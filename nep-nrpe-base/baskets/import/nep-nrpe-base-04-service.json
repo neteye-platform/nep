@@ -1,0 +1,1105 @@
+{
+    "ServiceTemplate": {
+        "nx-st-agentless-nrpe": {
+            "check_command": "nx-c-check-nrpe",
+            "fields": [
+                {
+                    "datafield_id": 155,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 415,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 412,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 413,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 414,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 156,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 418,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 409,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 149,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 150,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 417,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 419,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 151,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 410,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 152,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 416,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 411,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 420,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 157,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 153,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 154,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 408,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 406,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 407,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-st-agentless"
+            ],
+            "object_name": "nx-st-agentless-nrpe",
+            "object_type": "template",
+            "uuid": "ad40bc96-5822-4db4-ae4d-c8a6c051e504"
+        },
+        "nx-st-agentless-nrpe-linux": {
+            "fields": [],
+            "imports": [
+                "nx-st-agentless-nrpe"
+            ],
+            "object_name": "nx-st-agentless-nrpe-linux",
+            "object_type": "template",
+            "uuid": "be9e127d-3df8-4b1c-990f-4be041726acd",
+            "vars": {
+                "nx_nrpe_target": "linux"
+            }
+        },
+        "nx-st-agentless-nrpe-linux-check-nrpe": {
+            "fields": [],
+            "imports": [
+                "nx-st-agentless-nrpe-linux"
+            ],
+            "object_name": "nx-st-agentless-nrpe-linux-check-nrpe",
+            "object_type": "template",
+            "uuid": "8ba351e2-64ad-4a72-832e-dbaf71994e1b"
+        },
+        "nx-st-agentless-nrpe-linux-cpu-load": {
+            "fields": [
+                {
+                    "datafield_id": 158,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 159,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 160,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 161,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 162,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 163,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-st-agentless-nrpe-linux"
+            ],
+            "object_name": "nx-st-agentless-nrpe-linux-cpu-load",
+            "object_type": "template",
+            "uuid": "39cf46ca-6749-49a5-bf1d-d62fd7cffb32",
+            "vars": {
+                "nx_nrpe_arguments": [
+                    "-r",
+                    "-w $nx_nrpe_wload1$,$nx_nrpe_wload5$,$nx_nrpe_wload15$",
+                    "-c $nx_nrpe_cload1$,$nx_nrpe_cload5$,$nx_nrpe_cload15$"
+                ],
+                "nx_nrpe_cload1": "15",
+                "nx_nrpe_cload15": "10",
+                "nx_nrpe_cload5": "12",
+                "nx_nrpe_command": "nx_check_load",
+                "nx_nrpe_wload1": "10",
+                "nx_nrpe_wload15": "6",
+                "nx_nrpe_wload5": "8"
+            }
+        },
+        "nx-st-agentless-nrpe-linux-disk-space-usage": {
+            "fields": [
+                {
+                    "datafield_id": 164,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 165,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-st-agentless-nrpe-linux"
+            ],
+            "object_name": "nx-st-agentless-nrpe-linux-disk-space-usage",
+            "object_type": "template",
+            "uuid": "de496a7f-6e04-43ec-a379-82d5e5a3ec91",
+            "vars": {
+                "nx_nrpe_arguments": [
+                    "-w $nrpe_disk_warning$",
+                    "-c $nrpe_disk_critical$",
+                    "-e"
+                ],
+                "nx_nrpe_command": "nx_check_disk",
+                "nx_nrpe_disk_critical": "90",
+                "nx_nrpe_disk_warning": "80"
+            }
+        },
+        "nx-st-agentless-nrpe-linux-memory-usage": {
+            "fields": [
+                {
+                    "datafield_id": 166,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 167,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-st-agentless-nrpe-linux"
+            ],
+            "object_name": "nx-st-agentless-nrpe-linux-memory-usage",
+            "object_type": "template",
+            "uuid": "9d85db01-abd6-4fbb-8158-21a33d18160e",
+            "vars": {
+                "nx_nrpe_arguments": [
+                    "-u",
+                    "-w $nx_nrpe_mem_warning$",
+                    "-c $nx_nrpe_mem_critical$"
+                ],
+                "nx_nrpe_command": "nx_check_mem",
+                "nx_nrpe_mem_critical": "90",
+                "nx_nrpe_mem_warning": "80"
+            }
+        },
+        "nx-st-agentless-nrpe-linux-swap-usage": {
+            "fields": [
+                {
+                    "datafield_id": 168,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 169,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-st-agentless-nrpe-linux"
+            ],
+            "object_name": "nx-st-agentless-nrpe-linux-swap-usage",
+            "object_type": "template",
+            "uuid": "29a8a153-1e09-45cb-a5b4-06b13755e50e",
+            "vars": {
+                "nx_nrpe_arguments": [
+                    "-w $nx_nrpe_free_swap_warning$%",
+                    "-c $nx_nrpe_free_swap_critical$%"
+                ],
+                "nx_nrpe_command": "nx_check_swap",
+                "nx_nrpe_free_swap_critical": "10",
+                "nx_nrpe_free_swap_warning": "20"
+            }
+        },
+        "nx-st-agentless-nrpe-linux-uptime": {
+            "fields": [
+                {
+                    "datafield_id": 170,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 171,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 172,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 173,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-st-agentless-nrpe-linux"
+            ],
+            "object_name": "nx-st-agentless-nrpe-linux-uptime",
+            "object_type": "template",
+            "uuid": "4d04727c-166a-49b7-8999-eb4a54dfb76f",
+            "vars": {
+                "nx_nrpe_command": "nx_check_uptime"
+            }
+        },
+        "nx-st-agentless-nrpe-windows": {
+            "check_command": "nx-c-check-nrpe",
+            "fields": [],
+            "imports": [
+                "nx-st-agentless-nrpe"
+            ],
+            "object_name": "nx-st-agentless-nrpe-windows",
+            "object_type": "template",
+            "uuid": "67db6a64-a79a-4f73-867e-7af9ec9f63fb",
+            "vars": {
+                "nx_nrpe_target": "windows"
+            }
+        },
+        "nx-st-agentless-nrpe-windows-counters": {
+            "fields": [],
+            "imports": [
+                "nx-st-agentless-nrpe-windows"
+            ],
+            "object_name": "nx-st-agentless-nrpe-windows-counters",
+            "object_type": "template",
+            "uuid": "8e0f4fbe-1b72-4466-bfb3-9150207409c7",
+            "vars": {
+                "nx_nrpe_command": "check_phd"
+            }
+        },
+        "nx-st-agentless-nrpe-windows-cpu-load": {
+            "fields": [
+                {
+                    "datafield_id": 170,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 171,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-st-agentless-nrpe-windows"
+            ],
+            "object_name": "nx-st-agentless-nrpe-windows-cpu-load",
+            "object_type": "template",
+            "uuid": "3c88f3dc-5696-43b7-b301-8cb837e640b4",
+            "vars": {
+                "nx_nrpe_arguments": [
+                    "filter=none",
+                    "warn=load > $nx_nrpe_max_uptime_warning$",
+                    "crit=load > $nx_nrpe_max_uptime_critical$"
+                ],
+                "nx_nrpe_command": "check_cpu",
+                "nx_nrpe_max_uptime_critical": "90",
+                "nx_nrpe_max_uptime_warning": "80"
+            }
+        },
+        "nx-st-agentless-nrpe-windows-cpu-load-legacy": {
+            "fields": [],
+            "imports": [
+                "nx-st-agentless-nrpe-windows"
+            ],
+            "object_name": "nx-st-agentless-nrpe-windows-cpu-load-legacy",
+            "object_type": "template",
+            "uuid": "427a5cef-8889-4a9e-8c24-06be48c79219",
+            "vars": {
+                "nx_nrpe_command": "checkcpu"
+            }
+        },
+        "nx-st-agentless-nrpe-windows-disk-space-usage": {
+            "fields": [
+                {
+                    "datafield_id": 164,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 165,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-st-agentless-nrpe-windows"
+            ],
+            "object_name": "nx-st-agentless-nrpe-windows-disk-space-usage",
+            "object_type": "template",
+            "uuid": "c02faa69-a88b-4316-80a7-1590c26ccb43",
+            "vars": {
+                "nx_nrpe_arguments": [
+                    "warning=free<$nx_nrpe_disk_warning$%",
+                    "critical=free<$nx_nrpe_disk_critical$%",
+                    "drive=*"
+                ],
+                "nx_nrpe_command": "check_drivesize",
+                "nx_nrpe_disk_critical": "10",
+                "nx_nrpe_disk_warning": "20"
+            }
+        },
+        "nx-st-agentless-nrpe-windows-disk-space-usage-legacy": {
+            "fields": [],
+            "imports": [
+                "nx-st-agentless-nrpe-windows"
+            ],
+            "object_name": "nx-st-agentless-nrpe-windows-disk-space-usage-legacy",
+            "object_type": "template",
+            "uuid": "1e2c8800-4031-425b-980b-6061d49c0f4d",
+            "vars": {
+                "nx_nrpe_command": "checkdrivesize"
+            }
+        },
+        "nx-st-agentless-nrpe-windows-memory-usage": {
+            "fields": [
+                {
+                    "datafield_id": 166,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 167,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-st-agentless-nrpe-windows"
+            ],
+            "object_name": "nx-st-agentless-nrpe-windows-memory-usage",
+            "object_type": "template",
+            "uuid": "bdfa87f5-7adf-4db4-9fdd-dcc5a42ae99a",
+            "vars": {
+                "nx_nrpe_arguments": [
+                    "warn=free < $nx_nrpe_mem_warning$%",
+                    "crit=free < $nx_nrpe_mem_critical$%",
+                    "type=physical"
+                ],
+                "nx_nrpe_command": "check_memory",
+                "nx_nrpe_mem_critical": "10",
+                "nx_nrpe_mem_warning": "20"
+            }
+        },
+        "nx-st-agentless-nrpe-windows-memory-usage-legacy": {
+            "fields": [],
+            "imports": [
+                "nx-st-agentless-nrpe-windows"
+            ],
+            "object_name": "nx-st-agentless-nrpe-windows-memory-usage-legacy",
+            "object_type": "template",
+            "uuid": "c5280150-be8e-4b75-b998-d4d5210153b1",
+            "vars": {
+                "nx_nrpe_command": "checkmem"
+            }
+        },
+        "nx-st-agentless-nrpe-windows-network": {
+            "fields": [],
+            "imports": [
+                "nx-st-agentless-nrpe-windows"
+            ],
+            "object_name": "nx-st-agentless-nrpe-windows-network",
+            "object_type": "template",
+            "uuid": "0176e333-3607-4ac5-a1db-8c337d0af307",
+            "vars": {
+                "nx_nrpe_command": "check_network"
+            }
+        },
+        "nx-st-agentless-nrpe-windows-os-version": {
+            "fields": [],
+            "imports": [
+                "nx-st-agentless-nrpe-windows"
+            ],
+            "object_name": "nx-st-agentless-nrpe-windows-os-version",
+            "object_type": "template",
+            "uuid": "6bedd8cc-cfba-498f-b78e-e3368db26221",
+            "vars": {
+                "nx_nrpe_command": "check_os_version"
+            }
+        },
+        "nx-st-agentless-nrpe-windows-pagefile-usage": {
+            "fields": [],
+            "imports": [
+                "nx-st-agentless-nrpe-windows"
+            ],
+            "object_name": "nx-st-agentless-nrpe-windows-pagefile-usage",
+            "object_type": "template",
+            "uuid": "be9a1055-12eb-4bbb-afe3-fe0e190934a2",
+            "vars": {
+                "nx_nrpe_arguments": [
+                    "filter=name = 'total'"
+                ],
+                "nx_nrpe_command": "check_pagefile"
+            }
+        },
+        "nx-st-agentless-nrpe-windows-process": {
+            "fields": [],
+            "imports": [
+                "nx-st-agentless-nrpe-windows"
+            ],
+            "object_name": "nx-st-agentless-nrpe-windows-process",
+            "object_type": "template",
+            "uuid": "91607aad-a435-46b3-a6e8-eaf5af687838",
+            "vars": {
+                "nx_nrpe_command": "check_process"
+            }
+        },
+        "nx-st-agentless-nrpe-windows-service": {
+            "fields": [
+                {
+                    "datafield_id": 174,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-st-agentless-nrpe-windows"
+            ],
+            "object_name": "nx-st-agentless-nrpe-windows-service",
+            "object_type": "template",
+            "uuid": "32f1ab3a-beae-4904-b585-637081b602af",
+            "vars": {
+                "nx_nrpe_arguments": [
+                    "service=$nx_nrpe_windows_service$",
+                    "crit=state = 'stopped'",
+                    "warn=none"
+                ],
+                "nx_nrpe_command": "check_service"
+            }
+        },
+        "nx-st-agentless-nrpe-windows-uptime": {
+            "fields": [
+                {
+                    "datafield_id": 172,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 173,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-st-agentless-nrpe-windows"
+            ],
+            "object_name": "nx-st-agentless-nrpe-windows-uptime",
+            "object_type": "template",
+            "uuid": "46a54091-331b-4e2e-a169-57136bf22be4",
+            "vars": {
+                "nx_nrpe_arguments": [
+                    "warn=uptime < -$nx_nrpe_min_uptime_warning$d",
+                    "crit=uptime < -$nx_nrpe_min_uptime_critical$d"
+                ],
+                "nx_nrpe_command": "check_uptime",
+                "nx_nrpe_min_uptime_critical": "0",
+                "nx_nrpe_min_uptime_warning": "0"
+            }
+        },
+        "nx-st-agentless-nrpe-windows-uptime-legacy": {
+            "fields": [],
+            "imports": [
+                "nx-st-agentless-nrpe-windows"
+            ],
+            "object_name": "nx-st-agentless-nrpe-windows-uptime-legacy",
+            "object_type": "template",
+            "uuid": "a0a689e2-cdff-44da-b97e-98a7ca6b17aa",
+            "vars": {
+                "nx_nrpe_command": "checkuptime"
+            }
+        },
+        "nx-st-agentless-nrpe-windows-wmi": {
+            "fields": [],
+            "imports": [
+                "nx-st-agentless-nrpe-windows"
+            ],
+            "object_name": "nx-st-agentless-nrpe-windows-wmi",
+            "object_type": "template",
+            "uuid": "c51af2b5-53e8-4403-9610-ae5a02c72366",
+            "vars": {
+                "nx_nrpe_command": "check_wmi"
+            }
+        }
+    },
+    "Datafield": {
+        "149": {
+            "uuid": "160aa786-0382-41af-91cb-1aa000000095",
+            "varname": "nx_nrpe_ipv4",
+            "caption": "[NX] Force use of IPv4",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeBoolean",
+            "format": null,
+            "settings": {},
+            "category": "[NX] NRPE Connection Settings"
+        },
+        "150": {
+            "uuid": "160aa786-0382-41af-91cb-1aa000000096",
+            "varname": "nx_nrpe_ipv6",
+            "caption": "[NX] Force use of IPv6",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeBoolean",
+            "format": null,
+            "settings": {},
+            "category": "[NX] NRPE Connection Settings"
+        },
+        "151": {
+            "uuid": "160aa786-0382-41af-91cb-1aa000000097",
+            "varname": "nx_nrpe_no_ssl",
+            "caption": "[NX] Connect without SSL",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeBoolean",
+            "format": null,
+            "settings": {},
+            "category": "[NX] NRPE Connection Settings"
+        },
+        "152": {
+            "uuid": "160aa786-0382-41af-91cb-1aa000000098",
+            "varname": "nx_nrpe_port",
+            "caption": "[NX] NRPE TCP Port",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] NRPE Connection Settings"
+        },
+        "153": {
+            "uuid": "160aa786-0382-41af-91cb-1aa000000099",
+            "varname": "nx_nrpe_timeout",
+            "caption": "[NX] Connection timeout",
+            "description": "<interval>:<state> = <Number of seconds before connection times out>:<Check state to exit with in the event of a timeout (default=CRITICAL)>",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] NRPE Connection Settings"
+        },
+        "154": {
+            "uuid": "160aa786-0382-41af-91cb-1aa00000009a",
+            "varname": "nx_nrpe_timeout_unknown",
+            "caption": "[NX] Return UNKNOWN on Connection Timeout",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeBoolean",
+            "format": null,
+            "settings": {},
+            "category": "[NX] NRPE Connection Settings"
+        },
+        "155": {
+            "uuid": "160aa786-0382-41af-91cb-1aa00000009b",
+            "varname": "nx_nrpe_arguments",
+            "caption": "[NX] NRPE Arguments",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeArray",
+            "format": null,
+            "settings": {},
+            "category": "[NX] NRPE Settings (Advanced)"
+        },
+        "415": {
+            "uuid": "2a1e8c1a-5b88-4cb9-960c-073cdea14a27",
+            "varname": "nx_nrpe_ca_cert_file",
+            "caption": "[NX] CA Cert File",
+            "description": "he CA certificate to use for PKI",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] NRPE Connection Settings"
+        },
+        "412": {
+            "uuid": "2b41190b-4a05-403c-8144-c2a8455c7480",
+            "varname": "nx_nrpe_chiper_list",
+            "caption": "[NX] Chiper List",
+            "description": "The list of SSL ciphers to use (currently defaults to \"ALL:!MD5:@STRENGTH:@SECLEVEL=0\". THIS WILL change in a future release.)",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] NRPE Connection Settings"
+        },
+        "413": {
+            "uuid": "932e0f39-b2ce-4e9e-866d-b0933c645e20",
+            "varname": "nx_nrpe_client_cert_file",
+            "caption": "[NX] Client Cert File",
+            "description": "The client certificate to use for PKI",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] NRPE Connection Settings"
+        },
+        "414": {
+            "uuid": "9995ae47-da88-4cc2-967e-1dfe07077961",
+            "varname": "nx_nrpe_client_key_file",
+            "caption": "[NX] Client Key File",
+            "description": "The private key to use with the client certificate",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] NRPE Connection Settings"
+        },
+        "156": {
+            "uuid": "160aa786-0382-41af-91cb-1aa00000009c",
+            "varname": "nx_nrpe_command",
+            "caption": "[NX] NRPE Command",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] NRPE Settings (Advanced)"
+        },
+        "418": {
+            "uuid": "80113d17-707f-4cdf-aca8-aeff150b3049",
+            "varname": "nx_nrpe_config_file",
+            "caption": "[NX] Configuration File",
+            "description": "Configuration file to use",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] NRPE Connection Settings"
+        },
+        "409": {
+            "uuid": "81c9e6e1-bcac-4bda-bd4f-6f0f4fb208eb",
+            "varname": "nx_nrpe_disable_syslog",
+            "caption": "[NX] Disable Syslog Logging",
+            "description": "Disable logging to syslog facilities",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeBoolean",
+            "format": null,
+            "settings": {},
+            "category": "[NX] NRPE Connection Settings"
+        },
+        "417": {
+            "uuid": "0c718c34-14d0-4f09-8b2a-378ba7801a22",
+            "varname": "nx_nrpe_local_bind_address",
+            "caption": "[NX] Local Bind Address",
+            "description": "Local address to bind to",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] NRPE Connection Settings"
+        },
+        "419": {
+            "uuid": "1f89d06b-7706-44e5-81e4-fc6b8922797f",
+            "varname": "nx_nrpe_log_file",
+            "caption": "[NX] Log File",
+            "description": "Log file to write to",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] NRPE Connection Settings"
+        },
+        "410": {
+            "uuid": "73aa8a80-cb2c-44ca-b53b-e10acb5c97eb",
+            "varname": "nx_nrpe_payload_size",
+            "caption": "[NX] Payload Size",
+            "description": "Specify non-default payload size for NSClient++",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] NRPE Connection Settings"
+        },
+        "416": {
+            "uuid": "ff8f7640-939e-49f0-b367-5b4531be4251",
+            "varname": "nx_nrpe_ssl_logging",
+            "caption": "[NX] SSL Logging Options",
+            "description": "SSL Logging Options",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] NRPE Connection Settings"
+        },
+        "411": {
+            "uuid": "5d6a5292-3f75-42dc-8b31-da64012201f2",
+            "varname": "nx_nrpe_ssl_version",
+            "caption": "[NX] SSL Version",
+            "description": "The SSL/TLS version to use. Can be any one of: SSLv3 SSL v3 only SSLv3+ SSL v3 or above TLSv1 TLS v1 only TLSv1+ TLS v1 or above (DEFAULT) TLSv1.1 TLS v1.1 only TLSv1.1+ TLS v1.1 or above TLSv1.2 TLS v1.2 only TLSv1.2+ TLS v1.2 or above",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] NRPE Connection Settings"
+        },
+        "420": {
+            "uuid": "002d73d8-279a-4aa9-aedb-05e4cc11477f",
+            "varname": "nx_nrpe_syslog_debug_messages",
+            "caption": "[NX] Enable Syslog Debug Messages",
+            "description": "Enable syslog debug messages.",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeBoolean",
+            "format": null,
+            "settings": {},
+            "category": "[NX] NRPE Connection Settings"
+        },
+        "157": {
+            "uuid": "160aa786-0382-41af-91cb-1aa00000009d",
+            "varname": "nx_nrpe_target",
+            "caption": "[NX] Target OS Family",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeDatalist",
+            "format": null,
+            "settings": {
+                "behavior": "strict",
+                "data_type": "string",
+                "datalist": "[NX] NRPE Target Type"
+            },
+            "category": "[NX] NRPE Settings (Advanced)"
+        },
+        "408": {
+            "uuid": "4ae3a4b9-b43e-475e-8362-f7a385f2f584",
+            "varname": "nx_nrpe_use_adh",
+            "caption": "[NX] Anonymous Diffie Hellman",
+            "description": "Anonymous Diffie Hellman use: 0 Don't use Anonymous Diffie Hellman (This will be the default in a future release.) 1 Allow Anonymous Diffie Hellman (default) 2 Force Anonymous Diffie Hellman",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] NRPE Connection Settings"
+        },
+        "406": {
+            "uuid": "f3659758-6097-4ba5-9c5b-fd0847fd8e83",
+            "varname": "nx_nrpe_v2",
+            "caption": "[NX] Force use of v2 of NRPE",
+            "description": "Only use version 2 packets, not version 3/4",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeBoolean",
+            "format": null,
+            "settings": {},
+            "category": "[NX] NRPE Connection Settings"
+        },
+        "407": {
+            "uuid": "fe569b30-b41f-4048-bdf9-7d6723fac577",
+            "varname": "nx_nrpe_v3",
+            "caption": "[NX] Force use of v3 of NRPE",
+            "description": "Only use version 3 packets, not version 4",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeBoolean",
+            "format": null,
+            "settings": {},
+            "category": "[NX] NRPE Connection Settings"
+        },
+        "158": {
+            "uuid": "160aa786-0382-41af-91cb-1aa00000009e",
+            "varname": "nx_nrpe_cload1",
+            "caption": "[NX] Load 1 Critical threshold",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] NRPE Settings"
+        },
+        "159": {
+            "uuid": "160aa786-0382-41af-91cb-1aa00000009f",
+            "varname": "nx_nrpe_cload15",
+            "caption": "[NX] Load 15 Critical threshold",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] NRPE Settings"
+        },
+        "160": {
+            "uuid": "160aa786-0382-41af-91cb-1aa0000000a0",
+            "varname": "nx_nrpe_cload5",
+            "caption": "[NX] Load 5 Critical threshold",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] NRPE Settings"
+        },
+        "161": {
+            "uuid": "160aa786-0382-41af-91cb-1aa0000000a1",
+            "varname": "nx_nrpe_wload1",
+            "caption": "[NX] Load 1 Warning threshold",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] NRPE Settings"
+        },
+        "162": {
+            "uuid": "160aa786-0382-41af-91cb-1aa0000000a2",
+            "varname": "nx_nrpe_wload15",
+            "caption": "[NX] Load 15 Warning threshold",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] NRPE Settings"
+        },
+        "163": {
+            "uuid": "160aa786-0382-41af-91cb-1aa0000000a3",
+            "varname": "nx_nrpe_wload5",
+            "caption": "[NX] Load 5 Warning threshold",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] NRPE Settings"
+        },
+        "164": {
+            "uuid": "160aa786-0382-41af-91cb-1aa0000000a4",
+            "varname": "nx_nrpe_disk_critical",
+            "caption": "[NX] Disk Critical threshold",
+            "description": "% Critical Used Disk",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] NRPE Settings"
+        },
+        "165": {
+            "uuid": "160aa786-0382-41af-91cb-1aa0000000a5",
+            "varname": "nx_nrpe_disk_warning",
+            "caption": "[NX] Disk Warning threshold",
+            "description": "% Warning Used Disk",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] NRPE Settings"
+        },
+        "166": {
+            "uuid": "160aa786-0382-41af-91cb-1aa0000000a6",
+            "varname": "nx_nrpe_mem_critical",
+            "caption": "[NX] Memory used Critical threshold",
+            "description": "% Critical Used Memory",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] NRPE Settings"
+        },
+        "167": {
+            "uuid": "160aa786-0382-41af-91cb-1aa0000000a7",
+            "varname": "nx_nrpe_mem_warning",
+            "caption": "[NX] Memory used Warning threshold",
+            "description": "% Warning Used Memory",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] NRPE Settings"
+        },
+        "168": {
+            "uuid": "160aa786-0382-41af-91cb-1aa0000000a8",
+            "varname": "nx_nrpe_free_swap_critical",
+            "caption": "[NX] Swap free Critical threshold",
+            "description": "% Free Memory Swap Critical",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] NRPE Settings"
+        },
+        "169": {
+            "uuid": "160aa786-0382-41af-91cb-1aa0000000a9",
+            "varname": "nx_nrpe_free_swap_warning",
+            "caption": "[NX] Swap free Warning threshold",
+            "description": "% Free Memory Swap Warning",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] NRPE Settings"
+        },
+        "170": {
+            "uuid": "160aa786-0382-41af-91cb-1aa0000000aa",
+            "varname": "nx_nrpe_max_uptime_critical",
+            "caption": "[NX] Max uptime Critical threshold",
+            "description": "Critical Max Uptime in Minutes (Arg: -C $nx_nrpe_max_uptime_critical$)",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] NRPE Settings"
+        },
+        "171": {
+            "uuid": "160aa786-0382-41af-91cb-1aa0000000ab",
+            "varname": "nx_nrpe_max_uptime_warning",
+            "caption": "[NX] Max uptime Warning threshold",
+            "description": "Warning Max Uptime in Minutes (Arg: -W $nx_nrpe_max_uptime_warning$)",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] NRPE Settings"
+        },
+        "172": {
+            "uuid": "160aa786-0382-41af-91cb-1aa0000000ac",
+            "varname": "nx_nrpe_min_uptime_critical",
+            "caption": "[NX] Min uptime Critical threshold",
+            "description": "Critical Min Uptime in Minutes (Arg: -c $nx_nrpe_min_uptime_critical$)",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] NRPE Settings"
+        },
+        "173": {
+            "uuid": "160aa786-0382-41af-91cb-1aa0000000ad",
+            "varname": "nx_nrpe_min_uptime_warning",
+            "caption": "[NX] Min uptime Warning threshold",
+            "description": "Warning Min Uptime in Minutes (Arg: -w $nx_nrpe_min_uptime_warning$)",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] NRPE Settings"
+        },
+        "174": {
+            "uuid": "160aa786-0382-41af-91cb-1aa0000000ae",
+            "varname": "nx_nrpe_windows_service",
+            "caption": "[NX] Windows Service name",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] NRPE Connection Settings"
+        }
+    },
+    "DatafieldCategory": {
+        "[NX] NRPE Connection Settings": {
+            "category_name": "[NX] NRPE Connection Settings",
+            "description": null,
+            "originalId": "1"
+        },
+        "[NX] NRPE Settings (Advanced)": {
+            "category_name": "[NX] NRPE Settings (Advanced)",
+            "description": null,
+            "originalId": "2"
+        },
+        "[NX] NRPE Settings": {
+            "category_name": "[NX] NRPE Settings",
+            "description": null,
+            "originalId": "3"
+        }
+    }
+}

@@ -1,0 +1,57 @@
+{
+    "ServiceSet": {
+        "nx-ss-database-oracle-basic": {
+            "assign_filter": "host.vars.nx_enable_nep_ss=true&!\"nx-ss-database-oracle-basic\"=host.vars.nx_nep_ss_to_exclude&\"nx-ht-status-oracle-conn-time\"=host.templates",
+            "description": "Service Set providing basic monitoring for Oracle Database Instance",
+            "object_name": "nx-ss-database-oracle-basic",
+            "object_type": "template",
+            "services": [
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-agentless-oracle-health-connected-users",
+                        "nx-st-type-custom"
+                    ],
+                    "object_name": "Connected users Count",
+                    "object_type": "object"
+                },
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-agentless-oracle-health-connection-time",
+                        "nx-st-type-custom"
+                    ],
+                    "object_name": "Connection time",
+                    "object_type": "object"
+                },
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-agentless-oracle-health-process-usage",
+                        "nx-st-type-custom"
+                    ],
+                    "object_name": "Process usage",
+                    "object_type": "object"
+                },
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-agentless-oracle-health-session-usage",
+                        "nx-st-type-custom"
+                    ],
+                    "object_name": "Session usage",
+                    "object_type": "object"
+                },
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-agentless-oracle-health-tablespace-usage",
+                        "nx-st-type-custom"
+                    ],
+                    "object_name": "Tablespace usage",
+                    "object_type": "object"
+                }
+            ]
+        }
+    }
+}

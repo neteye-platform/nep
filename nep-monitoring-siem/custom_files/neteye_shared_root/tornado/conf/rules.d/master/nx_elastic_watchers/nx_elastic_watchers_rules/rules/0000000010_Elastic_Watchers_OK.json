@@ -1,0 +1,49 @@
+{
+  "name": "Elastic_Watchers_OK",
+  "description": "",
+  "continue": false,
+  "active": true,
+  "constraint": {
+    "WHERE": null,
+    "WITH": {}
+  },
+  "actions": [
+    {
+      "id": "smart_monitoring_check_result",
+      "payload": {
+        "check_result": {
+          "exit_status": "0",
+          "performance_data": "",
+          "plugin_output": "OK - Watcher ${event.payload.data._id} is running"
+        },
+        "host": {
+          "address": "127.0.0.1",
+          "imports": [
+            "nx-ht-passive",
+            "nx-ht-status-dummy",
+            "nx-ht-type-custom"
+          ],
+          "object_name": "Elastic Watchers",
+          "vars": {
+            "created_by": "tornado",
+            "rulename": "root/master/nx_elastic_watchers/nx_elastic_watchers_rules"
+          }
+        },
+        "service": {
+          "imports": [
+            "nx-st-interval-10m",
+            "nx-st-passive-with-autoreset"
+          ],
+          "object_name": "Elastic Watcher - ${event.payload.data._id}",
+          "vars": {
+            "created_by": "tornado",
+            "dummy_state": "2",
+            "dummy_text": "No data from webhook in the last $service.check_interval$ seconds",
+            "nx_on_host_down": "disable_check_on_down_hard",
+            "rulename": "root/master/nx_elastic_watchers/nx_elastic_watchers_rules"
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,148 @@
+{
+    "Command": {
+        "nx-c-telegram-host-notification": {
+            "arguments": {
+                "-6": "$notification_address6$",
+                "-4": "$notification_address$",
+                "-b": "$notification_author$",
+                "-c": "$notification_comment$",
+                "-d": {
+                    "required": true,
+                    "value": "$notification_date$"
+                },
+                "-i": "$notification_icingaweb2url$",
+                "-j": "$telegram_thread_id$",
+                "-l": {
+                    "required": true,
+                    "value": "$notification_hostname$"
+                },
+                "-n": {
+                    "required": true,
+                    "value": "$notification_hostdisplayname$"
+                },
+                "-o": {
+                    "required": true,
+                    "value": "$notification_hostoutput$"
+                },
+                "-p": {
+                    "required": true,
+                    "value": "$telegram_bot$"
+                },
+                "-q": {
+                    "required": true,
+                    "value": "$telegram_chat_id$"
+                },
+                "-r": {
+                    "required": true,
+                    "value": "$telegram_bot_token$"
+                },
+                "-s": {
+                    "required": true,
+                    "value": "$notification_hoststate$"
+                },
+                "-t": {
+                    "required": true,
+                    "value": "telegram"
+                },
+                "-v": "$notification_logtosyslog$"
+            },
+            "command": "/neteye/shared/monitoring/plugins/host-by-telegram.sh",
+            "fields": [],
+            "methods_execute": "PluginNotification",
+            "object_name": "nx-c-telegram-host-notification",
+            "object_type": "object",
+            "timeout": 60,
+            "uuid": "6f67051a-bdf0-46f1-a88d-6c1c640cd313",
+            "vars": {
+                "notification_address": "$address$",
+                "notification_address6": "$address6$",
+                "notification_author": "$notification.author$",
+                "notification_comment": "$notification.comment$",
+                "notification_date": "$icinga.long_date_time$",
+                "notification_hostdisplayname": "$host.display_name$",
+                "notification_hostname": "$host.name$",
+                "notification_hostoutput": "$host.output$",
+                "notification_hoststate": "$host.state$",
+                "notification_type": "$notification.type$",
+                "notification_useremail": "$user.email$"
+            }
+        },
+        "nx-c-telegram-service-notification": {
+            "arguments": {
+                "-6": "$notification_address6$",
+                "-4": "$notification_address$",
+                "-b": "$notification_author$",
+                "-c": "$notification_comment$",
+                "-d": {
+                    "required": true,
+                    "value": "$notification_date$"
+                },
+                "-e": {
+                    "required": true,
+                    "value": "$notification_servicename$"
+                },
+                "-i": "$notification_icingaweb2url$",
+                "-j": "$telegram_thread_id$",
+                "-l": {
+                    "required": true,
+                    "value": "$notification_hostname$"
+                },
+                "-n": {
+                    "required": true,
+                    "value": "$notification_hostdisplayname$"
+                },
+                "-o": {
+                    "required": true,
+                    "value": "$notification_serviceoutput$"
+                },
+                "-p": {
+                    "required": true,
+                    "value": "$telegram_bot$"
+                },
+                "-q": {
+                    "required": true,
+                    "value": "$telegram_chat_id$"
+                },
+                "-r": {
+                    "required": true,
+                    "value": "$telegram_bot_token$"
+                },
+                "-s": {
+                    "required": true,
+                    "value": "$notification_servicestate$"
+                },
+                "-t": {
+                    "required": true,
+                    "value": "telegram"
+                },
+                "-u": {
+                    "required": true,
+                    "value": "$notification_servicedisplayname$"
+                },
+                "-v": "$notification_logtosyslog$"
+            },
+            "command": "/neteye/shared/monitoring/plugins/service-by-telegram.sh",
+            "fields": [],
+            "methods_execute": "PluginNotification",
+            "object_name": "nx-c-telegram-service-notification",
+            "object_type": "object",
+            "timeout": 60,
+            "uuid": "cfb5b302-c2f9-472d-91d3-20e3dccb5e85",
+            "vars": {
+                "notification_address": "$address$",
+                "notification_address6": "$address6$",
+                "notification_author": "$notification.author$",
+                "notification_comment": "$notification.comment$",
+                "notification_date": "$icinga.long_date_time$",
+                "notification_hostdisplayname": "$host.display_name$",
+                "notification_hostname": "$host.name$",
+                "notification_servicedisplayname": "$service.display_name$",
+                "notification_servicename": "$service.name$",
+                "notification_serviceoutput": "$service.output$",
+                "notification_servicestate": "$service.state$",
+                "notification_type": "$notification.type$",
+                "notification_useremail": "$user.email$"
+            }
+        }
+    }
+}

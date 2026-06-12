@@ -1,0 +1,652 @@
+{
+    "Command": {
+        "nx-c-check-elastic-slm-policy": {
+            "arguments": {
+                "--type": "policy"
+            },
+            "command": "/neteye/shared/monitoring/plugins/check_elastic_slm.py",
+            "fields": [],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-check-elastic-slm-policy",
+            "object_type": "object"
+        },
+        "nx-c-check-elastic-slm-status": {
+            "arguments": {
+                "--type": "status"
+            },
+            "command": "/neteye/shared/monitoring/plugins/check_elastic_slm.py",
+            "fields": [],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-check-elastic-slm-status",
+            "object_type": "object"
+        },
+        "nx-c-check_elastic_blockchain_status": {
+            "arguments": {
+                "-t": {
+                    "description": "Teanant ID",
+                    "required": true,
+                    "value": "$nx_neteye_tenant$"
+                },
+                "-H": {
+                    "description": "Hostaname",
+                    "required": true,
+                    "value": "$host.name$"
+                },
+                "-w": {
+                    "description": "Warning threshold",
+                    "value": "$nx_elastic_warning$"
+                }
+            },
+            "command": "PluginContribDir + \/check_elastic_blockchain_status.py",
+            "disabled": false,
+            "fields": [],
+            "imports": [],
+            "is_string": null,
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-check_elastic_blockchain_status",
+            "object_type": "object",
+            "timeout": null,
+            "uuid": "14ec4f59-2ef0-42cc-ae24-f9fb1b61938c",
+            "vars": {},
+            "zone": null
+        },
+        "nx-c-check-es-system": {
+            "arguments": {
+                "-E": {
+                    "description": "Certificate Auth",
+                    "value": "$es_auth_cert$"
+                },
+                "-H": {
+                    "description": "Hostaname or IP Address",
+                    "required": true,
+                    "value": "$es_hostname$"
+                },
+                "-K": {
+                    "value": "$es_auth_key$"
+                },
+                "-L": {
+                    "description": "Run check on Local Node",
+                    "set_if": "$es_local_enabled$",
+                    "set_if_format": "string"
+                },
+                "-S": {
+                    "set_if": "$http_ssl$",
+                    "set_if_format": "string"
+                },
+                "-c": {
+                    "description": "Critical threshold ",
+                    "value": "$nx_elastic_critical$"
+                },
+                "-t": {
+                    "required": true,
+                    "value": "$nx_elastic_check_types_list$"
+                },
+                "-w": {
+                    "description": "Warning threshold",
+                    "value": "$nx_elastic_warning$"
+                }
+            },
+            "command": "PluginContribDir + \/check_es_system.sh",
+            "disabled": false,
+            "fields": [],
+            "imports": [],
+            "is_string": null,
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-check-es-system",
+            "object_type": "object",
+            "timeout": null,
+            "vars": {
+                "es_hostname": "localhost"
+            },
+            "zone": null
+        },
+        "nx-c-check-filebeat": {
+            "arguments": {
+                "--filebeat-host": {
+                    "description": "Hostaname or IP Address (default is localhost)",
+                    "required": true,
+                    "value": "$filebeat_hostname$"
+                },
+                "--filebeat-port": {
+                    "description": "Port for HTTP (default is 5066)",
+                    "required": true,
+                    "value": "$filebeat_port$"
+                },
+                "-c": {
+                    "description": "Critical threshold",
+                    "value": "$filebeat_critical$"
+                },
+                "-w": {
+                    "description": "warning threshold (default is 0)",
+                    "value": "$filebeat_warning$"
+                }
+            },
+            "command": "PluginContribDir + \/check_filebeat",
+            "disabled": false,
+            "fields": [],
+            "imports": [],
+            "is_string": null,
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-check-filebeat",
+            "object_type": "object",
+            "timeout": null,
+            "zone": null
+        },
+        "nx-c-check-logstash-pipeline": {
+            "arguments": {
+                "--inflight-events-crit": {
+                    "description": " Critical threshold for inflight events to be a critical result. Use min:max for a range.",
+                    "value": "$logstash_critical$"
+                },
+                "--inflight-events-warn": {
+                    "description": " Warning threshold for inflight events to be a warning result. Use min:max for a range.",
+                    "value": "$logstash_warning$"
+                },
+                "-H": {
+                    "description": "Hostaname or IP Address",
+                    "required": true,
+                    "value": "$logstash_hostname$"
+                },
+                "-P": {
+                    "description": "Pipeline Name (default \"/\")",
+                    "value": "$logstash_pipeline$"
+                },
+                "-p": {
+                    "description": "Port of the Logstash server (default 9600)",
+                    "value": "$logstash_port$"
+                },
+                "mode": {
+                    "description": "Mode of check",
+                    "required": true,
+                    "skip_key": true,
+                    "value": "pipeline"
+                }
+            },
+            "command": "PluginContribDir + /check_logstash",
+            "fields": [
+                {
+                    "datafield_id": 447,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-check-logstash-pipeline",
+            "object_type": "object",
+            "uuid": "f579f639-855d-4e70-8de5-ba4b466d6177",
+            "vars": {
+                "logstash_hostname": "localhost"
+            }
+        },
+        "nx-c-check-logstash": {
+            "arguments": {
+                "--cpu-usage-threshold-crit": {
+                    "description": "The percentage of CPU usage on which to be a critical result (default \"100\")",
+                    "value": "$logstash_cpu_crit$"
+                },
+                "--cpu-usage-threshold-warn": {
+                    "description": "The percentage of CPU usage on which to be a warning result (default \"100\")",
+                    "value": "$logstash_cpu_warn$"
+                },
+                "--file-descriptor-threshold-crit": {
+                    "description": "The percentage relative to the process file descriptor limit on which to be a critical result (default \"100\")",
+                    "value": "$logstash_descriptor_crit$"
+                },
+                "--file-descriptor-threshold-warn": {
+                    "description": "The percentage relative to the process file descriptor limit on which to be a warning result (default \"100\")",
+                    "value": "$logstash_descriptor_warn$"
+                },
+                "--heap-usage-threshold-crit": {
+                    "description": "The percentage relative to the heap size limit on which to be a critical result (default \"80\")",
+                    "value": "$logstash_heap_crit$"
+                },
+                "--heap-usage-threshold-warn": {
+                    "description": "The percentage relative to the heap size limit on which to be a warning result (default \"70\")",
+                    "value": "$logstash_heap_warn$"
+                },
+                "-H": {
+                    "description": "Hostaname or IP Address",
+                    "required": true,
+                    "value": "$logstash_hostname$"
+                },
+                "-p": {
+                    "description": "Port of the Logstash server (default 9600)",
+                    "value": "$logstash_port$"
+                },
+                "mode": {
+                    "description": "Mode of check",
+                    "required": true,
+                    "skip_key": true,
+                    "value": "health"
+                }
+            },
+            "command": "PluginContribDir + /check_logstash",
+            "fields": [
+                {
+                    "datafield_id": 447,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-check-logstash",
+            "object_type": "object",
+            "uuid": "6c48d029-cbf9-48b5-9070-241b0000016f",
+            "vars": {
+                "logstash_hostname": "localhost"
+
+            }
+        },
+        "nx-c-check-logstash-events": {
+            "arguments": {
+                "--logstash-host": {
+                    "description": "Hostaname or IP Address",
+                    "required": true,
+                    "value": "$logstash_hostname$"
+                },
+                "--logstash-port": {
+                    "description": "Logstash API Port",
+                    "required": false,
+                    "value": "$logstash_port$"
+                },
+                "--pipeline": {
+                    "value": "$logstash_pipeline$"
+                },
+                "-c": {
+                    "value": "$logstash_critical$"
+                },
+                "-w": {
+                    "value": "$logstash_warning$"
+                }
+            },
+            "command": "PluginContribDir + \/check_logstash_events.sh",
+            "disabled": false,
+            "fields": [],
+            "imports": [],
+            "is_string": null,
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-check-logstash-events",
+            "object_type": "object",
+            "timeout": null,
+            "vars": {
+                "logstash_hostname": "localhost"
+            },
+            "zone": null
+        },
+        "nx-c-check-logstash-queue": {
+            "arguments": {
+                "--logstash-host": {
+                    "description": "Hostaname or IP Address",
+                    "required": true,
+                    "value": "$logstash_hostname$"
+                },
+                "--pipeline": {
+                    "value": "$logstash_pipeline$"
+                }
+            },
+            "command": "PluginContribDir + \/check_logstash_queue.sh",
+            "disabled": false,
+            "fields": [
+                {
+                    "datafield_id": 447,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "imports": [],
+            "is_string": null,
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-check-logstash-queue",
+            "object_type": "object",
+            "timeout": null,
+            "vars": {
+                "logstash_hostname": "localhost"
+            },
+            "zone": null
+        },
+        "nx-c-check-kibana-stats": {
+            "arguments": {
+                "-H": {
+                    "description": "Hostaname or IP Address",
+                    "required": true,
+                    "value": "$nx_kibana_hostname$"
+                },
+                "-P": {
+                    "description": "Port for check: defualt 5601",
+                    "value": "$nx_kibana_port$"
+                },
+                "-K": {
+                    "description": "API Key file for Authentication (absolute path)",
+                    "value": "$nx_kibana_auth_file$"
+                },
+                "-S": {
+                    "set_if": "$http_ssl$"
+                },
+                "-c": {
+                    "description": "Critical threshold ",
+                    "value": "$nx_kibana_critical$"
+                },
+                "-t": {
+                    "required": true,
+                    "value": "$nx_kibana_check_types_list$"
+                },
+                "-w": {
+                    "description": "Warning threshold",
+                    "value": "$nx_kibana_warning$"
+                }
+            },
+            "command": "PluginContribDir + \/check_kibana_stats.sh",
+            "disabled": false,
+            "fields": [],
+            "imports": [],
+            "is_string": null,
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-check-kibana-stats",
+            "object_type": "object",
+            "timeout": null,
+            "vars": {
+                "es_hostname": "localhost"
+            },
+            "zone": null
+        },
+        "nx-c-check_elastic_ingest_status": {
+            "arguments": {
+                "--agent": {
+                    "description": "Agent type. Choose between the following values: 'winlogbeat', 'filebeat', 'auditbeat', 'packetbeat', 'metricbeat', 'elastic_agent', 'all'",
+                    "required": false,
+                    "value": "$nx_elastic_agent_type$"
+                },
+                "--check-interval": {
+                    "description": "check interval time (default 5m)",
+                    "required": false,
+                    "value": "$nx_elastic_check_interval$"
+                },
+                "--eps": {
+                    "description": "Show EPS (boolean)",
+                    "set_if": "$nx_enable_eps$",
+                    "set_if_format": "string"
+                },
+                "--filters": {
+                    "description": "Filters to be added on query match, this param can be use multiple times (format: field.name=value)",
+                    "repeat_key": true,
+                    "required": false,
+                    "value": "$nx_elastic_filters$"
+                },
+                "--ingest-time": {
+                    "description": "Time field",
+                    "required": false,
+                    "value": "$nx_elastic_time_field$"
+                },
+                "--warning": {
+                    "description": "Warning threshold number of events or EPS (if parameter enabled) (default: 0)",
+                    "required": false,
+                    "value": "$nx_elastic_warning$"
+                },
+                "--critical": {
+                    "description": "Critical threshold number of events or EPS (if parameter enabled) (default: 0)",
+                    "required": false,
+                    "value": "$nx_elastic_critical$"
+                },
+                "--tenant": {
+                    "description": "Tenand ID where search data (like namespace for ElasticAgent)",
+                    "required": true,
+                    "value": "$nx_neteye_tenant$"
+                }
+            },
+            "command": "PluginContribDir + \/check_elastic_ingest_status.py",
+            "disabled": false,
+            "fields": [],
+            "imports": [],
+            "is_string": null,
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-check_elastic_ingest_status",
+            "object_type": "object",
+            "timeout": "15",
+            "vars": {},
+            "zone": null
+        },
+        "nx-c-check-elastic-agent-status": {
+            "arguments": {
+                "-H": {
+                    "description": "Elastic Agent Hostname",
+                    "value": "$es_hostname$"
+                },
+                "-f": {
+                    "description": "JSON file path",
+                    "value": "$kb_json_file$"
+                }
+            },
+            "command": "PluginContribDir + /check_elastic_agent_status.sh",
+            "fields": [],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-check-elastic-agent-status",
+            "object_type": "object",
+            "timeout": "10"
+        },
+        "nx-c-check-apm-server-status": {
+            "arguments": {
+                "-H": {
+                    "description": "Elastic Agent Hostname",
+                    "value": "$es_hostname$"
+                },
+                "-f": {
+                    "description": "JSON file path",
+                    "value": "$kb_json_file$"
+                }
+            },
+            "command": "PluginContribDir + /check_apm_server_status.sh",
+            "fields": [],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-check-apm-server-status",
+            "object_type": "object",
+            "timeout": "10"
+        },
+        "nx-c-check-elastic-endpoint-status": {
+            "arguments": {
+                "-H": {
+                    "description": "Elastic Endpoint Hostname",
+                    "value": "$es_hostname$"
+                },
+                "-f": {
+                    "description": "JSON file path",
+                    "value": "$kb_json_file$"
+                }
+            },
+            "command": "PluginContribDir + /check_elastic_endpoint_status.sh",
+            "fields": [],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-check-elastic-endpoint-status",
+            "object_type": "object",
+            "timeout": "10"
+        },
+        "nx-c-fleet-agent-status": {
+            "arguments": {
+                "-f": {
+                    "description": "JSON file path",
+                    "value": "$kb_json_file$"
+                },
+                 "-S": {
+                    "set_if": "$http_ssl$",
+                    "set_if_format": "string"
+                }
+            },
+            "command": "PluginContribDir + /fleet-agent-status.sh",
+            "fields": [],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-fleet-agent-status",
+            "object_type": "object",
+            "timeout": "30"
+        },
+        "nx-c-endpoint-agent-status": {
+            "arguments": {
+                "-f": {
+                    "description": "JSON file path",
+                    "value": "$kb_json_file$"
+                }
+            },
+            "command": "PluginContribDir + /endpoint-agent-status.sh",
+            "fields": [],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-endpoint-agent-status",
+            "object_type": "object",
+            "timeout": "30"
+        },
+        "nx-c-check_elastic_dataset_status": {
+            "arguments": {
+                "--agent": {
+                    "description": "Agent type. Choose between the following values: 'beats', 'elastic_agent', 'logstash'",
+                    "value": "$nx_elastic_agent_type$"
+                },
+                "--check-interval": {
+                    "description": "check interval time (default 5m)",
+                    "required": false,
+                    "value": "$nx_elastic_check_interval$"
+                },
+                "--ingest-time": {
+                    "description": "Time field",
+                    "required": false,
+                    "value": "$nx_elastic_time_field$"
+                },
+                "--secret": {
+                    "description": "Webhook endpoint token secret in Tornado",
+                    "value": "$nx_tornado_webhook_secret$"
+                },
+                "--tenant": {
+                    "description": "Tenand ID where search data (like namespace for ElasticAgent)",
+                    "value": "$nx_neteye_tenant$"
+                },
+                "--webhook": {
+                    "description": "Webhook endpoint enabled in Tornado",
+                    "required": false,
+                    "value": "$nx_tornado_webhook_name$"
+                },
+                "--exclude-dataset": {
+                    "description": "Dataset name to be excluded from check, this param can be use multiple times",
+                    "repeat_key": true,
+                    "required": false,
+                    "value": "$nx_elastic_dataset_exclusion$"
+                },
+                "--metrics": {
+                    "description": "Metrics enabled",
+                    "required": false,
+                    "value": "$nx_elastic_enable_metrics$"
+                }
+
+            },
+            "command": "PluginContribDir + /check_elastic_dataset_status.py",
+            "fields": [],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-check_elastic_dataset_status",
+            "object_type": "object",
+            "timeout": "15"
+        },
+        "nx-c-check_elastic_transforms_status": {
+            "arguments": {
+                "--check-interval": {
+                    "description": "Check interval time (default 5m)",
+                    "value": "$nx_elastic_check_interval$"
+                },
+                "--secret": {
+                    "description": "Webhook endpoint token secret in Tornado",
+                    "value": "$nx_tornado_webhook_secret$"
+                },
+                "--webhook": {
+                    "description": "Webhook endpoint enabled in Tornado",
+                    "value": "$nx_tornado_webhook_name$"
+                }
+            },
+            "command": "PluginContribDir + /check_elastic_transforms_status.py",
+            "fields": [],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-check_elastic_transforms_status",
+            "object_type": "object",
+            "timeout": 15,
+            "uuid": "e1a8f120-af7d-45f2-9705-1c681c587fe1"
+        },
+        "nx-c-check_elastic_remove_duplicate_ebp_iterations":{
+            "arguments": {
+                "--blockchain": {
+                    "description": "Blockchain Name",
+                    "value": "$nx_ebp_blockchain$"
+                }
+            },
+            "command": "PluginContribDir + /check_elastic_remove_duplicate_ebp_iterations.py",
+            "fields": [],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-check_elastic_remove_duplicate_ebp_iterations",
+            "object_type": "object",
+            "timeout": 60,
+            "uuid": "12fca00a-0817-49eb-a8f5-914fee07cfc6"
+        },
+        "nx-c-check-elastic-dataset-object": {
+            "arguments": {
+                "--host": {
+                    "description": "Hostname",
+                    "value": "$host.name$"
+                }
+            },
+            "command": "PluginContribDir + /check_elastic_dataset_object.py",
+            "fields": [],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-check-elastic-dataset-object",
+            "object_type": "object",
+            "uuid": "b77f03ad-3eff-4dc8-a382-f1cb245bdf91"
+        },
+        "nx-c-check_elastic_disk_watermark_flooding": {
+            "arguments": {
+                "--path": {
+                    "description": "Path to the Elasticsearch data disk",
+                    "value": "$nx_elastic_data_path$"
+                },
+                "--warning-multiplier": {
+                    "description": "Multiplier for warning threshold (default: 2.0)",
+                    "value": "$nx_elastic_disk_watermark_warning_multiplier_threshold$"
+                },
+                "--critical-multiplier": {
+                    "description": "Multiplier for critical threshold (default: 1.5)",
+                    "value": "$nx_elastic_disk_watermark_critical_multiplier_threshold$"
+                }
+            },
+            "command": "PluginContribDir + /check_elastic_disk_watermark_flooding.py",
+            "fields": [],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-check_elastic_disk_watermark_flooding",
+            "object_type": "object",
+            "timeout": 15
+        },
+        "nx-c-check_elastic_watchers_status": {
+            "arguments": {
+                "--check-interval": {
+                    "description": "Check interval time (default 5m)",
+                    "value": "$nx_elastic_check_interval$"
+                },
+                "--secret": {
+                    "description": "Webhook endpoint token secret in Tornado",
+                    "value": "$nx_tornado_webhook_secret$"
+                },
+                "--webhook": {
+                    "description": "Webhook endpoint enabled in Tornado",
+                    "value": "$nx_tornado_webhook_name$"
+                }
+            },
+            "command": "PluginContribDir + /check_elastic_watchers_status.py",
+            "fields": [],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-check_elastic_watchers_status",
+            "object_type": "object",
+            "timeout": 15
+        }
+    },
+    "Datafield": {
+        "447": {
+            "category_id": null,
+            "varname": "logstash_hostname",
+            "caption": "Logstash Hostname",
+            "description": "Hostaname or IP Address",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "447",
+            "settings": {}
+        }
+    }
+}

@@ -1,0 +1,11 @@
+nep:
+  pcs:
+    colocation_resource: "cluster_ip"
+    service: null
+    ip: null
+  drbd:
+    minor: 208
+    port: 7995
+    volume_group: "vg00"
+    size: 1024
+    folder: "/neteye/shared/nep/"

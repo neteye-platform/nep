@@ -1,0 +1,108 @@
+{
+    "DataList": {
+        "[NX] SAP Instance Type List": {
+            "entries": [
+                {
+                    "entry_name": "ASCS",
+                    "entry_value": "ABAP Central Services (ASCS)",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "C",
+                    "entry_value": "SAP Content Server (C)",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "D",
+                    "entry_value": "ABAP Dialog-Instance (D)",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "DVEBMGS",
+                    "entry_value": "ABAP Primary Application Server incl. Central Instance (DVEBMGS)",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "HDB",
+                    "entry_value": "SAP HANA Database Instance (HDB)",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "J",
+                    "entry_value": "JAVA Application Instance (J)",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "SCS",
+                    "entry_value": "JAVA Central Services (SCS)",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "TREX",
+                    "entry_value": "TREX Search Engine (TREX)",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "W",
+                    "entry_value": "SAP WebDispatcher (W)",
+                    "format": "string",
+                    "allowed_roles": null
+                }
+            ],
+            "list_name": "[NX] SAP Instance Type List",
+            "owner": "FA98",
+            "uuid": "d65c7a7d-e15d-4f74-80d6-b0f100002711"
+        },
+        "[NX] SAP Sapcontrol Protocol List": {
+            "entries": [
+                {
+                    "entry_name": "GSOAP_HTTP",
+                    "entry_value": "HTTP  using gsoap built-in sockets",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "NI_HTTP",
+                    "entry_value": "HTTP  using SAP NI sockets (default, prefer Unix domain sockets)",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "NI_HTTPS",
+                    "entry_value": "HTTPS using SAP NI sockets (prefer Unix domain sockets)",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "PIPE",
+                    "entry_value": "Windows named pipes (on Unix same as NI_HTTP)",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "WINHTTP",
+                    "entry_value": "HTTP  using Windows winhttp",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "WINHTTPS",
+                    "entry_value": "HTTPS using Windows winhttp",
+                    "format": "string",
+                    "allowed_roles": null
+                }
+            ],
+            "list_name": "[NX] SAP Sapcontrol Protocol List",
+            "owner": "FA98",
+            "uuid": "d65c7a7d-e15d-4f74-80d6-b0f10000272e"
+        }
+    }
+}

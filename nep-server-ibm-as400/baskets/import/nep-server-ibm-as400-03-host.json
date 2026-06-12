@@ -1,0 +1,88 @@
+{
+    "HostTemplate": {
+        "nx-ht-as400": {
+            "fields": [
+                {
+                    "datafield_id": 590,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 592,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 591,
+                    "is_required": "n",
+                    "var_filter": "host.vars.nx-as400-login-file=false"
+                },
+                {
+                    "datafield_id": 589,
+                    "is_required": "n",
+                    "var_filter": "host.vars.nx-as400-login-file=false"
+                }
+            ],
+            "imports": [
+                "nx-ht-type-monitor"
+            ],
+            "object_name": "nx-ht-as400",
+            "object_type": "template"
+        }
+    },
+    "Datafield": {
+        "590": {
+            "varname": "nx-as400-login-file",
+            "caption": "[NX] AS400 Login file",
+            "description": "Login file .as400 with access credential to host",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeBoolean",
+            "format": null,
+            "originalId": "590",
+            "settings": {},
+            "category": "[NX] AS400 Options"
+        },
+        "592": {
+            "varname": "nx-as400-os-version",
+            "caption": "[NX] AS400 OS Version",
+            "description": "Provide OS version in numberic format: 5.4, 5.3, ...",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "592",
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] AS400 Options"
+        },
+        "591": {
+            "varname": "nx-as400-password",
+            "caption": "[NX] AS400 Password",
+            "description": "Password to login to host",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "591",
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] AS400 Options"
+        },
+        "589": {
+            "varname": "nx-as400-username",
+            "caption": "[NX] AS400 Username",
+            "description": "Username to login to host",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "589",
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] AS400 Options"
+        }
+    },
+    "DatafieldCategory": {
+        "[NX] AS400 Options": {
+            "category_name": "[NX] AS400 Options",
+            "description": null,
+            "originalId": "20"
+        }
+    }
+}

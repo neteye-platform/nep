@@ -1,0 +1,280 @@
+{
+    "DataList": {
+        "[NX] Centreon Exit code changes List": {
+            "entries": [
+                {
+                    "entry_name": "critical=ok",
+                    "entry_value": "CRITICAL -> OK",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "critical=unknown",
+                    "entry_value": "CRITICAL -> UNKNOWN",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "critical=warning",
+                    "entry_value": "CRITICAL -> WARNING",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "ok-=warning",
+                    "entry_value": "OK -> WARNING",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "ok=critical",
+                    "entry_value": "OK -> CRITICAL",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "ok=unknown",
+                    "entry_value": "OK -> UNKNOWN",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "unknown=critical",
+                    "entry_value": "UNKNOWN -> CRITICAL",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "unknown=ok",
+                    "entry_value": "UNKNOWN -> OK",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "unknown=warning",
+                    "entry_value": "UNKNOWN -> WARNING",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "warning=critical",
+                    "entry_value": "WARNING -> CRITICAL",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "warning=ok",
+                    "entry_value": "WARNING -> OK",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "warning=unknown",
+                    "entry_value": "WARNING -> UNKNOWN",
+                    "format": "string",
+                    "allowed_roles": null
+                }
+            ],
+            "list_name": "[NX] Centreon Exit code changes List",
+            "owner": "root"
+        },
+        "[NX] Centreon Problem exit codes List": {
+            "entries": [
+                {
+                    "entry_name": "critical",
+                    "entry_value": "Critical",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "unknown",
+                    "entry_value": "Unknown",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "warning",
+                    "entry_value": "Warning",
+                    "format": "string",
+                    "allowed_roles": null
+                }
+            ],
+            "list_name": "[NX] Centreon Problem exit codes List",
+            "owner": "root"
+        },
+        "[NX] Centreon Retention Statefile Formats List": {
+            "entries": [
+                {
+                    "entry_name": "dumper",
+                    "entry_value": "Dumper",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "json",
+                    "entry_value": "JSON",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "storable",
+                    "entry_value": "Storable",
+                    "format": "string",
+                    "allowed_roles": null
+                }
+            ],
+            "list_name": "[NX] Centreon Retention Statefile Formats List",
+            "owner": "root"
+        },
+        "[NX] Centreon Rewrite range Options List": {
+            "entries": [
+                {
+                    "entry_name": "0",
+                    "entry_value": "Do not change",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "1",
+                    "entry_value": "Remove lower bound if 0",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "2",
+                    "entry_value": "Remove the whole threshold",
+                    "format": "string",
+                    "allowed_roles": null
+                }
+            ],
+            "list_name": "[NX] Centreon Rewrite range Options List",
+            "owner": "root"
+        },
+        "[NX] Centreon SNMP Expected statuses List": {
+            "entries": [
+                {
+                    "entry_name": "critical",
+                    "entry_value": "Critical",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "unknown",
+                    "entry_value": "Unknown",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "warning",
+                    "entry_value": "Warning",
+                    "format": "string",
+                    "allowed_roles": null
+                }
+            ],
+            "list_name": "[NX] Centreon SNMP Expected statuses List",
+            "owner": "root"
+        },
+        "[NX] Centreon SNMP TLS transport protocols List": {
+            "entries": [
+                {
+                    "entry_name": "dtlsudp",
+                    "entry_value": "DTLSUDP",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "tlstcp",
+                    "entry_value": "TLSTCP",
+                    "format": "string",
+                    "allowed_roles": null
+                }
+            ],
+            "list_name": "[NX] Centreon SNMP TLS transport protocols List",
+            "owner": "root"
+        },
+        "[NX] Centreon SNMP v3 Authentication protocols List": {
+            "entries": [
+                {
+                    "entry_name": "SHA224",
+                    "entry_value": "SHA224",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "SHA256",
+                    "entry_value": "SHA256",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "SHA384",
+                    "entry_value": "SHA384",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "SHA512",
+                    "entry_value": "SHA512",
+                    "format": "string",
+                    "allowed_roles": null
+                }
+            ],
+            "list_name": "[NX] Centreon SNMP v3 Authentication protocols List",
+            "owner": "root"
+        },
+        "[NX] Centreon SNMP v3 Privacy protocols List": {
+            "entries": [
+                {
+                    "entry_name": "AES192",
+                    "entry_value": "AES192",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "AES192C",
+                    "entry_value": "AES192C",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "AES256",
+                    "entry_value": "AES256",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "AES256C",
+                    "entry_value": "AES256C",
+                    "format": "string",
+                    "allowed_roles": null
+                }
+            ],
+            "list_name": "[NX] Centreon SNMP v3 Privacy protocols List",
+            "owner": "root"
+        },
+        "[NX] Centreon SNMP Version List": {
+            "entries": [
+                {
+                    "entry_name": "1",
+                    "entry_value": "v1",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "2",
+                    "entry_value": "v2/v2c",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "3",
+                    "entry_value": "v3",
+                    "format": "string",
+                    "allowed_roles": null
+                }
+            ],
+            "list_name": "[NX] Centreon SNMP Version List",
+            "owner": "root"
+        }
+    }
+}

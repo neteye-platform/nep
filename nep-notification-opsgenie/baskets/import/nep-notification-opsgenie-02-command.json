@@ -1,0 +1,251 @@
+{
+    "Command": {
+        "nx-c-opsgenie-host-notification": {
+            "arguments": {
+                "-apiKey": "$nx_opsgenie_apikey$",
+                "-entityType": "host",
+                "-ha": "$host.check_attempt$",
+                "-haddr": "$host.address$",
+                "-hal": "$host.display_name$",
+                "-hdn": "$host.display_name$",
+                "-hds": "$host.duration_sec$",
+                "-hdt": "$host.downtime_depth$",
+                "-het": "$host.execution_time$",
+                "-hgn": "$host.group$",
+                "-hgns": {
+                    "type": "Function",
+                    "body": "host.groups.join(\",\")"
+                },
+                "-hl": "$host.latency$",
+                "-hn": "$host.name$",
+                "-ho": "$host.output$",
+                "-hpd": "$host.perfdata$",
+                "-hs": "$host.state$",
+                "-hsi": "$host.state_id$",
+                "-hst": "$host.state_type$",
+                "-ldt": "$icinga.long_date_time$",
+                "-lhc": "$host.last_check$",
+                "-lhs": "$host.last_state$",
+                "-lhsc": "$host.last_state_change$",
+                "-lhsi": "$host.last_state_id$",
+                "-mha": "$host.max_check_attempts$",
+                "-t": "$notification.type$"
+            },
+            "command": "/neteye/shared/icinga2/conf/icinga2/scripts/send2opsgenie",
+            "fields": [],
+            "methods_execute": "PluginNotification",
+            "object_name": "nx-c-opsgenie-host-notification",
+            "object_type": "object",
+            "timeout": "60",
+            "vars": {
+                "hgns": {
+                    "arguments": [],
+                    "deprecated": false,
+                    "name": "<anonymous>",
+                    "side_effect_free": false,
+                    "type": "Function"
+                }
+            }
+        },
+        "nx-c-opsgenie-service-notification": {
+            "arguments": {
+                "-apiKey": "$nx_opsgenie_apikey$",
+                "-entityType": "service",
+                "-ha": "$host.check_attempt$",
+                "-haddr": "$host.address$",
+                "-hal": "$host.display_name$",
+                "-hdn": "$host.display_name$",
+                "-hds": "$host.duration_sec$",
+                "-hdt": "$host.downtime_depth$",
+                "-het": "$host.execution_time$",
+                "-hgn": "$host.group$",
+                "-hgns": {
+                    "type": "Function",
+                    "body": "host.groups.join(\",\")"
+                },
+                "-hl": "$host.latency$",
+                "-hn": "$host.name$",
+                "-ho": "$host.output$",
+                "-hpd": "$host.perfdata$",
+                "-hs": "$host.state$",
+                "-hsi": "$host.state_id$",
+                "-hst": "$host.state_type$",
+                "-ldt": "$icinga.long_date_time$",
+                "-lhc": "$host.last_check$",
+                "-lhs": "$host.last_state$",
+                "-lhsc": "$host.last_state_change$",
+                "-lhsi": "$host.last_state_id$",
+                "-lsch": "$service.last_check$",
+                "-lss": "$service.last_state$",
+                "-lssc": "$service.last_state_change$",
+                "-lssi": "$service.last_state_id$",
+                "-mha": "$host.max_check_attempts$",
+                "-msa": "$service.max_check_attempts$",
+                "-s": "$service.name$",
+                "-sa": "$service.check_attempt$",
+                "-sc": "$service.check_command$",
+                "-sdn": "$service.display_name$",
+                "-sds": "$service.duration_sec$",
+                "-sdt": "$service.downtime_depth$",
+                "-set": "$service.execution_time$",
+                "-sgns": {
+                    "type": "Function",
+                    "body": "service.groups.join(\",\")"
+                },
+                "-sl": "$service.latency$",
+                "-so": "$service.output$",
+                "-spd": "$service.perfdata$",
+                "-ss": "$service.state$",
+                "-ssi": "$service.state_id$",
+                "-sst": "$service.state_type$",
+                "-t": "$notification.type$"
+            },
+            "command": "/neteye/shared/icinga2/conf/icinga2/scripts/send2opsgenie",
+            "fields": [],
+            "methods_execute": "PluginNotification",
+            "object_name": "nx-c-opsgenie-service-notification",
+            "object_type": "object",
+            "timeout": "60",
+            "vars": {
+                "hgns": {
+                    "arguments": [],
+                    "deprecated": false,
+                    "name": "<anonymous>",
+                    "side_effect_free": false,
+                    "type": "Function"
+                },
+                "sgns": {
+                    "arguments": [],
+                    "deprecated": false,
+                    "name": "<anonymous>",
+                    "side_effect_free": false,
+                    "type": "Function"
+                }
+            }
+        },
+
+        "nx-c-jsm-opsgenie-host-notification": {
+            "arguments": {
+                "-apiKey": "$nx_jsm_opsgenie_apikey$",
+                "-entityType": "host",
+                "-ha": "$host.check_attempt$",
+                "-haddr": "$host.address$",
+                "-hal": "$host.display_name$",
+                "-hdn": "$host.display_name$",
+                "-hds": "$host.duration_sec$",
+                "-hdt": "$host.downtime_depth$",
+                "-het": "$host.execution_time$",
+                "-hgn": "$host.group$",
+                "-hgns": {
+                    "type": "Function",
+                    "body": "host.groups.join(\",\")"
+                },
+                "-hl": "$host.latency$",
+                "-hn": "$host.name$",
+                "-ho": "$host.output$",
+                "-hpd": "$host.perfdata$",
+                "-hs": "$host.state$",
+                "-hsi": "$host.state_id$",
+                "-hst": "$host.state_type$",
+                "-ldt": "$icinga.long_date_time$",
+                "-lhc": "$host.last_check$",
+                "-lhs": "$host.last_state$",
+                "-lhsc": "$host.last_state_change$",
+                "-lhsi": "$host.last_state_id$",
+                "-mha": "$host.max_check_attempts$",
+                "-t": "$notification.type$"
+            },
+            "command": "/neteye/shared/icinga2/conf/icinga2/scripts/send2jsm",
+            "fields": [],
+            "methods_execute": "PluginNotification",
+            "object_name": "nx-c-jsm-opsgenie-host-notification",
+            "object_type": "object",
+            "timeout": "60",
+            "vars": {
+                "hgns": {
+                    "arguments": [],
+                    "deprecated": false,
+                    "name": "<anonymous>",
+                    "side_effect_free": false,
+                    "type": "Function"
+                }
+            }
+        },
+        "nx-c-jsm-opsgenie-service-notification": {
+            "arguments": {
+                "-apiKey": "$nx_jsm_opsgenie_apikey$",
+                "-entityType": "service",
+                "-ha": "$host.check_attempt$",
+                "-haddr": "$host.address$",
+                "-hal": "$host.display_name$",
+                "-hdn": "$host.display_name$",
+                "-hds": "$host.duration_sec$",
+                "-hdt": "$host.downtime_depth$",
+                "-het": "$host.execution_time$",
+                "-hgn": "$host.group$",
+                "-hgns": {
+                    "type": "Function",
+                    "body": "host.groups.join(\",\")"
+                },
+                "-hl": "$host.latency$",
+                "-hn": "$host.name$",
+                "-ho": "$host.output$",
+                "-hpd": "$host.perfdata$",
+                "-hs": "$host.state$",
+                "-hsi": "$host.state_id$",
+                "-hst": "$host.state_type$",
+                "-ldt": "$icinga.long_date_time$",
+                "-lhc": "$host.last_check$",
+                "-lhs": "$host.last_state$",
+                "-lhsc": "$host.last_state_change$",
+                "-lhsi": "$host.last_state_id$",
+                "-lsch": "$service.last_check$",
+                "-lss": "$service.last_state$",
+                "-lssc": "$service.last_state_change$",
+                "-lssi": "$service.last_state_id$",
+                "-mha": "$host.max_check_attempts$",
+                "-msa": "$service.max_check_attempts$",
+                "-s": "$service.name$",
+                "-sa": "$service.check_attempt$",
+                "-sc": "$service.check_command$",
+                "-sdn": "$service.display_name$",
+                "-sds": "$service.duration_sec$",
+                "-sdt": "$service.downtime_depth$",
+                "-set": "$service.execution_time$",
+                "-sgns": {
+                    "type": "Function",
+                    "body": "service.groups.join(\",\")"
+                },
+                "-sl": "$service.latency$",
+                "-so": "$service.output$",
+                "-spd": "$service.perfdata$",
+                "-ss": "$service.state$",
+                "-ssi": "$service.state_id$",
+                "-sst": "$service.state_type$",
+                "-t": "$notification.type$"
+            },
+            "command": "/neteye/shared/icinga2/conf/icinga2/scripts/send2jsm",
+            "fields": [],
+            "methods_execute": "PluginNotification",
+            "object_name": "nx-c-jsm-opsgenie-service-notification",
+            "object_type": "object",
+            "timeout": "60",
+            "vars": {
+                "hgns": {
+                    "arguments": [],
+                    "deprecated": false,
+                    "name": "<anonymous>",
+                    "side_effect_free": false,
+                    "type": "Function"
+                },
+                "sgns": {
+                    "arguments": [],
+                    "deprecated": false,
+                    "name": "<anonymous>",
+                    "side_effect_free": false,
+                    "type": "Function"
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,16 @@
+{
+    "type": "filter",
+    "name": "nx_elastic_transforms",
+    "description": "Filter only events that have event.type nx_elastic_transforms for Elasticsearch Transforms",
+    "active": true,
+    "filter": {
+        "type": "AND",
+        "operators": [
+            {
+                "type": "equals",
+                "first": "${event.type}",
+                "second": "nx_elastic_transforms"
+            }
+        ]
+    }
+}

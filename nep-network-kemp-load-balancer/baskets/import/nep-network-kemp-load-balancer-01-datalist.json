@@ -1,0 +1,65 @@
+{
+    "DataList": {
+        "[NX] Centreon Kemp Loadbalancers Mode List": {
+            "list_name": "[NX] Centreon Kemp Loadbalancers Mode List",
+            "owner": "root",
+            "originalId": "21",
+            "entries": [
+                {
+                    "entry_name": "cpu-detailed",
+                    "entry_value": "CPU Load",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "ha-status",
+                    "entry_value": "HA Status",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "interfaces",
+                    "entry_value": "Interfaces",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "list-interfaces",
+                    "entry_value": "List Interfaces",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "list-vs",
+                    "entry_value": "List Virtual Services",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "load",
+                    "entry_value": "System Load",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "memory",
+                    "entry_value": "Memory Usage",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "rs-status",
+                    "entry_value": "Real Server Status",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "vs-status",
+                    "entry_value": "Virtual Services Status",
+                    "format": "string",
+                    "allowed_roles": null
+                }
+            ]
+        }
+    }
+}

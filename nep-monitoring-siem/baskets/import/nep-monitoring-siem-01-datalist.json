@@ -1,0 +1,121 @@
+{
+    "DataList": {
+        "[NX] Elastic Check Types List": {
+            "list_name": "[NX] Elastic Check Types List",
+            "owner": "root",
+            "originalId": "7",
+            "entries": [
+                {
+                    "entry_name": "cpu",
+                    "entry_value": "CPU Usage",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "disk",
+                    "entry_value": "Disk Usage",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "master",
+                    "entry_value": "Master Node",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "maxshards",
+                    "entry_value": "Max Shards",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "mem",
+                    "entry_value": "Memory Usage",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "status",
+                    "entry_value": "Status of the Node/Cluster",
+                    "format": "string",
+                    "allowed_roles": null
+                }
+            ]
+        },
+        "[NX] Kibana Check Types List": {
+            "list_name": "[NX] Kibana Check Types List",
+            "owner": "root",
+            "originalId": "10077",
+            "entries": [
+                {
+                    "entry_name": "rt",
+                    "entry_value": "Response Time",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "task",
+                    "entry_value": "Task Manager",
+                    "format": "string",
+                    "allowed_roles": null
+                }
+            ]
+        },
+        "[NX] Elastic Agent Types List": {
+            "list_name": "[NX] Elastic Agent Types List",
+            "owner": "root",
+            "originalId": "10078",
+            "entries": [
+                {
+                    "entry_name": "all",
+                    "entry_value": "All Agent",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "auditbeat",
+                    "entry_value": "Auditbeat",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "elastic_agent",
+                    "entry_value": "Elastic Agent",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "filebeat",
+                    "entry_value": "Filebeat",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "logstash",
+                    "entry_value": "Logstash",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "metricbeat",
+                    "entry_value": "Metricbeat",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "packetbeat",
+                    "entry_value": "Packetbeat",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "winlogbeat",
+                    "entry_value": "Winlogbeat",
+                    "format": "string",
+                    "allowed_roles": null
+                }
+            ]
+        }
+    }
+}

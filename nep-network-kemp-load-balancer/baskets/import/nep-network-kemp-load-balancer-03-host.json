@@ -1,0 +1,87 @@
+{
+    "HostTemplate": {
+        "nx-ht-virtual-kemp-cluster": {
+            "accept_config": null,
+            "action_url": null,
+            "address": null,
+            "address6": null,
+            "api_key": null,
+            "check_command": null,
+            "check_interval": null,
+            "check_period": null,
+            "check_timeout": null,
+            "command_endpoint": null,
+            "disabled": false,
+            "display_name": null,
+            "enable_active_checks": null,
+            "enable_event_handler": null,
+            "enable_flapping": null,
+            "enable_notifications": null,
+            "enable_passive_checks": null,
+            "enable_perfdata": null,
+            "event_command": null,
+            "fields": [
+                {
+                    "datafield_id": 200,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 201,
+                    "is_required": "y",
+                    "var_filter": null
+                }
+            ],
+            "flapping_threshold_high": null,
+            "flapping_threshold_low": null,
+            "groups": [],
+            "has_agent": null,
+            "icon_image": null,
+            "icon_image_alt": null,
+            "imports": [
+                "nx-ht-virtual"
+            ],
+            "master_should_connect": null,
+            "max_check_attempts": null,
+            "notes": null,
+            "notes_url": null,
+            "object_name": "nx-ht-virtual-kemp-cluster",
+            "object_type": "template",
+            "retry_interval": null,
+            "template_choice": null,
+            "vars": {},
+            "volatile": null,
+            "zone": null
+        }
+    },
+    "Datafield": {
+        "200": {
+            "category_id": null,
+            "varname": "nx_hardware_model",
+            "caption": "[NX] Hardware model",
+            "description": "Hardware model name",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeDatalist",
+            "format": null,
+            "originalId": "200",
+            "settings": {
+                "behavior": "suggest_optional",
+                "data_type": "string",
+                "datalist": "[NX] Model List"
+            }
+        },
+        "201": {
+            "category_id": null,
+            "varname": "nx_hardware_vendor",
+            "caption": "[NX] Hardware vendor",
+            "description": "Hardware vendor name",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeDatalist",
+            "format": null,
+            "originalId": "201",
+            "settings": {
+                "behavior": "strict",
+                "data_type": "string",
+                "datalist": "[NX] Vendor List"
+            }
+        }
+    }
+}

@@ -1,0 +1,411 @@
+{
+    "CommandTemplate": {
+        "nx-ct-centreon-plugin-base": {
+            "arguments": {
+                "--change-exit": {
+                    "description": "Replace an exit code with one of your choice. Eg: adding --change-exit=unknown=critical will result in a CRITICAL state instead of an UNKNOWN state.",
+                    "value": "$nx_centreon_plugin_change_exit$"
+                },
+                "--change-long-output": {
+                    "description": "Modify the short/long output that is returned by the plugin. Syntax: --change-short-output=pattern~replacement~modifier Most commonly used modifiers are i (case insensitive) and g (replace all occurrences). Eg: adding --change-short-output='OK~Up~gi' will replace all occurrences of 'OK', 'ok', 'Ok' or 'oK' with 'Up'",
+                    "value": "$nx_centreon_plugin_change_long_output$"
+                },
+                "--change-perfdata": {
+                    "description": "Change or extend perfdata. Syntax: --extend-perfdata=searchlabel,newlabel,target[,[newuom],[min],[m ax]]",
+                    "value": "$nx_centreon_plugin_change_perfdata$"
+                },
+                "--change-short-output": {
+                    "description": "Modify the short/long output that is returned by the plugin. Syntax: --change-short-output=pattern~replacement~modifier Most commonly used modifiers are i (case insensitive) and g (replace all occurrences). Eg: adding --change-short-output='OK~Up~gi' will replace all occurrences of 'OK', 'ok', 'Ok' or 'oK' with 'Up'",
+                    "value": "$nx_centreon_plugin_change_short_output$"
+                },
+                "--convert-args": {
+                    "description": "Replace a pattern in the provided arguments. Useful to bypass forbidden characters. E.g.: when a password transmitted via the NRPE protocol contains '!' (which is interpreted as a separator), you can send '##' instead of the '!' and the plugin will replace '##' with '!', using the --convert-args='##,\\x21' option.",
+                    "repeat_key": true,
+                    "value": "$nx_centreon_plugin_convert_args$"
+                },
+                "--debug": {
+                    "description": "Display debug messages",
+                    "set_if": "$nx_centreon_plugin_debug$",
+                    "set_if_format": "string"
+                },
+                "--environment": {
+                    "description": "Define environment variables for the script (set them in the execution environment before running it for better performance)",
+                    "repeat_key": true,
+                    "value": "$nx_centreon_plugin_environment$"
+                },
+                "--explode-perfdata-max": {
+                    "description": "Create a new metric for each metric that comes with a maximum limit. The new metric will be named identically with a '_max' suffix). Eg: it will split 'used_prct'=26.93%;0:80;0:90;0;100 into 'used_prct'=26.93%;0:80;0:90;0;100 'used_prct_max'=100%;;;;",
+                    "value": "$nx_centreon_plugin_explode_perfdata_max$"
+                },
+                "--extend-perfdata": {
+                    "description": "Change or extend perfdata. Syntax: --extend-perfdata=searchlabel,newlabel,target[,[newuom],[min],[m ax]]",
+                    "value": "$nx_centreon_plugin_extend_perfdata$"
+                },
+                "--extend-perfdata-group": {
+                    "description": "Add new aggregated metrics (min, max, average or sum) for groups of metrics defined by a regex match on the metrics' names.",
+                    "value": "$nx_centreon_plugin_extend_perfdata_group$"
+                },
+                "--filter-perfdata": {
+                    "description": "Filter perfdata that match the regexp. Eg: adding --filter-perfdata='avg' will remove all metrics that do not contain 'avg' from performance data.",
+                    "value": "$nx_centreon_plugin_filter_perfdata$"
+                },
+                "--filter-perfdata-adv": {
+                    "description": "Filter perfdata based on a \"if\" condition using the following variables: label, value, unit, warning, critical, min, max. Variables must be written either %{variable} or %(variable). Eg: adding --filter-perfdata-adv='not (%(value) == 0 and %(max) eq \"\")' will remove all metrics whose value equals 0 and that don't have a maximum value.",
+                    "value": "$nx_centreon_plugin_filter_perfdata_adv$"
+                },
+                "--filter-uom": {
+                    "description": "Mask the units when they don't match the given regular expression",
+                    "value": "$nx_centreon_plugin_filter_uom$"
+                },
+                "--float-precision": {
+                    "description": "Define the float precision for thresholds (default: 8)",
+                    "value": "$nx_centreon_plugin_float_precision$"
+                },
+                "--global-timeout": {
+                    "description": "Define the script's timeout",
+                    "value": "$nx_centreon_plugin_global_timeout$"
+                },
+                "--ignore-warn-msg": {
+                    "description": "Ignore Perl warning messages (they will not be displayed)",
+                    "set_if": "$nx_centreon_plugin_ignore_warn_msg$",
+                    "set_if_format": "string"
+                },
+                "--opt-exit": {
+                    "description": "Replace the exit code in case of an execution error (i.e. wrong option provided, SSH connection refused, timeout, etc). Default: unknown.",
+                    "value": "$nx_centreon_plugin_opt_exit$"
+                },
+                "--output-ignore-label": {
+                    "description": "Remove the status label (\"OK:\", \"WARNING:\", \"UNKNOWN:\", CRITICAL:\") from the beginning of the output. Eg: 'OK: Ram Total:...' will become 'Ram Total:...'",
+                    "set_if": "$nx_centreon_plugin_output_ignore_label$",
+                    "set_if_format": "string"
+                },
+                "--output-ignore-perfdata": {
+                    "description": "Remove all the metrics from the service. The service will still have a status and an output.",
+                    "set_if": "$nx_centreon_plugin_output_ignore_perfdata$",
+                    "set_if_format": "string"
+                },
+                "--range-perfdata": {
+                    "description": "Rewrite the ranges displayed in the perfdata. Accepted values: 0: nothing is changed. 1: if the lower value of the range is equal to 0, it is removed. 2: remove the thresholds from the perfdata.",
+                    "value": "$nx_centreon_plugin_range_perfdata$"
+                },
+                "--runas": {
+                    "description": "Run the script as a different user",
+                    "value": "$nx_centreon_plugin_runas$"
+                },
+                "--source-encoding": {
+                    "description": "Define the character encoding of the response sent by the monitored resource Default: 'UTF-8'.",
+                    "value": "$nx_centreon_plugin_source_encoding$"
+                },
+                "--verbose": {
+                    "description": "Display extended status information (long output)",
+                    "set_if": "$nx_centreon_plugin_verbose$",
+                    "set_if_format": "string"
+                }
+            },
+            "fields": [],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-ct-centreon-plugin-base",
+            "object_type": "template"
+        },
+        "nx-ct-centreon-plugin-restapi": {
+            "arguments": {
+                "--api-password": {
+                    "description": "API password",
+                    "value": "$api_password$"
+                },
+                "--api-username": {
+                    "description": "API username",
+                    "value": "$api_user$"
+                },
+                "--hostname": {
+                    "description": "Hostname to query (required).",
+                    "required": true,
+                    "value": "$host.address$"
+                },
+                "--insecure": {
+                    "description": "Accept insecure SSL connections",
+                    "set_if": "$api_insecure$",
+                    "set_if_format": "string"
+                },
+                "--port": {
+                    "description": "Port (default: 443).",
+                    "value": "$api_port$"
+                },
+                "--proto": {
+                    "description": "Specify https if needed (Default: 'https')",
+                    "value": "$api_proto$"
+                },
+                "--timeout": {
+                    "description": "Timeout in secondes (default: 1) before retries.",
+                    "value": "$api_timeout$"
+                }
+            },
+            "fields": [],
+            "imports": [
+                "nx-ct-centreon-plugin-base"
+            ],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-ct-centreon-plugin-restapi",
+            "object_type": "template"
+        },
+        "nx-ct-centreon-plugin-snmp": {
+            "arguments": {
+                "--authpassphrase": {
+                    "description": "SNMP v3 only: Pass phrase hashed using the authentication protocol defined in the --authprotocol option.",
+                    "value": "$nx_centreon_plugin_snmp_authpassphrase$",
+                    "order": "13"
+                },
+                "--authprotocol": {
+                    "description": "SNMP v3 only: Authentication protocol: MD5|SHA. Since net-snmp 5.9.1: SHA224|SHA256|SHA384|SHA512",
+                    "value": "$nx_centreon_plugin_snmp_authprotocol$",
+                    "order": "14"
+                },
+                "--contextengineid": {
+                    "description": "SNMP v3 only: Context engine ID (contextEngineID), if relevant for the monitored host, given as a hexadecimal string.",
+                    "value": "$nx_centreon_plugin_snmp_contextengineid$",
+                    "order": "18"
+                },
+                "--contextname": {
+                    "description": "SNMP v3 only: Context name (contextName), if relevant for the monitored host.",
+                    "value": "$nx_centreon_plugin_snmp_contextname$",
+                    "order": "17"
+                },
+                "--critical": {
+                    "description": "Critical SNMP value.",
+                    "value": "$nx_centreon_snmp_critical$"
+                },
+                "--hostname": {
+                    "description": "Name or address of the host to monitor (mandatory)",
+                    "required": true,
+                    "value": "$nx_centreon_plugin_snmp_hostname$",
+                    "order": "1"
+                },
+                "--maxrepetitions": {
+                    "description": "Max repetitions value (default: 50) (only for SNMP v2 and v3)",
+                    "value": "$nx_centreon_plugin_snmp_maxrepetitions$",
+                    "order": "7"
+                },
+                "--privpassphrase": {
+                    "description": "SNMP v3 only: Privacy pass phrase (privPassword) to encrypt messages using the protocol defined in the --privprotocol option.",
+                    "value": "$nx_centreon_plugin_snmp_privpassphrase$",
+                    "order": "15"
+                },
+                "--privprotocol": {
+                    "description": "SNMP v3 only: Privacy protocol (privProtocol) used to encrypt messages. Supported protocols are: DES|AES and since net-snmp 5.9.1: AES192|AES192C|AES256|AES256C.",
+                    "value": "$nx_centreon_plugin_snmp_privprotocol$",
+                    "order": "16"
+                },
+                "--securityengineid": {
+                    "description": "SNMP v3 only: Security engine ID, given as a hexadecimal string",
+                    "value": "$nx_centreon_plugin_snmp_securityengineid$",
+                    "order": "19"
+                },
+                "--snmp-autoreduce": {
+                    "description": "Progressively reduce the number of requested OIDs in bulk mode. Use it in case of SNMP errors (By default, the number is divided by 2)",
+                    "value": "$nx_centreon_plugin_snmp_snmp_autoreduce$",
+                    "order": "9"
+                },
+                "--snmp-cache-file": {
+                    "description": "Use SNMP cache file",
+                    "set_if": "$nx_centreon_plugin_snmp_snmp_cache_file$",
+                    "set_if_format": "string",
+                    "order": "11"
+                },
+                "--snmp-community": {
+                    "description": "SNMP community (default value: public). It is recommended to use a read-only community.",
+                    "value": "$nx_centreon_plugin_snmp_snmp_community$",
+                    "order": "2"
+                },
+                "--snmp-errors-exit": {
+                    "description": "Expected status in case of SNMP error or timeout. Possible values are warning, critical and unknown (default).",
+                    "value": "$nx_centreon_plugin_snmp_errors_exit$",
+                    "order": "20"
+                },
+                "--snmp-force-getnext": {
+                    "description": "Use snmp getnext function (even in snmp v2c and v3).",
+                    "set_if": "$nx_centreon_plugin_snmp_snmp_force_getnext$",
+                    "set_if_format": "string",
+                    "order": "10"
+                },
+                "--snmp-port": {
+                    "description": "UDP port to send the SNMP request to (default: 161)",
+                    "value": "$nx_centreon_plugin_snmp_snmp_port$",
+                    "order": "4"
+                },
+                "--snmp-retries": {
+                    "description": "Maximum number of retries (default: 5)",
+                    "value": "$nx_centreon_plugin_snmp_snmp_retries$",
+                    "order": "6"
+                },
+                "--snmp-timeout": {
+                    "description": "Time to wait before sending the request again if no reply has been received, in seconds (default: 1). See also --snmp-retries",
+                    "value": "$nx_centreon_plugin_snmp_snmp_timeout$",
+                    "order": "5"
+                },
+                "--snmp-tls-our-identity": {
+                    "description": "X.509 certificate to identify ourselves. Can be the path to the certificate file or its contents.",
+                    "value": "$nx_centreon_plugin_snmp_snmp_tls_our_identity$",
+                    "order": "22"
+                },
+                "--snmp-tls-their-hostname": {
+                    "description": "Common Name (CN) expected in the certificate sent by the host if it differs from the value of the --hostname parameter.",
+                    "value": "$nx_centreon_plugin_snmp_snmp_tls_their_hostname$",
+                    "order": "24"
+                },
+                "--snmp-tls-their-identity": {
+                    "description": "X.509 certificate to identify the remote host. Can be the path to the certificate file or its contents. This option is unnecessary if the certificate is already trusted by your system.",
+                    "value": "$nx_centreon_plugin_snmp_snmp_tls_their_identity$",
+                    "order": "23"
+                },
+                "--snmp-tls-transport": {
+                    "description": "Transport protocol for TLS communication (can be: 'dtlsudp', 'tlstcp').",
+                    "value": "$nx_centreon_plugin_snmp_snmp_tls_transport$",
+                    "order": "21"
+                },
+                "--snmp-tls-trust-cert": {
+                    "description": "A trusted CA certificate used to verify a remote host's certificate. If you use this option, you must also define --snmp-tls-their-hostname.",
+                    "value": "$nx_centreon_plugin_snmp_snmp_tls_trust_cert$",
+                    "order": "25"
+                },
+                "--snmp-username": {
+                    "description": "SNMP v3 only: User name (securityName)",
+                    "value": "$nx_centreon_plugin_snmp_snmp_username$",
+                    "order": "12"
+                },
+                "--snmp-version": {
+                    "description": "Version: 1 for SNMP v1 (default), 2 for SNMP v2c, 3 for SNMP v3.",
+                    "value": "$nx_centreon_plugin_snmp_snmp_version$",
+                    "order": "3"
+                },
+                "--subsetleef": {
+                    "description": "How many oid values per SNMP request (default: 50) (for get_leef method. Be cautious whe you set it. Prefer to let the default value).",
+                    "value": "$nx_centreon_plugin_snmp_subsetleef$",
+                    "order": "8"
+                },
+                "--warning": {
+                    "description": "Warning SNMP value.",
+                    "value": "$nx_centreon_snmp_warning$"
+                }
+            },
+            "fields": [],
+            "imports": [
+                "nx-ct-centreon-plugin-base"
+            ],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-ct-centreon-plugin-snmp",
+            "object_type": "template",
+            "vars": {
+                "nx_centreon_plugin_snmp_authpassphrase": "$snmp_auth_passphrase$",
+                "nx_centreon_plugin_snmp_authprotocol": "$snmp_authprotocol$",
+                "nx_centreon_plugin_snmp_hostname": "$host.address$",
+                "nx_centreon_plugin_snmp_privpassphrase": "$snmp_priv_password$",
+                "nx_centreon_plugin_snmp_privprotocol": "$snmp_privprotocol$",
+                "nx_centreon_plugin_snmp_snmp_community": "$snmp_community$",
+                "nx_centreon_plugin_snmp_snmp_port": "$snmp_port$",
+                "nx_centreon_plugin_snmp_snmp_retries": "$snmp_retries$",
+                "nx_centreon_plugin_snmp_snmp_timeout": "$snmp_timeout$",
+                "nx_centreon_plugin_snmp_snmp_username": "$snmp_user$",
+                "nx_centreon_plugin_snmp_snmp_version": "$snmp_version$"
+            }
+        },
+        "nx-ct-centreon-plugin-ssh": {
+            "arguments": {
+                "--hostname": {
+                    "description": "Hostname to query (required).",
+                    "required": true,
+                    "value": "$host.address$"
+                },
+                "--ssh-backend": {
+                    "description": "Set the backend used (Default: 'sshcli') Can be: sshcli, plink, libssh.",
+                    "value": "$nx_ssh_backend$"
+                },
+                "--ssh-password": {
+                    "description": "SSH password",
+                    "value": "$nx_ssh_password$"
+                },
+                "--ssh-port": {
+                    "description": "Port (default: 22).",
+                    "value": "$nx_ssh_port$"
+                },
+                "--ssh-priv-key": {
+                    "description": "Private key file for user authentication",
+                    "value": "$nx_ssh_priv_key$"
+                },
+                "--ssh-username": {
+                    "description": "SSH username",
+                    "value": "$nx_ssh_user$"
+                }
+            },
+            "fields": [],
+            "imports": [
+                "nx-ct-centreon-plugin-base"
+            ],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-ct-centreon-plugin-ssh",
+            "object_type": "template",
+            "vars": {
+                "nx_ssh_backend": "sshcli"
+            }
+        },
+        "nx-ct-centreon-plugin-retention": {
+            "arguments": {
+                "--memcached": {
+                    "description": "Memcached server to use (only one server).",
+                    "value": "$nx_centreon_plugin_retention_memcached_server$"
+                },
+                "--redis-server": {
+                    "description": "Redis server to use (only one server). Syntax: address[:port]",
+                    "value": "$nx_centreon_plugin_retention_redis_server$"
+                },
+                "--redis-attribute": {
+                    "description": "Set Redis Options (--redis-attribute=\"cnx_timeout=5\").",
+                    "value": "$nx_centreon_plugin_retention_redis_options$"
+                },
+                "--redis-db": {
+                    "description": "Set Redis database index.",
+                    "value": "$nx_centreon_plugin_retention_redis_db_index$"
+                },
+                "--failback-file": {
+                    "description": "Failback on a local file if Redis connection fails.",
+                    "value": "$nx_centreon_plugin_retention_redis_failback_file$"
+                },
+                "--memexpiration": {
+                    "description": "Time to keep data in seconds (default: 86400).",
+                    "value": "$nx_centreon_plugin_retention_memcached_data_expiration$"
+                },
+                "--statefile-dir": {
+                    "description": "Define the cache directory (default: '/var/lib/centreon/centplugins').",
+                    "value": "$nx_centreon_plugin_retention_statefile_dir$"
+                },
+                "--statefile-suffix": {
+                    "description": "Define a suffix to customize the statefile name (default: '').",
+                    "value": "$nx_centreon_plugin_retention_statefile_suffix$"
+                },
+                "--statefile-concat-cwd": {
+                    "description": "If used with the '--statefile-dir' option, the latter's value will be used as a sub-directory of the current working directory. Useful on Windows when the plugin is compiled, as the file system and permissions are different from Linux.",
+                    "value": "$nx_centreon_plugin_retention_statefile_dir_subdir$"
+                },
+                "--statefile-format": {
+                    "description": "Define the format used to store the cache. Available formats: 'dumper', 'storable', 'json' (default).",
+                    "value": "$nx_centreon_plugin_retention_statefile_format$"
+                },
+                "--statefile-key": {
+                    "description": "Define the key to encrypt/decrypt the cache.",
+                    "value": "$nx_centreon_plugin_retention_statefile_encryption_key$"
+                },
+                "--statefile-cipher": {
+                    "description": "Define the cipher algorithm to encrypt the cache (default: 'AES').",
+                    "value": "$nx_centreon_plugin_retention_statefile_encryption_cipher$"
+                }
+            },
+            "fields": [],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-ct-centreon-plugin-retention",
+            "object_type": "template",
+            "uuid": "89462adf-8902-4510-ba3e-fe43c653a6b1",
+            "vars": {
+                "nx_centreon_plugin_statefile_dir": "/neteye/shared/icinga2/data/lib/centreon-plugins/"
+            }
+        }
+    }
+}

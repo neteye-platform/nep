@@ -1,0 +1,62 @@
+{
+    "ServiceSet": {
+        "nx-ss-as400": {
+            "assign_filter": "\"nx-ht-as400\"=host.templates",
+            "description": "Service Set providing monitoring for IBM AS400",
+            "object_name": "nx-ss-as400",
+            "object_type": "template",
+            "services": {
+                "Check Active Jobs": {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-agentless-as400-base"
+                    ],
+                    "object_name": "Check Active Jobs",
+                    "object_type": "object",
+                    "vars": {
+                        "nx-as400-critical": "1250",
+                        "nx-as400-variabile": "AJ",
+                        "nx-as400-warning": "1100"
+                    }
+                },
+                "Check CPU Usage": {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-agentless-as400-base"
+                    ],
+                    "object_name": "Check CPU Usage",
+                    "object_type": "object",
+                    "vars": {
+                        "nx-as400-critical": "99",
+                        "nx-as400-variabile": "CPU",
+                        "nx-as400-warning": "98"
+                    }
+                },
+                "Check DISK Hardware Status": {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-agentless-as400-base"
+                    ],
+                    "object_name": "Check DISK Hardware Status",
+                    "object_type": "object",
+                    "vars": {
+                        "nx-as400-variabile": "DSKHW"
+                    }
+                },
+                "Check Disk Usage": {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-agentless-as400-base"
+                    ],
+                    "object_name": "Check Disk Usage",
+                    "object_type": "object",
+                    "vars": {
+                        "nx-as400-critical": "10",
+                        "nx-as400-variabile": "US",
+                        "nx-as400-warning": "20"
+                    }
+                }
+            }
+        }
+    }
+}

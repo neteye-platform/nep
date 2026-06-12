@@ -1,0 +1,172 @@
+{
+    "HostTemplate": {
+        "nx-ht-hana-instance": {
+            "fields": [
+                {
+                    "datafield_id": 1985,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1986,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1975,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-ht-virtual"
+            ],
+            "notes": "SAP HANA Database Instance",
+            "object_name": "nx-ht-hana-instance",
+            "object_type": "template",
+            "uuid": "33ca8463-dfad-4e3a-bb18-bc644fc6aabd",
+            "vars": {
+                "nx_sap_sapcontrol_protocol": "NI_HTTP"
+            }
+        },
+        "nx-ht-hana-tenant": {
+            "fields": [
+                {
+                    "datafield_id": 1987,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1988,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1989,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1990,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-ht-hana-instance"
+            ],
+            "notes": "SAP HANA Database System",
+            "object_name": "nx-ht-hana-tenant",
+            "object_type": "template",
+            "uuid": "dc789138-79a3-4219-86a7-6821f24742af",
+            "vars": {
+                "nx_sap_sapcontrol_protocol": "NI_HTTP"
+            }
+        }
+    },
+    "Datafield": {
+        "1985": {
+            "uuid": "cf25ec87-3d03-49a6-ad0d-d827fed81d8c",
+            "varname": "nx_hana_instance_number",
+            "caption": "[NX] HANA Instance Number",
+            "description": "SAP Instance Number (2 digits,  00-99)",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] HANA Database Instance"
+        },
+        "1986": {
+            "uuid": "82b4383c-1a9b-4eaf-923b-fee2644f0c7c",
+            "varname": "nx_hana_instance_sid",
+            "caption": "[NX] HANA Instance ID (SID)",
+            "description": "HANA Instance ID (SID) consisting of 3 characters/digits",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] HANA Database Instance"
+        },
+        "1975": {
+            "uuid": "0760b9e1-8b49-48ac-8c3f-97eb00002903",
+            "varname": "nx_sap_sapcontrol_protocol",
+            "caption": "[NX] SAP sapcontrol Protocol",
+            "description": "Protocol to be used by services based on command nx-c-sap-check-sapcontrol",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeDatalist",
+            "format": null,
+            "settings": {
+                "behavior": "strict",
+                "data_type": "string",
+                "datalist": "[NX] SAP Sapcontrol Protocol List"
+            },
+            "category": "[NX] SAP Instance"
+        },
+        "1987": {
+            "uuid": "5cfb6733-1d1c-4181-90c1-17ee089ec9e0",
+            "varname": "nx_hana_tenant_id",
+            "caption": "[NX] HANA Database Tenant ID",
+            "description": "Tenant-ID  (e.g. SYSTEMDB, ABC, DB7, etc.)",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] HANA Database Tenant"
+        },
+        "1988": {
+            "uuid": "95facc00-e031-4231-933f-5acbff15c034",
+            "varname": "nx_hana_tenant_password",
+            "caption": "[NX] HANA Database Tenant Password",
+            "description": "password for sql-connect user",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "hidden"
+            },
+            "category": "[NX] HANA Database Tenant"
+        },
+        "1989": {
+            "uuid": "2587b1d9-ffb2-446a-93c5-8be6d1a9289b",
+            "varname": "nx_hana_tenant_sql_port",
+            "caption": "[NX] HANA Database Tenant SQL-Port",
+            "description": "SQL-Port of HANA Tenant DB",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] HANA Database Tenant"
+        },
+        "1990": {
+            "uuid": "ba2e47b5-74ad-4e14-bbdc-be851bdf2c41",
+            "varname": "nx_hana_tenant_user",
+            "caption": "[NX] HANA Database Tenant User",
+            "description": "user for sql-connect to Tenant-DB",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] HANA Database Tenant"
+        }
+    },
+    "DatafieldCategory": {
+        "[NX] HANA Database Instance": {
+            "category_name": "[NX] HANA Database Instance",
+            "description": "fields related to HANA Instance level",
+            "originalId": "40"
+        },
+        "[NX] SAP Instance": {
+            "category_name": "[NX] SAP Instance",
+            "description": "fields related to SAP Instance level",
+            "originalId": "39"
+        },
+        "[NX] HANA Database Tenant": {
+            "category_name": "[NX] HANA Database Tenant",
+            "description": "fields related to HANA Tenant level",
+            "originalId": "41"
+        }
+    }
+}

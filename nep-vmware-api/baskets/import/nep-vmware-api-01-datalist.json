@@ -1,0 +1,53 @@
+{
+    "DataList": {
+        "[NX] VmWare ESX command": {
+            "list_name": "[NX] VmWare ESX command",
+            "owner": "root",
+            "originalId": "21",
+            "entries": [
+                {
+                    "entry_name": "CPU",
+                    "entry_value": "CPU",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "IO",
+                    "entry_value": "IO",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "MEM",
+                    "entry_value": "MEM",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "NET",
+                    "entry_value": "NET",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "RUNTIME",
+                    "entry_value": "RUNTIME",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "UPTIME",
+                    "entry_value": "UPTIME",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "VMFS",
+                    "entry_value": "VM FileSystem",
+                    "format": "string",
+                    "allowed_roles": null
+                }
+            ]
+        }
+    }
+}

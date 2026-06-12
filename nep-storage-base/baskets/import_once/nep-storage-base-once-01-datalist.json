@@ -1,0 +1,16 @@
+{
+    "DataList": {
+        "[NX] Vendor List": {
+            "list_name": "[NX] Vendor List",
+            "owner": "root",
+            "originalId": "10005",
+            "entries": []
+        },
+        "[NX] Model List": {
+            "list_name": "[NX] Model List",
+            "owner": "root",
+            "originalId": "10006",
+            "entries": []
+        }
+    }
+}

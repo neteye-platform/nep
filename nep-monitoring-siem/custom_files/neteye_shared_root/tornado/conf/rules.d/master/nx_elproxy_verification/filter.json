@@ -1,0 +1,16 @@
+{
+    "type": "filter",
+    "name": "nx_elproxy_verification",
+    "description": "",
+    "active": true,
+    "filter": {
+      "type": "AND",
+      "operators": [
+        {
+          "type": "equals",
+          "first": "${event.type}",
+          "second": "elproxy_verification"
+        }
+      ]
+    }
+}
