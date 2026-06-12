@@ -1,0 +1,136 @@
+{
+    "ServiceTemplate": {
+        "nx-st-agentless-ldap-query": {
+            "action_url": null,
+            "apply_for": null,
+            "assign_filter": null,
+            "check_command": "ldap",
+            "check_interval": null,
+            "check_period": null,
+            "check_timeout": null,
+            "command_endpoint": null,
+            "disabled": false,
+            "display_name": null,
+            "enable_active_checks": null,
+            "enable_event_handler": null,
+            "enable_flapping": null,
+            "enable_notifications": null,
+            "enable_passive_checks": null,
+            "enable_perfdata": null,
+            "event_command": null,
+            "fields": [
+                {
+                    "datafield_id": 31,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 32,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 33,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 34,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 35,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 36,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "flapping_threshold_high": null,
+            "flapping_threshold_low": null,
+            "groups": [],
+            "host": null,
+            "icon_image": null,
+            "icon_image_alt": null,
+            "imports": [
+                "nx-st-agentless"
+            ],
+            "max_check_attempts": null,
+            "notes": null,
+            "notes_url": null,
+            "object_name": "nx-st-agentless-ldap-query",
+            "object_type": "template",
+            "retry_interval": null,
+            "service_set": null,
+            "template_choice": null,
+            "use_agent": null,
+            "use_var_overrides": null,
+            "vars": {},
+            "volatile": null,
+            "zone": null
+        }
+    },
+    "Datafield": {
+        "31": {
+            "varname": "ldap_address",
+            "caption": "LDAP Server address",
+            "description": "Host name, IP Address, or unix socket (must be an absolute path)",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "31",
+            "settings": {}
+        },
+        "32": {
+            "varname": "ldap_attr",
+            "caption": "LDAP Filter",
+            "description": "ldap attribute to search (default: \"(objectclass=*)\"",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "32",
+            "settings": {}
+        },
+        "33": {
+            "varname": "ldap_base",
+            "caption": "LDAP Search base",
+            "description": "ldap base (eg. ou=my unit, o=my org, c=at",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "33",
+            "settings": {}
+        },
+        "34": {
+            "varname": "ldap_bind",
+            "caption": "LDAP Bind Username",
+            "description": "ldap bind DN (if required)",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "34",
+            "settings": {}
+        },
+        "35": {
+            "varname": "ldap_pass",
+            "caption": "LDAP Bind Password",
+            "description": "ldap password (if required)",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "35",
+            "settings": {
+               "visibility": "hidden"
+	    },
+            "category": null
+        },
+        "36": {
+            "varname": "ldap_port",
+            "caption": "LDAP Server port",
+            "description": "Port number (default: 389)",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "36",
+            "settings": {}
+        }
+    }
+}

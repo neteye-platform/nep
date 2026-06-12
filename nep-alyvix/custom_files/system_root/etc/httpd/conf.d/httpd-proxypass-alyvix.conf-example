@@ -1,0 +1,10 @@
+Define AlyvixProbeAlias SERVERHOSTNAME
+Define AlyvixProbeFQDN  serverfqdn_all_lowercase
+
+SSLProxyEngine on
+SSLProxyVerify none
+SSLProxyCheckPeerCN off
+SSLProxyCheckPeerName off
+SSLProxyCheckPeerExpire off
+ProxyPass /alyvix/${AlyvixProbeAlias}/ https://${AlyvixProbeFQDN}/
+ProxyPassReverse /alyvix/${AlyvixProbeAlias}/ https://${AlyvixProbeFQDN}/

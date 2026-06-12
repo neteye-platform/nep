@@ -1,0 +1,987 @@
+{
+    "ServiceTemplate": {
+        "nx-st-agentless-influxdb-centreon-query-precompiled": {
+            "fields": [
+                {
+                    "datafield_id": 2869,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 2871,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 2865,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 2870,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 2864,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-st-agentless-influxdb-centreon-query-base"
+            ],
+            "object_name": "nx-st-agentless-influxdb-centreon-query-precompiled",
+            "object_type": "template",
+            "vars": {
+                "nx_centreon_influxdb_query_time_window": "5m"
+            }
+        },
+        "nx-st-centreon-influxdb-query-cpu-usage": {
+            "check_command": "nx-c-centreon-influxdb-query-cpu-usage",
+            "fields": [
+                {
+                    "datafield_id": 2901,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 2896,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 2898,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 2900,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 2897,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 2899,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-st-agentless-influxdb-centreon-query-precompiled"
+            ],
+            "object_name": "nx-st-centreon-influxdb-query-cpu-usage",
+            "object_type": "template"
+        },
+        "nx-st-centreon-influxdb-query-disk-free-linux": {
+            "check_command": "nx-c-centreon-influxdb-query-disk-free-linux",
+            "fields": [
+                {
+                    "datafield_id": 2890,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 2889,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 2895,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 2894,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 2893,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 2892,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 2891,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-st-agentless-influxdb-centreon-query-precompiled"
+            ],
+            "object_name": "nx-st-centreon-influxdb-query-disk-free-linux",
+            "object_type": "template"
+        },
+        "nx-st-centreon-influxdb-query-disk-free-windows": {
+            "check_command": "nx-c-centreon-influxdb-query-disk-free-windows",
+            "fields": [
+                {
+                    "datafield_id": 2907,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 2903,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 2904,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 2905,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 2906,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-st-agentless-influxdb-centreon-query-precompiled"
+            ],
+            "object_name": "nx-st-centreon-influxdb-query-disk-free-windows",
+            "object_type": "template"
+        },
+        "nx-st-centreon-influxdb-query-load": {
+            "check_command": "nx-c-centreon-influxdb-query-load",
+            "fields": [
+                {
+                    "datafield_id": 2875,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 2877,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 2876,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 2872,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 2874,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 2873,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-st-agentless-influxdb-centreon-query-precompiled"
+            ],
+            "object_name": "nx-st-centreon-influxdb-query-load",
+            "object_type": "template"
+        },
+        "nx-st-centreon-influxdb-query-mem-available": {
+            "check_command": "nx-c-centreon-influxdb-query-mem-available",
+            "fields": [
+                {
+                    "datafield_id": 2885,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 2880,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 2881,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 2884,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-st-agentless-influxdb-centreon-query-precompiled"
+            ],
+            "object_name": "nx-st-centreon-influxdb-query-mem-available",
+            "object_type": "template",
+            "vars": {
+                "nx_centreon_influxdb_query_mem_available_pct_critical": 5,
+                "nx_centreon_influxdb_query_mem_available_pct_warning": 10
+            }
+        },
+        "nx-st-centreon-influxdb-query-mem-used": {
+            "check_command": "nx-c-centreon-influxdb-query-mem-used",
+            "fields": [
+                {
+                    "datafield_id": 2882,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 2879,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 2878,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 2883,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-st-agentless-influxdb-centreon-query-precompiled"
+            ],
+            "object_name": "nx-st-centreon-influxdb-query-mem-used",
+            "object_type": "template",
+            "vars": {
+                "nx_centreon_influxdb_query_mem_used_pct_critical": 95,
+                "nx_centreon_influxdb_query_mem_used_pct_warning": 90
+            }
+        },
+        "nx-st-centreon-influxdb-query-systemd-unit-status": {
+            "check_command": "nx-c-centreon-influxdb-query-systemd-unit",
+            "fields": [
+                {
+                    "datafield_id": 2887,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 2888,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 2886,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-st-agentless-influxdb-centreon-query-precompiled"
+            ],
+            "object_name": "nx-st-centreon-influxdb-query-systemd-unit-status",
+            "object_type": "template",
+            "vars": {
+                "nx_centreon_enable_verbose_output": true,
+                "nx_centreon_influxdb_query_systemd_unit_critical": [
+                    "2",
+                    "3"
+                ],
+                "nx_centreon_influxdb_query_systemd_unit_warning": [
+                    "1",
+                    "4",
+                    "5"
+                ]
+            }
+        },
+        "nx-st-centreon-influxdb-query-uptime-count": {
+            "check_command": "nx-c-centreon-influxdb-query-uptime",
+            "fields": [
+                {
+                    "datafield_id": 2908,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 2909,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-st-agentless-influxdb-centreon-query-precompiled"
+            ],
+            "object_name": "nx-st-centreon-influxdb-query-uptime-count",
+            "object_type": "template"
+        },
+        "nx-st-centreon-influxdb-query-uptime-value": {
+            "check_command": "nx-c-centreon-influxdb-query-uptime-value",
+            "fields": [
+                {
+                    "datafield_id": 2912,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 2910,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 2913,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 2911,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-st-agentless-influxdb-centreon-query-precompiled"
+            ],
+            "object_name": "nx-st-centreon-influxdb-query-uptime-value",
+            "object_type": "template"
+        },
+        "nx-st-centreon-influxdb-query-windows-service-status": {
+            "check_command": "nx-c-centreon-influxdb-query-windows-service",
+            "fields": [
+                {
+                    "datafield_id": 2914,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 2916,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 2915,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-st-agentless-influxdb-centreon-query-precompiled"
+            ],
+            "object_name": "nx-st-centreon-influxdb-query-windows-service-status",
+            "object_type": "template",
+            "vars": {
+                "nx_centreon_enable_verbose_output": true,
+                "nx_centreon_influxdb_query_windows_service_critical": [
+                    "1",
+                    "3"
+                ],
+                "nx_centreon_influxdb_query_windows_service_warning": [
+                    "5",
+                    "6",
+                    "2",
+                    "7"
+                ]
+            }
+        }
+    },
+    "Datafield": {
+        "2869": {
+            "varname": "nx_centreon_influxdb_query_database",
+            "caption": "[NX] Database Name",
+            "description": "Database containing data requested by the query",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "2869",
+            "settings": {
+                "rename_vars": "y",
+                "visibility": "visible"
+            },
+            "category": "Centreon InfluxDB Data source"
+        },
+        "2871": {
+            "varname": "nx_centreon_influxdb_query_host_name",
+            "caption": "[NX] Host name on InfluxDB",
+            "description": "Name of the Host Object as it is stored on InfluxDB",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "2871",
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "Centreon InfluxDB Query"
+        },
+        "2865": {
+            "varname": "nx_centreon_influxdb_query_query_aggregation",
+            "caption": "[NX] Query aggregation",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeDatalist",
+            "format": null,
+            "originalId": "2865",
+            "settings": {
+                "behavior": "strict",
+                "data_type": "string",
+                "rename_vars": "y",
+                "datalist": "[NX] Centreon InfluxDB Query aggregations List"
+            },
+            "category": "Centreon InfluxDB Query Advanced"
+        },
+        "2870": {
+            "varname": "nx_centreon_influxdb_query_retention_policy",
+            "caption": "[NX] Retention policy Name",
+            "description": "Retention policy of the Database containing data requested by the query",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "2870",
+            "settings": {
+                "rename_vars": "y",
+                "visibility": "visible"
+            },
+            "category": "Centreon InfluxDB Data source"
+        },
+        "2864": {
+            "varname": "nx_centreon_influxdb_query_time_window",
+            "caption": "[NX] Query time window",
+            "description": "Width of the time window applied to the current query (starting from now() )",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "2864",
+            "settings": {
+                "rename_vars": "y",
+                "visibility": "visible"
+            },
+            "category": "Centreon InfluxDB Query Advanced"
+        },
+        "2901": {
+            "varname": "nx_centreon_influxdb_query_cpu_usage_critical_system",
+            "caption": "[NX] System CPU usage Critical threshold",
+            "description": "System CPU usage Critical threshold (in percentage 0-100)",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "2901",
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "Centreon InfluxDB Query"
+        },
+        "2896": {
+            "varname": "nx_centreon_influxdb_query_cpu_usage_critical_total",
+            "caption": "[NX] Total CPU usage Critical threshold",
+            "description": "Total CPU usage Critical threshold (in percentage 0-100)",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "2896",
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "Centreon InfluxDB Query"
+        },
+        "2898": {
+            "varname": "nx_centreon_influxdb_query_cpu_usage_critical_user",
+            "caption": "[NX] User CPU usage Critical threshold",
+            "description": "User CPU usage Critical threshold (in percentage 0-100)",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "2898",
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "Centreon InfluxDB Query"
+        },
+        "2900": {
+            "varname": "nx_centreon_influxdb_query_cpu_usage_warning_system",
+            "caption": "[NX] System CPU usage Warning threshold",
+            "description": "System CPU usage Warning threshold (in percentage 0-100)",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "2900",
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "Centreon InfluxDB Query"
+        },
+        "2897": {
+            "varname": "nx_centreon_influxdb_query_cpu_usage_warning_total",
+            "caption": "[NX] Total CPU usage Warning threshold",
+            "description": "Total CPU usage Warning threshold (in percentage 0-100)",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "2897",
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "Centreon InfluxDB Query"
+        },
+        "2899": {
+            "varname": "nx_centreon_influxdb_query_cpu_usage_warning_user",
+            "caption": "[NX] User CPU usage Warning threshold",
+            "description": "User CPU usage Warning threshold (in percentage 0-100)",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "2899",
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "Centreon InfluxDB Query"
+        },
+        "2890": {
+            "varname": "nx_centreon_influxdb_query_disk_linux_bytes_free_pct_critical",
+            "caption": "[NX] Free space Critical threshold",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeNumber",
+            "format": null,
+            "originalId": "2890",
+            "settings": {
+                "rename_vars": "y"
+            },
+            "category": "Centreon InfluxDB Query"
+        },
+        "2889": {
+            "varname": "nx_centreon_influxdb_query_disk_linux_bytes_free_pct_warning",
+            "caption": "[NX] Free space Warning threshold",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeNumber",
+            "format": null,
+            "originalId": "2889",
+            "settings": {},
+            "category": "Centreon InfluxDB Query"
+        },
+        "2895": {
+            "varname": "nx_centreon_influxdb_query_disk_linux_filter_device",
+            "caption": "[NX] Include Device Regex",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "2895",
+            "settings": {
+                "rename_vars": "y",
+                "visibility": "visible"
+            },
+            "category": "Centreon InfluxDB Query"
+        },
+        "2894": {
+            "varname": "nx_centreon_influxdb_query_disk_linux_filter_fstype",
+            "caption": "[NX] Include FS Type Regex",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "2894",
+            "settings": {
+                "rename_vars": "y",
+                "visibility": "visible"
+            },
+            "category": "Centreon InfluxDB Query"
+        },
+        "2893": {
+            "varname": "nx_centreon_influxdb_query_disk_linux_filter_path",
+            "caption": "[NX] Include path regex",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "2893",
+            "settings": {
+                "rename_vars": "y",
+                "visibility": "visible"
+            },
+            "category": "Centreon InfluxDB Query"
+        },
+        "2892": {
+            "varname": "nx_centreon_influxdb_query_disk_linux_inodes_free_pct_critical",
+            "caption": "[NX] Free inode Critical threshold",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeNumber",
+            "format": null,
+            "originalId": "2892",
+            "settings": {},
+            "category": "Centreon InfluxDB Query"
+        },
+        "2891": {
+            "varname": "nx_centreon_influxdb_query_disk_linux_inodes_free_pct_warning",
+            "caption": "[NX] Free inode Warning threshold",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeNumber",
+            "format": null,
+            "originalId": "2891",
+            "settings": {},
+            "category": "Centreon InfluxDB Query"
+        },
+        "2907": {
+            "varname": "nx_centreon_influxdb_query_disk_windows_bytes_free_pct_critical",
+            "caption": "[NX] Free space Critical threshold",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "2907",
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "Centreon InfluxDB Query"
+        },
+        "2903": {
+            "varname": "nx_centreon_influxdb_query_disk_windows_bytes_free_pct_warning",
+            "caption": "[NX] Free space Warning threshold",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "2903",
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "Centreon InfluxDB Query"
+        },
+        "2904": {
+            "varname": "nx_centreon_influxdb_query_disk_windows_filter_device",
+            "caption": "[NX] Include Device Regex",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "2904",
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "Centreon InfluxDB Query"
+        },
+        "2905": {
+            "varname": "nx_centreon_influxdb_query_disk_windows_filter_fstype",
+            "caption": "[NX] Include FS Type Regex",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "2905",
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "Centreon InfluxDB Query"
+        },
+        "2906": {
+            "varname": "nx_centreon_influxdb_query_disk_windows_filter_path",
+            "caption": "[NX] Include path regex",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "2906",
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "Centreon InfluxDB Query"
+        },
+        "2875": {
+            "varname": "nx_centreon_influxdb_query_load_critical1",
+            "caption": "[NX] Load 1 Critical threshold",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeNumber",
+            "format": null,
+            "originalId": "2875",
+            "settings": {},
+            "category": "Centreon InfluxDB Query"
+        },
+        "2877": {
+            "varname": "nx_centreon_influxdb_query_load_critical15",
+            "caption": "[NX] Load 15 Critical threshold",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeNumber",
+            "format": null,
+            "originalId": "2877",
+            "settings": {},
+            "category": "Centreon InfluxDB Query"
+        },
+        "2876": {
+            "varname": "nx_centreon_influxdb_query_load_critical5",
+            "caption": "[NX] Load 5 Critical threshold",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeNumber",
+            "format": null,
+            "originalId": "2876",
+            "settings": {},
+            "category": "Centreon InfluxDB Query"
+        },
+        "2872": {
+            "varname": "nx_centreon_influxdb_query_load_warning1",
+            "caption": "[NX] Load 1 Warning threshold",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeNumber",
+            "format": null,
+            "originalId": "2872",
+            "settings": {
+                "rename_vars": "y"
+            },
+            "category": "Centreon InfluxDB Query"
+        },
+        "2874": {
+            "varname": "nx_centreon_influxdb_query_load_warning15",
+            "caption": "[NX] Load 15 Warning threshold",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeNumber",
+            "format": null,
+            "originalId": "2874",
+            "settings": {
+                "rename_vars": "y"
+            },
+            "category": "Centreon InfluxDB Query"
+        },
+        "2873": {
+            "varname": "nx_centreon_influxdb_query_load_warning5",
+            "caption": "[NX] Load 5 Warning threshold",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeNumber",
+            "format": null,
+            "originalId": "2873",
+            "settings": {},
+            "category": "Centreon InfluxDB Query"
+        },
+        "2885": {
+            "varname": "nx_centreon_influxdb_query_mem_available_critical",
+            "caption": "[NX] Memory available Critical threshold",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeNumber",
+            "format": null,
+            "originalId": "2885",
+            "settings": {},
+            "category": "Centreon InfluxDB Query"
+        },
+        "2880": {
+            "varname": "nx_centreon_influxdb_query_mem_available_pct_critical",
+            "caption": "[NX] Memory available Critical threshold (%)",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeNumber",
+            "format": null,
+            "originalId": "2880",
+            "settings": {},
+            "category": "Centreon InfluxDB Query"
+        },
+        "2881": {
+            "varname": "nx_centreon_influxdb_query_mem_available_pct_warning",
+            "caption": "[NX] Memory available Warning threshold (%)",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeNumber",
+            "format": null,
+            "originalId": "2881",
+            "settings": {},
+            "category": "Centreon InfluxDB Query"
+        },
+        "2884": {
+            "varname": "nx_centreon_influxdb_query_mem_available_warning",
+            "caption": "[NX] Memory available Warning threshold",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeNumber",
+            "format": null,
+            "originalId": "2884",
+            "settings": {},
+            "category": "Centreon InfluxDB Query"
+        },
+        "2882": {
+            "varname": "nx_centreon_influxdb_query_mem_used_critical",
+            "caption": "[NX] Memory used Critical threshold",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeNumber",
+            "format": null,
+            "originalId": "2882",
+            "settings": {
+                "rename_vars": "y"
+            },
+            "category": "Centreon InfluxDB Query"
+        },
+        "2879": {
+            "varname": "nx_centreon_influxdb_query_mem_used_pct_critical",
+            "caption": "[NX] Memory used Critical treshold (%)",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeNumber",
+            "format": null,
+            "originalId": "2879",
+            "settings": {
+                "rename_vars": "y"
+            },
+            "category": "Centreon InfluxDB Query"
+        },
+        "2878": {
+            "varname": "nx_centreon_influxdb_query_mem_used_pct_warning",
+            "caption": "[NX] Memory used Warning threshold (%)",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeNumber",
+            "format": null,
+            "originalId": "2878",
+            "settings": {
+                "rename_vars": "y"
+            },
+            "category": "Centreon InfluxDB Query"
+        },
+        "2883": {
+            "varname": "nx_centreon_influxdb_query_mem_used_warning",
+            "caption": "[NX] Memory used Warning threshold",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeNumber",
+            "format": null,
+            "originalId": "2883",
+            "settings": {
+                "rename_vars": "y"
+            },
+            "category": "Centreon InfluxDB Query"
+        },
+        "2887": {
+            "varname": "nx_centreon_influxdb_query_systemd_unit_critical",
+            "caption": "[NX] Critical statuses",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeDatalist",
+            "format": null,
+            "originalId": "2887",
+            "settings": {
+                "behavior": "strict",
+                "data_type": "array",
+                "rename_vars": "y",
+                "datalist": "[NX] Centreon InfluxDB SystemD Active Code List"
+            },
+            "category": "Centreon InfluxDB Query"
+        },
+        "2888": {
+            "varname": "nx_centreon_influxdb_query_systemd_unit_name_regex",
+            "caption": "[NX] SystemD Unit name regex",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "2888",
+            "settings": {
+                "rename_vars": "y",
+                "visibility": "visible"
+            },
+            "category": "Centreon InfluxDB Query"
+        },
+        "2886": {
+            "varname": "nx_centreon_influxdb_query_systemd_unit_warning",
+            "caption": "[NX] Warning statuses",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeDatalist",
+            "format": null,
+            "originalId": "2886",
+            "settings": {
+                "behavior": "strict",
+                "data_type": "array",
+                "rename_vars": "y",
+                "datalist": "[NX] Centreon InfluxDB SystemD Active Code List"
+            },
+            "category": "Centreon InfluxDB Query"
+        },
+        "2908": {
+            "varname": "nx_centreon_influxdb_query_uptime_count_critical",
+            "caption": "[NX] Received data Critical threshold",
+            "description": "If the number of Uptime metrics received in the time window is below this number, assumes the sending client has some kind of issues and reports a CRITICAL.",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeNumber",
+            "format": null,
+            "originalId": "2908",
+            "settings": {},
+            "category": "Centreon InfluxDB Query"
+        },
+        "2909": {
+            "varname": "nx_centreon_influxdb_query_uptime_count_warning",
+            "caption": "[NX] Received data Warning threshold",
+            "description": "If the number of Uptime metrics received in the time window is below this number, assumes the sending client is about to have some kind of issues and reports a WARNING.",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeNumber",
+            "format": null,
+            "originalId": "2909",
+            "settings": {},
+            "category": "Centreon InfluxDB Query"
+        },
+        "2912": {
+            "varname": "nx_centreon_influxdb_query_uptime_value_critical_max",
+            "caption": "[NX] Critical Maximum system uptime",
+            "description": "Uptime (in seconds) that the system should not have for it to be OK. If uptime is higher than this, a CRITICAL will be raised.",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeNumber",
+            "format": null,
+            "originalId": "2912",
+            "settings": {},
+            "category": "Centreon InfluxDB Query"
+        },
+        "2910": {
+            "varname": "nx_centreon_influxdb_query_uptime_value_critical_min",
+            "caption": "[NX] Critical Minimum system uptime",
+            "description": "Uptime (in seconds) that the system should have for it to be OK. If uptime is lower than this, a CRITICAL will be raised.",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeNumber",
+            "format": null,
+            "originalId": "2910",
+            "settings": {},
+            "category": "Centreon InfluxDB Query"
+        },
+        "2913": {
+            "varname": "nx_centreon_influxdb_query_uptime_value_warning_max",
+            "caption": "[NX] Warning Maximum system uptime",
+            "description": "Uptime (in seconds) that the system should not have for it to be OK. If uptime is higher than this, a WARNING will be raised.",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeNumber",
+            "format": null,
+            "originalId": "2913",
+            "settings": {},
+            "category": "Centreon InfluxDB Query"
+        },
+        "2911": {
+            "varname": "nx_centreon_influxdb_query_uptime_value_warning_min",
+            "caption": "[NX] Warning Minimum system uptime",
+            "description": "Uptime (in seconds) that the system should have for it to be OK. If uptime is lower than this, a WARNING will be raised.",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeNumber",
+            "format": null,
+            "originalId": "2911",
+            "settings": {},
+            "category": "Centreon InfluxDB Query"
+        },
+        "2914": {
+            "varname": "nx_centreon_influxdb_query_windows_service_critical",
+            "caption": "[NX] Critical statuses",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeDatalist",
+            "format": null,
+            "originalId": "2914",
+            "settings": {
+                "behavior": "strict",
+                "data_type": "array",
+                "datalist": "[NX] Centreon InfluxDB Windows Service State Code List"
+            },
+            "category": "Centreon InfluxDB Query"
+        },
+        "2916": {
+            "varname": "nx_centreon_influxdb_query_windows_service_name_regex",
+            "caption": "[NX] Windows Service name regex",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "2916",
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "Centreon InfluxDB Query"
+        },
+        "2915": {
+            "varname": "nx_centreon_influxdb_query_windows_service_warning",
+            "caption": "[NX] Warning statuses",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeDatalist",
+            "format": null,
+            "originalId": "2915",
+            "settings": {
+                "behavior": "strict",
+                "data_type": "array",
+                "datalist": "[NX] Centreon InfluxDB Windows Service State Code List"
+            },
+            "category": "Centreon InfluxDB Query"
+        }
+    },
+    "DatafieldCategory": {
+        "Centreon InfluxDB Data source": {
+            "category_name": "Centreon InfluxDB Data source",
+            "description": null,
+            "originalId": "16"
+        },
+        "Centreon InfluxDB Query": {
+            "category_name": "Centreon InfluxDB Query",
+            "description": null,
+            "originalId": "13"
+        },
+        "Centreon InfluxDB Query Advanced": {
+            "category_name": "Centreon InfluxDB Query Advanced",
+            "description": null,
+            "originalId": "14"
+        }
+    }
+}

@@ -1,0 +1,12 @@
+{
+    "HostTemplate": {
+        "nx-ht-office-365-portal-service": {
+            "fields": [],
+            "imports": [
+                "nx-ht-virtual"
+            ],
+            "object_name": "nx-ht-office-365-portal-service",
+            "object_type": "template"
+        }
+    }
+}

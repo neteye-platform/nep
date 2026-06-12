@@ -1,0 +1,43 @@
+{
+    "ServiceTemplate": {
+        "nx-st-icinga-powershell-check-time-sync": {
+            "check_command": "Invoke-IcingaCheckTimeSync",
+            "fields": [],
+            "imports": [
+                "nx-st-agent-windows-script"
+            ],
+            "object_name": "nx-st-icinga-powershell-check-time-sync",
+            "object_type": "template",
+            "uuid": "068296c3-de4d-4933-9a07-52b500000b0e"
+        },
+        "nx-st-icinga-powershell-check-scheduled-task": {
+            "check_command": "Invoke-IcingaCheckScheduledTask",
+            "fields": [],
+            "imports": [
+                "nx-st-icinga-powershell"
+            ],
+            "object_name": "nx-st-icinga-powershell-check-scheduled-task",
+            "object_type": "template",
+            "uuid": "068296c3-de4d-4933-9a07-52b500000a87"
+        },
+        "nx-st-icinga-powershell-check-directory": {
+            "check_command": "Invoke-IcingaCheckDirectory",
+            "fields": [],
+            "imports": [
+                "nx-st-icinga-powershell"
+            ],
+            "object_name": "nx-st-icinga-powershell-check-directory",
+            "object_type": "template",
+            "uuid": "068296c3-de4d-4933-9a07-52b500000a86"
+        },
+        "nx-st-icinga-powershell": {
+            "fields": [],
+            "imports": [
+                "nx-st-agent-windows"
+            ],
+            "object_name": "nx-st-icinga-powershell",
+            "object_type": "template",
+            "uuid": "69c5b0af-12c0-4f4e-90a8-dc7aafea6c12"
+        }
+    }
+}

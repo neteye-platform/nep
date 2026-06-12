@@ -1,0 +1,75 @@
+{
+    "ServiceSet": {
+        "nx-ss-server-agent-linux-ntp": {
+            "assign_filter": "host.vars.nx_enable_nep_ss=true&!\"nx-ss-server-agent-linux-ntp\"=host.vars.nx_nep_ss_to_exclude&\"nx-ht-server-agent-linux-ntp\"=host.templates",
+            "object_name": "nx-ss-server-agent-linux-ntp",
+            "object_type": "template",
+            "services": [
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-agent-linux-systemd-unit-state",
+                        "nx-st-type-custom"
+                    ],
+                    "object_name": "Service CHRONYD Status",
+                    "object_type": "object",
+                    "uuid": "d9e22bb3-5ae0-44a5-819a-84bfb387148d",
+                    "vars": {
+                        "systemd_unit_name": "chronyd.service"
+                    }
+                },
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-agent-linux-ntp",
+                        "nx-st-type-custom"
+                    ],
+                    "object_name": "System time Drift Status",
+                    "object_type": "object",
+                    "uuid": "068296c3-de4d-4933-9a07-52b5000009c8",
+                    "vars": {
+                        "ntp_critical": "60",
+                        "ntp_warning": "3"
+                    }
+                }
+            ],
+            "uuid": "5b20f1d6-a7cf-4718-9ecc-df610000013c"
+        },
+        "nx-ss-server-agent-windows-ntp": {
+            "assign_filter": "host.vars.nx_enable_nep_ss=true&!\"nx-ss-server-agent-windows-ntp\"=host.vars.nx_nep_ss_to_exclude&\"nx-ht-server-agent-windows-ntp\"=host.templates",
+            "object_name": "nx-ss-server-agent-windows-ntp",
+            "object_type": "template",
+            "services": [
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-agent-windows-service-status",
+                        "nx-st-type-custom"
+                    ],
+                    "object_name": "Service Win32Time Status",
+                    "object_type": "object",
+                    "uuid": "068296c3-de4d-4933-9a07-52b5000009c9",
+                    "vars": {
+                        "service_win_service": [
+                            "w32time"
+                        ]
+                    }
+                },
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-icinga-powershell-check-time-sync",
+                        "nx-st-type-custom"
+                    ],
+                    "object_name": "System time Drift Status",
+                    "object_type": "object",
+                    "uuid": "8d4a1898-beee-4e7d-ac2f-2208f104ad51",
+                    "vars": {
+                        "IcingaCheckTimeSync_String_Server": "$check_address$"
+                    }
+                }
+            ],
+            "uuid": "5b20f1d6-a7cf-4718-9ecc-df610000013d"
+        }
+    }
+}

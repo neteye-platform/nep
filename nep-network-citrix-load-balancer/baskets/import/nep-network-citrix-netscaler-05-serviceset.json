@@ -1,0 +1,86 @@
+{
+    "ServiceSet": {
+        "nx-ss-network-centreon-citrix-netscaler": {
+            "assign_filter": "\"nx-ht-network-switch-snmp\"=host.templates&host.vars.nx_hardware_vendor=%22netscalers%22",
+            "description": "Service Set providing monitoring for switch Citrix Netscaler\r\n - CPU Load\r\n - Hardware Health\r\n - Memory Usage",
+            "object_name": "nx-ss-network-centreon-citrix-netscaler",
+            "object_type": "template",
+            "services": {
+                "CPU Load": {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-agentless-snmp-centreon-citrix-netscaler-cpu",
+                        "nx-st-type-custom"
+                    ],
+                    "object_name": "CPU Load",
+                    "object_type": "object",
+                    "vars": {
+                        "nx_centreon_plugin_snmp_crit": "90",
+                        "nx_centreon_plugin_snmp_warn": "80"
+                    }
+                },
+                "HW Health": {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-agentless-snmp-centreon-citrix-netscaler-hardware",
+                        "nx-st-type-custom"
+                    ],
+                    "object_name": "HW Health",
+                    "object_type": "object",
+                    "vars": {
+                        "nx_centreon_plugin_snmp_crit": "temperature,.*,70",
+                        "nx_centreon_plugin_snmp_warn": "temperature,.*,50"
+                    }
+                },
+                "Memory Usage": {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-agentless-snmp-centreon-citrix-netscaler-memory",
+                        "nx-st-type-custom"
+                    ],
+                    "object_name": "Memory Usage",
+                    "object_type": "object",
+                    "vars": {
+                        "nx_centreon_plugin_snmp_crit": "90",
+                        "nx_centreon_plugin_snmp_warn": "80"
+                    }
+                }
+            }
+        },
+        "nx-ss-network-centreon-citrix-netscaler-extras": {
+            "assign_filter": "\"nx-ht-network-switch-snmp\"=host.templates&host.vars.nx_hardware_vendor=%22netscalers%22&host.vars.nx_enable_nep_ss=true&!\"nx-ss-network-centreon-citrix-netscaler\"=host.vars.nx_nep_ss_to_exclude&host.vars.nx_enable_nep_extras=true",
+            "description": "Service Set providing monitoring for switch Citrix Netscaler Extras",
+            "object_name": "nx-ss-network-centreon-citrix-netscaler-extras",
+            "object_type": "template",
+            "services": [
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-agentless-snmp-centreon-citrix-netscaler-certificates",
+                        "nx-st-type-custom"
+                    ],
+                    "object_name": "Certificates Status",
+                    "object_type": "object"
+                },
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-agentless-snmp-centreon-citrix-netscaler-connections",
+                        "nx-st-type-custom"
+                    ],
+                    "object_name": "Connections Status",
+                    "object_type": "object"
+                },
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-agentless-snmp-centreon-citrix-netscaler-ha-state",
+                        "nx-st-type-custom"
+                    ],
+                    "object_name": "High Availability Status",
+                    "object_type": "object"
+                }
+            ]
+        }
+    }
+}

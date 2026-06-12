@@ -1,0 +1,182 @@
+{
+    "ServiceTemplate": {
+        "nx-st-agentless-snmp-centreon-hp-standard-cpu": {
+            "check_command": "nx-c-centreon-hp-standard-cpu",
+            "fields": [
+                {
+                    "datafield_id": 1731,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1733,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-st-agentless-snmp-centreon"
+            ],
+            "object_name": "nx-st-agentless-snmp-centreon-hp-standard-cpu",
+            "object_type": "template",
+            "vars": {
+                "nx_centreon_plugin_snmp_crit": "90",
+                "nx_centreon_plugin_snmp_warn": "70"
+            }
+        },
+        "nx-st-agentless-snmp-centreon-hp-standard-hardware": {
+            "check_command": "nx-c-centreon-hp-standard-hardware",
+            "fields": [
+                {
+                    "datafield_id": 1824,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1731,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1733,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-st-agentless-snmp-centreon"
+            ],
+            "object_name": "nx-st-agentless-snmp-centreon-hp-standard-hardware",
+            "object_type": "template"
+        },
+        "nx-st-agentless-snmp-centreon-hp-standard-interfaces": {
+            "check_command": "nx-c-centreon-hp-standard-interfaces",
+            "fields": [
+                {
+                    "datafield_id": 1731,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1750,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1790,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1791,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1733,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-st-agentless-snmp-centreon"
+            ],
+            "object_name": "nx-st-agentless-snmp-centreon-hp-standard-interfaces",
+            "object_type": "template"
+        },
+        "nx-st-agentless-snmp-centreon-hp-standard-memory": {
+            "check_command": "nx-c-centreon-hp-standard-memory",
+            "fields": [
+                {
+                    "datafield_id": 1731,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1733,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-st-agentless-snmp-centreon"
+            ],
+            "object_name": "nx-st-agentless-snmp-centreon-hp-standard-memory",
+            "object_type": "template"
+        }
+    },
+    "Datafield": {
+        "1731": {
+            "varname": "nx_centreon_plugin_snmp_crit",
+            "caption": "[NX] Centreon Plugin Critical",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "1731",
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": null
+        },
+        "1733": {
+            "varname": "nx_centreon_plugin_snmp_warn",
+            "caption": "[NX] Centreon Plugin Warning",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "1733",
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": null
+        },
+        "1824": {
+            "varname": "nx_centreon_plugin_component",
+            "caption": "[NX] Centreon Plugin Component",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "1824",
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": null
+        },
+        "1750": {
+            "varname": "nx_centreon_plugin_snmp_interface",
+            "caption": "[NX] Centreon Plugin Interface",
+            "description": "Set the ID interface (number expected) ex: 1,2,... (empty means 'check all interface')",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "1750",
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": null
+        },
+        "1790": {
+            "varname": "nx_centreon_plugin_snmp_speed",
+            "caption": "[NX] Centreon Speed",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "1790",
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": null
+        },
+        "1791": {
+            "varname": "nx_centreon_plugin_snmp_unit",
+            "caption": "[NX] Centreon Unit Traffic",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "1791",
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": null
+        }
+    }
+}

@@ -1,0 +1,99 @@
+{
+    "ServiceSet": {
+        "nx-ss-network-centreon-fortinet-fortigate": {
+            "assign_filter": "host.vars.nx_enable_nep_ss=true&!\"nx-ss-network-centreon-fortinet-fortigate\"=host.vars.nx_nep_ss_to_exclude&\"nx-ht-network-firewall-snmp\"=host.templates&host.vars.nx_hardware_vendor=%22fortinet%22",
+            "description": "Service Set providing monitoring for firewall Fortinet Fortigate\r\n - CPU Load\r\n - Hardware Health\r\n - Memory Usage",
+            "object_name": "nx-ss-network-centreon-fortinet-fortigate",
+            "object_type": "template",
+            "services": [
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-agentless-snmp-centreon-fortinet-fortigate-cpu",
+                        "nx-st-type-custom"
+                    ],
+                    "object_name": "CPU Load",
+                    "object_type": "object",
+                    "uuid": "17533e14-7427-4c72-ae7e-eaa7cb49a54b"
+                },
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-agentless-snmp-centreon-fortinet-fortigate-hardware",
+                        "nx-st-type-custom"
+                    ],
+                    "object_name": "HW Health",
+                    "object_type": "object",
+                    "uuid": "16060155-df93-4942-a074-4e1f3945801d"
+                },
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-agentless-snmp-centreon-fortinet-fortigate-memory",
+                        "nx-st-type-custom"
+                    ],
+                    "object_name": "Memory Usage",
+                    "object_type": "object",
+                    "uuid": "7f416b34-f609-4ce7-839a-fbc47879aecd"
+                },
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-agentless-snmp-centreon-fortinet-fortigate-sessions",
+                        "nx-st-type-custom"
+                    ],
+                    "object_name": "Session count",
+                    "object_type": "object",
+                    "uuid": "d1f90ca0-5cca-470c-9201-e155a42df655"
+                }
+            ],
+            "uuid": "072ac91d-25b7-4cda-84a4-17a8513584d1"
+        },
+        "nx-ss-network-centreon-fortinet-fortigate-extras": {
+            "assign_filter": "host.vars.nx_enable_nep_ss=true&!\"nx-ss-network-centreon-fortinet-fortigate-extras\"=host.vars.nx_nep_ss_to_exclude&\"nx-ht-network-firewall-snmp\"=host.templates&host.vars.nx_hardware_vendor=%22fortinet%22&host.vars.nx_enable_nep_extras=true",
+            "description": "Service Set providing monitoring for firewall Fortinet Fortigate extras",
+            "object_name": "nx-ss-network-centreon-fortinet-fortigate-extras",
+            "object_type": "template",
+            "services": [
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-agentless-snmp-centreon-fortinet-fortigate-cluster-status",
+                        "nx-st-type-custom"
+                    ],
+                    "object_name": "Cluster Status",
+                    "object_type": "object",
+                    "uuid": "281a3d41-ad95-4f6d-a8c6-6cbec74ac796"
+                },
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-agentless-snmp-centreon-fortinet-fortigate-disk",
+                        "nx-st-type-custom"
+                    ],
+                    "object_name": "Disk Usage",
+                    "object_type": "object",
+                    "uuid": "1b455c2c-82b0-4e56-b4a5-809d0ed1d21d"
+                },
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-agentless-snmp-centreon-fortinet-fortigate-vpn",
+                        "nx-st-type-custom"
+                    ],
+                    "object_name": "VPN Users Status",
+                    "object_type": "object",
+                    "uuid": "79f4bf14-313b-485c-9bf0-6cfa3b1ef574",
+                    "vars": {
+                        "nx_centreon_fortinet_fortigate_critical_status": "%{state} eq \"xxx\"",
+                        "nx_centreon_plugin_change_exit": [
+                            "critical=ok"
+                        ],
+                        "nx_centreon_plugin_output_filter_perfdata": "users"
+                    }
+                }
+            ],
+            "uuid": "5c6742fb-5d3f-43de-9781-961439a7d698"
+        }
+    }
+}

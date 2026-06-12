@@ -1,0 +1,200 @@
+{
+    "Command": {
+        "nx-c-check-nrpe": {
+            "arguments": {
+                "-6": {
+                    "description": "Use IPv6 connection",
+                    "repeat_key": true,
+                    "required": false,
+                    "set_if": "$nx_nrpe_ipv6$",
+                    "set_if_format": "string",
+                    "skip_key": false,
+                    "order": "6"
+                },
+                "-4": {
+                    "description": "Use IPv4 connection",
+                    "repeat_key": true,
+                    "required": false,
+                    "set_if": "$nx_nrpe_ipv4$",
+                    "set_if_format": "string",
+                    "skip_key": false,
+                    "order": "5"
+                },
+                "-3": {
+                    "description": "Use v3 of NRPE",
+                    "repeat_key": true,
+                    "required": false,
+                    "set_if": "$nx_nrpe_v3$",
+                    "set_if_format": "string",
+                    "skip_key": false,
+                    "order": "4"
+                },
+                "-2": {
+                    "description": "Use v2 of NRPE",
+                    "repeat_key": true,
+                    "required": false,
+                    "set_if": "$nx_nrpe_v2$",
+                    "set_if_format": "string",
+                    "skip_key": false,
+                    "order": "3"
+                },
+                "-A": {
+                    "description": "CA Cert File",
+                    "required": false,
+                    "value": "$nx_nrpe_ca_cert_file$",
+                    "order": "19"
+                },
+                "-C": {
+                    "description": "Client Cert File",
+                    "required": false,
+                    "value": "$nx_nrpe_client_cert_file$",
+                    "order": "17"
+                },
+                "-D": {
+                    "description": "Disable Syslog Logging",
+                    "repeat_key": true,
+                    "required": false,
+                    "set_if": "$nx_nrpe_disable_syslog$",
+                    "set_if_format": "string",
+                    "skip_key": false,
+                    "order": "13"
+                },
+                "-H": {
+                    "description": "The address of the host running the NRPE daemon",
+                    "repeat_key": true,
+                    "required": true,
+                    "skip_key": false,
+                    "value": "$host.address$",
+                    "order": "1"
+                },
+                "-K": {
+                    "description": "Client Key File",
+                    "required": false,
+                    "value": "$nx_nrpe_client_key_file$",
+                    "order": "18"
+                },
+                "-L": {
+                    "description": "Chiper List",
+                    "required": false,
+                    "value": "$nx_nrpe_chiper_list$",
+                    "order": "16"
+                },
+                "-P": {
+                    "description": "Payload-size",
+                    "required": false,
+                    "value": "$nx_nrpe_payload_size$",
+                    "order": "14"
+                },
+                "-S": {
+                    "description": "SSL Version",
+                    "required": false,
+                    "value": "$nx_nrpe_ssl_version$",
+                    "order": "15"
+                },
+                "-a": {
+                    "repeat_key": false,
+                    "required": false,
+                    "skip_key": false,
+                    "value": {
+                        "type": "Function",
+                        "body": "var os = macro(\"$nx_nrpe_target$\");\r\nvar arg = macro(\"$nx_nrpe_arguments$\");\r\nif ( os == \"linux\"){\r\n    if (len(arg) == 0) {\r\n    return \"$null\";\r\n    }\r\n    return arg.join(\" \");\r\n}\r\nreturn arg;"
+                    },
+                    "order": "9"
+                },
+                "-b": {
+                    "description": "Local Bind Address",
+                    "required": false,
+                    "value": "$nx_nrpe_local_bind_address$",
+                    "order": "21"
+                },
+                "-c": {
+                    "required": false,
+                    "value": "$nx_nrpe_command$",
+                    "order": "8"
+                },
+                "-d": {
+                    "description": "Use Anonymous Diffie Hellman",
+                    "required": false,
+                    "value": "$nx_nrpe_use_adh$",
+                    "order": "12"
+                },
+                "-e": {
+                    "description": "Enable Syslog Debug Messages",
+                    "repeat_key": true,
+                    "required": false,
+                    "set_if": "$nx_nrpe_syslog_debug_messages$",
+                    "set_if_format": "string",
+                    "skip_key": false,
+                    "order": "24"
+                },
+                "-f": {
+                    "description": "Configuration File",
+                    "required": false,
+                    "value": "$nx_nrpe_config_file$",
+                    "order": "22"
+                },
+                "-g": {
+                    "description": "Log File",
+                    "required": false,
+                    "value": "$nx_nrpe_log_file$",
+                    "order": "23"
+                },
+                "-n": {
+                    "description": "Do not use SSL",
+                    "repeat_key": true,
+                    "required": false,
+                    "set_if": "$nx_nrpe_no_ssl$",
+                    "set_if_format": "string",
+                    "skip_key": false,
+                    "order": "7"
+                },
+                "-p": {
+                    "required": false,
+                    "value": "$nx_nrpe_port$",
+                    "order": "2"
+                },
+                "-s": {
+                    "description": "SSL Logging Options",
+                    "required": false,
+                    "value": "$nx_nrpe_ssl_logging$",
+                    "order": "20"
+                },
+                "-t": {
+                    "description": "<interval>:<state> = <Number of seconds before connection times out>:<Check state to exit with in the event of a timeout (default=CRITICAL) or integer: (OK, WARNING, CRITICAL, UNKNOWN) or integer (0-3)>",
+                    "required": false,
+                    "value": "$nx_nrpe_timeout$",
+                    "order": "11"
+                },
+                "-u": {
+                    "description": "Make socket timeouts return an UNKNOWN state instead of CRITICAL",
+                    "repeat_key": true,
+                    "required": false,
+                    "set_if": "$nx_nrpe_timeout_unknown$",
+                    "set_if_format": "string",
+                    "skip_key": false,
+                    "order": "10"
+                }
+            },
+            "command": "PluginContribDir + /check_nrpe",
+            "fields": [],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-check-nrpe",
+            "object_type": "object",
+            "timeout": 300,
+            "uuid": "d6186bca-a882-4c46-a90b-791b4506cbd3",
+            "vars": {
+                "check_address": {
+                    "arguments": [],
+                    "deprecated": false,
+                    "name": "<anonymous>",
+                    "side_effect_free": false,
+                    "type": "Function"
+                },
+                "check_ipv4": "$nrpe_ipv4$",
+                "check_ipv6": "$nrpe_ipv6$",
+                "nx_nrpe_no_ssl": false,
+                "nx_nrpe_timeout_unknown": false
+            }
+        }
+    }
+}

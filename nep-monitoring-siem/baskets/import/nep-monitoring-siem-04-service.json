@@ -1,0 +1,1484 @@
+{
+    "ServiceTemplate": {
+        "nx-st-agent-elastic": {
+            "action_url": null,
+            "apply_for": null,
+            "assign_filter": null,
+            "check_command": "nx-c-check-es-system",
+            "check_interval": null,
+            "check_period": null,
+            "check_timeout": null,
+            "command_endpoint": null,
+            "disabled": false,
+            "display_name": null,
+            "enable_active_checks": null,
+            "enable_event_handler": null,
+            "enable_flapping": null,
+            "enable_notifications": null,
+            "enable_passive_checks": null,
+            "enable_perfdata": null,
+            "event_command": null,
+            "fields": [
+                {
+                    "datafield_id": 444,
+                    "is_required": "y",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 448,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 250,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 103,
+                    "is_required": "y",
+                    "var_filter": "service.vars.http_ssl=true"
+                },
+                {
+                    "datafield_id": 104,
+                    "is_required": "y",
+                    "var_filter": "service.vars.http_ssl=true"
+                },
+                {
+                    "datafield_id": 105,
+                    "is_required": "n",
+                    "var_filter": "service.vars.nx_elastic_check_types_list=%22mem%22|service.vars.nx_elastic_check_types_list=%22cpu%22|service.vars.nx_elastic_check_types_list=%22disk%22"
+                },
+                {
+                    "datafield_id": 10632,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 10633,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "flapping_threshold_high": null,
+            "flapping_threshold_low": null,
+            "groups": [],
+            "host": null,
+            "icon_image": null,
+            "icon_image_alt": null,
+            "imports": [
+                "nx-st-agent"
+            ],
+            "max_check_attempts": null,
+            "notes": null,
+            "notes_url": null,
+            "object_name": "nx-st-agent-elastic",
+            "object_type": "template",
+            "retry_interval": null,
+            "service_set": null,
+            "template_choice": null,
+            "use_agent": null,
+            "use_var_overrides": null,
+            "vars": {},
+            "volatile": null,
+            "zone": null
+        },
+        "nx-st-agent-elastic-neteye": {
+            "action_url": null,
+            "apply_for": null,
+            "assign_filter": null,
+            "check_command": null,
+            "check_interval": null,
+            "check_period": null,
+            "check_timeout": null,
+            "command_endpoint": null,
+            "disabled": false,
+            "display_name": null,
+            "enable_active_checks": null,
+            "enable_event_handler": null,
+            "enable_flapping": null,
+            "enable_notifications": null,
+            "enable_passive_checks": null,
+            "enable_perfdata": null,
+            "event_command": null,
+            "fields": [],
+            "flapping_threshold_high": null,
+            "flapping_threshold_low": null,
+            "groups": [],
+            "host": null,
+            "icon_image": null,
+            "icon_image_alt": null,
+            "imports": [
+                "nx-st-agent-elastic"
+            ],
+            "max_check_attempts": null,
+            "notes": null,
+            "notes_url": null,
+            "object_name": "nx-st-agent-elastic-neteye",
+            "object_type": "template",
+            "retry_interval": null,
+            "service_set": null,
+            "template_choice": null,
+            "use_agent": null,
+            "use_var_overrides": null,
+            "vars": {
+                "es_auth_cert": "\/neteye\/local\/elasticsearch\/conf\/monitoring-certs\/certs\/NetEyeElasticCheck.crt.pem",
+                "es_auth_key": "\/neteye\/local\/elasticsearch\/conf\/monitoring-certs\/certs\/private\/NetEyeElasticCheck.key.pem",
+                "es_hostname": "localhost",
+                "http_ssl": true
+            },
+            "volatile": null,
+            "zone": null
+        },
+        "nx-st-agent-filebeat": {
+            "action_url": null,
+            "apply_for": null,
+            "assign_filter": null,
+            "check_command": "nx-c-check-filebeat",
+            "check_interval": null,
+            "check_period": null,
+            "check_timeout": null,
+            "command_endpoint": null,
+            "disabled": false,
+            "display_name": null,
+            "enable_active_checks": null,
+            "enable_event_handler": null,
+            "enable_flapping": null,
+            "enable_notifications": null,
+            "enable_passive_checks": null,
+            "enable_perfdata": null,
+            "event_command": null,
+            "fields": [],
+            "flapping_threshold_high": null,
+            "flapping_threshold_low": null,
+            "groups": [],
+            "host": null,
+            "icon_image": null,
+            "icon_image_alt": null,
+            "imports": [
+                "nx-st-agent"
+            ],
+            "max_check_attempts": null,
+            "notes": null,
+            "notes_url": null,
+            "object_name": "nx-st-agent-filebeat",
+            "object_type": "template",
+            "retry_interval": null,
+            "service_set": null,
+            "template_choice": null,
+            "use_agent": null,
+            "use_var_overrides": null,
+            "vars": {},
+            "volatile": null,
+            "zone": null
+        },
+        "nx-st-agent-filebeat-neteye": {
+            "action_url": null,
+            "apply_for": null,
+            "assign_filter": null,
+            "check_command": null,
+            "check_interval": null,
+            "check_period": null,
+            "check_timeout": null,
+            "command_endpoint": null,
+            "disabled": false,
+            "display_name": null,
+            "enable_active_checks": null,
+            "enable_event_handler": null,
+            "enable_flapping": null,
+            "enable_notifications": null,
+            "enable_passive_checks": null,
+            "enable_perfdata": null,
+            "event_command": null,
+            "fields": [
+                {
+                    "datafield_id": 522,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 521,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 523,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 524,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "flapping_threshold_high": null,
+            "flapping_threshold_low": null,
+            "groups": [],
+            "host": null,
+            "icon_image": null,
+            "icon_image_alt": null,
+            "imports": [
+                "nx-st-agent-filebeat"
+            ],
+            "max_check_attempts": null,
+            "notes": null,
+            "notes_url": null,
+            "object_name": "nx-st-agent-filebeat-neteye",
+            "object_type": "template",
+            "retry_interval": null,
+            "service_set": null,
+            "template_choice": null,
+            "use_agent": null,
+            "use_var_overrides": null,
+            "vars": {
+                "filebeat_hostname": "localhost",
+                "filebeat_port": 5067
+            },
+            "volatile": null,
+            "zone": null
+        },
+        "nx-st-agent-logstash": {
+            "action_url": null,
+            "apply_for": null,
+            "assign_filter": null,
+            "check_command": null,
+            "check_interval": null,
+            "check_period": null,
+            "check_timeout": null,
+            "command_endpoint": null,
+            "disabled": false,
+            "display_name": null,
+            "enable_active_checks": null,
+            "enable_event_handler": null,
+            "enable_flapping": null,
+            "enable_notifications": null,
+            "enable_passive_checks": null,
+            "enable_perfdata": null,
+            "event_command": null,
+            "fields": [
+                {
+                    "datafield_id": 447,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 2397,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+
+            ],
+            "flapping_threshold_high": null,
+            "flapping_threshold_low": null,
+            "groups": [],
+            "host": null,
+            "icon_image": null,
+            "icon_image_alt": null,
+            "imports": [
+                "nx-st-agent"
+            ],
+            "max_check_attempts": null,
+            "notes": null,
+            "notes_url": null,
+            "object_name": "nx-st-agent-logstash",
+            "object_type": "template",
+            "retry_interval": null,
+            "service_set": null,
+            "template_choice": null,
+            "use_agent": null,
+            "use_var_overrides": null,
+            "vars": {},
+            "volatile": null,
+            "zone": null
+        },
+        "nx-st-agent-logstash-health": {
+            "check_command": "nx-c-check-logstash",
+            "fields": [
+                {
+                    "datafield_id": 2391,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 2392,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 2393,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 2394,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 2395,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 2396,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-st-agent-logstash"
+            ],
+            "object_name": "nx-st-agent-logstash-health",
+            "object_type": "template",
+            "uuid": "8178011a-3755-45b0-a271-324122d29f74"
+        },
+        "nx-st-agent-logstash-pipeline": {
+            "check_command": "nx-c-check-logstash-pipeline",
+            "fields": [
+                {
+                    "datafield_id": 445,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 446,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 443,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-st-agent-logstash"
+            ],
+            "object_name": "nx-st-agent-logstash-pipeline",
+            "object_type": "template",
+            "uuid": "160bd4d8-0e90-425a-8f25-1f947a4d1ced"
+        },
+        "nx-st-agent-logstash-events": {
+            "action_url": null,
+            "apply_for": null,
+            "assign_filter": null,
+            "check_command": "nx-c-check-logstash-events",
+            "check_interval": null,
+            "check_period": null,
+            "check_timeout": null,
+            "command_endpoint": null,
+            "disabled": false,
+            "display_name": null,
+            "enable_active_checks": null,
+            "enable_event_handler": null,
+            "enable_flapping": null,
+            "enable_notifications": null,
+            "enable_passive_checks": null,
+            "enable_perfdata": null,
+            "event_command": null,
+            "fields": [
+                {
+                    "datafield_id": 447,
+                    "is_required": "y",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 446,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 443,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 445,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "flapping_threshold_high": null,
+            "flapping_threshold_low": null,
+            "groups": [],
+            "host": null,
+            "icon_image": null,
+            "icon_image_alt": null,
+            "imports": [
+                "nx-st-agent-logstash"
+            ],
+            "max_check_attempts": null,
+            "notes": null,
+            "notes_url": null,
+            "object_name": "nx-st-agent-logstash-events",
+            "object_type": "template",
+            "retry_interval": null,
+            "service_set": null,
+            "template_choice": null,
+            "use_agent": null,
+            "use_var_overrides": null,
+            "vars": {},
+            "volatile": null,
+            "zone": null
+        },
+        "nx-st-agent-logstash-neteye": {
+            "action_url": null,
+            "apply_for": null,
+            "assign_filter": null,
+            "check_command": null,
+            "check_interval": null,
+            "check_period": null,
+            "check_timeout": null,
+            "command_endpoint": null,
+            "disabled": false,
+            "display_name": null,
+            "enable_active_checks": null,
+            "enable_event_handler": null,
+            "enable_flapping": null,
+            "enable_notifications": null,
+            "enable_passive_checks": null,
+            "enable_perfdata": null,
+            "event_command": null,
+            "fields": [],
+            "flapping_threshold_high": null,
+            "flapping_threshold_low": null,
+            "groups": [],
+            "host": null,
+            "icon_image": null,
+            "icon_image_alt": null,
+            "imports": [
+                "nx-st-agent-logstash"
+            ],
+            "max_check_attempts": null,
+            "notes": null,
+            "notes_url": null,
+            "object_name": "nx-st-agent-logstash-neteye",
+            "object_type": "template",
+            "retry_interval": null,
+            "service_set": null,
+            "template_choice": null,
+            "use_agent": null,
+            "use_var_overrides": null,
+            "vars": {
+                "logstash_hostname": "localhost"
+            },
+            "volatile": null,
+            "zone": null
+        },
+        "nx-st-agent-logstash-queue": {
+            "action_url": null,
+            "apply_for": null,
+            "assign_filter": null,
+            "check_command": "nx-c-check-logstash-queue",
+            "check_interval": null,
+            "check_period": null,
+            "check_timeout": null,
+            "command_endpoint": null,
+            "disabled": false,
+            "display_name": null,
+            "enable_active_checks": null,
+            "enable_event_handler": null,
+            "enable_flapping": null,
+            "enable_notifications": null,
+            "enable_passive_checks": null,
+            "enable_perfdata": null,
+            "event_command": null,
+            "fields": [
+                {
+                    "datafield_id": 447,
+                    "is_required": "y",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 446,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "flapping_threshold_high": null,
+            "flapping_threshold_low": null,
+            "groups": [],
+            "host": null,
+            "icon_image": null,
+            "icon_image_alt": null,
+            "imports": [
+                "nx-st-agent"
+            ],
+            "max_check_attempts": null,
+            "notes": null,
+            "notes_url": null,
+            "object_name": "nx-st-agent-logstash-queue",
+            "object_type": "template",
+            "retry_interval": null,
+            "service_set": null,
+            "template_choice": null,
+            "use_agent": null,
+            "use_var_overrides": null,
+            "vars": {},
+            "volatile": null,
+            "zone": null
+        },
+        "nx-st-agent-kibana": {
+            "action_url": null,
+            "apply_for": null,
+            "assign_filter": null,
+            "check_command": "nx-c-check-kibana-stats",
+            "check_interval": null,
+            "check_period": null,
+            "check_timeout": null,
+            "command_endpoint": null,
+            "disabled": false,
+            "display_name": null,
+            "enable_active_checks": null,
+            "enable_event_handler": null,
+            "enable_flapping": null,
+            "enable_notifications": null,
+            "enable_passive_checks": null,
+            "enable_perfdata": null,
+            "event_command": null,
+            "fields": [
+                {
+                    "datafield_id": 10631,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 10628,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 10627,
+                    "is_required": "y",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 10630,
+                    "is_required": "n",
+                    "var_filter": "service.vars.nx_kibana_check_types_list=%22rt%22"
+                },
+                {
+                    "datafield_id": 10626,
+                    "is_required": "y",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 10629,
+                    "is_required": "n",
+                    "var_filter": "service.vars.nx_kibana_check_types_list=%22rt%22"
+                },
+                {
+                    "datafield_id": 250,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "flapping_threshold_high": null,
+            "flapping_threshold_low": null,
+            "groups": [],
+            "host": null,
+            "icon_image": null,
+            "icon_image_alt": null,
+            "imports": [
+                "nx-st-agent"
+            ],
+            "max_check_attempts": null,
+            "notes": null,
+            "notes_url": null,
+            "object_name": "nx-st-agent-kibana",
+            "object_type": "template",
+            "retry_interval": null,
+            "service_set": null,
+            "template_choice": null,
+            "use_agent": null,
+            "use_var_overrides": null,
+            "vars": {
+                "nx_kibana_hostname": "localhost",
+                "nx_kibana_port": "5601"
+            },
+            "volatile": null,
+            "zone": null
+        },
+        "nx-st-agentless-restapi-elastic-ingest-status": {
+            "action_url": null,
+            "apply_for": null,
+            "assign_filter": null,
+            "check_command": "nx-c-check_elastic_ingest_status",
+            "check_interval": "300",
+            "check_period": null,
+            "check_timeout": null,
+            "command_endpoint": null,
+            "disabled": false,
+            "display_name": null,
+            "enable_active_checks": null,
+            "enable_event_handler": null,
+            "enable_flapping": null,
+            "enable_notifications": null,
+            "enable_passive_checks": null,
+            "enable_perfdata": null,
+            "event_command": null,
+            "fields": [
+                {
+                    "datafield_id": 10641,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 10644,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 10642,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 10645,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 10646,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 10643,
+                    "is_required": "y",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 10632,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 10633,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "flapping_threshold_high": null,
+            "flapping_threshold_low": null,
+            "groups": [],
+            "host": null,
+            "icon_image": null,
+            "icon_image_alt": null,
+            "imports": [
+                "nx-st-agentless-restapi"
+            ],
+            "max_check_attempts": null,
+            "notes": null,
+            "notes_url": null,
+            "object_name": "nx-st-agentless-restapi-elastic-ingest-status",
+            "object_type": "template",
+            "retry_interval": null,
+            "service_set": null,
+            "template_choice": null,
+            "use_agent": null,
+            "use_var_overrides": null,
+            "vars": {},
+            "volatile": null,
+            "zone": "master"
+        },
+        "nx-st-agentless-restapi-elastic-blockchain-status": {
+            "action_url": null,
+            "apply_for": null,
+            "assign_filter": null,
+            "check_command": "nx-c-check_elastic_blockchain_status",
+            "check_interval": "3600",
+            "check_period": null,
+            "check_timeout": null,
+            "command_endpoint": null,
+            "disabled": false,
+            "display_name": null,
+            "enable_active_checks": null,
+            "enable_event_handler": null,
+            "enable_flapping": null,
+            "enable_notifications": null,
+            "enable_passive_checks": null,
+            "enable_perfdata": null,
+            "event_command": null,
+            "fields": [
+                {
+                    "datafield_id": 10642,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 10646,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 10643,
+                    "is_required": "y",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 10633,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "flapping_threshold_high": null,
+            "flapping_threshold_low": null,
+            "groups": [],
+            "host": null,
+            "icon_image": null,
+            "icon_image_alt": null,
+            "imports": [
+                "nx-st-agentless-restapi"
+            ],
+            "max_check_attempts": null,
+            "notes": null,
+            "notes_url": null,
+            "object_name": "nx-st-agentless-restapi-elastic-blockchain-status",
+            "object_type": "template",
+            "retry_interval": null,
+            "service_set": null,
+            "template_choice": null,
+            "use_agent": null,
+            "use_var_overrides": null,
+            "uuid": "d0be5702-e614-4122-ab6f-3fcb91ed4d89",
+            "vars": {},
+            "volatile": null,
+            "zone": "master"
+        },
+        "nx-st-agentless-elastic-agent-check": {
+            "check_command": "nx-c-check-elastic-agent-status",
+            "fields": [
+                {
+                    "datafield_id": 448,
+                    "is_required": "y",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-st-agentless"
+            ],
+            "object_name": "nx-st-agentless-elastic-agent-check",
+            "object_type": "template",
+            "zone": "master",
+            "vars": {
+                "es_hostname": "$host.name$"
+            }
+        },
+        "nx-st-agentless-apm-server-check": {
+            "check_command": "nx-c-check-apm-server-status",
+            "fields": [
+                {
+                    "datafield_id": 448,
+                    "is_required": "y",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-st-agentless"
+            ],
+            "object_name": "nx-st-agentless-apm-server-check",
+            "object_type": "template",
+            "zone": "master",
+            "vars": {
+                "es_hostname": "$host.name$"
+            }
+        },
+        "nx-st-agentless-elastic-endpoint-check": {
+            "check_command": "nx-c-check-elastic-endpoint-status",
+            "fields": [
+                {
+                    "datafield_id": 448,
+                    "is_required": "y",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-st-agentless"
+            ],
+            "object_name": "nx-st-agentless-elastic-endpoint-check",
+            "object_type": "template",
+            "zone": "master",
+            "vars": {
+                "es_hostname": "$host.name$"
+            }
+        },
+        "nx-st-fleet-agent-status": {
+            "check_command": "nx-c-fleet-agent-status",
+            "check_timeout": 90,
+            "max_check_attempts": "2",
+            "fields": [
+                {
+                    "datafield_id": 250,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "neteye-check-template",
+                "nx-st-agentless-neteye"
+            ],
+            "object_name": "nx-st-fleet-agent-status",
+            "object_type": "template"
+        },
+        "nx-st-endpoint-agent-status": {
+            "check_command": "nx-c-endpoint-agent-status",
+            "fields": [],
+            "imports": [
+                "neteye-check-template",
+                "nx-st-agentless-neteye"
+            ],
+            "object_name": "nx-st-endpoint-agent-status",
+            "object_type": "template"
+        },
+        "nx-st-check_elastic_disk_watermark_flooding": {
+            "check_command": "nx-c-check_elastic_disk_watermark_flooding",
+            "fields": [
+                {
+                    "datafield_id": 10650,
+                    "is_required": "y",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 10651,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 10652,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-st-agent-elastic"
+            ],
+            "object_name": "nx-st-check_elastic_disk_watermark_flooding",
+            "object_type": "template"
+        },
+        "nx-st-agentless-elastic-slm-policy": {
+            "check_command": "nx-c-check-elastic-slm-policy",
+            "fields": [],
+            "imports": [
+                "nx-st-agentless"
+            ],
+            "object_name": "nx-st-agentless-elastic-slm-policy",
+            "object_type": "template"
+        },
+        "nx-st-agentless-elastic-slm-status": {
+            "check_command": "nx-c-check-elastic-slm-status",
+            "fields": [],
+            "imports": [
+                "nx-st-agentless"
+            ],
+            "object_name": "nx-st-agentless-elastic-slm-status",
+            "object_type": "template"
+        },
+        "nx-st-agentless-elastic-dataset-status": {
+            "check_command": "nx-c-check_elastic_dataset_status",
+            "fields": [
+                {
+                    "datafield_id": 10641,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 10646,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 10647,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 10642,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 10643,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1668,
+                    "is_required": "y",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1669,
+                    "is_required": "y",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 10648,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-st-agentless"
+            ],
+            "object_name": "nx-st-agentless-elastic-dataset-status",
+            "object_type": "template"
+        },
+        "nx-st-agentless-elastic-transforms-status": {
+            "check_command": "nx-c-check_elastic_transforms_status",
+            "fields": [
+                {
+                    "datafield_id": 1668,
+                    "is_required": "y",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1669,
+                    "is_required": "y",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-st-agentless"
+            ],
+            "object_name": "nx-st-agentless-elastic-transforms-status",
+            "object_type": "template"
+        },
+        "nx-st-agentless-ebp-duplicates-removal": {
+            "check_command": "nx-c-check_elastic_remove_duplicate_ebp_iterations",
+            "fields": [
+                {
+                    "datafield_id": 10649,
+                    "is_required": "y",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-st-agentless"
+            ],
+            "object_name": "nx-st-agentless-ebp-duplicates-removal",
+            "object_type": "template",
+            "uuid": "faa52866-0a21-45e2-8919-0c7765c5f400"
+        },
+        "nx-st-agentless-elastic-dataset-object": {
+            "check_command": "nx-c-check-elastic-dataset-object",
+            "fields": [],
+            "imports": [
+                "nx-st-agentless"
+            ],
+            "object_name": "nx-st-agentless-elastic-dataset-object",
+            "object_type": "template",
+            "uuid": "7bbc8dd2-c4ac-4d71-b0c9-5d116a5313cb",
+            "zone": "master"
+        },
+        "nx-st-interval-10m": {
+            "check_interval": 600,
+            "imports": [
+                "nx-st-type-custom"
+            ],
+            "object_name": "nx-st-interval-10m",
+            "object_type": "template"
+        },
+        "nx-st-interval-24h": {
+            "check_interval": 86400,
+            "imports": [
+                "nx-st-type-custom"
+            ],
+            "object_name": "nx-st-interval-24h",
+            "object_type": "template"
+        },
+        "nx-st-interval-30h": {
+            "check_interval": 108000,
+            "imports": [
+                "nx-st-type-custom"
+            ],
+            "object_name": "nx-st-interval-30h",
+            "object_type": "template"
+        },
+        "nx-st-interval-30d": {
+            "check_interval": 2592000,
+            "imports": [
+                "nx-st-type-custom"
+            ],
+            "object_name": "nx-st-interval-30d",
+            "object_type": "template"
+        },
+        "nx-st-agentless-elastic-watchers-status": {
+            "check_command": "nx-c-check_elastic_watchers_status",
+            "fields": [
+                {
+                    "datafield_id": 1668,
+                    "is_required": "y",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1669,
+                    "is_required": "y",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-st-agentless"
+            ],
+            "object_name": "nx-st-agentless-elastic-watchers-status",
+            "object_type": "template"
+        }
+    },
+    "Datafield": {
+        "103": {
+            "varname": "es_auth_cert",
+            "caption": "es_auth_cert",
+            "description": "Certificate Auth",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "103",
+            "settings": {}
+        },
+        "104": {
+            "varname": "es_auth_key",
+            "caption": "es_auth_key",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "104",
+            "settings": {}
+        },
+        "105": {
+            "varname": "es_local_enabled",
+            "caption": "Elastic Local Node",
+            "description": "Run check om Local Node",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeBoolean",
+            "format": null,
+            "originalId": "105",
+            "settings": {
+                "visibility": "visible"
+            }
+        },
+        "443": {
+            "category_id": null,
+            "varname": "logstash_warning",
+            "caption": "Logstash Warning",
+            "description": "Warning threshold (support for nagios range)",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "443",
+            "settings": {}
+        },
+        "444": {
+            "category_id": null,
+            "varname": "nx_elastic_check_types_list",
+            "caption": "[NX] Elastic Check Types List",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeDatalist",
+            "format": null,
+            "originalId": "444",
+            "settings": {
+                "behavior": "strict",
+                "data_type": "string",
+                "datalist": "[NX] Elastic Check Types List"
+            }
+        },
+        "445": {
+            "category_id": null,
+            "varname": "logstash_critical",
+            "caption": "Logstash Critical",
+            "description": "Critical threshold (support for nagios range)",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "445",
+            "settings": {}
+        },
+        "446": {
+            "category_id": null,
+            "varname": "logstash_pipeline",
+            "caption": "Logstash Pipeline",
+            "description": "Pipeline name to check (see names under 'pipelines.yml'",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "446",
+            "settings": {}
+        },
+        "447": {
+            "uuid": "87246f58-974b-4a66-9708-c38b000003a1",
+            "varname": "logstash_hostname",
+            "caption": "Logstash Hostname",
+            "description": "Hostaname or IP Address",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "447",
+            "settings": {},
+            "category": null
+        },
+        "2397": {
+            "uuid": "2e6d295d-9bbe-4577-b15b-f238168128a6",
+            "varname": "logstash_port",
+            "caption": "Logstash API Port",
+            "description": "Port of the Logstash server (default 9600)",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {},
+            "category": null
+        },
+        "2391": {
+            "uuid": "89d69e6f-d12c-457c-ba5c-46eb47459790",
+            "varname": "logstash_cpu_crit",
+            "caption": "Logstash CPU Critical",
+            "description": "The percentage of CPU usage on which to be a critical result (default \"100\")",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {},
+            "category": null
+        },
+        "2392": {
+            "uuid": "d9a3f1ac-29ea-4f5c-9978-25612cee47f6",
+            "varname": "logstash_cpu_warn",
+            "caption": "Logstash CPU Warning",
+            "description": "The percentage of CPU usage on which to be a warning result (default \"100\")",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {},
+            "category": null
+        },
+        "2393": {
+            "uuid": "ac17bbb9-1525-43c1-8f1d-b60fee7e13ad",
+            "varname": "logstash_descriptor_crit",
+            "caption": "Logstash File Descriptor Critical",
+            "description": "The percentage relative to the process file descriptor limit on which to be a critical result (default \"100\")",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {},
+            "category": null
+        },
+        "2394": {
+            "uuid": "43ce6a39-a4c5-4273-afb1-7fcaf1fe4167",
+            "varname": "logstash_descriptor_warn",
+            "caption": "Logstash File Descriptor Warning",
+            "description": "The percentage relative to the process file descriptor limit on which to be a warning result (default \"100\")",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {},
+            "category": null
+        },
+        "2395": {
+            "uuid": "6e22f99d-4940-45a4-9e63-8f46082bdf97",
+            "varname": "logstash_heap_crit",
+            "caption": "Logstash Heap Usage Critical",
+            "description": "The percentage relative to the heap size limit on which to be a critical result (default \"80\")",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {},
+            "category": null
+        },
+        "2396": {
+            "uuid": "8e92c7a1-2f3b-4ce1-b699-cdcbbf687252",
+            "varname": "logstash_heap_warn",
+            "caption": "Logstash Heap Usage Warning",
+            "description": "The percentage relative to the heap size limit on which to be a warning result (default \"70\")",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {},
+            "category": null
+        },
+        "448": {
+            "category_id": null,
+            "varname": "es_hostname",
+            "caption": "Elastic Hostname",
+            "description": "Hostaname or IP Address",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "448",
+            "settings": {}
+        },
+        "250": {
+            "category_id": null,
+            "varname": "http_ssl",
+            "caption": "HTTP use SSL",
+            "description": "Activates -S",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeBoolean",
+            "format": null,
+            "originalId": "250",
+            "settings": {}
+        },
+        "522": {
+            "category_id": null,
+            "varname": "filebeat_critical",
+            "caption": "Filebeat Critical",
+            "description": "Critical threshold",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "522",
+            "settings": {}
+        },
+        "521": {
+            "category_id": null,
+            "varname": "filebeat_hostname",
+            "caption": "Filebeat Hostname",
+            "description": "Hostaname or IP Address (default is localhost)",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "521",
+            "settings": {}
+        },
+        "523": {
+            "category_id": null,
+            "varname": "filebeat_warning",
+            "caption": "Filebeat Warning",
+            "description": "warning threshold (default is 0)",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "523",
+            "settings": {}
+        },
+        "524": {
+            "category_id": null,
+            "varname": "filebeat_port",
+            "caption": "Filebeat Port",
+            "description": "Port (default is 5066)",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "521",
+            "settings": {}
+        },
+        "1668": {
+            "varname": "nx_tornado_webhook_name",
+            "caption": "[NX] Tornado Webhook Name",
+            "description": "'Webhook endpoint enabled in Tornado",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "1668",
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": null
+        },
+        "1669": {
+            "varname": "nx_tornado_webhook_secret",
+            "caption": "[NX] Tornado Webhook Secret",
+            "description": "Webhook endpoint token secret in Tornado",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "1669",
+            "settings": {
+                "visibility": "hidden"
+            },
+            "category": null
+        },
+        "10632": {
+            "varname": "nx_elastic_critical",
+            "caption": "[NX] Elastic Critical",
+            "description": "Critical threshold \r\nThreshold format for 'disk', 'mem', 'cpu' and 'maxshards': int (for percent), defaults to 80 (warn) and 95 (crit)\r\nThreshold format for 'tps': int,int,int (active, queued, rejected), no defaults\r\nThreshold format for all other check types': int, no defaults\r\n",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "10632",
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": null
+        },
+        "10633": {
+            "varname": "nx_elastic_warning",
+            "caption": "[NX] Elastic Warning",
+            "description": "Warning threshold\r\nThreshold format for 'disk', 'mem', 'cpu' and 'maxshards': int (for percent), defaults to 80 (warn) and 95 (crit)\r\nThreshold format for 'tps': int,int,int (active, queued, rejected), no defaults\r\nThreshold format for all other check types': int, no defaults\r\n",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "10633",
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": null
+        },
+        "10631": {
+            "varname": "nx_kibana_auth_file",
+            "caption": "Kibana API Auth File",
+            "description": "API Key file for Authentication (absolute path)",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "10631",
+            "settings": {},
+            "category": null
+        },
+        "10627": {
+            "varname": "nx_kibana_check_types_list",
+            "caption": "Kibana Check Type",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeDatalist",
+            "format": null,
+            "originalId": "10627",
+            "settings": {
+                "behavior": "strict",
+                "data_type": "string",
+                "datalist": "[NX] Kibana Check Types List"
+            },
+            "category": null
+        },
+        "10630": {
+            "varname": "nx_kibana_critical",
+            "caption": "Kibana Critical",
+            "description": "Critical threshold \r\nThreshold format for max_response_time': int, milliseconds",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "10630",
+            "settings": {},
+            "category": null
+        },
+        "10626": {
+            "varname": "nx_kibana_hostname",
+            "caption": "Kibana Host",
+            "description": "Hostaname or IP Address",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "10626",
+            "settings": {
+                "rename_vars": "y",
+                "visibility": "visible"
+            },
+            "category": null
+        },
+        "10628": {
+            "varname": "nx_kibana_port",
+            "caption": "Kibana Port",
+            "description": "Port check \r\nDefault: 5601",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "10628",
+            "settings": {},
+            "category": null
+        },
+        "10629": {
+            "varname": "nx_kibana_warning",
+            "caption": "Kibana Warning",
+            "description": "Warning threshold\r\nThreshold format for max_response_time': int, milliseconds",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "10629",
+            "settings": {},
+            "category": null
+        },
+        "10641": {
+            "varname": "nx_elastic_agent_type",
+            "caption": "[NX] Elastic Agent Type",
+            "description": "Agent type. Choose between the following values: 'winlogbeat', 'filebeat', 'auditbeat', 'packetbeat', 'metricbeat', 'elastic_agent', 'all'",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeDatalist",
+            "format": null,
+            "originalId": "10641",
+            "settings": {
+                "behavior": "strict",
+                "data_type": "string",
+                "datalist": "[NX] Elastic Agent Types List"
+            },
+            "category": null
+        },
+        "10644": {
+            "varname": "nx_elastic_filters",
+            "caption": "[NX] Elastic Filters",
+            "description": "Filters to be added on query match, this param can be use multiple times (format: field.name=value)",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeArray",
+            "format": null,
+            "originalId": "10644",
+            "settings": {},
+            "category": null
+        },
+        "10642": {
+            "varname": "nx_elastic_time_field",
+            "caption": "[NX] Elastic Time Field",
+            "description": "Time field",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "10642",
+            "settings": {},
+            "category": null
+        },
+        "10645": {
+            "varname": "nx_enable_eps",
+            "caption": "[NX] Enable EPS",
+            "description": "Enable EPS",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeBoolean",
+            "format": null,
+            "originalId": "10645",
+            "settings": {},
+            "category": null
+        },
+        "10648": {
+            "varname": "nx_elastic_enable_metrics",
+            "caption": "[NX] Elastic Enable Metrics",
+            "description": "Enable Metrics logs on Elasticsearch",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeBoolean",
+            "format": null,
+            "originalId": "10648",
+            "settings": {},
+            "category": null
+        },
+        "10643": {
+            "varname": "nx_neteye_tenant",
+            "caption": "[NX] NetEye Tenant",
+            "description": "Tenant name where search data (like namespace for ElasticAgent)",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "10643",
+            "settings": {},
+            "category": null
+        },
+        "10646": {
+            "varname": "nx_elastic_check_interval",
+            "caption": "[NX] Elastic Check Interval",
+            "description": "Check interval range time with format 1m, 1d, 1h (default 5m)",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "10646",
+            "settings": {},
+            "category": null
+        },
+        "10647": {
+            "varname": "nx_elastic_dataset_exclusion",
+            "caption": "[NX] Elastic Dataset Exclusion",
+            "description": "Dataset name to be excluded from check, this param can be use multiple times",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeArray",
+            "format": null,
+            "originalId": "10647",
+            "settings": {},
+            "category": null
+        },
+        "10649":{
+            "varname": "nx_ebp_blockchain",
+            "caption": "[NX] Elastic Blockchain Name",
+            "description": "Blockchain to search iterations into the format <tenant>-<retention>-<tag>",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "10649",
+            "settings": {},
+            "category": null,
+            "uuid": "15e8ff0a-ce05-49dd-afb6-792e79f16ba8"
+        },
+        "10650":{
+            "varname": "nx_elastic_data_path",
+            "caption": "[NX] Elastic Data Folder Path",
+            "description": "Path of the Elasticsearch Data Folder (usually /neteye/local/elasticsearch/data)",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "10650",
+            "settings": {},
+            "category": null
+        },
+        "10651":{
+            "varname": "nx_elastic_disk_watermark_warning_multiplier_threshold",
+            "caption": "[NX] Elastic Disk Watermark Warning Multiplier",
+            "description": "Multiplier used for warning threshold for Elastic disk flooding watermark (default: 2.0)",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "10651",
+            "settings": {},
+            "category": null
+        },
+        "10652":{
+            "varname": "nx_elastic_disk_watermark_critical_multiplier_threshold",
+            "caption": "[NX] Elastic Disk Watermark Critical Multiplier",
+            "description": "Multiplier used for critical threshold for Elastic disk flooding watermark (default: 1.5)",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "10652",
+            "settings": {},
+            "category": null
+        }
+    }
+}

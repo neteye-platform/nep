@@ -1,0 +1,490 @@
+{
+  "ServiceTemplate": {
+    "nx-st-agentless-http": {
+      "action_url": null,
+      "apply_for": null,
+      "assign_filter": null,
+      "check_command": "nx-c-http",
+      "check_interval": null,
+      "check_period": null,
+      "check_timeout": null,
+      "command_endpoint": null,
+      "disabled": false,
+      "display_name": null,
+      "enable_active_checks": null,
+      "enable_event_handler": null,
+      "enable_flapping": null,
+      "enable_notifications": null,
+      "enable_passive_checks": null,
+      "enable_perfdata": null,
+      "event_command": null,
+      "fields": [],
+      "flapping_threshold_high": null,
+      "flapping_threshold_low": null,
+      "groups": [],
+      "host": null,
+      "icon_image": "img/nep/service/http.png",
+      "icon_image_alt": null,
+      "imports": [
+        "nx-st-agentless-http-only",
+        "nx-st-agentless-https-only"
+      ],
+      "max_check_attempts": null,
+      "notes": null,
+      "notes_url": null,
+      "object_name": "nx-st-agentless-http",
+      "object_type": "template",
+      "retry_interval": null,
+      "service_set": null,
+      "template_choice": null,
+      "use_agent": null,
+      "use_var_overrides": null,
+      "vars": {},
+      "volatile": null,
+      "zone": null
+    },
+    "nx-st-agentless-http-base": {
+      "action_url": null,
+      "apply_for": null,
+      "assign_filter": null,
+      "check_command": null,
+      "check_interval": null,
+      "check_period": null,
+      "check_timeout": null,
+      "command_endpoint": null,
+      "disabled": false,
+      "display_name": null,
+      "enable_active_checks": null,
+      "enable_event_handler": null,
+      "enable_flapping": null,
+      "enable_notifications": null,
+      "enable_passive_checks": null,
+      "enable_perfdata": null,
+      "event_command": null,
+      "fields": [
+        {
+          "datafield_id": 145,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 148,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 149,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 150,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 151,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 152,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 161,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 154,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 155,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 156,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 163,
+          "is_required": "n",
+          "var_filter": null
+        }
+      ],
+      "flapping_threshold_high": null,
+      "flapping_threshold_low": null,
+      "groups": [],
+      "host": null,
+      "icon_image": null,
+      "icon_image_alt": null,
+      "imports": [
+        "nx-st-agentless"
+      ],
+      "max_check_attempts": null,
+      "notes": null,
+      "notes_url": null,
+      "object_name": "nx-st-agentless-http-base",
+      "object_type": "template",
+      "retry_interval": null,
+      "service_set": null,
+      "template_choice": null,
+      "use_agent": null,
+      "use_var_overrides": null,
+      "vars": {
+        "http_critical_time": 30,
+        "http_timeout": 60,
+        "http_warn_time": 20
+      },
+      "volatile": null,
+      "zone": null
+    },
+    "nx-st-agentless-http-only": {
+      "action_url": null,
+      "apply_for": null,
+      "assign_filter": null,
+      "check_command": "nx-c-http-only",
+      "check_interval": null,
+      "check_period": null,
+      "check_timeout": null,
+      "command_endpoint": null,
+      "disabled": false,
+      "display_name": null,
+      "enable_active_checks": null,
+      "enable_event_handler": null,
+      "enable_flapping": null,
+      "enable_notifications": null,
+      "enable_passive_checks": null,
+      "enable_perfdata": null,
+      "event_command": null,
+      "fields": [
+        {
+          "datafield_id": 146,
+          "is_required": "n",
+          "var_filter": null
+        }
+      ],
+      "flapping_threshold_high": null,
+      "flapping_threshold_low": null,
+      "groups": [],
+      "host": null,
+      "icon_image": null,
+      "icon_image_alt": null,
+      "imports": [
+        "nx-st-agentless-http-base"
+      ],
+      "max_check_attempts": null,
+      "notes": null,
+      "notes_url": null,
+      "object_name": "nx-st-agentless-http-only",
+      "object_type": "template",
+      "retry_interval": null,
+      "service_set": null,
+      "template_choice": null,
+      "use_agent": null,
+      "use_var_overrides": null,
+      "vars": {},
+      "volatile": null,
+      "zone": null
+    },
+    "nx-st-agentless-https-only": {
+      "action_url": null,
+      "apply_for": null,
+      "assign_filter": null,
+      "check_command": "nx-c-https-only",
+      "check_interval": null,
+      "check_period": null,
+      "check_timeout": null,
+      "command_endpoint": null,
+      "disabled": false,
+      "display_name": null,
+      "enable_active_checks": null,
+      "enable_event_handler": null,
+      "enable_flapping": null,
+      "enable_notifications": null,
+      "enable_passive_checks": null,
+      "enable_perfdata": null,
+      "event_command": null,
+      "fields": [
+        {
+          "datafield_id": 162,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 147,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 1382,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 2760,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 2763,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 2765,
+          "is_required": "n",
+          "var_filter": null
+        }
+      ],
+      "flapping_threshold_high": null,
+      "flapping_threshold_low": null,
+      "groups": [],
+      "host": null,
+      "icon_image": null,
+      "icon_image_alt": null,
+      "imports": [
+        "nx-st-agentless-http-base"
+      ],
+      "max_check_attempts": null,
+      "notes": null,
+      "notes_url": null,
+      "object_name": "nx-st-agentless-https-only",
+      "object_type": "template",
+      "retry_interval": null,
+      "service_set": null,
+      "template_choice": null,
+      "use_agent": null,
+      "use_var_overrides": null,
+      "vars": {},
+      "volatile": null,
+      "zone": null
+    }
+  },
+  "Datafield": {
+    "145": {
+      "varname": "nx_http_address",
+      "caption": "[NX] IP Address",
+      "description": "IP address or name (use numeric address if possible to bypass DNS lookup)",
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+      "format": null,
+      "originalId": "145",
+      "settings": {
+        "visibility": "visible"
+      },
+      "category": "Website Settings"
+    },
+    "148": {
+      "varname": "nx_http_auth_method",
+      "caption": "[NX] Authentication method",
+      "description": "Authentication method: basic, ntlm, ntlm2 (default basic)",
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeDatalist",
+      "format": null,
+      "originalId": "148",
+      "settings": {
+        "behavior": "strict",
+        "data_type": "string",
+        "datalist": "[NX] HTTP Authentication methods List"
+      },
+      "category": "Website Settings"
+    },
+    "149": {
+      "varname": "nx_http_auth_pair",
+      "caption": "[NX] Authenticaton credential",
+      "description": "Username:password on sites with basic authentication",
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+      "format": null,
+      "originalId": "149",
+      "settings": {
+        "visibility": "visible"
+      },
+      "category": "Website Settings"
+    },
+    "150": {
+      "varname": "nx_http_critical_time",
+      "caption": "[NX] Response time Critical",
+      "description": "Response time to result in critical status (seconds)",
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+      "format": null,
+      "originalId": "150",
+      "settings": {
+        "visibility": "visible"
+      },
+      "category": "Website Settings"
+    },
+    "151": {
+      "varname": "nx_http_extendedperfdata",
+      "caption": "[NX] Enable Extended Perfdata",
+      "description": "Print additional performance data",
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeBoolean",
+      "format": null,
+      "originalId": "151",
+      "settings": {},
+      "category": "Website Settings (Advanced)"
+    },
+    "152": {
+      "varname": "nx_http_onredirect",
+      "caption": "[NX] On HTTP 3xx",
+      "description": "Define the behavior in case the HTTP response is an HTTP Recirect (HTTP Code 3xx)",
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeDatalist",
+      "format": null,
+      "originalId": "152",
+      "settings": {
+        "behavior": "strict",
+        "data_type": "string",
+        "datalist": "[NX] HTTP Redirect Actions List"
+      },
+      "category": "Website Settings (Advanced)"
+    },
+    "161": {
+      "varname": "nx_http_ssl",
+      "caption": "[NX] Connect using SSL",
+      "description": "Connect via SSL",
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeBoolean",
+      "format": null,
+      "originalId": "161",
+      "settings": {},
+      "category": "Website Settings"
+    },
+    "154": {
+      "varname": "nx_http_uri",
+      "caption": "[NX] URI",
+      "description": "URL to GET or POST (default: \/)",
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+      "format": null,
+      "originalId": "154",
+      "settings": {
+        "visibility": "visible"
+      },
+      "category": "Website Settings"
+    },
+    "155": {
+      "varname": "nx_http_vhost",
+      "caption": "[NX] Virtual Host (Host Header)",
+      "description": "Host name argument for servers using host headers (virtual host)",
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+      "format": null,
+      "originalId": "155",
+      "settings": {
+        "visibility": "visible"
+      },
+      "category": "Website Settings"
+    },
+    "156": {
+      "varname": "nx_http_warn_time",
+      "caption": "[NX] Response time Warning",
+      "description": "Response time to result in warning status (seconds)",
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+      "format": null,
+      "originalId": "156",
+      "settings": {
+        "visibility": "visible"
+      },
+      "category": "Website Settings"
+    },
+    "146": {
+      "varname": "nx_http_port_http",
+      "caption": "[NX] TCP Port (HTTP)",
+      "description": "Port number (default: 80)",
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeNumber",
+      "format": null,
+      "originalId": "146",
+      "settings": {},
+      "category": "Website Settings"
+    },
+    "162": {
+      "varname": "nx_http_min_certificate_validity",
+      "caption": "[NX] Minimum Certificate validity",
+      "description": "Minimum number of days a certificate has to be valid. This parameter explicitely sets the port to 443 and ignores the URL if passed.",
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+      "format": null,
+      "originalId": "162",
+      "settings": {
+        "rename_vars": "y",
+        "visibility": "visible"
+      },
+      "category": "Website Settings"
+    },
+    "147": {
+      "varname": "nx_http_port_https",
+      "caption": "[NX] TCP Port (HTTPS)",
+      "description": "Port number (default: 80)",
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeNumber",
+      "format": null,
+      "originalId": "147",
+      "settings": {},
+      "category": "Website Settings"
+    },
+    "163": {
+      "varname": "nx_http_expected",
+      "caption": "[NX] Expected Http code list",
+      "description": "Comma-delimited list of strings, at least one of them is expected in the first (status) line of the server response (default: HTTP/1.)",
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+      "format": null,
+      "originalId": "163",
+      "settings": {
+        "visibility": "visible"
+      },
+      "category": "Website Settings"
+    },
+    "1382": {
+      "uuid": "87246f58-974b-4a66-9708-c38b00000566",
+      "varname": "nx_http_sni",
+      "caption": "[NX] Enable SNI",
+      "description": "Enable SSL/TLS hostname extension support (SNI)",
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeBoolean",
+      "format": null,
+      "settings": {},
+      "category": "Website Settings (Advanced)"
+    },
+    "2760": {
+      "varname": "nx_http_expect_body_regex",
+      "caption": "[NX] Expected regex",
+      "description": "Search page for regex STRING",
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+      "format": null,
+      "settings": {
+        "visibility": "visible"
+      },
+      "category": "Website Settings (Advanced)"
+    },
+    "2763": {
+      "varname": "nx_http_invertregex",
+      "caption": "[NX] Invert Regex",
+      "description": "Return CRITICAL if found, OK if not",
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeBoolean",
+      "format": null,
+      "settings": {},
+      "category": "Website Settings (Advanced)"
+    },
+    "2765": {
+      "varname": "nx_http_string",
+      "caption": "[NX] Expected string in body",
+      "description": "String to expect in the content",
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+      "format": null,
+      "settings": {
+        "visibility": "visible"
+      },
+      "category": "Website Settings (Advanced)"
+    }
+  },
+  "DatafieldCategory": {
+    "Website Settings": {
+      "category_name": "Website Settings",
+      "description": null,
+      "originalId": "1"
+    },
+    "Website Settings (Advanced)": {
+      "category_name": "Website Settings (Advanced)",
+      "description": null,
+      "originalId": "2"
+    }
+  }
+}

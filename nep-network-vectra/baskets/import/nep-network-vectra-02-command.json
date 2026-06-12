@@ -1,0 +1,112 @@
+{
+    "Command": {
+        "nx-c-centreon_vectra_cpu": {
+            "arguments": {
+                "--critical-cpu.utilization.percentage": {
+                    "value": "$vectra_critical_cpu_utilization_percentage$",
+                    "order": "3"
+                },
+                "--mode": {
+                    "value": "cpu",
+                    "order": "1"
+                },
+                "--warning-cpu.utilization.percentage": {
+                    "value": "$vectra_warning_cpu_utilization_percentage$",
+                    "order": "2"
+                }
+            },
+            "fields": [],
+            "imports": [
+                "nx-ct-centreon-plugin-restapi-vectra"
+            ],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-centreon_vectra_cpu",
+            "object_type": "object"
+        },
+        "nx-c-centreon_vectra_disk": {
+            "arguments": {
+                "--critical-disk.usage.percentage": {
+                    "value": "$vectra_critical_disk_utilization_percentage$",
+                    "order": "3"
+                },
+                "--mode": {
+                    "value": "disk",
+                    "order": "1"
+                },
+                "--warning-disk.usage.percentage": {
+                    "value": "$vectra_warning_disk_utilization_percentage$",
+                    "order": "2"
+                }
+            },
+            "fields": [],
+            "imports": [
+                "nx-ct-centreon-plugin-restapi-vectra"
+            ],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-centreon_vectra_disk",
+            "object_type": "object"
+        },
+        "nx-c-centreon_vectra_memory": {
+            "arguments": {
+                "--critical-memory.usage.percentage": {
+                    "value": "$vectra_critical_memory_utilization_percentage$",
+                    "order": "3"
+                },
+                "--mode": {
+                    "value": "memory",
+                    "order": "1"
+                },
+                "--warning-memory.usage.percentage": {
+                    "value": "$vectra_warning_memory_utilization_percentage$",
+                    "order": "2"
+                }
+            },
+            "fields": [],
+            "imports": [
+                "nx-ct-centreon-plugin-restapi-vectra"
+            ],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-centreon_vectra_memory",
+            "object_type": "object"
+        },
+        "nx-c-centreon_vectra_sensors": {
+            "arguments": {
+                "--mode": "sensors",
+                "--output-ignore-perfdata": {
+                    "skip_key": true,
+                    "value": "--output-ignore-perfdata"
+                }
+            },
+            "fields": [],
+            "imports": [
+                "nx-ct-centreon-plugin-restapi-vectra"
+            ],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-centreon_vectra_sensors",
+            "object_type": "object",
+            "timeout": "300"
+        }
+    },
+    "CommandTemplate": {
+        "nx-ct-centreon-plugin-restapi-vectra": {
+            "arguments": {
+                "--insecure": {
+                    "set_if": "$api_insecure$",
+                    "set_if_format": "string"
+                },
+                "--token": {
+                    "description": "API Token",
+                    "value": "$api_token$"
+                }
+            },
+            "command": "/usr/lib/centreon/plugins/centreon_vectra_restapi.pl",
+            "fields": [],
+            "imports": [
+                "nx-ct-centreon-plugin-restapi"
+            ],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-ct-centreon-plugin-restapi-vectra",
+            "object_type": "template"
+        }
+    }
+}

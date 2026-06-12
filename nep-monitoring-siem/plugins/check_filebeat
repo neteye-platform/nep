@@ -1,0 +1,201 @@
+#!/bin/bash
+
+# Original author: Franco Federico (franco.federico <at> wuerth-phoenix.com)
+#
+# The aim of this check is to detect error on filebeat that ingestion data to elasticsearch or logstash.
+#
+# The documentation used to implement this script is here
+# https://discuss.elastic.co/t/check-filebeat-status-using-api-on-local-host/183594
+#
+#
+
+
+readonly PROGRAM_NAME=$(basename "$0")
+readonly OK=0
+readonly WARNING=1
+readonly CRITICAL=2
+readonly UNKNOWN=3
+
+
+build_performance_data() {
+    local METRIC_NAME=$1
+    local VALUE=$2
+    local WARNING_THRESHOLD=$3
+    local CRITICAL_THRESHOLD=$4
+    echo "${METRIC_NAME}=${VALUE};${WARNING_THRESHOLD};${CRITICAL_THRESHOLD};;"
+}
+
+check_threshold_existence() {
+    local WARNING_THRESHOLD=$1
+    local CRITICAL_THRESHOLD=$2
+    # Check if warning threshold smaller than critical one
+    if [[ "$CRITICAL_THRESHOLD" -lt "${WARNING_THRESHOLD}" ]];
+    then
+      echo "CHECK UNKNOWN - Critical Threshold '${CRITICAL_THRESHOLD}' should be bigger than or equal to warning threshold '${WARNING_THRESHOLD}'"
+      exit "${UNKNOWN}"
+    fi
+}
+
+
+# Default Values that can be overwritten by options
+FILEBEAT_HOST="localhost"
+FILEBEAT_PORT="5066"
+FILEBEAT_PROTOCOL="http"
+## PIPELINE_NAME="main"
+THRESHOLD_FORMAT="percentage"
+CURL_COMMAND_PATH="/usr/bin/curl"
+CURL_CERT=""
+CURL_PRIVATE_KEY=""
+WARNING_ON_NUMBER=0
+CRITICAL_ON_NUMBER=0
+
+
+
+
+
+function print_help() {
+  # Print the help message and exit
+  echo "$1: check the status of the Filebeat."
+  echo -e "\t Usage: $1 [OPTION]..."
+  echo ""
+  echo -e "\t-c, --critical-on-number (int): the critical threshold (default: ${CRITICAL_ON_NUMBER}, 0 to disable it)"
+  echo -e "\t-w, --warning-on-number (int): the warning threshold (default: ${WARNING_ON_NUMBER}, 0 to disable it)"
+  echo -e "\t--filebeat-host (str): the elasticsearch host or ip (default: ${FILEBEAT_HOST})"
+  echo -e "\t--filebeat-port (int): the elasticsearch port (default: ${FILEBEAT_PORT})"
+  echo -e "\t--filebeat-protocol (str): the protocol used to connect to elasticsearch (default: ${FILEBEAT_PROTOCOL})"
+  echo -e "\t--curl-command-path (str): path to a curl executable to use (default: '${CURL_COMMAND_PATH}')"
+  echo -e "\t--curl-cert (str): path to the client's certificate (check: man curl for details) (default: '${CURL_CERT}')"
+  echo -e "\t--curl-key (str): path to the private key of the client (check: man curl for details) (default: ${CURL_PRIVATE_KEY}')"
+}
+
+
+# Retrieving the command line options. Each shift, discard one argument.
+while [[ $# -gt 0 ]]
+do
+  key="$1"
+
+  case ${key} in
+      "-c"|"--critical-on-numbert")
+      CRITICAL_ON_NUMBER="$2"; shift; shift;;
+      "-w"|"--warning-threshold")
+      WARNING_ON_NUMBER="$2"; shift; shift;;
+      "--filebeat-host")
+      FILEBEAT_HOST="$2"; shift; shift;;
+      "--filebeat-port")
+      FILEBEAT_PORT="$2"; shift; shift;;
+      "--filebeat-protocol")
+      FILEBEAT_PROTOCOL="$2"; shift; shift;;
+      "-h"|"--help")
+      print_help "${PROGRAM_NAME}"
+      exit 2
+      ;;
+      "--curl-command-path")
+      CURL_COMMAND_PATH="$2"; shift; shift;;
+      "--curl-cert")
+      CURL_CERT="$2"; shift; shift;;
+      "--curl-key")
+      CURL_PRIVATE_KEY="$2"; shift; shift;;
+  esac
+done
+
+check_threshold_existence "${WARNING_THRESHOLD}" "${CRITICAL_THRESHOLD}"
+check_threshold_existence "${WARNING_ON_NUMBER}" "${CRITICAL_ON_NUMBER}"
+
+BASE_URL="${FILEBEAT_PROTOCOL}://${FILEBEAT_HOST}:${FILEBEAT_PORT}"
+
+# Building the url
+URL="${BASE_URL}/stats"
+
+OUTPUT=$("${CURL_COMMAND_PATH}" -s -X GET "${URL}")
+
+EXIT_CODE="$?"
+
+OUTPUT_EVENTS_TOTAL=$(echo "${OUTPUT}" | jq ".libbeat.output.events.total")
+OUTPUT_EVENTS_FAILED=$(echo "${OUTPUT}" | jq ".libbeat.output.events.failed")
+PIPELINE_EVENTS_TOTAL=$(echo "${OUTPUT}" | jq ".libbeat.pipeline.events.published")
+PIPELINE_EVENTS_FAILED=$(echo "${OUTPUT}" | jq ".libbeat.pipeline.events.failed")
+OUTPUT_WRITE_FAILED=$(echo "${OUTPUT}" | jq ".libbeat.output.write.errors")
+OUTPUT_READ_FAILED=$(echo "${OUTPUT}" | jq ".libbeat.output.read.errors")
+
+
+BEAT_INFO_VERSION=$(echo "${OUTPUT}" | jq ".beat.info.version")
+
+if [[ "${EXIT_CODE}" -ne 0 ]]; then
+  echo "CHECK UNKNOWN - Not able to collect for Filebeat. It is possibles to be not reachable"
+  exit ${UNKNOWN}
+fi
+
+if [[ -z "${OUTPUT_EVENTS_FAILED}" ]]; then
+    echo "CHECK UNKNOWN - Perhaps Filebeat does not have output events failed"
+    exit ${UNKNOWN}
+fi
+
+if [[ -z "${PIPELINE_EVENTS_FAILED}" ]]; then
+    echo "CHECK UNKNOWN - Perhaps Filebeat does not have pipeline events failed"
+    exit ${UNKNOWN}
+fi
+
+if [[ -z "${OUTPUT_WRITE_FAILED}" ]]; then
+    echo "CHECK UNKNOWN - Perhaps Filebeat does not have output write failed"
+    exit ${UNKNOWN}
+fi
+
+if [[ -z "${OUTPUT_READ_FAILED}" ]]; then
+    echo "CHECK UNKNOWN - Perhaps Filebeat does not have output read failed"
+    exit ${UNKNOWN}
+fi
+
+
+MESSAGE="Filebeat version: $BEAT_INFO_VERSION - '$OUTPUT_EVENTS_TOTAL' events in Output<br><br>'${OUTPUT_EVENTS_FAILED}' in Output Event Failed<br>'${OUTPUT_WRITE_FAILED}' in Output Write Failed<br>'${OUTPUT_READ_FAILED}' in Output Read Failed<br>'${PIPELINE_EVENTS_TOTAL}' events published in Pipeline<br>'${PIPELINE_EVENTS_FAILED}' in Pipeline Event Failed"
+
+PERFORMANCE_DATA_EVENT_OUTPUT_EVENTS_TOTAL=$(build_performance_data "number_of_output_events_total" "${OUTPUT_EVENTS_TOTAL}")
+PERFORMANCE_DATA_EVENT_OUTPUT_EVENTS_FAILED=$(build_performance_data "number_of_output_events_failed" "${OUTPUT_EVENTS_FAILED}" "${WARNING_ON_NUMBER}" "${CRITICAL_ON_NUMBER}")
+PERFORMANCE_DATA_PIPELINE_EVENTS_FAILED=$(build_performance_data "number_of_pipeline_events_failed" "${PIPELINE_EVENTS_FAILED}" "${WARNING_ON_NUMBER}" "${CRITICAL_ON_NUMBER}")
+PERFORMANCE_DATA_EVENT_OUTPUT_WRITE_FAILED=$(build_performance_data "number_of_output_write_failed" "${OUTPUT_WRITE_FAILED}" "${WARNING_ON_NUMBER}" "${CRITICAL_ON_NUMBER}")
+PERFORMANCE_DATA_EVENT_OUTPUT_READ_FAILED=$(build_performance_data "number_of_output_read_failed" "${OUTPUT_READ_FAILED}" "${WARNING_ON_NUMBER}" "${CRITICAL_ON_NUMBER}")
+
+if [[ ${CRITICAL_ON_NUMBER} -ne 0 && "${OUTPUT_EVENTS_FAILED}" -gt "${CRITICAL_ON_NUMBER}" ]]; then
+    echo "CHECK CRITICAL - ${MESSAGE} | ${PERFORMANCE_DATA_EVENT_OUTPUT_EVENTS_TOTAL} ${PERFORMANCE_DATA_EVENT_OUTPUT_EVENTS_FAILED} ${PERFORMANCE_DATA_PIPELINE_EVENTS_FAILED} ${PERFORMANCE_DATA_EVENT_OUTPUT_WRITE_FAILED} ${PERFORMANCE_DATA_EVENT_OUTPUT_READ_FAILED}"
+    exit ${CRITICAL}
+elif [[ ${WARNING_ON_NUMBER} -ne 0 && "${OUTPUT_EVENTS_FAILED}" -gt "${WARNING_ON_NUMBER}" ]]; then
+    echo "CHECK WARNING - ${MESSAGE} | ${PERFORMANCE_DATA_EVENT_OUTPUT_EVENTS_TOTAL} ${PERFORMANCE_DATA_EVENT_OUTPUT_EVENTS_FAILED} ${PERFORMANCE_DATA_PIPELINE_EVENTS_FAILED} ${PERFORMANCE_DATA_EVENT_OUTPUT_WRITE_FAILED} ${PERFORMANCE_DATA_EVENT_OUTPUT_READ_FAILED}"
+    exit ${WARNING}
+else
+    echo "CHECK OK - ${MESSAGE} | ${PERFORMANCE_DATA_EVENT_OUTPUT_EVENTS_TOTAL} ${PERFORMANCE_DATA_EVENT_OUTPUT_EVENTS_FAILED} ${PERFORMANCE_DATA_PIPELINE_EVENTS_FAILED} ${PERFORMANCE_DATA_EVENT_OUTPUT_WRITE_FAILED} ${PERFORMANCE_DATA_EVENT_OUTPUT_READ_FAILED}"
+    exit ${OK}
+fi
+
+if [[ ${CRITICAL_ON_NUMBER} -ne 0 && "${PIPELINE_EVENTS_FAILED}" -gt "${CRITICAL_ON_NUMBER}" ]]; then
+    echo "CHECK CRITICAL - ${MESSAGE} | ${PERFORMANCE_DATA_EVENT_OUTPUT_EVENTS_TOTAL} ${PERFORMANCE_DATA_EVENT_OUTPUT_EVENTS_FAILED} ${PERFORMANCE_DATA_PIPELINE_EVENTS_FAILED} ${PERFORMANCE_DATA_EVENT_OUTPUT_WRITE_FAILED} ${PERFORMANCE_DATA_EVENT_OUTPUT_READ_FAILED}"
+    exit ${CRITICAL}
+elif [[ ${WARNING_ON_NUMBER} -ne 0 && "${PIPELINE_EVENTS_FAILED}" -gt "${WARNING_ON_NUMBER}" ]]; then
+    echo "CHECK WARNING - ${MESSAGE} | ${PERFORMANCE_DATA_EVENT_OUTPUT_EVENTS_TOTAL} ${PERFORMANCE_DATA_EVENT_OUTPUT_EVENTS_FAILED} ${PERFORMANCE_DATA_PIPELINE_EVENTS_FAILED} ${PERFORMANCE_DATA_EVENT_OUTPUT_WRITE_FAILED} ${PERFORMANCE_DATA_EVENT_OUTPUT_READ_FAILED}"
+    exit ${WARNING}
+else
+    echo "CHECK OK - ${MESSAGE} | ${PERFORMANCE_DATA_EVENT_OUTPUT_EVENTS_TOTAL} ${PERFORMANCE_DATA_EVENT_OUTPUT_EVENTS_FAILED} ${PERFORMANCE_DATA_PIPELINE_EVENTS_FAILED} ${PERFORMANCE_DATA_EVENT_OUTPUT_WRITE_FAILED} ${PERFORMANCE_DATA_EVENT_OUTPUT_READ_FAILED}"
+    exit ${OK}
+fi
+
+if [[ ${CRITICAL_ON_NUMBER} -ne 0 && "${OUTPUT_WRITE_FAILED}" -gt "${CRITICAL_ON_NUMBER}" ]]; then
+    echo "CHECK CRITICAL - ${MESSAGE} | ${PERFORMANCE_DATA_EVENT_OUTPUT_EVENTS_TOTAL} ${PERFORMANCE_DATA_EVENT_OUTPUT_EVENTS_FAILED} ${PERFORMANCE_DATA_PIPELINE_EVENTS_FAILED} ${PERFORMANCE_DATA_EVENT_OUTPUT_WRITE_FAILED} ${PERFORMANCE_DATA_EVENT_OUTPUT_READ_FAILED}"
+    exit ${CRITICAL}
+elif [[ ${WARNING_ON_NUMBER} -ne 0 && "${OUTPUT_WRITE_FAILED}" -gt "${WARNING_ON_NUMBER}" ]]; then
+    echo "CHECK WARNING - ${MESSAGE} | ${PERFORMANCE_DATA_EVENT_OUTPUT_EVENTS_TOTAL} ${PERFORMANCE_DATA_EVENT_OUTPUT_EVENTS_FAILED} ${PERFORMANCE_DATA_PIPELINE_EVENTS_FAILED} ${PERFORMANCE_DATA_EVENT_OUTPUT_WRITE_FAILED} ${PERFORMANCE_DATA_EVENT_OUTPUT_READ_FAILED}"
+    exit ${WARNING}
+else
+    echo "CHECK OK - ${MESSAGE} | ${PERFORMANCE_DATA_EVENT_OUTPUT_EVENTS_TOTAL} ${PERFORMANCE_DATA_EVENT_OUTPUT_EVENTS_FAILED} ${PERFORMANCE_DATA_PIPELINE_EVENTS_FAILED} ${PERFORMANCE_DATA_EVENT_OUTPUT_WRITE_FAILED} ${PERFORMANCE_DATA_EVENT_OUTPUT_READ_FAILED}"
+    exit ${OK}
+fi
+
+if [[ ${CRITICAL_ON_NUMBER} -ne 0 && "${OUTPUT_READ_FAILED}" -gt "${CRITICAL_ON_NUMBER}" ]]; then
+    echo "CHECK CRITICAL - ${MESSAGE} | ${PERFORMANCE_DATA_EVENT_OUTPUT_EVENTS_TOTAL} ${PERFORMANCE_DATA_EVENT_OUTPUT_EVENTS_FAILED} ${PERFORMANCE_DATA_PIPELINE_EVENTS_FAILED} ${PERFORMANCE_DATA_EVENT_OUTPUT_WRITE_FAILED} ${PERFORMANCE_DATA_EVENT_OUTPUT_READ_FAILED}"
+    exit ${CRITICAL}
+elif [[ ${WARNING_ON_NUMBER} -ne 0 && "${OUTPUT_READ_FAILED}" -gt "${WARNING_ON_NUMBER}" ]]; then
+    echo "CHECK WARNING - ${MESSAGE} | ${PERFORMANCE_DATA_EVENT_OUTPUT_EVENTS_TOTAL} ${PERFORMANCE_DATA_EVENT_OUTPUT_EVENTS_FAILED} ${PERFORMANCE_DATA_PIPELINE_EVENTS_FAILED} ${PERFORMANCE_DATA_EVENT_OUTPUT_WRITE_FAILED} ${PERFORMANCE_DATA_EVENT_OUTPUT_READ_FAILED}"
+    exit ${WARNING}
+else
+    echo "CHECK OK - ${MESSAGE} | ${PERFORMANCE_DATA_EVENT_OUTPUT_EVENTS_TOTAL} ${PERFORMANCE_DATA_EVENT_OUTPUT_EVENTS_FAILED} ${PERFORMANCE_DATA_PIPELINE_EVENTS_FAILED} ${PERFORMANCE_DATA_EVENT_OUTPUT_WRITE_FAILED} ${PERFORMANCE_DATA_EVENT_OUTPUT_READ_FAILED}"
+    exit ${OK}
+fi
+
+

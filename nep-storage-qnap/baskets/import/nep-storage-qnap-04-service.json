@@ -1,0 +1,134 @@
+{
+    "ServiceTemplate": {
+        "nx-st-agentless-snmp-centreon-qnap": {
+            "action_url": null,
+            "apply_for": null,
+            "assign_filter": null,
+            "check_command": "nx-c-centreon-qnap",
+            "check_interval": null,
+            "check_period": null,
+            "check_timeout": null,
+            "command_endpoint": null,
+            "disabled": false,
+            "display_name": null,
+            "enable_active_checks": null,
+            "enable_event_handler": null,
+            "enable_flapping": null,
+            "enable_notifications": null,
+            "enable_passive_checks": null,
+            "enable_perfdata": null,
+            "event_command": null,
+            "fields": [
+                {
+                    "datafield_id": 242,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 10765,
+                    "is_required": "n",
+                    "var_filter": "service.vars.nx_qnap_storage_mode=%5B%22shelf%22%2C%22cpuload%22%5D"
+                },
+                {
+                    "datafield_id": 10768,
+                    "is_required": "n",
+                    "var_filter": "service.vars.nx_qnap_storage_mode=%5B%22shelf%22%2C%22cpuload%22%5D"
+                },
+                {
+                    "datafield_id": 10769,
+                    "is_required": "n",
+                    "var_filter": "service.vars.nx_qnap_storage_mode=%22interfaces%22"
+                },
+                {
+                    "datafield_id": 419,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "flapping_threshold_high": null,
+            "flapping_threshold_low": null,
+            "groups": [],
+            "host": null,
+            "icon_image": null,
+            "icon_image_alt": null,
+            "imports": [
+                "nx-st-agentless-snmp-centreon"
+            ],
+            "max_check_attempts": null,
+            "notes": null,
+            "notes_url": null,
+            "object_name": "nx-st-agentless-snmp-centreon-qnap",
+            "object_type": "template",
+            "retry_interval": null,
+            "service_set": null,
+            "template_choice": null,
+            "use_agent": null,
+            "use_var_overrides": null,
+            "vars": {},
+            "volatile": null,
+            "zone": null
+        }
+    },
+    "Datafield": {
+        "419": {
+            "varname": "nx_centreon_qnap_storage_filter",
+            "caption": "[NX] Storage QNAP Filter",
+            "description": "Exclude some parts (comma seperated list) (Example: --filter=disk) Can also exclude specific instance: --filter=disk,1",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeArray",
+            "format": null,
+            "originalId": "419",
+            "settings": {},
+            "category": null
+        },
+        "242": {
+            "category_id": null,
+            "varname": "nx_qnap_storage_mode",
+            "caption": "[NX] Storage QNAP Mode",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeDatalist",
+            "format": null,
+            "originalId": "242",
+            "settings": {
+                "behavior": "strict",
+                "data_type": "string",
+                "datalist": "[NX] Centreon QNAP Storage Mode List"
+            }
+        },
+        "10765": {
+            "category_id": null,
+            "varname": "nx_centreon_snmp_critical",
+            "caption": "[NX] Centreon SNMP Critical",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "10765",
+            "settings": {
+                "visibility": "visible"
+            }
+        },
+        "10768": {
+            "category_id": null,
+            "varname": "nx_centreon_snmp_warning",
+            "caption": "[NX] Centreon SNMP Warning",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "10768",
+            "settings": {
+                "visibility": "visible"
+            }
+        },
+        "10769": {
+            "category_id": null,
+            "varname": "nx_centreon_qnap_storage_interface",
+            "caption": "[NX] Storage QNAP Interface",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "10768",
+            "settings": {
+                "visibility": "visible"
+            }
+        }
+    }
+}

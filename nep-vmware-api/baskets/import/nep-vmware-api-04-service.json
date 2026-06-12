@@ -1,0 +1,459 @@
+{
+    "ServiceTemplate": {
+        "nx-st-agentless-vmware": {
+            "action_url": null,
+            "apply_for": null,
+            "assign_filter": null,
+            "check_command": null,
+            "check_interval": null,
+            "check_period": null,
+            "check_timeout": null,
+            "command_endpoint": null,
+            "disabled": false,
+            "display_name": null,
+            "enable_active_checks": null,
+            "enable_event_handler": null,
+            "enable_flapping": null,
+            "enable_notifications": null,
+            "enable_passive_checks": null,
+            "enable_perfdata": null,
+            "event_command": null,
+            "fields": [
+                {
+                    "datafield_id": 153,
+                    "is_required": "n",
+                    "var_filter": "service.vars.nx_vmware_esx_command!=%22RUNTIME%22"
+                },
+                {
+                    "datafield_id": 149,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 154,
+                    "is_required": "n",
+                    "var_filter": "service.vars.nx_vmware_esx_command!=%22RUNTIME%22"
+                },
+                {
+                    "datafield_id": 150,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "flapping_threshold_high": null,
+            "flapping_threshold_low": null,
+            "groups": [],
+            "host": null,
+            "icon_image": null,
+            "icon_image_alt": null,
+            "imports": [
+                "nx-st-agentless"
+            ],
+            "max_check_attempts": null,
+            "notes": null,
+            "notes_url": null,
+            "object_name": "nx-st-agentless-vmware",
+            "object_type": "template",
+            "retry_interval": null,
+            "service_set": null,
+            "template_choice": null,
+            "use_agent": null,
+            "use_var_overrides": null,
+            "vars": {},
+            "volatile": null,
+            "zone": null
+        },
+        "nx-st-agentless-vmware-cluster": {
+            "action_url": null,
+            "apply_for": null,
+            "assign_filter": null,
+            "check_command": "nx-c-vclusteralive",
+            "check_interval": null,
+            "check_period": null,
+            "check_timeout": null,
+            "command_endpoint": null,
+            "disabled": false,
+            "display_name": null,
+            "enable_active_checks": null,
+            "enable_event_handler": null,
+            "enable_flapping": null,
+            "enable_notifications": null,
+            "enable_passive_checks": null,
+            "enable_perfdata": null,
+            "event_command": null,
+            "fields": [
+                {
+                    "datafield_id": 153,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 149,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 154,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 150,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "flapping_threshold_high": null,
+            "flapping_threshold_low": null,
+            "groups": [],
+            "host": null,
+            "icon_image": null,
+            "icon_image_alt": null,
+            "imports": [
+                "nx-st-agentless-vmware"
+            ],
+            "max_check_attempts": null,
+            "notes": null,
+            "notes_url": null,
+            "object_name": "nx-st-agentless-vmware-cluster",
+            "object_type": "template",
+            "retry_interval": null,
+            "service_set": null,
+            "template_choice": null,
+            "use_agent": null,
+            "use_var_overrides": null,
+            "vars": {},
+            "volatile": null,
+            "zone": null
+        },
+        "nx-st-agentless-vmware-datacenter": {
+            "action_url": null,
+            "apply_for": null,
+            "assign_filter": null,
+            "check_command": "nx-c-check-vmware-api-datacenter",
+            "check_interval": null,
+            "check_period": null,
+            "check_timeout": null,
+            "command_endpoint": null,
+            "disabled": false,
+            "display_name": null,
+            "enable_active_checks": null,
+            "enable_event_handler": null,
+            "enable_flapping": null,
+            "enable_notifications": null,
+            "enable_passive_checks": null,
+            "enable_perfdata": null,
+            "event_command": null,
+            "fields": [
+                {
+                    "datafield_id": 153,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 149,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 154,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 150,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "flapping_threshold_high": null,
+            "flapping_threshold_low": null,
+            "groups": [],
+            "host": null,
+            "icon_image": null,
+            "icon_image_alt": null,
+            "imports": [
+                "nx-st-agentless-vmware"
+            ],
+            "max_check_attempts": null,
+            "notes": null,
+            "notes_url": null,
+            "object_name": "nx-st-agentless-vmware-datacenter",
+            "object_type": "template",
+            "retry_interval": null,
+            "service_set": null,
+            "template_choice": null,
+            "use_agent": null,
+            "use_var_overrides": null,
+            "vars": {
+                "esx_datacenter": "$host.vars.esx_datacenter$",
+                "esx_host_name": "$host.vars.esx_host_name$",
+                "esx_vm_name ": "$host.vars.esx_vm_name$"
+            },
+            "volatile": null,
+            "zone": null
+        },
+        "nx-st-agentless-vmware-direct": {
+            "action_url": null,
+            "apply_for": null,
+            "assign_filter": null,
+            "check_command": "nx-c-check-vmware-api",
+            "check_interval": null,
+            "check_period": null,
+            "check_timeout": null,
+            "command_endpoint": null,
+            "disabled": false,
+            "display_name": null,
+            "enable_active_checks": null,
+            "enable_event_handler": null,
+            "enable_flapping": null,
+            "enable_notifications": null,
+            "enable_passive_checks": null,
+            "enable_perfdata": null,
+            "event_command": null,
+            "fields": [
+                {
+                    "datafield_id": 153,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 149,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 154,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 150,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "flapping_threshold_high": null,
+            "flapping_threshold_low": null,
+            "groups": [],
+            "host": null,
+            "icon_image": null,
+            "icon_image_alt": null,
+            "imports": [
+                "nx-st-agentless-vmware"
+            ],
+            "max_check_attempts": null,
+            "notes": null,
+            "notes_url": null,
+            "object_name": "nx-st-agentless-vmware-direct",
+            "object_type": "template",
+            "retry_interval": null,
+            "service_set": null,
+            "template_choice": null,
+            "use_agent": null,
+            "use_var_overrides": null,
+            "vars": {},
+            "volatile": null,
+            "zone": null
+        },
+        "nx-st-agentless-vmware-snapshot": {
+            "action_url": null,
+            "apply_for": null,
+            "assign_filter": null,
+            "check_command": "nx-c-check-vmware-snapshot",
+            "check_interval": "84600",
+            "check_period": null,
+            "check_timeout": null,
+            "command_endpoint": null,
+            "disabled": false,
+            "display_name": null,
+            "enable_active_checks": null,
+            "enable_event_handler": null,
+            "enable_flapping": null,
+            "enable_notifications": null,
+            "enable_passive_checks": null,
+            "enable_perfdata": null,
+            "event_command": null,
+            "fields": [
+                {
+                    "datafield_id": 161,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 155,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 156,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 157,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 158,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 159,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 160,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "flapping_threshold_high": null,
+            "flapping_threshold_low": null,
+            "groups": [],
+            "host": null,
+            "icon_image": null,
+            "icon_image_alt": null,
+            "imports": [
+                "nx-st-agentless-vmware"
+            ],
+            "max_check_attempts": null,
+            "notes": null,
+            "notes_url": null,
+            "object_name": "nx-st-agentless-vmware-snapshot",
+            "object_type": "template",
+            "retry_interval": null,
+            "service_set": null,
+            "template_choice": null,
+            "use_agent": null,
+            "use_var_overrides": null,
+            "vars": {
+                "check_vmware_snapshot_critical": "2",
+                "check_vmware_snapshot_mode": "count",
+                "check_vmware_snapshot_password": "PASSWORD",
+                "check_vmware_snapshot_username": "neteye@vshpere.local",
+                "check_vmware_snapshot_warning": "1"
+            },
+            "volatile": null,
+            "zone": null
+        }
+    },
+    "Datafield": {
+        "153": {
+            "category_id": null,
+            "varname": "esx_critical",
+            "caption": "ESX critical value",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "153",
+            "settings": {}
+        },
+        "149": {
+            "category_id": null,
+            "varname": "esx_subcommand",
+            "caption": "ESX subcommand",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "149",
+            "settings": {}
+        },
+        "154": {
+            "category_id": null,
+            "varname": "esx_warning",
+            "caption": "ESX waning value",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "154",
+            "settings": {}
+        },
+        "150": {
+            "category_id": null,
+            "varname": "nx_vmware_esx_command",
+            "caption": "[NX] VmWare ESX command",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeDatalist",
+            "format": null,
+            "originalId": "150",
+            "settings": {
+                "data_type": "string",
+                "datalist": "[NX] VmWare ESX command"
+            }
+        },
+        "161": {
+            "category_id": null,
+            "varname": "check_vmware_snapshot_blacklist",
+            "caption": "VMWare snapshot blacklist",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "161",
+            "settings": {}
+        },
+        "155": {
+            "category_id": null,
+            "varname": "check_vmware_snapshot_critical",
+            "caption": "VMWare snapshot critical",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "155",
+            "settings": {}
+        },
+        "156": {
+            "category_id": null,
+            "varname": "check_vmware_snapshot_mode",
+            "caption": "VMWare snapshot_mode",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "156",
+            "settings": {}
+        },
+        "157": {
+            "category_id": null,
+            "varname": "check_vmware_snapshot_password",
+            "caption": "VMWare snapshot password",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "157",
+            "settings": {}
+        },
+        "158": {
+            "category_id": null,
+            "varname": "check_vmware_snapshot_username",
+            "caption": "VMWare snapshot username",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "158",
+            "settings": {}
+        },
+        "159": {
+            "category_id": null,
+            "varname": "check_vmware_snapshot_warning",
+            "caption": "VMWare snapshot warning",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "159",
+            "settings": {}
+        },
+        "160": {
+            "category_id": null,
+            "varname": "check_vmware_snapshot_whitelist",
+            "caption": "VMWare snapshot whitelist",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "160",
+            "settings": {}
+        }
+    }
+}

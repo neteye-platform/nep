@@ -1,0 +1,244 @@
+{
+    "DataList": {
+        "[NX] AS400 - Variable to check": {
+            "entries": [
+                {
+                    "entry_name": "AJ",
+                    "entry_value": "AJ",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "ASP",
+                    "entry_value": "ASP",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "CALL",
+                    "entry_value": "CALL",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "CJ",
+                    "entry_value": "CJ",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "CJS",
+                    "entry_value": "CJS",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "CPU",
+                    "entry_value": "CPU",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "CPUC",
+                    "entry_value": "CPUC",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "CPUT",
+                    "entry_value": "CPUT",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "CTLMSGW",
+                    "entry_value": "CTLMSGW",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "DB",
+                    "entry_value": "DB",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "DBFault",
+                    "entry_value": "DBFault",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "DISK",
+                    "entry_value": "DISK",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "DISKLOAD",
+                    "entry_value": "DISKLOAD",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "DSKHW",
+                    "entry_value": "DSKHW",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "DSPLOG",
+                    "entry_value": "DSPLOG",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "DSPLOGBRM",
+                    "entry_value": "DSPLOGBRM",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "DSPLOGCPI",
+                    "entry_value": "DSPLOGCPI",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "DSPLOGCPIN",
+                    "entry_value": "DSPLOGCPIN",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "DSPLOGN",
+                    "entry_value": "DSPLOGN",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "DSPLOGPARSE",
+                    "entry_value": "DSPLOGPARSE",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "DSPPRB",
+                    "entry_value": "DSPPRB",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "FDN",
+                    "entry_value": "FDN",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "ICGROUP",
+                    "entry_value": "ICGROUP",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "ICNODE",
+                    "entry_value": "ICNODE",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "ICSWTCHRDY",
+                    "entry_value": "ICSWTCHRDY",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "JDBCQUERY",
+                    "entry_value": "JDBCQUERY",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "JOBQ",
+                    "entry_value": "JOBQ",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "JOBS",
+                    "entry_value": "JOBS",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "LOGIN",
+                    "entry_value": "LOGIN",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "MIMIX",
+                    "entry_value": "MIMIX",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "MSG",
+                    "entry_value": "MSG",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "MSGQ",
+                    "entry_value": "MSGQ",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "MSGQN",
+                    "entry_value": "MSGQN",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "OUTQ",
+                    "entry_value": "OUTQ",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "PRB",
+                    "entry_value": "PRB",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "SBS",
+                    "entry_value": "SBS",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "US",
+                    "entry_value": "US",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "US720",
+                    "entry_value": "US720",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "USRPRF",
+                    "entry_value": "USRPRF",
+                    "format": "string",
+                    "allowed_roles": null
+                }
+            ],
+            "list_name": "[NX] AS400 - Variable to check",
+            "owner": "root"
+        }
+    }
+}

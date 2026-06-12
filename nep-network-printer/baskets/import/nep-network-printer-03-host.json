@@ -1,0 +1,13 @@
+{
+    "HostTemplate": {
+        "nx-ht-network-printer-snmp": {
+            "fields": [
+            ],
+            "imports": [
+                "nx-ht-snmp"
+            ],
+            "object_name": "nx-ht-network-printer-snmp",
+            "object_type": "template"
+        }
+    }
+}

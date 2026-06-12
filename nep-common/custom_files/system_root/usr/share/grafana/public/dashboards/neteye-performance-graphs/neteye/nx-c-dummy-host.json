@@ -1,0 +1,315 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "description": "Generic Status Timeline to show evolution of Object Status in time. This is useful when a Command uses a Plugin that doesn't produce Metrics.",
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "links": [],
+  "panels": [
+    {
+      "datasource": {
+        "type": "influxdb"
+      },
+      "description": "History of Host's Status. Uses State Changes and Performance Data sent during the specified Time Window. If no data is displayed, try to extend the Time Window.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "fixed"
+          },
+          "custom": {
+            "axisPlacement": "auto",
+            "fillOpacity": 70,
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineWidth": 0,
+            "spanNulls": true
+          },
+          "fieldMinMax": false,
+          "mappings": [
+            {
+              "options": {
+                "0": {
+                  "color": "dark-green",
+                  "index": 0,
+                  "text": "UP"
+                },
+                "1": {
+                  "color": "dark-red",
+                  "index": 1,
+                  "text": "DOWN"
+                },
+                "2": {
+                  "color": "dark-red",
+                  "index": 2,
+                  "text": "DOWN"
+                },
+                "3": {
+                  "color": "dark-purple",
+                  "index": 3,
+                  "text": "UNKNOWN"
+                }
+              },
+              "type": "value"
+            },
+            {
+              "options": {
+                "from": 4,
+                "result": {
+                  "color": "dark-purple",
+                  "index": 4,
+                  "text": "Unrecognised value"
+                }
+              },
+              "type": "range"
+            },
+            {
+              "options": {
+                "result": {
+                  "color": "dark-purple",
+                  "index": 5,
+                  "text": "Unrecognised value"
+                },
+                "to": -1
+              },
+              "type": "range"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "transparent",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": null,
+      "options": {
+        "alignValue": "center",
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false
+        },
+        "mergeValues": true,
+        "rowHeight": 1,
+        "showValue": "never",
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.4.2",
+      "targets": [
+        {
+          "alias": "Status",
+          "datasource": {
+            "type": "influxdb"
+          },
+          "dsType": "influxdb",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "dummy",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT max(\"value\") FROM /^$command$/ WHERE (\"hostname\" =~ /^$hostname$/ AND \"service\" =~ /^$service$/ AND \"metric\"::tag = 'service') AND $timeFilter GROUP BY time($__interval) fill(previous)",
+          "rawQuery": false,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "state"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "min"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "hostname",
+              "operator": "=",
+              "value": "$hostname"
+            },
+            {
+              "condition": "AND",
+              "key": "service",
+              "operator": "=~",
+              "value": "/^$/"
+            }
+          ]
+        },
+        {
+          "alias": "Status",
+          "datasource": {
+            "type": "influxdb"
+          },
+          "dsType": "influxdb",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "nx-c-dummy-host",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT max(\"value\") FROM /^$command$/ WHERE (\"hostname\" =~ /^$hostname$/ AND \"service\" =~ /^$service$/ AND \"metric\"::tag = 'service') AND $timeFilter GROUP BY time($__interval) fill(previous)",
+          "rawQuery": false,
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "state"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "min"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "hostname",
+              "operator": "=",
+              "value": "$hostname"
+            },
+            {
+              "condition": "AND",
+              "key": "service",
+              "operator": "=~",
+              "value": "/^$/"
+            }
+          ]
+        }
+      ],
+      "title": "State timeline",
+      "transformations": [
+        {
+          "id": "merge",
+          "options": {}
+        },
+        {
+          "id": "sortBy",
+          "options": {
+            "fields": {},
+            "sort": [
+              {
+                "field": "Time"
+              }
+            ]
+          }
+        }
+      ],
+      "type": "state-timeline"
+    }
+  ],
+  "preload": false,
+  "schemaVersion": 42,
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "text": "dummy-host",
+          "value": "dummy-host"
+        },
+        "name": "hostname",
+        "options": [],
+        "query": "${VAR_HOSTNAME},dummy-host",
+        "type": "custom",
+        "valuesFormat": "csv"
+      },
+      {
+        "current": {
+          "text": "nx-st-passive-with-autoreset",
+          "value": "nx-st-passive-with-autoreset"
+        },
+        "name": "service",
+        "options": [],
+        "query": "${VAR_SERVICE},nx-st-passive-with-autoreset,nx-st-passive-with-autoreset 2",
+        "type": "custom",
+        "valuesFormat": "csv"
+      },
+      {
+        "current": {
+          "text": "nx-c-dummy-service",
+          "value": "nx-c-dummy-service"
+        },
+        "name": "command",
+        "options": [],
+        "query": "${VAR_COMMAND},dummy,nx-c-dummy-service",
+        "type": "custom",
+        "valuesFormat": "csv"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-3h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "nx-c-dummy-host",
+  "version": 4,
+  "weekStart": "",
+  "id": null
+}

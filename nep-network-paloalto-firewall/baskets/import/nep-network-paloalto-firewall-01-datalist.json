@@ -1,0 +1,47 @@
+{
+    "DataList": {
+        "[NX] Centreon PaloAlto Mode List": {
+            "list_name": "[NX] Centreon PaloAlto Mode List",
+            "owner": "root",
+            "originalId": "35",
+            "entries": [
+                {
+                    "entry_name": "environment",
+                    "entry_value": "environment",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "ha",
+                    "entry_value": "ha",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "interfaces",
+                    "entry_value": "interfaces",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "ipsec",
+                    "entry_value": "ipsec",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "licenses",
+                    "entry_value": "licenses",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "system",
+                    "entry_value": "system",
+                    "format": "string",
+                    "allowed_roles": null
+                }
+            ]
+        }
+    }
+}

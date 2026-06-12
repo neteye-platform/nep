@@ -1,0 +1,45 @@
+{
+    "name": "elproxy_verification",
+    "description": "DPO verify",
+    "continue": true,
+    "active": true,
+    "constraint": {
+        "WHERE": {
+            "type": "AND",
+            "operators": []
+        },
+        "WITH": {}
+    },
+    "actions": [
+        {
+            "id": "smart_monitoring_check_result",
+            "payload": {
+                "check_result": {
+                    "exit_status": "${event.payload.data.exit_status}",
+                    "plugin_output": "'Verify output  ${event.payload.data.output}'"
+                },
+                "host": {
+                    "imports": ["nx-ht-dummy", "nx-ht-type-custom"],
+                    "object_name": "tenant-${event.payload.data.tenant}",
+                    "vars": {
+                        "created_by": "tornado",
+                        "rulename": "root/master/elproxy_verification"
+                    }
+                },
+                "service": {
+                    "imports": [
+                        "nx-st-passive-with-autoreset",
+                        "nx-st-interval-30h"
+                    ],
+                    "object_name": "EBP Verify Status - ${event.payload.data.tenant}-${event.payload.data.retention}-${event.payload.data.tag}",
+                    "vars": {
+                        "created_by": "tornado",
+                        "dummy_state": "3",
+                        "dummy_text": "Scheduled DPO verification was not executed. Please check DPO docker",
+                        "rulename": "root/master/elproxy_verification"
+                    }
+                }
+            }
+        }
+    ]
+}

@@ -1,0 +1,138 @@
+{
+    "DataList": {
+        "[NX] Centreon Storage NetApp ONTAP RestAPI Mode List": {
+            "list_name": "[NX] Centreon Storage NetApp ONTAP RestAPI Mode List",
+            "owner": "admin191",
+            "originalId": "10091",
+            "entries": [
+                {
+                    "entry_name": "aggregates",
+                    "entry_value": "aggregates",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "cluster",
+                    "entry_value": "cluster",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "hardware",
+                    "entry_value": "hardware",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "list-volumes",
+                    "entry_value": "list-volumes",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "luns",
+                    "entry_value": "luns",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "snapmirrors",
+                    "entry_value": "snapmirrors",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "volumes",
+                    "entry_value": "volumes",
+                    "format": "string",
+                    "allowed_roles": null
+                }
+            ]
+        },
+        "[NX] Centreon Storage NetApp ONTAP SNMP Mode List": {
+            "list_name": "[NX] Centreon Storage NetApp ONTAP SNMP Mode List",
+            "owner": "root",
+            "originalId": "10096",
+            "entries": [
+                {
+                    "entry_name": "aggregates",
+                    "entry_value": "aggregates",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "cache-age",
+                    "entry_value": "cache-age",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "cluster-nodes",
+                    "entry_value": "cluster-nodes",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "cpuload",
+                    "entry_value": "cpuload",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "diskfailed",
+                    "entry_value": "diskfailed",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "failover",
+                    "entry_value": "failover",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "fan",
+                    "entry_value": "fan",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "filesys",
+                    "entry_value": "filesys",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "global-status",
+                    "entry_value": "global-status",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "shelf",
+                    "entry_value": "shelf",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "temperature",
+                    "entry_value": "temperature",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "uptime",
+                    "entry_value": "uptime",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "volumeoptions",
+                    "entry_value": "volumeoptions",
+                    "format": "string",
+                    "allowed_roles": null
+                }
+            ]
+        }
+    }
+}

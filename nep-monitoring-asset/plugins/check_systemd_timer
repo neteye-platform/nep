@@ -1,0 +1,81 @@
+#!/bin/bash
+
+# Copyright (C) 2017 Andreas Bader <development -(at)- geekparadise.de>
+# based on nagios-plugin-systemd-servicer of Mohamed El Morabity <melmorabity@fedoraproject.com>
+#
+# This module is free software: you can redistribute it and/or modify it under
+# the terms of the GNU General Public License as published by the Free Software
+# Foundation, either version 3 of the License, or (at your option) any later
+# version.
+#
+# This software is distributed in the hope that it will be useful, but WITHOUT
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+# FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License along with
+# this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+PLUGINDIR=$(dirname $0)
+#. $PLUGINDIR/utils.sh
+
+
+if [ $# -ne 4 ]; then
+    echo "Usage: ${0##*/} <service name> <timer name> <time in seconds between runs that is not warning> <time in seconds between runs that is not critical>" >&2
+    exit $STATE_UNKNOWN
+fi
+
+service=$1
+timer=$2
+warning=$3
+critical=$4
+
+status=$(systemctl status ${service}.service 2>/dev/null | grep "not-found" | wc -l)
+if [ $status -gt 0 ]; then
+    echo "ERROR: service ${service}.service doesn't exist"
+    exit $STATE_CRITICAL
+fi
+
+status=$(systemctl status ${timer}.timer 2>/dev/null | grep "not-found" | wc -l)
+if [ $status -gt 0 ]; then
+    echo "ERROR: timer ${timer}.timer doesn't exist"
+    exit $STATE_CRITICAL
+fi
+
+last_execution_date=$(date -d "$(systemctl show -p InactiveExitTimestamp ${service}.service | sed "s/InactiveExitTimestamp=//g" | sed "s/^[ A-Za-z]* //g")" +%s)
+now_date=$(date +%s)
+diff=$(( $now_date-$last_execution_date ))
+
+if [ $diff -gt $critical ]; then
+    echo "ERROR: service ${service}.service was executed $diff seconds ago."
+    exit $STATE_CRITICAL
+elif [ $diff -gt $warning ]; then
+    echo "WARNING: service ${service}.service was executed $diff seconds ago."
+    exit $STATE_WARNING
+fi
+
+systemctl --quiet is-active ${timer}.timer
+if [ $? -ne 0 ]; then
+    echo "ERROR: timer ${timer}.timer is not running"
+    exit $STATE_CRITICAL
+fi
+
+systemctl --quiet is-active ${service}.service
+if [ $? -eq 0 ]; then
+    # if is running at the moment it is okay
+    echo "OK: service ${service}.service was started $diff seconds ago and is running."
+    exit $STATE_OK
+else
+    # if not running, we check if it was succesful
+    state_msg=$(systemctl show -p Result ${service}.service | sed "s/Result=//g")
+    state=$(echo $state_msg | grep "success" | wc -l)
+    stateError=$(echo $state_msg | grep "failed" | wc -l)
+    if [ $state -ne 1 -o $stateError -ne 0 ]; then
+        echo "ERROR: service ${service}.service was executed $diff seconds ago and exited with status $state_msg."
+        exit $STATE_CRITICAL
+    fi
+
+fi
+
+echo "OK: service ${service}.service was running $diff seconds ago."
+exit $STATE_OK

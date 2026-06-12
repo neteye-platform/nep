@@ -1,0 +1,49 @@
+{
+    "Command": {
+        "nx-c-centreon-netapp-ontap-snmp": {
+            "arguments": {
+                "--mode": {
+                    "value": "$nx_centreon_netapp_ontap_snmp_mode_list$"
+                }
+            },
+            "command": "\/usr\/lib\/centreon\/plugins\/centreon_netapp_ontap_snmp.pl",
+            "disabled": false,
+            "fields": [],
+            "imports": [
+                "nx-ct-centreon-plugin-snmp"
+            ],
+            "is_string": null,
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-centreon-netapp-ontap-snmp",
+            "object_type": "object",
+            "timeout": null,
+            "vars": {},
+            "zone": null
+        },
+        "nx-c-centreon-netapp-ontap-restapi": {
+            "arguments": {
+                "--mode": {
+                    "value": "$nx_centreon_netapp_ontap_restapi_mode_list$"
+                },
+                "--ssl-opt": {
+                    "value": "$nx_centreon_ssl_opt$"
+                },
+                "--verbose": {}
+            },
+            "command": "\/usr\/lib\/centreon\/plugins\/centreon_netapp_ontap_restapi.pl",
+            "disabled": false,
+            "fields": [],
+            "imports": [
+                "nx-ct-centreon-plugin-restapi",
+                "nx-ct-centreon-plugin-retention"
+            ],
+            "is_string": null,
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-centreon-netapp-ontap-restapi",
+            "object_type": "object",
+            "timeout": null,
+            "vars": {},
+            "zone": null
+        }
+    }
+}
