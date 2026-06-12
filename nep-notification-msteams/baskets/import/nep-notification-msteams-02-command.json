@@ -1,0 +1,213 @@
+{
+    "Command": {
+        "nx-c-teams-host-notification": {
+            "arguments": {
+                "-6": "$notification_address6$",
+                "-4": "$notification_address$",
+                "-a": {
+                    "description": "Teams Client ID",
+                    "value": "$teams_client_id$"
+                },
+                "-b": "$notification_author$",
+                "-c": "$notification_comment$",
+                "-d": {
+                    "required": true,
+                    "value": "$notification_date$"
+                },
+                "-f": {
+                    "description": "Teams Tenant ID",
+                    "value": "$teams_tenant_id$"
+                },
+                "-g": {
+                    "description": "Teams Team ID",
+                    "value": "$teams_team_id$"
+                },
+                "-i": "$notification_icingaweb2url$",
+                "-j": {
+                    "description": "Teams Authorization Code",
+                    "value": "$teams_authorization_code$"
+                },
+                "-l": "$notification_hostname$",
+                "-m": {
+                    "description": "Teams Notification Method",
+                    "value": "$teams_notification_method$"
+                },
+                "-n": "$notification_hostdisplayname$",
+                "-o": {
+                    "required": true,
+                    "value": "$notification_hostoutput$"
+                },
+                "-r": {
+                    "description": "Teams Redirect URI",
+                    "value": "$teams_redirect_uri$"
+                },
+                "-s": {
+                    "required": true,
+                    "value": "$notification_hoststate$"
+                },
+                "-t": {
+                    "required": true,
+                    "value": "$notification_type$"
+                },
+                "-v": "$notification_logtosyslog$",
+                "-w": {
+                    "description": "Teams WEBHOOK URL (\\$teams_webhook_url$)",
+                    "value": "$teams_notification_webhook$"
+                },
+                "-y": {
+                    "description": "Teams Client Secret",
+                    "value": "$teams_client_secret$"
+                },
+                "-z": {
+                    "description": "Teams Channel ID",
+                    "value": "$teams_channel_id$"
+                }
+            },
+            "command": "/neteye/shared/monitoring/plugins/teams-notifications/teams-host-notification.sh",
+            "fields": [
+                {
+                    "datafield_id": 257,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "methods_execute": "PluginNotification",
+            "object_name": "nx-c-teams-host-notification",
+            "object_type": "object",
+            "timeout": 60,
+            "uuid": "ee6d23e5-e1ee-4550-acef-290541d54b02",
+            "vars": {
+                "notification_address": "$address$",
+                "notification_address6": "$address6$",
+                "notification_author": "$notification.author$",
+                "notification_comment": "$notification.comment$",
+                "notification_date": "$icinga.long_date_time$",
+                "notification_hostdisplayname": "$host.display_name$",
+                "notification_hostname": "$host.name$",
+                "notification_hostoutput": "$host.output$",
+                "notification_hoststate": "$host.state$",
+                "notification_icingaweb2url": "",
+                "notification_type": "$notification.type$",
+                "notification_useremail": "$user.email$"
+            }
+        },
+        "nx-c-teams-service-notification": {
+            "arguments": {
+                "-6": "$notification_address6$",
+                "-4": "$notification_address$",
+                "-a": {
+                    "description": "Teams Client ID",
+                    "value": "$teams_client_id$"
+                },
+                "-b": "$notification_author$",
+                "-c": "$notification_comment$",
+                "-d": {
+                    "required": true,
+                    "value": "$notification_date$"
+                },
+                "-e": {
+                    "required": true,
+                    "value": "$notification_servicename$"
+                },
+                "-f": {
+                    "description": "Teams Tenant ID",
+                    "value": "$teams_tenant_id$"
+                },
+                "-g": {
+                    "description": "Teams Team ID",
+                    "value": "$teams_team_id$"
+                },
+                "-i": "$notification_icingaweb2url$",
+                "-j": {
+                    "description": "Teams Authorization Code",
+                    "value": "$teams_authorization_code$"
+                },
+                "-l": {
+                    "required": true,
+                    "value": "$notification_hostname$"
+                },
+                "-m": {
+                    "description": "Teams Notification Method",
+                    "value": "$teams_notification_method$"
+                },
+                "-n": {
+                    "required": true,
+                    "value": "$notification_hostdisplayname$"
+                },
+                "-o": {
+                    "required": true,
+                    "value": "$notification_serviceoutput$"
+                },
+                "-r": {
+                    "description": "Teams Redirect URI",
+                    "value": "$teams_redirect_uri$"
+                },
+                "-s": {
+                    "required": true,
+                    "value": "$notification_servicestate$"
+                },
+                "-t": {
+                    "required": true,
+                    "value": "$notification_type$"
+                },
+                "-u": {
+                    "required": true,
+                    "value": "$notification_servicedisplayname$"
+                },
+                "-v": "$notification_logtosyslog$",
+                "-w": {
+                    "description": "Teams WEBHOOK URL (\\$teams_webhook_url$)",
+                    "value": "$teams_notification_webhook$"
+                },
+                "-y": {
+                    "description": "Teams Client Secret",
+                    "value": "$teams_client_secret$"
+                },
+                "-z": {
+                    "description": "Teams Channel ID",
+                    "value": "$teams_channel_id$"
+                }
+            },
+            "command": "/neteye/shared/monitoring/plugins/teams-notifications/teams-service-notification.sh",
+            "fields": [
+                {
+                    "datafield_id": 257,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "methods_execute": "PluginNotification",
+            "object_name": "nx-c-teams-service-notification",
+            "object_type": "object",
+            "timeout": 60,
+            "uuid": "2f44b6f1-9742-4b33-adb6-355b81ca58f5",
+            "vars": {
+                "notification_address": "$address$",
+                "notification_address6": "$address6$",
+                "notification_author": "$notification.author$",
+                "notification_comment": "$notification.comment$",
+                "notification_date": "$icinga.long_date_time$",
+                "notification_hostdisplayname": "$host.display_name$",
+                "notification_hostname": "$host.name$",
+                "notification_icingaweb2url": "",
+                "notification_servicedisplayname": "$service.display_name$",
+                "notification_servicename": "$service.name$",
+                "notification_serviceoutput": "$service.output$",
+                "notification_servicestate": "$service.state$",
+                "notification_type": "$notification.type$",
+                "notification_useremail": "$user.email$"
+            }
+        }
+    },
+    "Datafield": {
+        "257": {
+            "varname": "notification_icingaweb2url",
+            "caption": "Notification Icingaweb2url",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {},
+            "category": null
+        }
+    }
+}

@@ -1,0 +1,10 @@
+{
+    "id": "elproxy_verification",
+    "token": "@@PASSWORD@@",
+    "collector_config": {
+      "event_type": "elproxy_verification",
+      "payload": {
+        "data": "${@}"
+      }
+    }
+}

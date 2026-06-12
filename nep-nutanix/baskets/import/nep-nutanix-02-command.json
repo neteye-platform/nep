@@ -1,0 +1,315 @@
+{
+    "Command": {
+        "nx-c-centreon-nutanix-cluster-alive": {
+            "arguments": {
+                "--critical-status": "%{status} != \"started\"",
+                "--filter-counters": "status",
+                "--mode": "cluster-usage"
+            },
+            "fields": [],
+            "imports": [
+                "nx-c-centreon-nutanix-cluster-usage"
+            ],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-centreon-nutanix-cluster-alive",
+            "object_type": "object",
+            "uuid": "91023849-b529-425d-846e-4b523403a682"
+        },
+        "nx-c-centreon-nutanix-cluster-usage": {
+            "arguments": {
+                "--critcal-usage": {
+                    "description": "Critical threshold",
+                    "value": "$nx_centreon_nutanix_snmp_cluster_usage_critical_usage$"
+                },
+                "--critical-iops": {
+                    "description": "Critical threshold",
+                    "value": "$nx_centreon_nutanix_snmp_cluster_usage_critical_iops$"
+                },
+                "--critical-latency": {
+                    "description": "Critical threshold",
+                    "value": "$nx_centreon_nutanix_snmp_cluster_usage_critical_avg_lat$"
+                },
+                "--critical-status": {
+                    "description": "Define the conditions to match for the status to be CRITICAL. You can use the following variables: %{status}, %{display}",
+                    "value": "$nx_centreon_nutanix_snmp_cluster_usage_critical_status$"
+                },
+                "--free": {
+                    "description": "Thresholds are on free space left",
+                    "set_if": "$nx_centreon_nutanix_snmp_cluster_usage_threshold_free$",
+                    "set_if_format": "string"
+                },
+                "--mode": "cluster-usage",
+                "--units": {
+                    "description": "Units of thresholds (Default: '%') ('%', 'B')",
+                    "value": "$nx_centreon_nutanix_snmp_cluster_usage_threshold_units$"
+                },
+                "--warning-iops": {
+                    "description": "Warning threshold",
+                    "value": "$nx_centreon_nutanix_snmp_cluster_usage_warning_iops$"
+                },
+                "--warning-latency": {
+                    "description": "Warning threshold",
+                    "value": "$nx_centreon_nutanix_snmp_cluster_usage_warning_avg_lat$"
+                },
+                "--warning-status": {
+                    "description": "Define the conditions to match for the status to be WARNING. You can use the following variables: %{status}, %{display}",
+                    "value": "$nx_centreon_nutanix_snmp_cluster_usage_warning_status$"
+                },
+                "--warning-usage": {
+                    "description": "Warning threshold.",
+                    "value": "$nx_centreon_nutanix_snmp_cluster_usage_warning_usage$"
+                }
+            },
+            "fields": [],
+            "imports": [
+                "nx-ct-centreon-plugin-snmp-nutanix"
+            ],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-centreon-nutanix-cluster-usage",
+            "object_type": "object",
+            "uuid": "02156d38-291b-4e9e-bfa0-9ba208e62ee8"
+        },
+        "nx-c-centreon-nutanix-container-usage": {
+            "arguments": {
+                "--critcal-usage": {
+                    "description": "Critical threshold",
+                    "value": "$nx_centreon_nutanix_snmp_container_usage_critical_usage$"
+                },
+                "--critical-iops": {
+                    "description": "Critical threshold",
+                    "value": "$nx_centreon_nutanix_snmp_container_usage_critical_iops$"
+                },
+                "--critical-latency": {
+                    "description": "Critical threshold",
+                    "value": "$nx_centreon_nutanix_snmp_container_usage_critical_avg_lat$"
+                },
+                "--filter-name": {
+                    "description": "Filter storage pool name (can be a regexp).",
+                    "value": "$nx_centreon_nutanix_snmp_container_usage_filter_name$"
+                },
+                "--free": {
+                    "description": "Thresholds are on free space left",
+                    "set_if": "$nx_centreon_nutanix_snmp_container_usage_threshold_free$",
+                    "set_if_format": "string"
+                },
+                "--mode": "container-usage",
+                "--units": {
+                    "description": "Units of thresholds (Default: '%') ('%', 'B')",
+                    "value": "$nx_centreon_nutanix_snmp_container_usage_threshold_units$"
+                },
+                "--warning-iops": {
+                    "description": "Warning threshold",
+                    "value": "$nx_centreon_nutanix_snmp_container_usage_warning_iops$"
+                },
+                "--warning-latency": {
+                    "description": "Warning threshold",
+                    "value": "$nx_centreon_nutanix_snmp_container_usage_warning_avg_lat$"
+                },
+                "--warning-usage": {
+                    "description": "Warning threshold.",
+                    "value": "$nx_centreon_nutanix_snmp_container_usage_warning_usage$"
+                }
+            },
+            "fields": [],
+            "imports": [
+                "nx-ct-centreon-plugin-snmp-nutanix"
+            ],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-centreon-nutanix-container-usage",
+            "object_type": "object",
+            "uuid": "c97907cf-aea7-4ad7-95ed-205eb750b4cc"
+        },
+        "nx-c-centreon-nutanix-disk-usage": {
+            "arguments": {
+                "--critcal-usage": {
+                    "description": "Critical threshold",
+                    "value": "$nx_centreon_nutanix_snmp_disk_usage_critical_usage$"
+                },
+                "--critical-iops": {
+                    "description": "Critical threshold",
+                    "value": "$nx_centreon_nutanix_snmp_disk_usage_critical_iops$"
+                },
+                "--critical-latency": {
+                    "description": "Critical threshold",
+                    "value": "$nx_centreon_nutanix_snmp_disk_usage_critical_avg_lat$"
+                },
+                "--critical-status": {
+                    "description": "Define the conditions to match for the status to be CRITICAL. You can use the following variables: %{state}, %{crtName}, %{diskId}",
+                    "value": "$nx_centreon_nutanix_snmp_disk_usage_critical_status$"
+                },
+                "--filter-controllervm": {
+                    "description": "Filter controllervm name (can be a regexp)",
+                    "value": "$nx_centreon_nutanix_snmp_disk_usage_cvm_filter$"
+                },
+                "--filter-name": {
+                    "description": "Filter storage pool name (can be a regexp).",
+                    "value": "$nx_centreon_nutanix_snmp_disk_usage_filter_name$"
+                },
+                "--free": {
+                    "description": "Thresholds are on free space left",
+                    "set_if": "$nx_centreon_nutanix_snmp_disk_usage_threshold_free$",
+                    "set_if_format": "string"
+                },
+                "--mode": "disk-usage",
+                "--units": {
+                    "description": "Units of thresholds (Default: '%') ('%', 'B')",
+                    "value": "$nx_centreon_nutanix_snmp_disk_usage_threshold_units$"
+                },
+                "--warning-iops": {
+                    "description": "Warning threshold",
+                    "value": "$nx_centreon_nutanix_snmp_disk_usage_warning_iops$"
+                },
+                "--warning-latency": {
+                    "description": "Warning threshold",
+                    "value": "$nx_centreon_nutanix_snmp_disk_usage_warning_avg_lat$"
+                },
+                "--warning-status": {
+                    "description": "Define the conditions to match for the status to be WARNING. You can use the following variables: %{state}, %{crtName}, %{diskId}",
+                    "value": "$nx_centreon_nutanix_snmp_disk_usage_warning_status$"
+                },
+                "--warning-usage": {
+                    "description": "Warning threshold.",
+                    "value": "$nx_centreon_nutanix_snmp_disk_usage_warning_usage$"
+                }
+            },
+            "fields": [],
+            "imports": [
+                "nx-ct-centreon-plugin-snmp-nutanix"
+            ],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-centreon-nutanix-disk-usage",
+            "object_type": "object",
+            "uuid": "ba17cc60-12c4-42bd-a1cb-353f18cd4bdb"
+        },
+        "nx-c-centreon-nutanix-hypervisor-usage": {
+            "arguments": {
+                "--critcal-read-iops": {
+                    "description": "Critical threshold",
+                    "value": "$nx_centreon_nutanix_snmp_hypervisor_usage_critical_read_iops$"
+                },
+                "--critical-avg-latency": "$nx_centreon_nutanix_snmp_hypervisor_usage_critical_avg_lat$",
+                "--critical-cpu": {
+                    "description": "Critical threshold",
+                    "value": "$nx_centreon_nutanix_snmp_hypervisor_usage_critical_cpu$"
+                },
+                "--critical-memory": {
+                    "description": "Critical threshold",
+                    "value": "$nx_centreon_nutanix_snmp_hypervisor_usage_critical_memory$"
+                },
+                "--critical-vm-count": {
+                    "description": "Critical threshold",
+                    "value": "$nx_centreon_nutanix_snmp_hypervisor_usage_critical_vm_count$"
+                },
+                "--critical-write-iops": {
+                    "description": "Critical threshold",
+                    "value": "$nx_centreon_nutanix_snmp_hypervisor_usage_critical_write_iops$"
+                },
+                "--filter-name": {
+                    "description": "Filter storage pool name (can be a regexp).",
+                    "value": "$nx_centreon_nutanix_snmp_hypervisor_usage_filter_name$"
+                },
+                "--hostname": "$host.address$",
+                "--mode": "hypervisor-usage",
+                "--warning-avg-latency": "$nx_centreon_nutanix_snmp_hypervisor_usage_warning_avg_lat$",
+                "--warning-cpu": {
+                    "description": "Warning threshold",
+                    "value": "$nx_centreon_nutanix_snmp_hypervisor_usage_warning_cpu$"
+                },
+                "--warning-memory": "$nx_centreon_nutanix_snmp_hypervisor_usage_warning_memory$",
+                "--warning-read-iops": {
+                    "description": "Warning threshold.",
+                    "value": "$nx_centreon_nutanix_snmp_shypervisor_usage_warning_read_iops$"
+                },
+                "--warning-vm-count": {
+                    "description": "Warning threshold.",
+                    "value": "$nx_centreon_nutanix_snmp_hypervisor_usage_warning_vm_count$"
+                },
+                "--warning-write-iops": {
+                    "description": "Warning threshold",
+                    "value": "$nx_centreon_nutanix_snmp_hypervisor_usage_warning_write_iops$"
+                }
+            },
+            "fields": [],
+            "imports": [
+                "nx-ct-centreon-plugin-snmp-nutanix"
+            ],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-centreon-nutanix-hypervisor-usage",
+            "object_type": "object",
+            "uuid": "f7973a56-99a6-44bb-9c39-a52d36141a1f"
+        },
+        "nx-c-centreon-nutanix-storage-pool-usage": {
+            "arguments": {
+                "--critcal-usage": {
+                    "description": "Critical threshold",
+                    "value": "$nx_centreon_nutanix_snmp_storage_pool_usage_critical_usage$"
+                },
+                "--critical-iops": {
+                    "description": "Critical threshold",
+                    "value": "$nx_centreon_nutanix_snmp_storage_pool_usage_critical_iops$"
+                },
+                "--critical-latency": {
+                    "description": "Critical threshold",
+                    "value": "$nx_centreon_nutanix_snmp_storage_pool_usage_critical_avg_lat$"
+                },
+                "--filter-name": {
+                    "description": "Filter storage pool name (can be a regexp).",
+                    "value": "$nx_centreon_nutanix_snmp_storage_pool_usage_filter_name$"
+                },
+                "--free": {
+                    "description": "Thresholds are on free space left",
+                    "set_if": "$nx_centreon_nutanix_snmp_storage_pool_usage_threshold_free$",
+                    "set_if_format": "string"
+                },
+                "--mode": "storage-pool-usage",
+                "--units": {
+                    "description": "Units of thresholds (Default: '%') ('%', 'B')",
+                    "value": "$nx_centreon_nutanix_snmp_storage_pool_usage_threshold_units$"
+                },
+                "--warning-iops": {
+                    "description": "Warning threshold",
+                    "value": "$nx_centreon_nutanix_snmp_storage_pool_usage_warning_iops$"
+                },
+                "--warning-latency": {
+                    "description": "Warning threshold",
+                    "value": "$nx_centreon_nutanix_snmp_storage_pool_usage_warning_avg_lat$"
+                },
+                "--warning-usage": {
+                    "description": "Warning threshold.",
+                    "value": "$nx_centreon_nutanix_snmp_storage_pool_usage_warning_usage$"
+                }
+            },
+            "fields": [],
+            "imports": [
+                "nx-ct-centreon-plugin-snmp-nutanix"
+            ],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-centreon-nutanix-storage-pool-usage",
+            "object_type": "object",
+            "uuid": "3ddf8f8f-f449-449a-ba88-1e90fb018017"
+        }
+    },
+    "CommandTemplate": {
+        "nx-ct-centreon-plugin-snmp-nutanix": {
+            "arguments": {
+                "--filter-counters": {
+                    "description": "Only display some counters (regexp can be used)",
+                    "value": "$nx_centreon_nutanix_snmp_filter_counters$"
+                },
+                "--hostname": {
+                    "type": "Function",
+                    "body": "var cvms=macro(\"$host.vars.nx_nutanix_cluster_cvm$\")\r\nvar available_cvms = []\r\nfor (var cvm in cvms) {\r\ncvm_host=get_host(cvm)\r\nvar cvm_state=cvm_host.state\r\nif(cvm_state == 0) {\r\navailable_cvms.add(cvm_host.address)\r\n}\r\n}\r\nif (available_cvms.len() > 0) {\r\nreturn available_cvms[random() % available_cvms.len()]\r\n} \r\nreturn cvms[random() % cvms.len()]"
+                }
+            },
+            "command": "/usr/lib/centreon/plugins/centreon_nutanix_snmp.pl --plugin cloud::nutanix::snmp::plugin",
+            "fields": [],
+            "imports": [
+                "nx-ct-centreon-plugin-snmp"
+            ],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-ct-centreon-plugin-snmp-nutanix",
+            "object_type": "template",
+            "uuid": "ffe95c7b-25a3-4394-80e6-7bee66beca90"
+        }
+    }
+}

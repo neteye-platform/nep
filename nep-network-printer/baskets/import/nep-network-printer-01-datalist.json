@@ -1,0 +1,29 @@
+{
+    "DataList": {
+        "[NX] Printer Health Mode": {
+            "list_name": "[NX] Printer Health Mode",
+            "owner": "root",
+            "originalId": "35",
+            "entries": [
+                {
+                    "entry_name": "hardware-health",
+                    "entry_value": "Hardware Health",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "supplies-status",
+                    "entry_value": "Supplies Status",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "uptime",
+                    "entry_value": "Uptime",
+                    "format": "string",
+                    "allowed_roles": null
+                }
+            ]
+        }
+    }
+}

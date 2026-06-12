@@ -1,0 +1,58 @@
+{
+    "name": "Elastic_Transform_Critical",
+    "description": "",
+    "continue": true,
+    "active": true,
+    "constraint": {
+        "WHERE": {
+            "type": "AND",
+            "operators": [
+                {
+                    "type": "equals",
+                    "first": "${event.payload.data.health.status}",
+                    "second": "red"
+                }
+            ]
+        },
+        "WITH": {}
+    },
+    "actions": [
+        {
+            "id": "smart_monitoring_check_result",
+            "payload": {
+                "check_result": {
+                    "exit_status": "2",
+                    "performance_data": "'search_time_in_ms'=${event.payload.data.stats.search_time_in_ms};;;0; 'documents_processed'=${event.payload.data.stats.documents_processed};;;0; 'trigger_count'=${event.payload.data.stats.trigger_count};;;0; 'index_total'=${event.payload.data.stats.index_total};;;0; 'index_time_in_ms'=${event.payload.data.stats.index_time_in_ms};;;0;",
+                    "plugin_output": "CRITICAL - ${event.payload.data.health.issues[0].issue}.<br>${event.payload.data.health.issues[0].details}"
+                },
+                "host": {
+                    "address": "127.0.0.1",
+                    "imports": [
+                        "nx-ht-passive",
+                        "nx-ht-status-dummy",
+                        "nx-ht-type-custom"
+                    ],
+                    "object_name": "Elastic Transforms",
+                    "vars": {
+                        "created_by": "tornado",
+                        "rulename": "root/master/nx_elastic_transforms/nx_elastic_transforms_rules"
+                    }
+                },
+                "service": {
+                    "imports": [
+                        "nx-st-interval-10m",
+                        "nx-st-passive-with-autoreset"
+                    ],
+                    "object_name": "Elastic Transform - ${_variables.name_extract.name}",
+                    "vars": {
+                        "created_by": "tornado",
+                        "dummy_state": "2",
+                        "dummy_text": "No data from webhook in the last $service.check_interval$ seconds",
+                        "nx_on_host_down": "disable_check_on_down_hard",
+                        "rulename": "root/master/nx_elastic_dataset/nx_elastic_transforms_rules"
+                    }
+                }
+            }
+        }
+    ]
+}

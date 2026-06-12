@@ -1,0 +1,148 @@
+{
+    "ServiceTemplate": {
+        "nx-st-network-printer-health": {
+            "check_command": "nx-c-check-printer-health",
+            "fields": [
+                {
+                    "datafield_id": 588,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 185,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 186,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 187,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 188,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 189,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 190,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-st-agentless-snmp"
+            ],
+            "object_name": "nx-st-network-printer-health",
+            "object_type": "template",
+            "vars": {
+                "nx_printer_health_community": "$snmp_community$",
+                "nx_printer_health_hostname": "$address$"
+            }
+        }
+    },
+    "Datafield": {
+        "588": {
+            "uuid": "a4c57cc6-3f4c-4f4f-9c54-dcbf2e84084e",
+            "varname": "nx_printer_health_blacklist",
+            "caption": "[NX] Printer Blacklist",
+            "description": "Blacklist some (missing/failed) components",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": null
+        },
+        "185": {
+            "varname": "nx_printer_health_critical",
+            "caption": "[NX] Printer Critical",
+            "description": "The critical threshold",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "185",
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "Printer Health"
+        },
+        "186": {
+            "varname": "nx_printer_health_criticalx",
+            "caption": "[NX] Printer Criticalx",
+            "description": "The extended critical thresholds",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "186",
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "Printer Health"
+        },
+        "187": {
+            "varname": "nx_printer_health_hostname",
+            "caption": "[NX] Printer Hostname",
+            "description": "Hostname or IP-address of the printer",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "187",
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "Printer Health"
+        },
+        "188": {
+            "varname": "nx_printer_health_mode",
+            "caption": "[NX] Printer Mode",
+            "description": "Which mode should be executed. Available modes: hardware-health, supplies-status and uptime.",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeDatalist",
+            "format": null,
+            "originalId": "188",
+            "settings": {
+                "behavior": "strict",
+                "data_type": "string",
+                "datalist": "[NX] Printer Health Mode"
+            },
+            "category": "Printer Health"
+        },
+        "189": {
+            "varname": "nx_printer_health_warning",
+            "caption": "[NX] Printer Warning",
+            "description": "The warning threshold",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "189",
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "Printer Health"
+        },
+        "190": {
+            "varname": "nx_printer_health_warningx",
+            "caption": "[NX] Printer Warningx",
+            "description": "The extended warning thresholds",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "190",
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "Printer Health"
+        }
+    },
+    "DatafieldCategory": {
+        "Printer Health": {
+            "category_name": "Printer Health",
+            "description": null,
+            "originalId": "6"
+        }
+    }
+}

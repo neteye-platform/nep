@@ -1,0 +1,534 @@
+{
+    "ServiceTemplate": {
+        "nx-st-agentless-snmp-nwc-health": {
+            "check_command": "nx-c-check-nwc-health",
+            "fields": [
+                {
+                    "datafield_id": 196,
+                    "is_required": "y",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-st-agentless-snmp-nwc-health-base"
+            ],
+            "object_name": "nx-st-agentless-snmp-nwc-health",
+            "object_type": "template",
+            "uuid": "b8bcf037-54bb-4e75-89df-ea6878ea3e94",
+            "vars": {
+                "nwc_health_multiline": true
+            }
+        },
+        "nx-st-agentless-snmp-nwc-health-base": {
+            "check_command": "nx-c-check-nwc-health",
+            "fields": [
+                {
+                    "datafield_id": 188,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 189,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 190,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 191,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 192,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 193,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 194,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 195,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 197,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 198,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 199,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-st-agentless-snmp"
+            ],
+            "object_name": "nx-st-agentless-snmp-nwc-health-base",
+            "object_type": "template",
+            "uuid": "4228726a-2bf9-48b3-a622-14fea5237df1",
+            "vars": {
+                "nwc_health_multiline": true
+            }
+        },
+        "nx-st-agentless-snmp-nwc-health-cpu-load": {
+            "check_command": "nx-c-check-nwc-health-cpu-load",
+            "fields": [],
+            "imports": [
+                "nx-st-agentless-snmp-nwc-health-base"
+            ],
+            "object_name": "nx-st-agentless-snmp-nwc-health-cpu-load",
+            "object_type": "template",
+            "uuid": "62a93f05-6b5a-48d8-9ef4-38c7f9abe8b0",
+            "vars": {
+                "nwc_health_multiline": true
+            }
+        },
+        "nx-st-agentless-snmp-nwc-health-hardware-health": {
+            "check_command": "nx-c-check-nwc-health-hardware-health",
+            "fields": [],
+            "imports": [
+                "nx-st-agentless-snmp-nwc-health-base"
+            ],
+            "object_name": "nx-st-agentless-snmp-nwc-health-hardware-health",
+            "object_type": "template",
+            "uuid": "26fb269f-bc86-48da-9f14-f0d3093bf4f0",
+            "vars": {
+                "nwc_health_multiline": true
+            }
+        },
+        "nx-st-agentless-snmp-nwc-health-interface-status": {
+            "check_command": "nx-c-check-nwc-health-interface-status",
+            "fields": [],
+            "imports": [
+                "nx-st-agentless-snmp-nwc-health-base"
+            ],
+            "object_name": "nx-st-agentless-snmp-nwc-health-interface-status",
+            "object_type": "template",
+            "uuid": "c6eae8dc-e54e-4ef1-9287-b4049ed0f6b6",
+            "vars": {
+                "nwc_health_multiline": true
+            }
+        },
+        "nx-st-agentless-snmp-nwc-health-interface-usage": {
+            "check_command": "nx-c-check-nwc-health-interface-usage",
+            "fields": [],
+            "imports": [
+                "nx-st-agentless-snmp-nwc-health-base"
+            ],
+            "object_name": "nx-st-agentless-snmp-nwc-health-interface-usage",
+            "object_type": "template",
+            "uuid": "881e9671-54bb-4fc2-b258-04df716801c2",
+            "vars": {
+                "nwc_health_multiline": true
+            }
+        },
+        "nx-st-agentless-snmp-nwc-health-memory-usage": {
+            "check_command": "nx-c-check-nwc-health-memory-usage",
+            "fields": [],
+            "imports": [
+                "nx-st-agentless-snmp-nwc-health-base"
+            ],
+            "object_name": "nx-st-agentless-snmp-nwc-health-memory-usage",
+            "object_type": "template",
+            "uuid": "a50ce0f8-edd2-4915-960c-9014ae330654",
+            "vars": {
+                "nwc_health_multiline": true
+            }
+        },
+        "nx-st-agentless-snmp-nwc-health-uptime": {
+            "check_command": "nx-c-check-nwc-health-uptime",
+            "fields": [],
+            "imports": [
+                "nx-st-agentless-snmp-nwc-health-base"
+            ],
+            "object_name": "nx-st-agentless-snmp-nwc-health-uptime",
+            "object_type": "template",
+            "uuid": "28356623-1fe5-4343-bc5f-8e4e15bda261",
+            "vars": {
+                "nwc_health_multiline": true
+            }
+        },
+        "nx-st-agentless-tcp": {
+            "check_command": "nx-c-check-tcp",
+            "fields": [
+                {
+                    "datafield_id": 179,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 180,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 181,
+                    "is_required": "y",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 182,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 183,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 184,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 185,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 186,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 187,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-st-agentless"
+            ],
+            "object_name": "nx-st-agentless-tcp",
+            "object_type": "template",
+            "uuid": "924ef2d5-02ef-4d80-8877-359e29fbebfd"
+        },
+        "nx-st-agentless-traceroute": {
+            "check_command": "nx-c-traceroute",
+            "fields": [
+                {
+                    "datafield_id": 200,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 201,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 202,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 203,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 204,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-st-agentless"
+            ],
+            "object_name": "nx-st-agentless-traceroute",
+            "object_type": "template",
+            "uuid": "5407c5bb-76a8-4aa7-bc10-28037eb938f2"
+        }
+    },
+    "Datafield": {
+        "196": {
+            "uuid": "d2ea679e-ef43-4acc-8355-bab74279687e",
+            "varname": "nx_nwc_health_mode",
+            "caption": "[NX] NWC Mode",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeDatalist",
+            "format": null,
+            "settings": {
+                "behavior": "strict",
+                "data_type": "string",
+                "datalist": "[NX] NWC Health Mode"
+            },
+            "category": null
+        },
+        "188": {
+            "uuid": "4793dd58-c780-49b4-b531-55bb89d86007",
+            "varname": "nwc_health_blacklist",
+            "caption": "NWC Blacklist",
+            "description": "Blacklist some (missing/failed) components",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {},
+            "category": null
+        },
+        "189": {
+            "uuid": "96ae3c6d-dbb8-40ba-9548-7381906608e1",
+            "varname": "nwc_health_critical",
+            "caption": "NWC Critical",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {},
+            "category": null
+        },
+        "190": {
+            "uuid": "45bb537b-d803-4c4b-a5a7-25e70944369b",
+            "varname": "nwc_health_criticalx",
+            "caption": "NWC Critical Extended",
+            "description": "The extended critical thresholds allow a finer tuning of thresholds, using a regular expression match.",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeArray",
+            "format": null,
+            "settings": {},
+            "category": null
+        },
+        "191": {
+            "uuid": "f94a0fdd-e96c-4808-9764-494a83f51887",
+            "varname": "nwc_health_multiline",
+            "caption": "NWC set multiline output",
+            "description": "Multiline output",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeBoolean",
+            "format": null,
+            "settings": {},
+            "category": null
+        },
+        "192": {
+            "uuid": "b0f04da6-b806-407c-a502-19dacbfdded2",
+            "varname": "nwc_health_name",
+            "caption": "NWC Interface Name",
+            "description": "The name of an interface (ifDescr) or pool or ...",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {},
+            "category": null
+        },
+        "193": {
+            "uuid": "3100fff8-8ae7-479d-b495-56fb4559b881",
+            "varname": "nwc_health_units",
+            "caption": "NWC Units",
+            "description": "One of %, B, KB, MB, GB, Bit, KBi, MBi, GBi. /(used for e.g. mode interface-usage/)",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {},
+            "category": null
+        },
+        "194": {
+            "uuid": "0193d868-fb4c-4441-b477-f26322325213",
+            "varname": "nwc_health_warning",
+            "caption": "NWC Warning",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {},
+            "category": null
+        },
+        "195": {
+            "uuid": "c5d9ff6a-4fe1-4919-88ff-c57f5a7e70dc",
+            "varname": "nwc_health_warningx",
+            "caption": "NWC Warning Extended",
+            "description": "The extended warning thresholds  allow a finer tuning of thresholds, using a regular expression match.",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeArray",
+            "format": null,
+            "settings": {},
+            "category": null
+        },
+        "197": {
+            "uuid": "73687f92-5a8c-4df2-9beb-130c10563dc2",
+            "varname": "nx_nwc_health_negate",
+            "caption": "[NX] NWC Negate",
+            "description": "The parameter allows you to map exit levels, such as warning=critical",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeDatalist",
+            "format": null,
+            "settings": {
+                "behavior": "strict",
+                "data_type": "array",
+                "datalist": "[NX] NWC Negate List"
+            },
+            "category": null
+        },
+        "198": {
+            "uuid": "2350d910-26f2-4f28-9dad-b5f170f82fbb",
+            "varname": "nx_nwc_health_regexp",
+            "caption": "[NX] NWC Regexp",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeBoolean",
+            "format": null,
+            "settings": {},
+            "category": null
+        },
+        "199": {
+            "uuid": "119d41ed-8ec9-4e8f-84ef-1625570de1a7",
+            "varname": "nx_nwc_health_timeout",
+            "caption": "[NX] NWC Timeout",
+            "description": "Seconds before plugin times out /(default: 15/)",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {},
+            "category": null
+        },
+        "179": {
+            "uuid": "dcc6f76a-e1eb-455f-8f0e-aab9e33195ce",
+            "varname": "nx_enable_ipv6",
+            "caption": "[NX] Enable IPv6",
+            "description": "Enable IPv6 (Default False)",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeBoolean",
+            "format": null,
+            "settings": {},
+            "category": null
+        },
+        "180": {
+            "uuid": "11135e5a-e307-4283-ae29-0a1d81652d5b",
+            "varname": "nx_enable_ssl",
+            "caption": "[NX] Enable SSL",
+            "description": "Enable SSL",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeBoolean",
+            "format": null,
+            "settings": {},
+            "category": null
+        },
+        "181": {
+            "uuid": "52a3b8a9-3231-486b-896e-c320f3b1b93f",
+            "varname": "tcp_address",
+            "caption": "TCP Address",
+            "description": "Host name, IP Address, or unix socket (must be an absolute path).",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {},
+            "category": null
+        },
+        "182": {
+            "uuid": "c26ca217-d17d-49bc-877e-1a2ae506b2e2",
+            "varname": "tcp_expect",
+            "caption": "TCP Expect",
+            "description": "String to expect in server response (may be repeated).",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {},
+            "category": null
+        },
+        "183": {
+            "uuid": "abc740b7-710c-4b22-bf75-0af48ab195b4",
+            "varname": "tcp_mismatch",
+            "caption": "TCP Mismatch",
+            "description": "Accept expected string mismatches with states ok, warn, crit. Defaults to warn.",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {},
+            "category": null
+        },
+        "184": {
+            "uuid": "3e6dedfd-9d07-4657-943d-7ea23a0b8b1c",
+            "varname": "tcp_port",
+            "caption": "TCP Port",
+            "description": "The TCP port number.",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {},
+            "category": null
+        },
+        "185": {
+            "uuid": "086f05c3-b1d7-457a-b2a6-d78f5c5d1ac3",
+            "varname": "tcp_refuse",
+            "caption": "TCP Refuse",
+            "description": "Accept TCP refusals with states ok, warn, crit. Defaults to crit.",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {},
+            "category": null
+        },
+        "186": {
+            "uuid": "843a0f8b-5c22-4a03-8f1f-99891cf2313b",
+            "varname": "tcp_send",
+            "caption": "TCP Send",
+            "description": "String to send to the server.",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {},
+            "category": null
+        },
+        "187": {
+            "uuid": "56583119-6278-42c6-92d0-d75866b9018a",
+            "varname": "tcp_timeout",
+            "caption": "TCP Timeout",
+            "description": "Seconds before connection times out. Defaults to 10.",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {},
+            "category": null
+        },
+        "200": {
+            "uuid": "4d062938-14ba-4596-915d-615250830f38",
+            "varname": "nx_trace_backup_route",
+            "caption": "[NX] Trace Backup Route",
+            "description": "route2 (backup)",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {},
+            "category": null
+        },
+        "201": {
+            "uuid": "2f20d516-f4c3-4f7e-9574-7b2b9c71f16f",
+            "varname": "nx_trace_master_route",
+            "caption": "[NX] Trace Master Route",
+            "description": "route1 (default)",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": null
+        },
+        "202": {
+            "uuid": "37d2d3cb-5ae0-492b-8f78-baa01a808696",
+            "varname": "nx_trace_max_hop",
+            "caption": "[NX] Trace Max Hop Number",
+            "description": "Number max hop to search",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeNumber",
+            "format": null,
+            "settings": {},
+            "category": null
+        },
+        "203": {
+            "uuid": "7ca92cec-b1be-4d6e-83ee-c19e277cf0e7",
+            "varname": "nx_trace_target_host",
+            "caption": "[NX] Trace Target Host",
+            "description": "Target host",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {},
+            "category": null
+        },
+        "204": {
+            "uuid": "8f062bb0-a7a3-4a89-a242-312b8352ee2e",
+            "varname": "nx_trace_timeout",
+            "caption": "[NX] Trace Timeout",
+            "description": "Timeout in seconds",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {},
+            "category": null
+        }
+    }
+}

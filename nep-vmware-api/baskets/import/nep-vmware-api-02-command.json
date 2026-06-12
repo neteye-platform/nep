@@ -1,0 +1,177 @@
+{
+    "Command": {
+        "nx-c-check-vmware-snapshot": {
+            "arguments": {
+                "--blacklist": {
+                    "value": "$check_vmware_snapshot_blacklist$"
+                },
+                "--critical": {
+                    "value": "$check_vmware_snapshot_critical$"
+                },
+                "--mode": {
+                    "value": "$check_vmware_snapshot_mode$"
+                },
+                "--password": {
+                    "value": "$check_vmware_snapshot_password$"
+                },
+                "--server": {
+                    "value": "$host.name$"
+                },
+                "--username": {
+                    "value": "$check_vmware_snapshot_username$"
+                },
+                "--warning": {
+                    "value": "$check_vmware_snapshot_warning$"
+                },
+                "--whitelist": {
+                    "value": "$check_vmware_snapshot_whitelist$"
+                }
+            },
+            "command": "PluginContribDir + \/check_vmware_snapshots.pl",
+            "disabled": false,
+            "fields": [],
+            "imports": [],
+            "is_string": null,
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-check-vmware-snapshot",
+            "object_type": "object",
+            "timeout": null,
+            "vars": {},
+            "zone": null
+        },
+        "nx-c-check-vmware-api": {
+            "arguments": {
+                "-H": {
+                    "required": true,
+                    "value": "$host.name$"
+                },
+                "-N": {
+                    "value": "$esx_vm_name$"
+                },
+                "-c": {
+                    "value": "$esx_critical$"
+                },
+                "-f": {
+                    "value": "$esx_authfile$"
+                },
+                "-i": {
+                    "value": "$esx_sample_interval$"
+                },
+                "-l": {
+                    "value": "$nx_vmware_esx_command$"
+                },
+                "-o": {
+                    "value": "$esx_optional$"
+                },
+                "-p": {
+                    "value": "$esx_password$"
+                },
+                "-s": {
+                    "value": "$esx_subcommand$"
+                },
+                "-u": {
+                    "value": "$esx_username$"
+                },
+                "-w": {
+                    "value": "$esx_warning$"
+                }
+            },
+            "command": "PluginContribDir + \/check_vmware_api",
+            "disabled": false,
+            "fields": [],
+            "imports": [],
+            "is_string": null,
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-check-vmware-api",
+            "object_type": "object",
+            "timeout": null,
+            "vars": {},
+            "zone": null
+        },
+        "nx-c-check-vmware-api-datacenter": {
+            "arguments": {
+                "-D": {
+                    "required": true,
+                    "value": "$esx_datacenter$"
+                },
+                "-H": {
+                    "value": "$esx_host_name$"
+                },
+                "-N": {
+                    "value": "$esx_vm_name$"
+                },
+                "-c": {
+                    "value": "$esx_critical$"
+                },
+                "-f": {
+                    "value": "$esx_authfile$"
+                },
+                "-l": {
+                    "value": "$nx_vmware_esx_command$"
+                },
+                "-o": {
+                    "value": "$esx_optional$"
+                },
+                "-p": {
+                    "value": "$esx_password$"
+                },
+                "-s": {
+                    "value": "$esx_subcommand$"
+                },
+                "-u": {
+                    "value": "$esx_username$"
+                },
+                "-w": {
+                    "value": "$esx_warning$"
+                },
+                "-x": {
+                    "value": "$esx_blacklist$"
+                }
+            },
+            "command": "PluginContribDir + \/check_vmware_api",
+            "disabled": false,
+            "fields": [],
+            "imports": [],
+            "is_string": null,
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-check-vmware-api-datacenter",
+            "object_type": "object",
+            "timeout": null,
+            "vars": {},
+            "zone": null
+        },
+        "nx-c-vclusteralive": {
+            "arguments": {
+                "-C": {
+                    "required": true,
+                    "value": "$vmware_name$"
+                },
+                "-D": {
+                    "required": true,
+                    "value": "$vmware_vcsa_name$"
+                },
+                "-f": {
+                    "required": true,
+                    "value": "$esx_authfile$"
+                },
+                "-l": {
+                    "value": "$nx_vmware_esx_command$"
+                },
+                "-s": {
+                    "value": "$esx_subcommand$"
+                }
+            },
+            "command": "PluginContribDir + \/check_vmware_api",
+            "disabled": false,
+            "fields": [],
+            "imports": [],
+            "is_string": null,
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-vclusteralive",
+            "object_type": "object",
+            "timeout": null,
+            "vars": {},
+            "zone": null
+        }
+    }
+}

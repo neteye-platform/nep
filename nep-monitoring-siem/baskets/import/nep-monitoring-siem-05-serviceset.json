@@ -1,0 +1,1904 @@
+{
+    "ServiceSet": {
+        "nx-ss-agent-linux-elastic-agent-state": {
+            "assign_filter": "host.vars.nx_enable_nep_ss=true&(host.vars.logmanager_log_source_type=%22elastic-agent%22&host.vars.nx_host_os_type=%22linux%22&\"nx-ht-computer-agent\"=host.templates)&!host.vars.nx_nep_ss_to_exclude=%22nx-ss-agent-linux-elastic-agent-state%22&host.vars.logmanager_forwarder_enable=false",
+            "description": "Service Set providing common monitoring for Elastic Agent Service on NetEye",
+            "object_name": "nx-ss-agent-linux-elastic-agent-state",
+            "object_type": "template",
+            "services": {
+                "Elastic Agent Status": {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-agentless-elastic-agent-check",
+                        "nx-st-type-custom"
+                    ],
+                    "object_name": "Elastic Agent Status",
+                    "object_type": "object"
+                },
+                "Unit Elastic Agent State": {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-agent-linux-systemd-unit-state",
+                        "nx-st-type-custom"
+                    ],
+                    "object_name": "Unit Elastic Agent State",
+                    "object_type": "object",
+                    "vars": {
+                        "systemd_skip_enabled_check": true,
+                        "systemd_unit_name": "elastic-agent.service"
+                    }
+                }
+            }
+        },
+        "nx-ss-agent-windows-elastic-agent-state": {
+            "assign_filter": "host.vars.nx_enable_nep_ss=true&!\"nx-ss-agent-windows-elastic-agent-state\"=host.vars.nx_nep_ss_to_exclude&(host.vars.logmanager_log_source_type=%22elastic-agent%22&host.vars.nx_host_os_type=%22windows%22&\"nx-ht-computer-agent\"=host.templates)&host.vars.logmanager_forwarder_enable=false",
+            "description": "Service Set providing common monitoring for Elastic Agent Service on Windows System",
+            "object_name": "nx-ss-agent-windows-elastic-agent-state",
+            "object_type": "template",
+            "services": {
+                "Elastic Agent Status": {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-agentless-elastic-agent-check",
+                        "nx-st-type-custom"
+                    ],
+                    "object_name": "Elastic Agent Status",
+                    "object_type": "object"
+                },
+                "Service Elastic Agent Status": {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-agent-windows-service-status",
+                        "nx-st-type-custom"
+                    ],
+                    "object_name": "Service Elastic Agent Status",
+                    "object_type": "object",
+                    "vars": {
+                        "service_win_service": "Elastic Agent"
+                    }
+                }
+            }
+        },
+        "nx-ss-agent-linux-elastic-endpoint-state": {
+            "assign_filter": "host.vars.nx_enable_nep_ss=true&(host.vars.logmanager_log_source_type=%22elastic-agent%22&host.vars.nx_host_os_type=%22linux%22&\"nx-ht-computer-agent\"=host.templates)&host.vars.logmanager_elastic_endpoint_enable=true&!host.vars.nx_nep_ss_to_exclude=%22nx-ss-agent-linux-elastic-agent-state%22",
+            "description": "Service Set providing common monitoring for Elastic Endpoint Service on Linux System",
+            "object_name": "nx-ss-agent-linux-elastic-endpoint-state",
+            "object_type": "template",
+            "services": {
+                "Elastic Endpoint Status": {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-agentless-elastic-endpoint-check",
+                        "nx-st-type-custom"
+                    ],
+                    "object_name": "Elastic Endpoint Status",
+                    "object_type": "object"
+                },
+                "Unit Elastic Endpoint State": {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-agent-linux-systemd-unit-state",
+                        "nx-st-type-custom"
+                    ],
+                    "object_name": "Unit Elastic Endpoint State",
+                    "object_type": "object",
+                    "vars": {
+                        "systemd_skip_enabled_check": true,
+                        "systemd_unit_name": "ElasticEndpoint.service"
+                    }
+                }
+            }
+        },
+        "nx-ss-agent-windows-elastic-endpoint-state": {
+            "assign_filter": "host.vars.nx_enable_nep_ss=true&!\"nx-ss-agent-windows-elastic-endpoint-state\"=host.vars.nx_nep_ss_to_exclude&(host.vars.logmanager_log_source_type=%22elastic-agent%22&host.vars.nx_host_os_type=%22windows%22&\"nx-ht-computer-agent\"=host.templates)&host.vars.logmanager_elastic_endpoint_enable=true",
+            "description": "Service Set providing common monitoring for Elastic Endpoint Service on Windows System",
+            "object_name": "nx-ss-agent-windows-elastic-endpoint-state",
+            "object_type": "template",
+            "services": {
+                "Elastic Endpoint Status": {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-agentless-elastic-endpoint-check",
+                        "nx-st-type-custom"
+                    ],
+                    "object_name": "Elastic Endpoint Status",
+                    "object_type": "object"
+                },
+                "Service Elastic Endpoint Status": {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-agent-windows-service-status",
+                        "nx-st-type-custom"
+                    ],
+                    "object_name": "Service Elastic Endpoint Status",
+                    "object_type": "object",
+                    "vars": {
+                        "service_win_service": "ElasticEndpoint"
+                    }
+                }
+            }
+        },
+        "nx-ss-neteye-siem-disks-state": {
+            "assign_filter": "host.vars.nx_enable_nep_ss=true&!\"nx-ss-neteye-siem-disks-state\"=host.vars.nx_nep_ss_to_exclude&\"neteye-elastic-stack\"=host.vars.neteye_modules&host.vars.nx_neteye_cluster=true&(\"nx-ht-neteye-mainsystem-master\"=host.templates|\"nx-ht-neteye-subsystem-master\"=host.templates)",
+            "description": "Service Set providing common monitoring for Disk Space on a cluster for NetEye SIEM Module",
+            "object_name": "nx-ss-neteye-siem-disks-state",
+            "object_type": "template",
+            "services": {
+                "Disk Tornado RSyslog collector Free space": {
+                    "action_url": null,
+                    "apply_for": null,
+                    "assign_filter": null,
+                    "check_command": null,
+                    "check_interval": null,
+                    "check_period": null,
+                    "check_timeout": null,
+                    "command_endpoint": null,
+                    "disabled": false,
+                    "display_name": null,
+                    "enable_active_checks": null,
+                    "enable_event_handler": null,
+                    "enable_flapping": null,
+                    "enable_notifications": null,
+                    "enable_passive_checks": null,
+                    "enable_perfdata": null,
+                    "event_command": null,
+                    "fields": [],
+                    "flapping_threshold_high": null,
+                    "flapping_threshold_low": null,
+                    "groups": [],
+                    "host": null,
+                    "icon_image": null,
+                    "icon_image_alt": null,
+                    "imports": [
+                        "nx-st-agent-linux-byssh-disk-free-space",
+                        "nx-st-type-custom"
+                    ],
+                    "max_check_attempts": null,
+                    "notes": null,
+                    "notes_url": null,
+                    "object_name": "Disk Tornado RSyslog collector Free space",
+                    "object_type": "object",
+                    "retry_interval": null,
+                    "service_set": null,
+                    "template_choice": null,
+                    "use_agent": null,
+                    "use_var_overrides": null,
+                    "vars": {
+                        "by_ssh_address": "rsyslog-logmanager.neteyelocal",
+                        "by_ssh_logname": "monitoring",
+                        "disk_single_ereg_path": "\/neteye\/shared\/tornado_rsyslog_collector"
+                    },
+                    "volatile": null,
+                    "zone": null
+                },
+                "Disk FileBeat Free space": {
+                    "action_url": null,
+                    "apply_for": null,
+                    "assign_filter": null,
+                    "check_command": null,
+                    "check_interval": null,
+                    "check_period": null,
+                    "check_timeout": null,
+                    "command_endpoint": null,
+                    "disabled": false,
+                    "display_name": null,
+                    "enable_active_checks": null,
+                    "enable_event_handler": null,
+                    "enable_flapping": null,
+                    "enable_notifications": null,
+                    "enable_passive_checks": null,
+                    "enable_perfdata": null,
+                    "event_command": null,
+                    "fields": [],
+                    "flapping_threshold_high": null,
+                    "flapping_threshold_low": null,
+                    "groups": [],
+                    "host": null,
+                    "icon_image": null,
+                    "icon_image_alt": null,
+                    "imports": [
+                        "nx-st-agent-linux-byssh-disk-free-space",
+                        "nx-st-type-custom"
+                    ],
+                    "max_check_attempts": null,
+                    "notes": null,
+                    "notes_url": null,
+                    "object_name": "Disk FileBeat Free space",
+                    "object_type": "object",
+                    "retry_interval": null,
+                    "service_set": null,
+                    "template_choice": null,
+                    "use_agent": null,
+                    "use_var_overrides": null,
+                    "vars": {
+                        "by_ssh_address": "filebeat.neteyelocal",
+                        "by_ssh_logname": "monitoring",
+                        "disk_single_ereg_path": "\/neteye\/shared\/filebeat"
+                    },
+                    "volatile": null,
+                    "zone": null
+                },
+                "Disk Elastic Blockchain Proxy Free space": {
+                    "action_url": null,
+                    "apply_for": null,
+                    "assign_filter": null,
+                    "check_command": null,
+                    "check_interval": null,
+                    "check_period": null,
+                    "check_timeout": null,
+                    "command_endpoint": null,
+                    "disabled": false,
+                    "display_name": null,
+                    "enable_active_checks": null,
+                    "enable_event_handler": null,
+                    "enable_flapping": null,
+                    "enable_notifications": null,
+                    "enable_passive_checks": null,
+                    "enable_perfdata": null,
+                    "event_command": null,
+                    "fields": [],
+                    "flapping_threshold_high": null,
+                    "flapping_threshold_low": null,
+                    "groups": [],
+                    "host": null,
+                    "icon_image": null,
+                    "icon_image_alt": null,
+                    "imports": [
+                        "nx-st-agent-linux-byssh-disk-free-space",
+                        "nx-st-type-custom"
+                    ],
+                    "max_check_attempts": null,
+                    "notes": null,
+                    "notes_url": null,
+                    "object_name": "Disk Elastic Blockchain Proxy Free space",
+                    "object_type": "object",
+                    "retry_interval": null,
+                    "service_set": null,
+                    "template_choice": null,
+                    "use_agent": null,
+                    "use_var_overrides": null,
+                    "vars": {
+                        "by_ssh_address": "elastic-blockchain-proxy.neteyelocal",
+                        "by_ssh_logname": "monitoring",
+                        "disk_single_ereg_path": "\/neteye\/shared\/elastic-blockchain-proxy"
+                    },
+                    "volatile": null,
+                    "zone": null
+                },
+                "Disk Logstash Free space": {
+                    "action_url": null,
+                    "apply_for": null,
+                    "assign_filter": null,
+                    "check_command": null,
+                    "check_interval": null,
+                    "check_period": null,
+                    "check_timeout": null,
+                    "command_endpoint": null,
+                    "disabled": false,
+                    "display_name": null,
+                    "enable_active_checks": null,
+                    "enable_event_handler": null,
+                    "enable_flapping": null,
+                    "enable_notifications": null,
+                    "enable_passive_checks": null,
+                    "enable_perfdata": null,
+                    "event_command": null,
+                    "fields": [],
+                    "flapping_threshold_high": null,
+                    "flapping_threshold_low": null,
+                    "groups": [],
+                    "host": null,
+                    "icon_image": null,
+                    "icon_image_alt": null,
+                    "imports": [
+                        "nx-st-agent-linux-byssh-disk-free-space",
+                        "nx-st-type-custom"
+                    ],
+                    "max_check_attempts": null,
+                    "notes": null,
+                    "notes_url": null,
+                    "object_name": "Disk Logstash Free space",
+                    "object_type": "object",
+                    "retry_interval": null,
+                    "service_set": null,
+                    "template_choice": null,
+                    "use_agent": null,
+                    "use_var_overrides": null,
+                    "vars": {
+                        "by_ssh_address": "logstash.neteyelocal",
+                        "by_ssh_logname": "monitoring",
+                        "disk_single_ereg_path": "\/neteye\/shared\/logstash"
+                    },
+                    "volatile": null,
+                    "zone": null
+                },
+                "Disk RSyslog-Logmanager Free space": {
+                    "action_url": null,
+                    "apply_for": null,
+                    "assign_filter": null,
+                    "check_command": null,
+                    "check_interval": null,
+                    "check_period": null,
+                    "check_timeout": null,
+                    "command_endpoint": null,
+                    "disabled": false,
+                    "display_name": null,
+                    "enable_active_checks": null,
+                    "enable_event_handler": null,
+                    "enable_flapping": null,
+                    "enable_notifications": null,
+                    "enable_passive_checks": null,
+                    "enable_perfdata": null,
+                    "event_command": null,
+                    "fields": [],
+                    "flapping_threshold_high": null,
+                    "flapping_threshold_low": null,
+                    "groups": [],
+                    "host": null,
+                    "icon_image": null,
+                    "icon_image_alt": null,
+                    "imports": [
+                        "nx-st-agent-linux-byssh-disk-free-space",
+                        "nx-st-type-custom"
+                    ],
+                    "max_check_attempts": null,
+                    "notes": null,
+                    "notes_url": null,
+                    "object_name": "Disk RSyslog-Logmanager Free space",
+                    "object_type": "object",
+                    "retry_interval": null,
+                    "service_set": null,
+                    "template_choice": null,
+                    "use_agent": null,
+                    "use_var_overrides": null,
+                    "vars": {
+                        "by_ssh_address": "rsyslog-logmanager.neteyelocal",
+                        "by_ssh_logname": "monitoring",
+                        "disk_single_ereg_path": "\/neteye\/shared\/rsyslog"
+                    },
+                    "volatile": null,
+                    "zone": null
+                }
+            }
+        },
+        "nx-ss-neteye-siem-services-state": {
+            "assign_filter": "host.vars.nx_enable_nep_ss=true&!\"nx-ss-neteye-siem-disks-state\"=host.vars.nx_nep_ss_to_exclude&\"neteye-elastic-stack\"=host.vars.neteye_modules&(\"nx-ht-neteye-mainsystem-master\"=host.templates|\"nx-ht-neteye-subsystem-master\"=host.templates)",
+            "description": "Service Set providing common monitoring for NetEye SIEM Module on a single and cluster master",
+            "object_name": "nx-ss-neteye-siem-services-state",
+            "object_type": "template",
+            "services": {
+                "Elastic Cluster Status": {
+                    "action_url": null,
+                    "apply_for": null,
+                    "assign_filter": null,
+                    "check_command": null,
+                    "check_interval": null,
+                    "check_period": null,
+                    "check_timeout": null,
+                    "command_endpoint": null,
+                    "disabled": false,
+                    "display_name": null,
+                    "enable_active_checks": null,
+                    "enable_event_handler": null,
+                    "enable_flapping": null,
+                    "enable_notifications": null,
+                    "enable_passive_checks": null,
+                    "enable_perfdata": null,
+                    "event_command": null,
+                    "fields": [],
+                    "flapping_threshold_high": null,
+                    "flapping_threshold_low": null,
+                    "groups": [],
+                    "host": null,
+                    "icon_image": null,
+                    "icon_image_alt": null,
+                    "imports": [
+                        "nx-st-agent-elastic-neteye",
+                        "nx-st-type-custom"
+                    ],
+                    "max_check_attempts": null,
+                    "notes": null,
+                    "notes_url": null,
+                    "object_name": "Elastic Cluster Status",
+                    "object_type": "object",
+                    "retry_interval": null,
+                    "service_set": null,
+                    "template_choice": null,
+                    "use_agent": null,
+                    "use_var_overrides": null,
+                    "vars": {
+                        "nx_elastic_check_types_list": "status",
+                        "es_hostname": "elasticsearch.neteyelocal"
+                    },
+                    "volatile": null,
+                    "zone": null
+                },
+                "Elastic Cluster Master": {
+                    "action_url": null,
+                    "apply_for": null,
+                    "assign_filter": null,
+                    "check_command": null,
+                    "check_interval": null,
+                    "check_period": null,
+                    "check_timeout": null,
+                    "command_endpoint": null,
+                    "disabled": false,
+                    "display_name": null,
+                    "enable_active_checks": null,
+                    "enable_event_handler": null,
+                    "enable_flapping": null,
+                    "enable_notifications": null,
+                    "enable_passive_checks": null,
+                    "enable_perfdata": null,
+                    "event_command": null,
+                    "fields": [],
+                    "flapping_threshold_high": null,
+                    "flapping_threshold_low": null,
+                    "groups": [],
+                    "host": null,
+                    "icon_image": null,
+                    "icon_image_alt": null,
+                    "imports": [
+                        "nx-st-agent-elastic-neteye",
+                        "nx-st-type-custom"
+                    ],
+                    "max_check_attempts": null,
+                    "notes": null,
+                    "notes_url": null,
+                    "object_name": "Elastic Cluster Master",
+                    "object_type": "object",
+                    "retry_interval": null,
+                    "service_set": null,
+                    "template_choice": null,
+                    "use_agent": null,
+                    "use_var_overrides": null,
+                    "vars": {
+                        "nx_elastic_check_types_list": "master",
+                        "es_hostname": "elasticsearch.neteyelocal"
+                    },
+                    "volatile": null,
+                    "zone": null
+                },
+                "Elastic Cluster Max Shards": {
+                    "action_url": null,
+                    "apply_for": null,
+                    "assign_filter": null,
+                    "check_command": null,
+                    "check_interval": null,
+                    "check_period": null,
+                    "check_timeout": null,
+                    "command_endpoint": null,
+                    "disabled": false,
+                    "display_name": null,
+                    "enable_active_checks": null,
+                    "enable_event_handler": null,
+                    "enable_flapping": null,
+                    "enable_notifications": null,
+                    "enable_passive_checks": null,
+                    "enable_perfdata": null,
+                    "event_command": null,
+                    "fields": [],
+                    "flapping_threshold_high": null,
+                    "flapping_threshold_low": null,
+                    "groups": [],
+                    "host": null,
+                    "icon_image": null,
+                    "icon_image_alt": null,
+                    "imports": [
+                        "nx-st-agent-elastic-neteye",
+                        "nx-st-type-custom"
+                    ],
+                    "max_check_attempts": null,
+                    "notes": null,
+                    "notes_url": null,
+                    "object_name": "Elastic Cluster Max Shards",
+                    "object_type": "object",
+                    "retry_interval": null,
+                    "service_set": null,
+                    "template_choice": null,
+                    "use_agent": null,
+                    "use_var_overrides": null,
+                    "vars": {
+                        "nx_elastic_check_types_list": "maxshards",
+                        "es_hostname": "elasticsearch.neteyelocal",
+                        "nx_elastic_critical": "90",
+                        "nx_elastic_warning": "80"
+                    },
+                    "volatile": null,
+                    "zone": null
+                },
+                "Elastic Cluster Disk Usage": {
+                    "action_url": null,
+                    "apply_for": null,
+                    "assign_filter": null,
+                    "check_command": null,
+                    "check_interval": null,
+                    "check_period": null,
+                    "check_timeout": null,
+                    "command_endpoint": null,
+                    "disabled": false,
+                    "display_name": null,
+                    "enable_active_checks": null,
+                    "enable_event_handler": null,
+                    "enable_flapping": null,
+                    "enable_notifications": null,
+                    "enable_passive_checks": null,
+                    "enable_perfdata": null,
+                    "event_command": null,
+                    "fields": [],
+                    "flapping_threshold_high": null,
+                    "flapping_threshold_low": null,
+                    "groups": [],
+                    "host": null,
+                    "icon_image": null,
+                    "icon_image_alt": null,
+                    "imports": [
+                        "nx-st-agent-elastic-neteye",
+                        "nx-st-type-custom"
+                    ],
+                    "max_check_attempts": null,
+                    "notes": null,
+                    "notes_url": null,
+                    "object_name": "Elastic Cluster Disk Usage",
+                    "object_type": "object",
+                    "retry_interval": null,
+                    "service_set": null,
+                    "template_choice": null,
+                    "use_agent": null,
+                    "use_var_overrides": null,
+                    "vars": {
+                        "nx_elastic_check_types_list": "disk",
+                        "es_hostname": "elasticsearch.neteyelocal"
+                    },
+                    "volatile": null,
+                    "zone": null
+                },
+                "Elastic Cluster Memory Usage": {
+                    "action_url": null,
+                    "apply_for": null,
+                    "assign_filter": null,
+                    "check_command": null,
+                    "check_interval": null,
+                    "check_period": null,
+                    "check_timeout": null,
+                    "command_endpoint": null,
+                    "disabled": false,
+                    "display_name": null,
+                    "enable_active_checks": null,
+                    "enable_event_handler": null,
+                    "enable_flapping": null,
+                    "enable_notifications": null,
+                    "enable_passive_checks": null,
+                    "enable_perfdata": null,
+                    "event_command": null,
+                    "fields": [],
+                    "flapping_threshold_high": null,
+                    "flapping_threshold_low": null,
+                    "groups": [],
+                    "host": null,
+                    "icon_image": null,
+                    "icon_image_alt": null,
+                    "imports": [
+                        "nx-st-agent-elastic-neteye",
+                        "nx-st-type-custom"
+                    ],
+                    "max_check_attempts": null,
+                    "notes": null,
+                    "notes_url": null,
+                    "object_name": "Elastic Cluster Memory Usage",
+                    "object_type": "object",
+                    "retry_interval": null,
+                    "service_set": null,
+                    "template_choice": null,
+                    "use_agent": null,
+                    "use_var_overrides": null,
+                    "vars": {
+                        "nx_elastic_check_types_list": "mem",
+                        "es_hostname": "elasticsearch.neteyelocal"
+                    },
+                    "volatile": null,
+                    "zone": null
+                },
+                "Filebeat Status": {
+                    "action_url": null,
+                    "apply_for": null,
+                    "assign_filter": null,
+                    "check_command": null,
+                    "check_interval": null,
+                    "check_period": null,
+                    "check_timeout": null,
+                    "command_endpoint": null,
+                    "disabled": false,
+                    "display_name": null,
+                    "enable_active_checks": null,
+                    "enable_event_handler": null,
+                    "enable_flapping": null,
+                    "enable_notifications": null,
+                    "enable_passive_checks": null,
+                    "enable_perfdata": null,
+                    "event_command": null,
+                    "fields": [],
+                    "flapping_threshold_high": null,
+                    "flapping_threshold_low": null,
+                    "groups": [],
+                    "host": null,
+                    "icon_image": null,
+                    "icon_image_alt": null,
+                    "imports": [
+                        "nx-st-agent-filebeat-neteye",
+                        "nx-st-type-custom"
+                    ],
+                    "max_check_attempts": null,
+                    "notes": null,
+                    "notes_url": null,
+                    "object_name": "Filebeat Status",
+                    "object_type": "object",
+                    "retry_interval": null,
+                    "service_set": null,
+                    "template_choice": null,
+                    "use_agent": null,
+                    "use_var_overrides": null,
+                    "vars": {
+                        "filebeat_hostname": "filebeat.neteyelocal"
+                    },
+                    "volatile": null,
+                    "zone": null
+                },
+                "Logstash Status": {
+                    "action_url": null,
+                    "apply_for": null,
+                    "assign_filter": null,
+                    "check_command": null,
+                    "check_interval": null,
+                    "check_period": null,
+                    "check_timeout": null,
+                    "command_endpoint": null,
+                    "disabled": false,
+                    "display_name": null,
+                    "enable_active_checks": null,
+                    "enable_event_handler": null,
+                    "enable_flapping": null,
+                    "enable_notifications": null,
+                    "enable_passive_checks": null,
+                    "enable_perfdata": null,
+                    "event_command": null,
+                    "fields": [],
+                    "flapping_threshold_high": null,
+                    "flapping_threshold_low": null,
+                    "groups": [],
+                    "host": null,
+                    "icon_image": null,
+                    "icon_image_alt": null,
+                    "imports": [
+                        "nx-st-agent-logstash-health",
+                        "nx-st-type-custom"
+                    ],
+                    "max_check_attempts": null,
+                    "notes": null,
+                    "notes_url": null,
+                    "object_name": "Logstash Status",
+                    "object_type": "object",
+                    "retry_interval": "3m",
+                    "service_set": null,
+                    "template_choice": null,
+                    "use_agent": null,
+                    "use_var_overrides": null,
+                    "vars": {
+                        "logstash_hostname": "logstash.neteyelocal",
+                        "logstash_heap_crit": "90",
+                        "logstash_heap_warn": "80"
+                    },
+                    "volatile": null,
+                    "zone": null
+                },
+                "Logstash Total EPS": {
+                    "action_url": null,
+                    "apply_for": null,
+                    "assign_filter": null,
+                    "check_command": null,
+                    "check_interval": null,
+                    "check_period": null,
+                    "check_timeout": null,
+                    "command_endpoint": null,
+                    "disabled": false,
+                    "display_name": null,
+                    "enable_active_checks": null,
+                    "enable_event_handler": null,
+                    "enable_flapping": null,
+                    "enable_notifications": null,
+                    "enable_passive_checks": null,
+                    "enable_perfdata": null,
+                    "event_command": null,
+                    "fields": [],
+                    "flapping_threshold_high": null,
+                    "flapping_threshold_low": null,
+                    "groups": [],
+                    "host": null,
+                    "icon_image": null,
+                    "icon_image_alt": null,
+                    "imports": [
+                        "nx-st-agent-logstash-events",
+                        "nx-st-type-custom"
+                    ],
+                    "max_check_attempts": null,
+                    "notes": null,
+                    "notes_url": null,
+                    "object_name": "Logstash Total EPS",
+                    "object_type": "object",
+                    "retry_interval": null,
+                    "service_set": null,
+                    "template_choice": null,
+                    "use_agent": null,
+                    "use_var_overrides": null,
+                    "vars": {
+                        "logstash_hostname": "logstash.neteyelocal"
+                    },
+                    "volatile": null,
+                    "zone": null
+                },
+                "Logstash Queue EBP Status": {
+                    "action_url": null,
+                    "apply_for": null,
+                    "assign_filter": null,
+                    "check_command": null,
+                    "check_interval": null,
+                    "check_period": null,
+                    "check_timeout": null,
+                    "command_endpoint": null,
+                    "disabled": false,
+                    "display_name": null,
+                    "enable_active_checks": null,
+                    "enable_event_handler": null,
+                    "enable_flapping": null,
+                    "enable_notifications": null,
+                    "enable_passive_checks": null,
+                    "enable_perfdata": null,
+                    "event_command": null,
+                    "fields": [],
+                    "flapping_threshold_high": null,
+                    "flapping_threshold_low": null,
+                    "groups": [],
+                    "host": null,
+                    "icon_image": null,
+                    "icon_image_alt": null,
+                    "imports": [
+                        "nx-st-agent-logstash-queue",
+                        "nx-st-type-custom"
+                    ],
+                    "max_check_attempts": null,
+                    "notes": null,
+                    "notes_url": null,
+                    "object_name": "Logstash Queue EBP Status",
+                    "object_type": "object",
+                    "retry_interval": null,
+                    "service_set": null,
+                    "template_choice": null,
+                    "use_agent": null,
+                    "use_var_overrides": null,
+                    "vars": {
+                        "logstash_pipeline": "ebp_persistent",
+                        "logstash_hostname": "logstash.neteyelocal"
+                    },
+                    "volatile": null,
+                    "zone": null
+                },
+                "Elastic Dataset Status - Master": {
+                    "check_interval": 60,
+                    "fields": [],
+                    "imports": [
+                        "nx-st-agentless-elastic-dataset-status",
+                        "nx-st-type-custom"
+                    ],
+                    "object_name": "Elastic Dataset Status - Master",
+                    "object_type": "object",
+                    "vars": {
+                        "nx_elastic_check_interval ": "2m",
+                        "nx_elastic_dataset_exclusion": [
+                            "elastic_agent",
+                            "elastic_agent.fleet_server",
+                            "elastic_agent.filebeat",
+                            "elastic_agent.metricbeat",
+                            "elastic_agent.elastic_agent"
+                        ],
+                        "nx_neteye_tenant": "master",
+                        "nx_tornado_webhook_name": "nx_elastic_dataset",
+                        "nx_tornado_webhook_secret": "@@PASSWORD@@"
+
+                    }
+                }
+            }
+        },
+        "nx-ss-neteye-siem-units-state": {
+            "assign_filter": "host.vars.nx_enable_nep_ss=true&!\"nx-ss-neteye-siem-units-state\"=host.vars.nx_nep_ss_to_exclude&\"neteye-elastic-stack\"=host.vars.neteye_modules&(\"nx-ht-neteye-mainsystem-master\"=host.templates|\"nx-ht-neteye-subsystem-master\"=host.templates)",
+            "description": "Service Set providing common monitoring for NetEye SIEM Module on a single and cluster master",
+            "object_name": "nx-ss-neteye-siem-units-state",
+            "object_type": "template",
+            "services": {
+                "Unit RSyslog-Logmanager State": {
+                    "action_url": null,
+                    "apply_for": null,
+                    "assign_filter": null,
+                    "check_command": null,
+                    "check_interval": null,
+                    "check_period": null,
+                    "check_timeout": null,
+                    "command_endpoint": null,
+                    "disabled": false,
+                    "display_name": null,
+                    "enable_active_checks": null,
+                    "enable_event_handler": null,
+                    "enable_flapping": null,
+                    "enable_notifications": null,
+                    "enable_passive_checks": null,
+                    "enable_perfdata": null,
+                    "event_command": null,
+                    "fields": [],
+                    "flapping_threshold_high": null,
+                    "flapping_threshold_low": null,
+                    "groups": [],
+                    "host": null,
+                    "icon_image": null,
+                    "icon_image_alt": null,
+                    "imports": [
+                        "nx-st-agent-linux-byssh-unit-state-no-enable",
+                        "nx-st-type-custom"
+                    ],
+                    "max_check_attempts": null,
+                    "notes": null,
+                    "notes_url": null,
+                    "object_name": "Unit RSyslog-Logmanager State",
+                    "object_type": "object",
+                    "retry_interval": null,
+                    "service_set": null,
+                    "template_choice": null,
+                    "use_agent": null,
+                    "use_var_overrides": null,
+                    "vars": {
+                        "by_ssh_address": "rsyslog-logmanager.neteyelocal",
+                        "by_ssh_logname": "monitoring",
+                        "systemd_unit_name": "rsyslog-logmanager.service"
+                    },
+                    "volatile": null,
+                    "zone": null
+                },
+                "Unit Elastic Blockchain Proxy State": {
+                    "action_url": null,
+                    "apply_for": null,
+                    "assign_filter": null,
+                    "check_command": null,
+                    "check_interval": null,
+                    "check_period": null,
+                    "check_timeout": null,
+                    "command_endpoint": null,
+                    "disabled": false,
+                    "display_name": null,
+                    "enable_active_checks": null,
+                    "enable_event_handler": null,
+                    "enable_flapping": null,
+                    "enable_notifications": null,
+                    "enable_passive_checks": null,
+                    "enable_perfdata": null,
+                    "event_command": null,
+                    "fields": [],
+                    "flapping_threshold_high": null,
+                    "flapping_threshold_low": null,
+                    "groups": [],
+                    "host": null,
+                    "icon_image": null,
+                    "icon_image_alt": null,
+                    "imports": [
+                        "nx-st-agent-linux-byssh-unit-state-no-enable",
+                        "nx-st-type-custom"
+                    ],
+                    "max_check_attempts": null,
+                    "notes": null,
+                    "notes_url": null,
+                    "object_name": "Unit Elastic Blockchain Proxy State",
+                    "object_type": "object",
+                    "retry_interval": null,
+                    "service_set": null,
+                    "template_choice": null,
+                    "use_agent": null,
+                    "use_var_overrides": null,
+                    "vars": {
+                        "by_ssh_address": "elastic-blockchain-proxy.neteyelocal",
+                        "by_ssh_logname": "monitoring",
+                        "systemd_unit_name": "elastic-blockchain-proxy.service",
+                        "systemd_skip_enabled_check": true
+                    },
+                    "volatile": null,
+                    "zone": null
+                },
+                "Unit Logstash State": {
+                    "action_url": null,
+                    "apply_for": null,
+                    "assign_filter": null,
+                    "check_command": null,
+                    "check_interval": null,
+                    "check_period": null,
+                    "check_timeout": null,
+                    "command_endpoint": null,
+                    "disabled": false,
+                    "display_name": null,
+                    "enable_active_checks": null,
+                    "enable_event_handler": null,
+                    "enable_flapping": null,
+                    "enable_notifications": null,
+                    "enable_passive_checks": null,
+                    "enable_perfdata": null,
+                    "event_command": null,
+                    "fields": [],
+                    "flapping_threshold_high": null,
+                    "flapping_threshold_low": null,
+                    "groups": [],
+                    "host": null,
+                    "icon_image": null,
+                    "icon_image_alt": null,
+                    "imports": [
+                        "nx-st-agent-linux-byssh-unit-state-no-enable",
+                        "nx-st-type-custom"
+                    ],
+                    "max_check_attempts": null,
+                    "notes": null,
+                    "notes_url": null,
+                    "object_name": "Unit Logstash State",
+                    "object_type": "object",
+                    "retry_interval": null,
+                    "service_set": null,
+                    "template_choice": null,
+                    "use_agent": null,
+                    "use_var_overrides": null,
+                    "vars": {
+                        "by_ssh_address": "logstash.neteyelocal",
+                        "by_ssh_logname": "monitoring",
+                        "systemd_unit_name": "logstash.service"
+                    },
+                    "volatile": null,
+                    "zone": null
+                },
+                "Unit FileBeat State": {
+                    "action_url": null,
+                    "apply_for": null,
+                    "assign_filter": null,
+                    "check_command": null,
+                    "check_interval": null,
+                    "check_period": null,
+                    "check_timeout": null,
+                    "command_endpoint": null,
+                    "disabled": false,
+                    "display_name": null,
+                    "enable_active_checks": null,
+                    "enable_event_handler": null,
+                    "enable_flapping": null,
+                    "enable_notifications": null,
+                    "enable_passive_checks": null,
+                    "enable_perfdata": null,
+                    "event_command": null,
+                    "fields": [],
+                    "flapping_threshold_high": null,
+                    "flapping_threshold_low": null,
+                    "groups": [],
+                    "host": null,
+                    "icon_image": null,
+                    "icon_image_alt": null,
+                    "imports": [
+                        "nx-st-agent-linux-byssh-unit-state-no-enable",
+                        "nx-st-type-custom"
+                    ],
+                    "max_check_attempts": null,
+                    "notes": null,
+                    "notes_url": null,
+                    "object_name": "Unit FileBeat State",
+                    "object_type": "object",
+                    "retry_interval": null,
+                    "service_set": null,
+                    "template_choice": null,
+                    "use_agent": null,
+                    "use_var_overrides": null,
+                    "vars": {
+                        "by_ssh_address": "filebeat.neteyelocal",
+                        "by_ssh_logname": "monitoring",
+                        "by_ssh_options": [
+                            "StrictHostKeyChecking no",
+                            "UserKnownHostsFile=\/dev\/null"
+                        ],
+                        "systemd_unit_name": "filebeat.service"
+                    },
+                    "volatile": null,
+                    "zone": null
+                }
+            }
+        },
+        "nx-ss-neteye-endpoint-elastic-state": {
+            "assign_filter": "host.vars.nx_enable_nep_ss=true&!\"nx-ss-neteye-endpoint-elastic-state\"=host.vars.nx_nep_ss_to_exclude&\"elasticsearch\"=host.vars.neteye_local_services",
+            "description": "Service Set providing common monitoring for Elasticsearch Service on NetEye",
+            "object_name": "nx-ss-neteye-endpoint-elastic-state",
+            "object_type": "template",
+            "services": {
+                "Unit Elasticsearch State": {
+                    "action_url": null,
+                    "apply_for": null,
+                    "assign_filter": null,
+                    "check_command": null,
+                    "check_interval": null,
+                    "check_period": null,
+                    "check_timeout": null,
+                    "command_endpoint": null,
+                    "disabled": false,
+                    "display_name": null,
+                    "enable_active_checks": null,
+                    "enable_event_handler": null,
+                    "enable_flapping": null,
+                    "enable_notifications": null,
+                    "enable_passive_checks": null,
+                    "enable_perfdata": null,
+                    "event_command": null,
+                    "fields": [],
+                    "flapping_threshold_high": null,
+                    "flapping_threshold_low": null,
+                    "groups": [],
+                    "host": null,
+                    "icon_image": null,
+                    "icon_image_alt": null,
+                    "imports": [
+                        "nx-st-agent-linux-systemd-unit-state",
+                        "nx-st-type-custom"
+                    ],
+                    "max_check_attempts": null,
+                    "notes": null,
+                    "notes_url": null,
+                    "object_name": "Unit Elasticsearch State",
+                    "object_type": "object",
+                    "retry_interval": null,
+                    "service_set": null,
+                    "template_choice": null,
+                    "use_agent": null,
+                    "use_var_overrides": null,
+                    "vars": {
+                        "systemd_unit_name": "elasticsearch.service",
+                        "systemd_skip_enabled_check": true
+                    },
+                    "volatile": null,
+                    "zone": null
+                },
+                "Disk Elasticsearch Free space": {
+                    "action_url": null,
+                    "apply_for": null,
+                    "assign_filter": null,
+                    "check_command": null,
+                    "check_interval": null,
+                    "check_period": null,
+                    "check_timeout": null,
+                    "command_endpoint": null,
+                    "disabled": false,
+                    "display_name": null,
+                    "enable_active_checks": null,
+                    "enable_event_handler": null,
+                    "enable_flapping": null,
+                    "enable_notifications": null,
+                    "enable_passive_checks": null,
+                    "enable_perfdata": null,
+                    "event_command": null,
+                    "fields": [],
+                    "flapping_threshold_high": null,
+                    "flapping_threshold_low": null,
+                    "groups": [],
+                    "host": null,
+                    "icon_image": null,
+                    "icon_image_alt": null,
+                    "imports": [
+                        "nx-st-agent-linux-disk-free-space",
+                        "nx-st-type-custom"
+                    ],
+                    "max_check_attempts": null,
+                    "notes": null,
+                    "notes_url": null,
+                    "object_name": "Disk Elasticsearch Free space",
+                    "object_type": "object",
+                    "retry_interval": null,
+                    "service_set": null,
+                    "template_choice": null,
+                    "use_agent": null,
+                    "use_var_overrides": null,
+                    "vars": {
+                        "disk_cfree": "15%",
+                        "disk_partitions": [
+                            "\/neteye\/local\/elasticsearch\/"
+                        ],
+                        "disk_wfree": "25%"
+                    },
+                    "volatile": null,
+                    "zone": null
+                },
+                "Elastic CPU Usage": {
+                    "action_url": null,
+                    "apply_for": null,
+                    "assign_filter": null,
+                    "check_command": null,
+                    "check_interval": null,
+                    "check_period": null,
+                    "check_timeout": null,
+                    "command_endpoint": null,
+                    "disabled": false,
+                    "display_name": null,
+                    "enable_active_checks": null,
+                    "enable_event_handler": null,
+                    "enable_flapping": null,
+                    "enable_notifications": null,
+                    "enable_passive_checks": null,
+                    "enable_perfdata": null,
+                    "event_command": null,
+                    "fields": [],
+                    "flapping_threshold_high": null,
+                    "flapping_threshold_low": null,
+                    "groups": [],
+                    "host": null,
+                    "icon_image": null,
+                    "icon_image_alt": null,
+                    "imports": [
+                        "nx-st-agent-elastic-neteye",
+                        "nx-st-type-custom"
+                    ],
+                    "max_check_attempts": null,
+                    "notes": null,
+                    "notes_url": null,
+                    "object_name": "Elastic CPU Usage",
+                    "object_type": "object",
+                    "retry_interval": null,
+                    "service_set": null,
+                    "template_choice": null,
+                    "use_agent": null,
+                    "use_var_overrides": null,
+                    "vars": {
+                        "nx_elastic_check_types_list": "cpu",
+                        "es_local_enabled": true
+                    },
+                    "volatile": null,
+                    "zone": null
+                },
+                "Elastic Memory Usage": {
+                    "action_url": null,
+                    "apply_for": null,
+                    "assign_filter": null,
+                    "check_command": null,
+                    "check_interval": null,
+                    "check_period": null,
+                    "check_timeout": null,
+                    "command_endpoint": null,
+                    "disabled": false,
+                    "display_name": null,
+                    "enable_active_checks": null,
+                    "enable_event_handler": null,
+                    "enable_flapping": null,
+                    "enable_notifications": null,
+                    "enable_passive_checks": null,
+                    "enable_perfdata": null,
+                    "event_command": null,
+                    "fields": [],
+                    "flapping_threshold_high": null,
+                    "flapping_threshold_low": null,
+                    "groups": [],
+                    "host": null,
+                    "icon_image": null,
+                    "icon_image_alt": null,
+                    "imports": [
+                        "nx-st-agent-elastic-neteye",
+                        "nx-st-type-custom"
+                    ],
+                    "max_check_attempts": null,
+                    "notes": null,
+                    "notes_url": null,
+                    "object_name": "Elastic Memory Usage",
+                    "object_type": "object",
+                    "retry_interval": null,
+                    "service_set": null,
+                    "template_choice": null,
+                    "use_agent": null,
+                    "use_var_overrides": null,
+                    "vars": {
+                        "nx_elastic_check_types_list": "mem",
+                        "es_local_enabled": true
+                    },
+                    "volatile": null,
+                    "zone": null
+                },
+                "Elastic Disk Usage": {
+                    "action_url": null,
+                    "apply_for": null,
+                    "assign_filter": null,
+                    "check_command": null,
+                    "check_interval": null,
+                    "check_period": null,
+                    "check_timeout": null,
+                    "command_endpoint": null,
+                    "disabled": false,
+                    "display_name": null,
+                    "enable_active_checks": null,
+                    "enable_event_handler": null,
+                    "enable_flapping": null,
+                    "enable_notifications": null,
+                    "enable_passive_checks": null,
+                    "enable_perfdata": null,
+                    "event_command": null,
+                    "fields": [],
+                    "flapping_threshold_high": null,
+                    "flapping_threshold_low": null,
+                    "groups": [],
+                    "host": null,
+                    "icon_image": null,
+                    "icon_image_alt": null,
+                    "imports": [
+                        "nx-st-agent-elastic-neteye",
+                        "nx-st-type-custom"
+                    ],
+                    "max_check_attempts": null,
+                    "notes": null,
+                    "notes_url": null,
+                    "object_name": "Elastic Disk Usage",
+                    "object_type": "object",
+                    "retry_interval": null,
+                    "service_set": null,
+                    "template_choice": null,
+                    "use_agent": null,
+                    "use_var_overrides": null,
+                    "vars": {
+                        "nx_elastic_check_types_list": "disk",
+                        "es_local_enabled": true
+                    },
+                    "volatile": null,
+                    "zone": null
+                },
+                "Elastic Disk Watermark Flooding": {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-check_elastic_disk_watermark_flooding",
+                        "nx-st-type-custom"
+                    ],
+                    "vars": {
+                        "nx_elastic_data_path": "/neteye/local/elasticsearch/data",
+                        "nx_elastic_disk_watermark_warning_multiplier_threshold": 2.0,
+                        "nx_elastic_disk_watermark_critical_multiplier_threshold": 1.5
+                    },
+                    "object_name": "Elastic Disk Watermark Flooding",
+                    "object_type": "object"
+                }
+            }
+        },
+        "nx-ss-neteye-endpoint-filebeat-state": {
+            "assign_filter": "host.vars.nx_enable_nep_ss=true&!\"nx-ss-neteye-endpoint-filebeat-state\"=host.vars.nx_nep_ss_to_exclude&\"filebeat\"=host.vars.neteye_local_services",
+            "description": "Service Set providing common monitoring for Filebeat Service on NetEye",
+            "object_name": "nx-ss-neteye-endpoint-filebeat-state",
+            "object_type": "template",
+            "services": {
+                "Filebeat Status": {
+                    "action_url": null,
+                    "apply_for": null,
+                    "assign_filter": null,
+                    "check_command": null,
+                    "check_interval": null,
+                    "check_period": null,
+                    "check_timeout": null,
+                    "command_endpoint": null,
+                    "disabled": false,
+                    "display_name": null,
+                    "enable_active_checks": null,
+                    "enable_event_handler": null,
+                    "enable_flapping": null,
+                    "enable_notifications": null,
+                    "enable_passive_checks": null,
+                    "enable_perfdata": null,
+                    "event_command": null,
+                    "fields": [],
+                    "flapping_threshold_high": null,
+                    "flapping_threshold_low": null,
+                    "groups": [],
+                    "host": null,
+                    "icon_image": null,
+                    "icon_image_alt": null,
+                    "imports": [
+                        "nx-st-agent-filebeat-neteye",
+                        "nx-st-type-custom"
+                    ],
+                    "max_check_attempts": null,
+                    "notes": null,
+                    "notes_url": null,
+                    "object_name": "Filebeat Status",
+                    "object_type": "object",
+                    "retry_interval": null,
+                    "service_set": null,
+                    "template_choice": null,
+                    "use_agent": null,
+                    "use_var_overrides": null,
+                    "vars": {},
+                    "volatile": null,
+                    "zone": null
+                },
+                "Unit FileBeat State": {
+                    "action_url": null,
+                    "apply_for": null,
+                    "assign_filter": null,
+                    "check_command": null,
+                    "check_interval": null,
+                    "check_period": null,
+                    "check_timeout": null,
+                    "command_endpoint": null,
+                    "disabled": false,
+                    "display_name": null,
+                    "enable_active_checks": null,
+                    "enable_event_handler": null,
+                    "enable_flapping": null,
+                    "enable_notifications": null,
+                    "enable_passive_checks": null,
+                    "enable_perfdata": null,
+                    "event_command": null,
+                    "fields": [],
+                    "flapping_threshold_high": null,
+                    "flapping_threshold_low": null,
+                    "groups": [],
+                    "host": null,
+                    "icon_image": null,
+                    "icon_image_alt": null,
+                    "imports": [
+                        "nx-st-agent-linux-systemd-unit-state",
+                        "nx-st-type-custom"
+                    ],
+                    "max_check_attempts": null,
+                    "notes": null,
+                    "notes_url": null,
+                    "object_name": "Unit FileBeat State",
+                    "object_type": "object",
+                    "retry_interval": null,
+                    "service_set": null,
+                    "template_choice": null,
+                    "use_agent": null,
+                    "use_var_overrides": null,
+                    "vars": {
+                        "systemd_unit_name": "filebeat.service",
+                        "systemd_skip_enabled_check": true
+                    },
+                    "volatile": null,
+                    "zone": null
+                }
+            }
+        },
+        "nx-ss-neteye-endpoint-apm-server-state": {
+            "assign_filter": "host.vars.nx_enable_nep_ss=true&!\"nx-ss-neteye-endpoint-apm-server-state\"=host.vars.nx_nep_ss_to_exclude&(\"apm-server\"=host.vars.neteye_local_services)",
+            "description": "Service Set providing common monitoring for APM Server on NetEye",
+            "object_name": "nx-ss-neteye-endpoint-apm-server-state",
+            "object_type": "template",
+            "services": [
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-agentless-apm-server-check",
+                        "nx-st-type-custom"
+                    ],
+                    "object_name": "APM Server Status",
+                    "object_type": "object",
+                    "uuid": "33fe0107-3c61-4b47-be99-23d46d150e4f"
+                }
+            ],
+            "uuid": "050e6707-c979-42b5-9997-8a845fe07bbf"
+        },
+        "nx-ss-neteye-endpoint-logstash-state": {
+            "assign_filter": "host.vars.nx_enable_nep_ss=true&!\"nx-ss-neteye-endpoint-logstash-state\"=host.vars.nx_nep_ss_to_exclude&\"logstash\"=host.vars.neteye_local_services",
+            "description": "Service Set providing common monitoring for Logstash Service on NetEye",
+            "object_name": "nx-ss-neteye-endpoint-logstash-state",
+            "object_type": "template",
+            "services": {
+                "Logstash Status": {
+                    "action_url": null,
+                    "apply_for": null,
+                    "assign_filter": null,
+                    "check_command": null,
+                    "check_interval": null,
+                    "check_period": null,
+                    "check_timeout": null,
+                    "command_endpoint": null,
+                    "disabled": false,
+                    "display_name": null,
+                    "enable_active_checks": null,
+                    "enable_event_handler": null,
+                    "enable_flapping": null,
+                    "enable_notifications": null,
+                    "enable_passive_checks": null,
+                    "enable_perfdata": null,
+                    "event_command": null,
+                    "fields": [],
+                    "flapping_threshold_high": null,
+                    "flapping_threshold_low": null,
+                    "groups": [],
+                    "host": null,
+                    "icon_image": null,
+                    "icon_image_alt": null,
+                    "imports": [
+                        "nx-st-agent-logstash-health",
+                        "nx-st-type-custom"
+                    ],
+                    "max_check_attempts": null,
+                    "notes": null,
+                    "notes_url": null,
+                    "object_name": "Logstash Status",
+                    "object_type": "object",
+                    "retry_interval": null,
+                    "service_set": null,
+                    "template_choice": null,
+                    "use_agent": null,
+                    "use_var_overrides": null,
+                    "vars": {
+                        "logstash_heap_crit": "90",
+                        "logstash_heap_warn": "80"
+                    },
+                    "volatile": null,
+                    "zone": null
+                },
+                "Logstash Total EPS": {
+                    "action_url": null,
+                    "apply_for": null,
+                    "assign_filter": null,
+                    "check_command": null,
+                    "check_interval": null,
+                    "check_period": null,
+                    "check_timeout": null,
+                    "command_endpoint": null,
+                    "disabled": false,
+                    "display_name": null,
+                    "enable_active_checks": null,
+                    "enable_event_handler": null,
+                    "enable_flapping": null,
+                    "enable_notifications": null,
+                    "enable_passive_checks": null,
+                    "enable_perfdata": null,
+                    "event_command": null,
+                    "fields": [],
+                    "flapping_threshold_high": null,
+                    "flapping_threshold_low": null,
+                    "groups": [],
+                    "host": null,
+                    "icon_image": null,
+                    "icon_image_alt": null,
+                    "imports": [
+                        "nx-st-agent-logstash-events",
+                        "nx-st-type-custom"
+                    ],
+                    "max_check_attempts": null,
+                    "notes": null,
+                    "notes_url": null,
+                    "object_name": "Logstash Total EPS",
+                    "object_type": "object",
+                    "retry_interval": null,
+                    "service_set": null,
+                    "template_choice": null,
+                    "use_agent": null,
+                    "use_var_overrides": null,
+                    "vars": {},
+                    "volatile": null,
+                    "zone": null
+                },
+                "Unit Logstash State": {
+                    "action_url": null,
+                    "apply_for": null,
+                    "assign_filter": null,
+                    "check_command": null,
+                    "check_interval": null,
+                    "check_period": null,
+                    "check_timeout": null,
+                    "command_endpoint": null,
+                    "disabled": false,
+                    "display_name": null,
+                    "enable_active_checks": null,
+                    "enable_event_handler": null,
+                    "enable_flapping": null,
+                    "enable_notifications": null,
+                    "enable_passive_checks": null,
+                    "enable_perfdata": null,
+                    "event_command": null,
+                    "fields": [],
+                    "flapping_threshold_high": null,
+                    "flapping_threshold_low": null,
+                    "groups": [],
+                    "host": null,
+                    "icon_image": null,
+                    "icon_image_alt": null,
+                    "imports": [
+                        "nx-st-agent-linux-systemd-unit-state",
+                        "nx-st-type-custom"
+                    ],
+                    "max_check_attempts": null,
+                    "notes": null,
+                    "notes_url": null,
+                    "object_name": "Unit Logstash State",
+                    "object_type": "object",
+                    "retry_interval": null,
+                    "service_set": null,
+                    "template_choice": null,
+                    "use_agent": null,
+                    "use_var_overrides": null,
+                    "vars": {
+                        "systemd_unit_name": "logstash.service",
+                        "systemd_skip_enabled_check": true
+                    },
+                    "volatile": null,
+                    "zone": null
+                }
+            }
+        },
+        "nx-ss-neteye-endpoint-logstash-extras": {
+            "assign_filter": "host.vars.nx_enable_nep_ss=true&host.vars.nx_enable_nep_extras=true&!\"nx-ss-neteye-endpoint-logstash-extras\"=host.vars.nx_nep_ss_to_exclude&\"logstash\"=host.vars.neteye_local_services",
+            "description": "Service Set providing common monitoring for Logstash Service on NetEye",
+            "object_name": "nx-ss-neteye-endpoint-logstash-extras",
+            "object_type": "template",
+            "services": {
+                "Logstash Current ESTABLISHED Connection": {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-agent-linux-netstat-local",
+                        "nx-st-type-custom"
+                    ],
+                    "object_name": "Logstash Current ESTABLISHED Connection",
+                    "object_type": "object",
+                    "vars": {
+                        "nx_netstat_critical": "<3",
+                        "nx_netstat_port": "<5045",
+                        "nx_netstat_protocol": "TCP6",
+                        "nx_netstat_state": "ESTABLISHED",
+                        "nx_netstat_warning": "<10"
+                    }
+                }
+            }
+        },
+        "nx-ss-neteye-endpoint-kibana-state": {
+            "assign_filter": "host.vars.nx_enable_nep_ss=true&!\"nx-ss-neteye-endpoint-kibana-state\"=host.vars.nx_nep_ss_to_exclude&\"kibana\"=host.vars.neteye_local_services",
+            "description": "Service Set providing common monitoring for Kibana Service on NetEye",
+            "object_name": "nx-ss-neteye-endpoint-kibana-state",
+            "object_type": "template",
+            "services": [
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-agent-linux-disk-free-space",
+                        "nx-st-type-custom"
+                    ],
+                    "object_name": "Disk Kibana Free Space",
+                    "object_type": "object",
+                    "uuid": "04ce13c6-606a-4911-85d3-239a3ad48884",
+                    "vars": {
+                        "disk_partitions": [
+                            "/neteye/local/kibana"
+                        ]
+                    }
+                },
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-agent-kibana",
+                        "nx-st-type-custom"
+                    ],
+                    "object_name": "Kibana Max Response Time",
+                    "object_type": "object",
+                    "uuid": "e1db7c07-c103-4838-8653-9ba42d9f675e",
+                    "vars": {
+                        "http_ssl": true,
+                        "nx_kibana_auth_file": "/neteye/local/icinga2/conf/.elastic_api_key",
+                        "nx_kibana_check_types_list": "rt",
+                        "nx_kibana_critical": "1000",
+                        "nx_kibana_warning": "400",
+                        "nx_kibana_port": "5602"
+                    }
+                },
+                {
+                    "check_interval": 120,
+                    "fields": [],
+                    "imports": [
+                        "nx-st-agent-kibana",
+                        "nx-st-type-custom"
+                    ],
+                    "object_name": "Kibana Task Manager Status",
+                    "object_type": "object",
+                    "uuid": "45e95cf8-16c4-4cc1-b864-5461697641c6",
+                    "vars": {
+                        "http_ssl": true,
+                        "nx_kibana_auth_file": "/neteye/local/icinga2/conf/.elastic_api_key",
+                        "nx_kibana_check_types_list": "task"
+                    }
+                },
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-agent-linux-systemd-unit-state",
+                        "nx-st-type-custom"
+                    ],
+                    "object_name": "Unit Kibana State",
+                    "object_type": "object",
+                    "uuid": "dbe80cdc-ea10-4d5c-9280-794623c8e260",
+                    "vars": {
+                        "systemd_skip_enabled_check": true,
+                        "systemd_unit_name": "kibana.service"
+                    }
+                }
+            ],
+            "uuid": "9197527c-cf05-4804-a3a6-2a3b2d73b719"
+        },
+        "nx-ss-neteye-endpoint-elastic-agent-state": {
+            "assign_filter": "host.vars.nx_enable_nep_ss=true&!\"nx-ss-neteye-endpoint-elastic-agent-state\"=host.vars.nx_nep_ss_to_exclude&(\"elastic-agent\"=host.vars.neteye_local_services)",
+            "description": "Service Set providing common monitoring for Elastic Agent Service on NetEye",
+            "object_name": "nx-ss-neteye-endpoint-elastic-agent-state",
+            "object_type": "template",
+            "services": {
+                "Elastic Agent Status": {
+                    "action_url": null,
+                    "apply_for": null,
+                    "assign_filter": null,
+                    "check_command": null,
+                    "check_interval": null,
+                    "check_period": null,
+                    "check_timeout": null,
+                    "command_endpoint": null,
+                    "disabled": false,
+                    "display_name": null,
+                    "enable_active_checks": null,
+                    "enable_event_handler": null,
+                    "enable_flapping": null,
+                    "enable_notifications": null,
+                    "enable_passive_checks": null,
+                    "enable_perfdata": null,
+                    "event_command": null,
+                    "fields": [],
+                    "flapping_threshold_high": null,
+                    "flapping_threshold_low": null,
+                    "groups": [],
+                    "host": null,
+                    "icon_image": null,
+                    "icon_image_alt": null,
+                    "imports": [
+                        "nx-st-agentless-elastic-agent-check",
+                        "nx-st-type-custom"
+                    ],
+                    "object_name": "Elastic Agent Status",
+                    "object_type": "object"
+                },
+                "Unit Elastic Agent State": {
+                    "action_url": null,
+                    "apply_for": null,
+                    "assign_filter": null,
+                    "check_command": null,
+                    "check_interval": null,
+                    "check_period": null,
+                    "check_timeout": null,
+                    "command_endpoint": null,
+                    "disabled": false,
+                    "display_name": null,
+                    "enable_active_checks": null,
+                    "enable_event_handler": null,
+                    "enable_flapping": null,
+                    "enable_notifications": null,
+                    "enable_passive_checks": null,
+                    "enable_perfdata": null,
+                    "event_command": null,
+                    "fields": [],
+                    "flapping_threshold_high": null,
+                    "flapping_threshold_low": null,
+                    "groups": [],
+                    "host": null,
+                    "icon_image": null,
+                    "icon_image_alt": null,
+                    "imports": [
+                        "nx-st-agent-linux-systemd-unit-state",
+                        "nx-st-type-custom"
+                    ],
+                    "max_check_attempts": null,
+                    "notes": null,
+                    "notes_url": null,
+                    "object_name": "Unit Elastic Agent State",
+                    "object_type": "object",
+                    "retry_interval": null,
+                    "service_set": null,
+                    "template_choice": null,
+                    "use_agent": null,
+                    "use_var_overrides": null,
+                    "vars": {
+                        "systemd_unit_name": "elastic-agent.service",
+                        "systemd_skip_enabled_check": true
+                    },
+                    "volatile": null,
+                    "zone": null
+                }
+            }
+        },
+        "nx-ss-neteye-endpoint-elastic-agent-extras": {
+            "assign_filter": "host.vars.nx_enable_nep_ss=true&host.vars.nx_enable_nep_extras=true&!\"nx-ss-neteye-endpoint-elastic-agent-extras\"=host.vars.nx_nep_ss_to_exclude&(\"elastic-agent\"=host.vars.neteye_local_services)",
+            "description": "Service Set providing common monitoring for Elastic Agent Service on NetEye",
+            "object_name": "nx-ss-neteye-endpoint-elastic-agent-extras",
+            "object_type": "template",
+            "services": {
+                "Elasticsearch Current ESTABLISHED Connection": {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-agent-linux-netstat-local",
+                        "nx-st-type-custom"
+                    ],
+                    "object_name": "Elasticsearch Current ESTABLISHED Connection",
+                    "object_type": "object",
+                    "vars": {
+                        "nx_netstat_critical": "<3",
+                        "nx_netstat_port": ">9200",
+                        "nx_netstat_protocol": "TCP",
+                        "nx_netstat_state": "ESTABLISHED",
+                        "nx_netstat_warning": "<10"
+                    }
+                },
+                "Elastic Agent Total EPS": {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-agentless-restapi-elastic-ingest-status",
+                        "nx-st-type-custom"
+                    ],
+                    "object_name": "Elastic Agent Total EPS",
+                    "object_type": "object",
+                    "uuid": "8266f133-4713-4c1d-bf3a-49b562df1d38",
+                    "vars": {
+                        "nx_elastic_agent_type": "elastic_agent",
+                        "nx_elastic_check_interval": "10m",
+                        "nx_elastic_filters": [
+                            "NETEYE.zone=$host.vars.cluster_zone$"
+                        ],
+                        "nx_enable_eps": true,
+                        "nx_neteye_tenant": "$host.vars.nx_neteye_tenant$"
+                    }
+                }
+            }
+        },
+        "nx-ss-neteye-local-siem": {
+            "assign_filter": "host.name=%22neteye-local%22",
+            "description": "All checks needed for SIEM module on NetEye Local",
+            "object_name": "nx-ss-neteye-local-siem",
+            "object_type": "template",
+            "services": {
+                "Fleet Agent Status": {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-fleet-agent-status",
+                        "nx-st-type-custom"
+                    ],
+                    "object_name": "Fleet Agent Status",
+                    "object_type": "object",
+                    "vars": {
+                         "http_ssl": true
+                    }
+                },
+                "Endpoint Agent Status": {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-endpoint-agent-status",
+                        "nx-st-type-custom"
+                    ],
+                    "object_name": "Endpoint Agent Status",
+                    "object_type": "object"
+                },
+                "Elastic SLM Policy": {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-agentless-elastic-slm-policy",
+                        "nx-st-type-custom"
+                    ],
+                    "object_name": "Elastic SLM Policy",
+                    "object_type": "object"
+                },
+                "Elastic SLM Status": {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-agentless-elastic-slm-status",
+                        "nx-st-type-custom"
+                    ],
+                    "object_name": "Elastic SLM Status",
+                    "object_type": "object"
+                },
+                "Elastic Transforms Status": {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-agentless-elastic-transforms-status",
+                        "nx-st-type-custom"
+                    ],
+                    "object_name": "Elastic Transforms Status",
+                    "object_type": "object",
+                    "vars": {
+                        "nx_tornado_webhook_name": "nx_elastic_transforms",
+                        "nx_tornado_webhook_secret": "@@PASSWORD_TRANSFORMS@@"
+                    }
+                },
+                "Elastic Watchers Status": {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-agentless-elastic-watchers-status",
+                        "nx-st-type-custom"
+                    ],
+                    "object_name": "Elastic Watchers Status",
+                    "object_type": "object",
+                    "vars": {
+                        "nx_tornado_webhook_name": "nx_elastic_watchers",
+                        "nx_tornado_webhook_secret": "@@PASSWORD_WATCHERS@@"
+                    }
+                }
+            }
+        },
+        "nx-ss-elastic-blockchain-extras": {
+            "assign_filter": "host.vars.nx_enable_nep_ss=true&host.vars.nx_enable_nep_extras=true&!\"nx-ss-elastic-blockchain-extras\"=host.vars.nx_nep_ss_to_exclude&host.vars.logmanager_blockchain_enable=true",
+            "description": "Service Set providing extras monitoring for Elastic Blockchaon on EBP Enabled hosts",
+            "object_name": "nx-ss-elastic-blockchain-extras",
+            "object_type": "template",
+            "services": {
+                "Elastic Blockchain Check": {
+                    "fields": [],
+                    "check_interval": 86400,
+                    "imports": [
+                        "nx-st-agentless-restapi-elastic-blockchain-status",
+                        "nx-st-type-custom"
+                    ],
+                    "object_name": "Elastic Blockchain Check",
+                    "object_type": "object",
+                    "uuid": "11fe1523-6946-417a-9c35-c9244b68aa79",
+                    "vars": {
+                        "nx_neteye_tenant": "$host.vars.nx_neteye_tenant$"
+                    }
+                }
+            }
+        },
+        "nx-ss-neteye-local-extras": {
+            "assign_filter": "host.name=%22neteye-local%22&host.vars.nx_enable_nep_extras=true",
+            "description": "All checks extras on NetEye Local",
+            "object_name": "nx-ss-neteye-local-extras",
+            "object_type": "template",
+            "services": {
+                "Elastic Dataset Status - neteye_system_internal": {
+                    "check_interval": 60,
+                    "fields": [],
+                    "imports": [
+                        "nx-st-agentless-elastic-dataset-status",
+                        "nx-st-type-custom"
+                    ],
+                    "object_name": "Elastic Dataset Status - neteye_system_internal",
+                    "object_type": "object",
+                    "vars": {
+                        "nx_elastic_check_interval": "2m",
+                        "nx_elastic_dataset_exclusion": [
+                            "elastic_agent",
+                            "elastic_agent.fleet_server",
+                            "elastic_agent.filebeat",
+                            "elastic_agent.metricbeat",
+                            "elastic_agent.auditbeat",
+                            "elastic_agent.heartbeat",
+                            "elastic_agent.elastic_agent",
+                            "elastic_agent.osquerybeat",
+                            "elastic_agent.endpoint_security",
+                            "elastic_agent.apm_server"
+                        ],
+                        "nx_neteye_tenant": "neteye_system_internal",
+                        "nx_tornado_webhook_name": "nx_elastic_dataset",
+                        "nx_tornado_webhook_secret": "@@PASSWORD@@"
+
+                    }
+                }
+            }
+        },
+        "nx-ss-neteye-siem-extras": {
+            "assign_filter": "host.vars.logmanager_enable=true&host.vars.nx_enable_nep_extras=true",
+            "description": "All checks extras on SIEM hosts (log manager enabled)",
+            "object_name": "nx-ss-neteye-siem-extras",
+            "object_type": "template",
+            "services": [
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-agentless-elastic-dataset-object",
+                        "nx-st-type-custom",
+                        "nx-st-interval-24h"
+                    ],
+                    "object_name": "Elastic Datasets Check",
+                    "object_type": "object",
+                    "uuid": "deff60f0-f3be-4c90-be18-5e4d824a28a0"
+                }
+            ],
+            "uuid": "9df3a41b-8b44-40b2-920c-0755e157a8b5"
+        }
+    }
+}

@@ -1,0 +1,10 @@
+{
+    "id": "nx_elastic_watchers",
+    "token": "@@PASSWORD@@",
+    "collector_config": {
+      "event_type": "nx_elastic_watchers",
+      "payload": {
+        "data": "${@}"
+      }
+    }
+}

@@ -1,0 +1,151 @@
+{
+    "ServiceTemplate": {
+        "nx-st-agentless-dns-record-status": {
+            "action_url": null,
+            "apply_for": null,
+            "assign_filter": null,
+            "check_command": "dns",
+            "check_interval": null,
+            "check_period": null,
+            "check_timeout": null,
+            "command_endpoint": null,
+            "disabled": false,
+            "display_name": null,
+            "enable_active_checks": null,
+            "enable_event_handler": null,
+            "enable_flapping": null,
+            "enable_notifications": null,
+            "enable_passive_checks": null,
+            "enable_perfdata": null,
+            "event_command": null,
+            "fields": [
+                {
+                    "datafield_id": 24,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 25,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 26,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 27,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 28,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 29,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 30,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "flapping_threshold_high": null,
+            "flapping_threshold_low": null,
+            "groups": [],
+            "host": null,
+            "icon_image": null,
+            "icon_image_alt": null,
+            "imports": [
+                "nx-st-agentless"
+            ],
+            "max_check_attempts": null,
+            "notes": null,
+            "notes_url": null,
+            "object_name": "nx-st-agentless-dns-record-status",
+            "object_type": "template",
+            "retry_interval": null,
+            "service_set": null,
+            "template_choice": null,
+            "use_agent": null,
+            "use_var_overrides": null,
+            "vars": {
+                "dns_ctime": "5",
+                "dns_server": "$host.address$",
+                "dns_wtime": "2"
+            },
+            "volatile": null,
+            "zone": null
+        }
+    },
+    "Datafield": {
+        "24": {
+            "varname": "dns_authoritative",
+            "caption": "DNS Expect authoritative answer",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeBoolean",
+            "format": null,
+            "originalId": "24",
+            "settings": {}
+        },
+        "25": {
+            "varname": "dns_ctime",
+            "caption": "DNS Critical threshold",
+            "description": "Return critical if elapsed time exceeds value.",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "25",
+            "settings": {}
+        },
+        "26": {
+            "varname": "dns_expected_answers",
+            "caption": "DNS Expected answer",
+            "description": "Optional ip address or host you expect the DNS server to return. Host must end with a dot (.). This option can be repeated multiple times (Returns OK if any value match). If multiple addresses are returned at once, you have to match the whole string of addresses separated with commas (sorted alphabetically).",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "26",
+            "settings": {}
+        },
+        "27": {
+            "varname": "dns_lookup",
+            "caption": "DNS Record to lookup",
+            "description": "The name or address you want to query.",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "27",
+            "settings": {}
+        },
+        "28": {
+            "varname": "dns_server",
+            "caption": "DNS Server address",
+            "description": "Optional DNS server you want to use for the lookup.",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "28",
+            "settings": {}
+        },
+        "29": {
+            "varname": "dns_timeout",
+            "caption": "DNS Query timeout",
+            "description": "Seconds before connection times out. Defaults to 10.",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "29",
+            "settings": {}
+        },
+        "30": {
+            "varname": "dns_wtime",
+            "caption": "DNS Warning threshold",
+            "description": "Return warning if elapsed time exceeds value.",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "30",
+            "settings": {}
+        }
+    }
+}

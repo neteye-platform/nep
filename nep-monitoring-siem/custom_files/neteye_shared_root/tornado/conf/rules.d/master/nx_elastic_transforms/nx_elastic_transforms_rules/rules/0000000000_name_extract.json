@@ -1,0 +1,21 @@
+{
+    "name": "name_extract",
+    "description": "",
+    "continue": true,
+    "active": true,
+    "constraint": {
+      "WHERE": null,
+      "WITH": {
+        "name": {
+          "from": "${event.payload.data.id}",
+          "regex": {
+            "match": "(?:(.*?)((-\\d+\\.\\d+\\.\\d+)$|(-\\d$)|($)))",
+            "group_match_idx": 1,
+            "all_matches": false
+          },
+          "modifiers_post": []
+        }
+      }
+    },
+    "actions": []
+}

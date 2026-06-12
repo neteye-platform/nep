@@ -1,0 +1,33 @@
+{
+    "name": "elproxy_duplicates_removal",
+    "description": "",
+    "continue": true,
+    "active": true,
+    "constraint": {
+        "WHERE": null,
+        "WITH": {}
+    },
+    "actions": [
+        {
+            "id": "director",
+            "payload": {
+                "action_name": "create_service",
+                "action_payload": {
+                    "host": "tenant-${event.payload.data.tenant}",
+                    "imports": [
+                        "nx-st-agentless-ebp-duplicates-removal",
+                        "nx-st-type-custom"
+                    ],
+                    "object_name": "EBP Duplicates Removal - ${event.payload.data.tenant}-${event.payload.data.retention}-${event.payload.data.tag}",
+                    "object_type": "object",
+                    "vars": {
+                        "created_by": "tornado",
+                        "nx_ebp_blockchain": "${event.payload.data.tenant}-${event.payload.data.retention}-${event.payload.data.tag}",
+                        "rulename": "root/master/elproxy_verification"
+                    }
+                },
+                "icinga2_live_creation": false
+            }
+        }
+    ]
+}

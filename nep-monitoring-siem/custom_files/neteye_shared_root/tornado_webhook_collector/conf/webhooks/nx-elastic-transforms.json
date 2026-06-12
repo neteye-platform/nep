@@ -1,0 +1,10 @@
+{
+    "id": "nx_elastic_transforms",
+    "token": "@@PASSWORD@@",
+    "collector_config": {
+      "event_type": "nx_elastic_transforms",
+      "payload": {
+        "data": "${@}"
+      }
+    }
+}

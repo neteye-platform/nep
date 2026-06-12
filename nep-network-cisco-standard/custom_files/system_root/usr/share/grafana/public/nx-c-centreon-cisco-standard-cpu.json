@@ -1,0 +1,306 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "datasource"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [],
+  "panels": [
+    {
+      "datasource": {
+        "default": false,
+        "type": "influxdb"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "left",
+            "axisSoftMax": 100,
+            "axisSoftMin": 0,
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 2,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": 600000,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "line+area"
+            }
+          },
+          "mappings": [],
+          "max": 100,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "transparent"
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": [
+          {
+            "__systemRef": "hideSeriesFrom",
+            "matcher": {
+              "id": "byNames",
+              "options": {
+                "mode": "exclude",
+                "names": [
+                  "CPU Avg Total - 1m (%)",
+                  "CPU Avg Total - 5m (%)",
+                  "CPU Avg Total - 5s (%)"
+                ],
+                "prefix": "All except:",
+                "readOnly": true
+              }
+            },
+            "properties": [
+              {
+                "id": "custom.hideFrom",
+                "value": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": true
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 15,
+        "w": 13,
+        "x": 0,
+        "y": 0
+      },
+      "id": null,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.0.2",
+      "targets": [
+        {
+          "alias": "[[tag_metric]]",
+          "datasource": {
+            "type": "influxdb"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "metric"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "/^$command$/",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT mean(\"value\") FROM /^$command$/ WHERE (\"hostname\" =~ /^$hostname$/ AND \"service\" =~ /^$service$/) AND $timeFilter GROUP BY time($__interval), \"metric\" fill(null)",
+          "rawQuery": true,
+          "refId": "VALUE",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "hostname",
+              "operator": "=~",
+              "value": "/^$hostname$/"
+            },
+            {
+              "condition": "AND",
+              "key": "service",
+              "operator": "=~",
+              "value": "/^$service$/"
+            },
+            {
+              "condition": "AND",
+              "key": "metric::tag",
+              "operator": "=",
+              "value": "USED"
+            }
+          ]
+        }
+      ],
+      "title": "$service",
+      "transformations": [
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "(total_cpu_(..)_avg)",
+            "renamePattern": "CPU Avg Total - $2 (%)"
+          }
+        },
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "(cpu_(..)_(..))",
+            "renamePattern": "CPU $3 - $2 (%)"
+          }
+        },
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "(cpu_(..))",
+            "renamePattern": "CPU - $2 (%)"
+          }
+        }
+      ],
+      "type": "timeseries"
+    }
+  ],
+  "preload": false,
+  "schemaVersion": 41,
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "allowCustomValue": false,
+        "current": {
+          "text": "${VAR_HOSTNAME}",
+          "value": "${VAR_HOSTNAME}"
+        },
+        "description": "",
+        "hide": 2,
+        "includeAll": false,
+        "name": "hostname",
+        "options": [
+          {
+            "selected": true,
+            "text": "${VAR_HOSTNAME}",
+            "value": "${VAR_HOSTNAME}"
+          }
+        ],
+        "query": "${VAR_HOSTNAME}",
+        "type": "custom"
+      },
+      {
+        "allowCustomValue": false,
+        "current": {
+          "text": "${VAR_SERVICE}",
+          "value": "${VAR_SERVICE}"
+        },
+        "description": "",
+        "hide": 2,
+        "includeAll": false,
+        "name": "service",
+        "options": [
+          {
+            "selected": true,
+            "text": "${VAR_SERVICE}",
+            "value": "${VAR_SERVICE}"
+          }
+        ],
+        "query": "${VAR_SERVICE}",
+        "type": "custom"
+      },
+      {
+        "allowCustomValue": false,
+        "current": {
+          "text": "${VAR_COMMAND}",
+          "value": "${VAR_COMMAND}"
+        },
+        "description": "",
+        "hide": 2,
+        "includeAll": false,
+        "name": "command",
+        "options": [
+          {
+            "selected": true,
+            "text": "${VAR_COMMAND}",
+            "value": "${VAR_COMMAND}"
+          }
+        ],
+        "query": "${VAR_COMMAND}",
+        "type": "custom"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "nx-c-centreon-cisco-standard-cpu",
+  "version": 3
+}

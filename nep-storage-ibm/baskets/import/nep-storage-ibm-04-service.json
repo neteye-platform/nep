@@ -1,0 +1,258 @@
+{
+    "ServiceTemplate": {
+        "nx-st-agentless-cli-centreon-storage-ibm-ds": {
+            "action_url": null,
+            "apply_for": null,
+            "assign_filter": null,
+            "check_command": "nx-c-centreon_ibm_ds3000",
+            "check_interval": null,
+            "check_period": null,
+            "check_timeout": null,
+            "command_endpoint": null,
+            "disabled": false,
+            "display_name": null,
+            "enable_active_checks": null,
+            "enable_event_handler": null,
+            "enable_flapping": null,
+            "enable_notifications": null,
+            "enable_passive_checks": null,
+            "enable_perfdata": null,
+            "event_command": null,
+            "fields": [
+                {
+                    "datafield_id": 991,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 992,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "flapping_threshold_high": null,
+            "flapping_threshold_low": null,
+            "groups": [],
+            "host": null,
+            "icon_image": null,
+            "icon_image_alt": null,
+            "imports": [
+                "nx-st-agentless-cli-centreon"
+            ],
+            "max_check_attempts": null,
+            "notes": null,
+            "notes_url": null,
+            "object_name": "nx-st-agentless-cli-centreon-storage-ibm-ds",
+            "object_type": "template",
+            "retry_interval": null,
+            "service_set": null,
+            "template_choice": null,
+            "use_agent": null,
+            "use_var_overrides": null,
+            "vars": {
+                "nx_centreon_ibm_ds3000_mode_list": "health-status",
+                "nx_centreon_ibm_ds3000_smcli_path": "\/opt\/IBM_DS\/client"
+            },
+            "volatile": null,
+            "zone": null
+        },
+        "nx-st-agentless-ssh-centreon-storage-ibm-storwize": {
+            "action_url": null,
+            "apply_for": null,
+            "assign_filter": null,
+            "check_command": "nx-c-centreon_ibm_storwize_ssh",
+            "check_interval": null,
+            "check_period": null,
+            "check_timeout": null,
+            "command_endpoint": null,
+            "disabled": false,
+            "display_name": null,
+            "enable_active_checks": null,
+            "enable_event_handler": null,
+            "enable_flapping": null,
+            "enable_notifications": null,
+            "enable_passive_checks": null,
+            "enable_perfdata": null,
+            "event_command": null,
+            "fields": [
+                {
+                    "datafield_id": 10291,
+                    "is_required": "n",
+                    "var_filter": "service.vars.nx_centreon_ibm_storwize_ssh_mode_list=%22components%22"
+                },
+                {
+                    "datafield_id": 10297,
+                    "is_required": "n",
+                    "var_filter": "service.vars.nx_centreon_ibm_storwize_ssh_mode_list=%22components%22"
+                },
+                {
+                    "datafield_id": 10296,
+                    "is_required": "n",
+                    "var_filter": "service.vars.nx_centreon_ibm_storwize_ssh_mode_list=%22pool-usage%22"
+                },
+                {
+                    "datafield_id": 10294,
+                    "is_required": "n",
+                    "var_filter": "service.vars.nx_centreon_ibm_storwize_ssh_mode_list=%22components%22"
+                },
+                {
+                    "datafield_id": 10295,
+                    "is_required": "n",
+                    "var_filter": "service.vars.nx_centreon_ibm_storwize_ssh_mode_list=%22pool-usage%22"
+                },
+                {
+                    "datafield_id": 10267,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 10298,
+                    "is_required": "n",
+                    "var_filter": "service.vars.nx_centreon_ibm_storwize_ssh_mode_list=%22components%22"
+                },
+                {
+                    "datafield_id": 10299,
+                    "is_required": "n",
+                    "var_filter": "service.vars.nx_centreon_ibm_storwize_ssh_mode_list=%22pool-usage%22"
+                }
+            ],
+            "flapping_threshold_high": null,
+            "flapping_threshold_low": null,
+            "groups": [],
+            "host": null,
+            "icon_image": null,
+            "icon_image_alt": null,
+            "imports": [
+                "nx-st-agentless-ssh-centreon"
+            ],
+            "max_check_attempts": null,
+            "notes": null,
+            "notes_url": null,
+            "object_name": "nx-st-agentless-ssh-centreon-storage-ibm-storwize",
+            "object_type": "template",
+            "retry_interval": null,
+            "service_set": null,
+            "template_choice": null,
+            "use_agent": null,
+            "use_var_overrides": null,
+            "vars": {},
+            "volatile": null,
+            "zone": null
+        }
+    },
+    "Datafield": {
+        "991": {
+            "category_id": null,
+            "varname": "nx_centreon_ibm_ds3000_mode_list",
+            "caption": "[NX] Centreon IBM Storage DS",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeDatalist",
+            "format": null,
+            "originalId": "991",
+            "settings": {
+                "behavior": "strict",
+                "data_type": "string",
+                "datalist": "[NX] Centreon Storage IBM DS Mode List"
+            }
+        },
+        "992": {
+            "category_id": null,
+            "varname": "nx_centreon_ibm_ds3000_smcli_path",
+            "caption": "nx_centreon_ibm_ds3000_smcli_path",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "992",
+            "settings": {}
+        },
+        "10291": {
+            "category_id": null,
+            "varname": "nx_centreon_ibm_storwize_ssh_component_list",
+            "caption": "[NX] Centreon IBM Storage Storwize Component",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeDatalist",
+            "format": null,
+            "originalId": "10291",
+            "settings": {
+                "behavior": "strict",
+                "data_type": "string",
+                "datalist": "[NX] Centreon IBM Storage Storwize Component List"
+            }
+        },
+        "10297": {
+            "category_id": null,
+            "varname": "nx_centreon_ibm_storwize_ssh_critical",
+            "caption": "[NX] Centreon IBM Storage Storwize Critical",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "10297",
+            "settings": {}
+        },
+        "10296": {
+            "category_id": null,
+            "varname": "nx_centreon_ibm_storwize_ssh_critical_usage",
+            "caption": "[NX] Centreon IBM Storage Storwize Critical",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "10296",
+            "settings": {}
+        },
+        "10294": {
+            "category_id": null,
+            "varname": "nx_centreon_ibm_storwize_ssh_filter",
+            "caption": "[NX] Centreon IBM Storage Storwize Filter",
+            "description": "Exclude some parts (comma seperated list) (Example: --filter=host --filter=enclosurecanister) Can also exclude specific instance: --filter=host,10",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "10294",
+            "settings": {}
+        },
+        "10295": {
+            "category_id": null,
+            "varname": "nx_centreon_ibm_storwize_ssh_filter_name",
+            "caption": "[NX] Centreon IBM Storage Storwize Filter",
+            "description": "Filter pool by name (can be a regexp)",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "10295",
+            "settings": {}
+        },
+        "10267": {
+            "category_id": null,
+            "varname": "nx_centreon_ibm_storwize_ssh_mode_list",
+            "caption": "[NX] Centreon IBM Storage Storwize Mode",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeDatalist",
+            "format": null,
+            "originalId": "10267",
+            "settings": {
+                "behavior": "strict",
+                "data_type": "string",
+                "rename_vars": "y",
+                "datalist": "[NX] Centreon IBM Storage Storwize Mode List"
+            }
+        },
+        "10298": {
+            "category_id": null,
+            "varname": "nx_centreon_ibm_storwize_ssh_warning",
+            "caption": "[NX] Centreon IBM Storage Storwize Warning",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "10298",
+            "settings": {}
+        },
+        "10299": {
+            "category_id": null,
+            "varname": "nx_centreon_ibm_storwize_ssh_warning_usage",
+            "caption": "[NX] Centreon IBM Storage Storwize Warning",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "10299",
+            "settings": {}
+        }
+    }
+}

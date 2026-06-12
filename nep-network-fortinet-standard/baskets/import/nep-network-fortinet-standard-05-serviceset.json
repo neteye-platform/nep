@@ -1,0 +1,56 @@
+{
+    "ServiceSet": {
+        "nx-ss-network-centreon-fortinet-standard": {
+            "assign_filter": "\"nx-ht-network-switch-snmp\"=host.templates&host.vars.nx_hardware_vendor=%22fortinet%22&!\"nx-ss-network-centreon-fortinet-fortiswitch\"=host.vars.nx_nep_ss_to_exclude",
+            "description": "Service Set providing monitoring for switch Fortinet\r\n - CPU Load\r\n - Hardware Health (use the Cisco plugin)\r\n - Interfaces (one or more)\r\n - Memory Usage",
+            "object_name": "nx-ss-network-centreon-fortinet-standard",
+            "object_type": "template",
+            "services": [
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-agentless-snmp-centreon-fortinet-fortiswitch-cpu",
+                        "nx-st-type-custom"
+                    ],
+                    "object_name": "CPU Load",
+                    "object_type": "object",
+                    "uuid": "df95843d-d103-4094-9d8e-cfc557024266"
+                },
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-agentless-snmp-centreon-cisco-standard-environment",
+                        "nx-st-type-custom"
+                    ],
+                    "object_name": "HW Health",
+                    "object_type": "object",
+                    "uuid": "67541cc8-5c20-4cd7-91c9-da25e7ccd034"
+                },
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-agentless-snmp-centreon-fortinet-fortiswitch-interfaces",
+                        "nx-st-type-custom"
+                    ],
+                    "object_name": "Ifaces Traffic",
+                    "object_type": "object",
+                    "uuid": "94848ea4-b607-4add-964d-6197da5e8ed4",
+                    "vars": {
+                        "nx_centreon_plugin_name_idx": "0"
+                    }
+                },
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-agentless-snmp-centreon-fortinet-fortiswitch-memory",
+                        "nx-st-type-custom"
+                    ],
+                    "object_name": "Memory Usage",
+                    "object_type": "object",
+                    "uuid": "ca2a0bf3-7e97-4c24-a9d5-84244a185715"
+                }
+            ],
+            "uuid": "24570d78-08f5-4646-b743-f4f7cfcb312e"
+        }
+    }
+}

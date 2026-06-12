@@ -1,0 +1,776 @@
+{
+    "ServiceTemplate": {
+        "nx-st-agentless-snmp-centreon-cisco-standard-cpu": {
+            "check_command": "nx-c-centreon-cisco-standard-cpu",
+            "fields": [
+                {
+                    "datafield_id": 1850,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1851,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1852,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1853,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-st-agentless-snmp-centreon"
+            ],
+            "object_name": "nx-st-agentless-snmp-centreon-cisco-standard-cpu",
+            "object_type": "template",
+            "uuid": "7993b152-6203-4e27-be21-b664edf317b7"
+        },
+        "nx-st-agentless-snmp-centreon-cisco-standard-environment": {
+            "check_command": "nx-c-centreon-cisco-standard-env",
+            "fields": [
+                {
+                    "datafield_id": 2290,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1891,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1892,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-st-agentless-snmp-centreon"
+            ],
+            "object_name": "nx-st-agentless-snmp-centreon-cisco-standard-environment",
+            "object_type": "template",
+            "uuid": "16ff6b02-a030-40d8-ad0e-fea24f8b08a9",
+            "vars": {
+                "nx_centreon_cisco_environment_filter": "sensor"
+            }
+        },
+        "nx-st-agentless-snmp-centreon-cisco-standard-interfaces": {
+            "check_command": "nx-c-centreon-cisco-standard-interfaces",
+            "fields": [
+                {
+                    "datafield_id": 1867,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1868,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1869,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1870,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1871,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1872,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1874,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1875,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1876,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1877,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1878,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1879,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1856,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1880,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1881,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1882,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1857,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1858,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1859,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1890,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1860,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1861,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1863,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1883,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1884,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1885,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1886,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1864,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1887,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1888,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1889,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1865,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1866,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 391,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-st-agentless-snmp-centreon"
+            ],
+            "object_name": "nx-st-agentless-snmp-centreon-cisco-standard-interfaces",
+            "object_type": "template",
+            "uuid": "469cde5c-5369-4350-89af-9d968dd037c1",
+            "vars": {
+                "nx_centreon_plugin_retention_statefile_dir": "/neteye/shared/icinga2/data/lib/centreon-plugins/"
+            }
+        },
+        "nx-st-agentless-snmp-centreon-cisco-standard-memory": {
+            "check_command": "nx-c-centreon-cisco-standard-mem",
+            "fields": [
+                {
+                    "datafield_id": 1854,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1855,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-st-agentless-snmp-centreon"
+            ],
+            "object_name": "nx-st-agentless-snmp-centreon-cisco-standard-memory",
+            "object_type": "template",
+            "uuid": "7e0c32fa-0af6-4789-b969-f2eef99376c5"
+        }
+    },
+    "Datafield": {
+        "1850": {
+            "uuid": "d1159c02-3e6a-4566-80f8-e839860f1a6d",
+            "varname": "nx_centreon_cisco_cpu_crit1m",
+            "caption": "[NX] Centreon Cisco CPU Critical 1m",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] Centreon plugin Cisco Standard"
+        },
+        "1851": {
+            "uuid": "89483380-bb35-49fd-a12e-275b2d72c78e",
+            "varname": "nx_centreon_cisco_cpu_crit5m",
+            "caption": "[NX] Centreon Cisco CPU Critical 5m",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] Centreon plugin Cisco Standard"
+        },
+        "1852": {
+            "uuid": "32c4a774-c48c-4709-8f63-006ad527ee00",
+            "varname": "nx_centreon_cisco_cpu_warn1m",
+            "caption": "[NX] Centreon Cisco CPU Warning 1m",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] Centreon plugin Cisco Standard"
+        },
+        "1853": {
+            "uuid": "dd867dae-42d5-4993-9a1b-7406556b1074",
+            "varname": "nx_centreon_cisco_cpu_warn5m",
+            "caption": "[NX] Centreon Cisco CPU Warning 5m",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] Centreon plugin Cisco Standard"
+        },
+        "1891": {
+            "uuid": "9f9703e3-6c83-48ac-b5a8-b15e1dc48298",
+            "varname": "nx_centreon_cisco_environment_critical",
+            "caption": "[NX] Critical threshold",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": null
+        },
+        "1892": {
+            "uuid": "aff4d980-affa-410c-8fc5-d1848714a58d",
+            "varname": "nx_centreon_cisco_environment_warning",
+            "caption": "[NX] Warning threshold",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": null
+        },
+        "1867": {
+            "uuid": "c4bcdec4-7fab-44b4-91de-3b84499b1a77",
+            "varname": "nx_centreon_cisco_interfaces_add_cast",
+            "caption": "[NX] Centreon Cisco Interfaces Add Cast",
+            "description": "Check interface cast.",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeBoolean",
+            "format": null,
+            "settings": {},
+            "category": "[NX] Centreon plugin Cisco Standard"
+        },
+        "1868": {
+            "uuid": "0ebc9095-8be2-438a-b94a-8d097196966f",
+            "varname": "nx_centreon_cisco_interfaces_add_duplex_status",
+            "caption": "[NX] Centreon Cisco Interfaces Add Duplex Status",
+            "description": " Check duplex status (with --warning-status and --critical-status).",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeBoolean",
+            "format": null,
+            "settings": {},
+            "category": "[NX] Centreon plugin Cisco Standard"
+        },
+        "1869": {
+            "uuid": "30d34e94-de79-40c0-893c-f39c140e6c81",
+            "varname": "nx_centreon_cisco_interfaces_add_err_disable",
+            "caption": "[NX] Centreon Cisco Interfaces Add Err Disable",
+            "description": "Check error disable (with --warning-status and --critical-status).\r\n",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeBoolean",
+            "format": null,
+            "settings": {},
+            "category": "[NX] Centreon plugin Cisco Standard"
+        },
+        "1870": {
+            "uuid": "e89ebe19-2175-4ff4-841d-46b47c55ecbc",
+            "varname": "nx_centreon_cisco_interfaces_add_errors",
+            "caption": "[NX] Centreon Cisco Interfaces Add Errors",
+            "description": " Check interface errors.",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeBoolean",
+            "format": null,
+            "settings": {},
+            "category": "[NX] Centreon plugin Cisco Standard"
+        },
+        "1871": {
+            "uuid": "a8dd0cec-b5c8-4eb8-b4e7-ed1c09e68519",
+            "varname": "nx_centreon_cisco_interfaces_add_global",
+            "caption": "[NX] Centreon Cisco Interfaces Add Global",
+            "description": "Check global port statistics (By default if no --add-* option is set).",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeBoolean",
+            "format": null,
+            "settings": {},
+            "category": "[NX] Centreon plugin Cisco Standard"
+        },
+        "1872": {
+            "uuid": "86854ffd-e35d-48c5-acb4-03e693e7487d",
+            "varname": "nx_centreon_cisco_interfaces_add_speed",
+            "caption": "[NX] Centreon Cisco Interfaces Add Speed",
+            "description": "Check interface speed.",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeBoolean",
+            "format": null,
+            "settings": {},
+            "category": "[NX] Centreon plugin Cisco Standard"
+        },
+        "1874": {
+            "uuid": "d7294fd0-7802-40f1-a768-c12ed3584beb",
+            "varname": "nx_centreon_cisco_interfaces_add_traffic",
+            "caption": "[NX] Centreon Cisco Interfaces Add Traffic",
+            "description": "Check interface traffic.",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeBoolean",
+            "format": null,
+            "settings": {},
+            "category": "[NX] Centreon plugin Cisco Standard"
+        },
+        "1875": {
+            "uuid": "563bac7a-0dc0-424a-a465-26739b656ada",
+            "varname": "nx_centreon_cisco_interfaces_add_volume",
+            "caption": "[NX] Centreon Cisco Interfaces Add Volume",
+            "description": "Check interface data volume between two checks (not supposed to be graphed, useful for BI reporting).",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeBoolean",
+            "format": null,
+            "settings": {},
+            "category": "[NX] Centreon plugin Cisco Standard"
+        },
+        "1876": {
+            "uuid": "bec1d419-9855-418c-9511-97cd90578326",
+            "varname": "nx_centreon_cisco_interfaces_critical_in_bcast",
+            "caption": "[NX] Centreon Cisco Interfaces Critical In Broadcast",
+            "description": "Set critical threshold for in-bcast",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] Centreon plugin Cisco Standard"
+        },
+        "1877": {
+            "uuid": "e2c79727-07ec-4bff-9005-0f8491be8848",
+            "varname": "nx_centreon_cisco_interfaces_critical_in_crc",
+            "caption": "[NX] Centreon Cisco Interfaces Critical In CRC",
+            "description": "Set critical threshold for in-crc",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] Centreon plugin Cisco Standard"
+        },
+        "1878": {
+            "uuid": "722df6b8-259b-4854-85bc-52b2555f9cb1",
+            "varname": "nx_centreon_cisco_interfaces_critical_in_discard",
+            "caption": "[NX] Centreon Cisco Interfaces Critical In Discard",
+            "description": "Set critical threshold for in-discard",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] Centreon plugin Cisco Standard"
+        },
+        "1879": {
+            "uuid": "5da01a73-79eb-41f7-b9f3-cd867e9c3fe6",
+            "varname": "nx_centreon_cisco_interfaces_critical_in_error",
+            "caption": "[NX] Centreon Cisco Interfaces Critical In Error",
+            "description": "Set critical threshold in-error",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] Centreon plugin Cisco Standard"
+        },
+        "1856": {
+            "uuid": "d265c7dd-3e90-4561-91c2-b62b32065961",
+            "varname": "nx_centreon_cisco_interfaces_critical_in_traffic",
+            "caption": "[NX] Centreon Cisco Interfaces Critical In Traffic",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] Centreon plugin Cisco Standard"
+        },
+        "1880": {
+            "uuid": "d1eb6336-cfa6-4ac8-896c-cb2fd4e96778",
+            "varname": "nx_centreon_cisco_interfaces_critical_out_bcast",
+            "caption": "[NX] Centreon Cisco Interfaces Critical Out Broadcast",
+            "description": "Set critical threshold for out-bcast",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] Centreon plugin Cisco Standard"
+        },
+        "1881": {
+            "uuid": "89a5bcb3-95d6-45d3-8bbb-027d1bc25e26",
+            "varname": "nx_centreon_cisco_interfaces_critical_out_discard",
+            "caption": "[NX] Centreon Cisco Interfaces Critical Out Discard",
+            "description": "Set critical threshold for out-discard",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] Centreon plugin Cisco Standard"
+        },
+        "1882": {
+            "uuid": "adf45a27-8625-4a09-b5c9-5bd4ff16fe01",
+            "varname": "nx_centreon_cisco_interfaces_critical_out_error",
+            "caption": "[NX] Centreon Cisco Interfaces Critical Out Error",
+            "description": "Set critical threshold for out-error",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] Centreon plugin Cisco Standard"
+        },
+        "1857": {
+            "uuid": "4edc820f-96e2-4e93-99fa-6753307d1d52",
+            "varname": "nx_centreon_cisco_interfaces_critical_out_traffic",
+            "caption": "[NX] Centreon Cisco Interfaces Critical Out Traffic",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] Centreon plugin Cisco Standard"
+        },
+        "1858": {
+            "uuid": "8bb84075-5faf-4379-a233-c7b613996909",
+            "varname": "nx_centreon_cisco_interfaces_critical_status",
+            "caption": "[NX] Centreon Cisco Interfaces Critical Status",
+            "description": "Set critical threshold for status (Default: '%{admstatus} eq \"up\" and %{opstatus} ne \"up\"'). Can used special variables like: %{admstatus}, %{opstatus}, %{duplexstatus}, %{errdisable}, %{display}",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] Centreon plugin Cisco Standard"
+        },
+        "1859": {
+            "uuid": "bf430c0f-7ece-49bd-a831-41263c05aa67",
+            "varname": "nx_centreon_cisco_interfaces_interface",
+            "caption": "[NX] Centreon Cisco Interfaces Interface",
+            "description": "Set the interface (number expected) ex: 1,2,... (empty means 'check all interface').",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] Centreon plugin Cisco Standard"
+        },
+        "1890": {
+            "uuid": "df802232-4342-45e9-8a48-8804a98595b5",
+            "varname": "nx_centreon_cisco_interfaces_name",
+            "caption": "[NX] Centreon Cisco Interfaces Name",
+            "description": "Allows to use interface name with option --interface instead of interface oid index (Can be a regexp)",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeBoolean",
+            "format": null,
+            "settings": {},
+            "category": "[NX] Centreon plugin Cisco Standard"
+        },
+        "1860": {
+            "uuid": "7873eae8-ae48-4ad3-8342-de54df002e55",
+            "varname": "nx_centreon_cisco_interfaces_speed",
+            "caption": "[NX] Centreon Cisco Interfaces Speed",
+            "description": "Set interface speed for incoming/outgoing traffic (in Mb).",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] Centreon plugin Cisco Standard"
+        },
+        "1861": {
+            "uuid": "e6dc932f-5bfe-47c9-ac3a-5432c79a1981",
+            "varname": "nx_centreon_cisco_interfaces_speed_in",
+            "caption": "[NX] Centreon Cisco Interfaces Speed In",
+            "description": "Set interface speed for incoming traffic (in Mb).",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] Centreon plugin Cisco Standard"
+        },
+        "1863": {
+            "uuid": "da231959-ceb2-435a-a1c8-fe08a98fa28a",
+            "varname": "nx_centreon_cisco_interfaces_units_traffic",
+            "caption": "[NX] Centreon Cisco Interfaces Units Traffic",
+            "description": "Units of thresholds for errors/discards (Default: 'percent_delta') ('percent_delta', 'percent', 'delta', 'counter').",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeDatalist",
+            "format": null,
+            "settings": {
+                "behavior": "strict",
+                "data_type": "string",
+                "datalist": "[NX] Centreon Cisco Interfaces Units Traffic List"
+            },
+            "category": "[NX] Centreon plugin Cisco Standard"
+        },
+        "1883": {
+            "uuid": "b7d5d36a-1b53-4466-9cb1-a5fbaf5e7944",
+            "varname": "nx_centreon_cisco_interfaces_warning_in_bcast",
+            "caption": "[NX] Centreon Cisco Interfaces Warning In Broadcast",
+            "description": "Set warning threshold for in-bcast",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] Centreon plugin Cisco Standard"
+        },
+        "1884": {
+            "uuid": "f68ff91b-0d50-4e74-bfc8-336a8cb4e927",
+            "varname": "nx_centreon_cisco_interfaces_warning_in_crc",
+            "caption": "[NX] Centreon Cisco Interfaces Warning In CRC",
+            "description": "Set warning threshold for in-crc",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] Centreon plugin Cisco Standard"
+        },
+        "1885": {
+            "uuid": "a32352dc-5900-47f6-95a1-923c77851307",
+            "varname": "nx_centreon_cisco_interfaces_warning_in_discard",
+            "caption": "[NX] Centreon Cisco Interfaces Warning In Discard",
+            "description": "Set warning threshold for in-discard",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] Centreon plugin Cisco Standard"
+        },
+        "1886": {
+            "uuid": "8e125d6d-3b99-45d6-adc2-e4e6be31009c",
+            "varname": "nx_centreon_cisco_interfaces_warning_in_error",
+            "caption": "[NX] Centreon Cisco Interfaces Warning In Error",
+            "description": "Set warning threshold for in-error",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] Centreon plugin Cisco Standard"
+        },
+        "1864": {
+            "uuid": "1303483f-6e9b-46db-967a-b0e1b41b85b2",
+            "varname": "nx_centreon_cisco_interfaces_warning_in_traffic",
+            "caption": "[NX] Centreon Cisco Interfaces Warning In Traffic",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] Centreon plugin Cisco Standard"
+        },
+        "1887": {
+            "uuid": "0ffa7e36-fc4f-43d7-8fee-3716d2d623f7",
+            "varname": "nx_centreon_cisco_interfaces_warning_out_bcast",
+            "caption": "[NX] Centreon Cisco Interfaces Warning Out Broadcast",
+            "description": "Set warning threshold for out-bcast",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] Centreon plugin Cisco Standard"
+        },
+        "1888": {
+            "uuid": "01d66b82-9c03-4d6d-b4ec-4722e27b384b",
+            "varname": "nx_centreon_cisco_interfaces_warning_out_discard",
+            "caption": "[NX] Centreon Cisco Interfaces Warning Out Discard",
+            "description": "Set warning threshold for out-discard",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] Centreon plugin Cisco Standard"
+        },
+        "1889": {
+            "uuid": "ed68ab43-9a87-4316-848b-2d60ad807370",
+            "varname": "nx_centreon_cisco_interfaces_warning_out_error",
+            "caption": "[NX] Centreon Cisco Interfaces Warning Out Error",
+            "description": "Set warning threshold for out-error",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] Centreon plugin Cisco Standard"
+        },
+        "1865": {
+            "uuid": "0d86d07b-a490-4ffc-8412-20b5dd824f96",
+            "varname": "nx_centreon_cisco_interfaces_warning_out_traffic",
+            "caption": "[NX] Centreon Cisco Interfaces Warning Out Traffic",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] Centreon plugin Cisco Standard"
+        },
+        "1866": {
+            "uuid": "917d36e3-c0d3-40e3-83fc-9d79e0b5c927",
+            "varname": "nx_centreon_cisco_interfaces_warning_status",
+            "caption": "[NX] Centreon Cisco Interfaces Warning Status",
+            "description": "Set warning threshold for status. Can used special variables like: %{admstatus}, %opstatus}, %{duplexstatus}, %{errdisable}, %{display}",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] Centreon plugin Cisco Standard"
+        },
+        "1854": {
+            "uuid": "4890b9a7-b62a-42bb-9e86-09ca2dc40a0e",
+            "varname": "nx_centreon_cisco_mem_crit",
+            "caption": "[NX] Centreon Cisco Memory Critical",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] Centreon plugin Cisco Standard"
+        },
+        "1855": {
+            "uuid": "dc09770e-c77e-4832-adb7-b8c77223d35a",
+            "varname": "nx_centreon_cisco_mem_warn",
+            "caption": "[NX] Centreon Cisco Memory Warning",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] Centreon plugin Cisco Standard"
+        },
+        "391": {
+            "varname": "nx_centreon_cisco_interfaces_speed_out",
+            "caption": "[NX] Centreon Cisco Interfaces Speed Out",
+            "description": "Set interface speed for incoming traffic (in Mb).",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "391",
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] Centreon plugin Cisco Standard"
+        },
+        "2290": {
+            "uuid": "ccdc162e-2afe-42e9-b318-d1a4a97a703b",
+            "varname": "nx_centreon_cisco_environment_addname",
+            "caption": "[NX] Use description in filters",
+            "description": "Add literal description for instance value (used in filter, absent-problem and threshold options).",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeBoolean",
+            "format": null,
+            "settings": {},
+            "category": null
+        }
+    },
+    "DatafieldCategory": {
+        "[NX] Centreon plugin Cisco Standard": {
+            "category_name": "[NX] Centreon plugin Cisco Standard",
+            "description": "Centreon plugin Cisco Standard",
+            "originalId": "35"
+        }
+    }
+}

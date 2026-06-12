@@ -1,0 +1,17 @@
+{
+    "Command": {
+        "nx-c-centreon-dell-idrac-snmp": {
+            "arguments": {
+                "--mode": "$nx_centreon_dell_idrac_snmp_mode_list$"
+            },
+            "command": "/usr/lib/centreon/plugins/centreon_dell_idrac.pl",
+            "fields": [],
+            "imports": [
+                "nx-ct-centreon-plugin-snmp"
+            ],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-centreon-dell-idrac-snmp",
+            "object_type": "object"
+        }
+    }
+}

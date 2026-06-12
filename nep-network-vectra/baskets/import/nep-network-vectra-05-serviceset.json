@@ -1,0 +1,56 @@
+{
+    "ServiceSet": {
+        "nx-ss-vectra": {
+            "assign_filter": "\"nx-ht-restapi-vectra\"=host.templates",
+            "description": "Basic set for Vectra device via API (cup,mem,disk,sensor)",
+            "object_name": "nx-ss-vectra",
+            "object_type": "template",
+            "services": {
+                "CPU Usage": {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-agentless-restapi-centreon-vectra-cpu"
+                    ],
+                    "object_name": "CPU Usage",
+                    "object_type": "object",
+                    "vars": {
+                        "vectra_critical_cpu_utilization_percentage": "90",
+                        "vectra_warning_cpu_utilization_percentage": "80 "
+                    }
+                },
+                "Disk Usage": {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-agentless-restapi-centreon-vectra-disk"
+                    ],
+                    "object_name": "Disk Usage",
+                    "object_type": "object",
+                    "vars": {
+                        "vectra_critical_disk_utilization_percentage": "90",
+                        "vectra_warning_disk_utilization_percentage": "80"
+                    }
+                },
+                "Memory Usage": {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-agentless-restapi-centreon-vectra-memory"
+                    ],
+                    "object_name": "Memory Usage",
+                    "object_type": "object",
+                    "vars": {
+                        "vectra_critical_memory_utilization_percentage": "90",
+                        "vectra_warning_memory_utilization_percentage": "80"
+                    }
+                },
+                "Sensors Status": {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-agentless-restapi-centreon-vectra-sensors"
+                    ],
+                    "object_name": "Sensors Status",
+                    "object_type": "object"
+                }
+            }
+        }
+    }
+}

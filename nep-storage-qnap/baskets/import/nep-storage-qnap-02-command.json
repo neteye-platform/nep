@@ -1,0 +1,46 @@
+{
+    "Command": {
+        "nx-c-centreon-qnap": {
+            "arguments": {
+                "--mode": {
+                    "value": "$nx_qnap_storage_mode$"
+                },
+                "--component": {
+                    "description": "Which component to check (Default: '.*'). Can be: 'disk', 'fan', 'mdisk', 'psu', 'raid', 'temperature'.",
+                    "value": "$nx_centreon_qnap_storage_component_list$"
+                },
+                "--critical": {
+                    "value": "$nx_centreon_qnap_storage_critical$"
+                },
+                "--warning": {
+                    "description": "Set warning threshold for temperatures (syntax: type,regexp,threshold) Example: --warning='temperature,cpu,30' --warning='fan,.*,1500'",
+                    "value": "$nx_centreon_qnap_storage_warning$"
+                },
+                "--filter": {
+                    "description": "Exclude some parts (comma seperated list) (Example: --filter=disk) Can also exclude specific instance: --filter=disk,1",
+                    "repeat_key": true,
+                    "value": "$nx_centreon_qnap_storage_filter$"
+                },
+                "--interface": {
+                     "description": "Interface (numeric)",
+                      "value": "$nx_centreon_qnap_storage_interface$"
+                  },
+                "--verbose": {}
+            },
+            "command": "\/usr\/lib\/centreon\/plugins\/centreon_qnap.pl",
+            "disabled": false,
+            "fields": [],
+            "imports": [
+                "nx-ct-centreon-plugin-snmp",
+                "nx-ct-centreon-plugin-retention"
+            ],
+            "is_string": null,
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-centreon-qnap",
+            "object_type": "object",
+            "timeout": null,
+            "vars": {},
+            "zone": null
+        }
+    }
+}

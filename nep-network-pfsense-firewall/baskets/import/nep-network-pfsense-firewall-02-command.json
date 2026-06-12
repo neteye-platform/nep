@@ -1,0 +1,282 @@
+{
+  "Command": {
+        "nx-c-centreon-pfsense-cpu": {
+            "arguments": {
+                "--critical-average": {
+                    "description": "Critical threshold average CPU utilization.",
+                    "value": "$nx_centreon_pfsense_cpu_critical_avg$"
+                },
+                "--critical-core": {
+                    "description": "Critical thresholds for each CPU core",
+                    "value": "$nx_centreon_pfsense_critical_core$"
+                },
+                "--filter-counters": {
+                    "description": "Only display some counters (regexp can be used). Example to check SSL connections only : --filter-counters='^xxxx|yyyy$'",
+                    "value": "$nx_centreon_pfsense_filter_counters$"
+                },
+                "--mode": "cpu",
+                "--warning-average": {
+                    "description": "Warning threshold average CPU utilization.",
+                    "value": "$nx_centreon_pfsense_cpu_warning_avg$"
+                },
+                "--warning-core": {
+                    "description": "Warning thresholds for each CPU core",
+                    "value": "$nx_centreon_pfsense_warning_core$"
+                }
+            },
+            "command": "/usr/lib/centreon/plugins/centreon_pfsense.pl",
+            "fields": [],
+            "imports": [
+                "nx-ct-centreon-plugin-snmp"
+            ],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-centreon-pfsense-cpu",
+            "object_type": "object"
+        },
+        "nx-c-centreon-pfsense-load": {
+            "arguments": {
+                "--average": {
+                    "description": "Load average for the number of CPUs.",
+                    "set_if": "$nx_centreon_pfsense_load_avg$",
+                    "set_if_format": "string"
+                },
+                "--critical": {
+                    "description": "Critical threshold (1min,5min,15min).",
+                    "value": "$nx_centreon_pfsense_load_critical$"
+                },
+                "--mode": "load",
+                "--warning": {
+                    "description": "Warning threshold (1min,5min,15min).",
+                    "value": "$nx_centreon_pfsense_load_warning$"
+                }
+            },
+            "command": "/usr/lib/centreon/plugins/centreon_pfsense.pl",
+            "fields": [],
+            "imports": [
+                "nx-ct-centreon-plugin-snmp"
+            ],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-centreon-pfsense-load",
+            "object_type": "object"
+        },
+        "nx-c-centreon-pfsense-memory": {
+            "arguments": {
+                "--critical": {
+                    "description": "Critical threshold in percent.",
+                    "value": "$nx_centreon_pfsense_mem_critical$"
+                },
+                "--critical-swap": {
+                    "description": "Critical threshold in percent.",
+                    "value": "$nx_centreon_pfsense_mem_critical_swap$"
+                },
+                "--mode": "memory",
+                "--no-swap": {
+                    "description": "Threshold if no active swap (default: 'critical').",
+                    "value": "$nx_centreon_pfsense_mem_no_swap$"
+                },
+                "--swap": {
+                    "description": "Check swap also.",
+                    "set_if": "$nx_centreon_pfsense_mem_swap$",
+                    "set_if_format": "string"
+                },
+                "--warning": {
+                    "description": "Warning threshold in percent.",
+                    "value": "$nx_centreon_pfsense_mem_warning$"
+                },
+                "--warning-swap": {
+                    "description": "Warning threshold in percent.",
+                    "value": "$nx_centreon_pfsense_mem_warning_swap$"
+                }
+            },
+            "command": "/usr/lib/centreon/plugins/centreon_pfsense.pl",
+            "fields": [],
+            "imports": [
+                "nx-ct-centreon-plugin-snmp"
+            ],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-centreon-pfsense-memory",
+            "object_type": "object"
+        },
+        "nx-c-centreon-pfsense-swap": {
+            "arguments": {
+                "--critical-usage": {
+                    "description": "Threshold in bytes.",
+                    "value": "$nx_centreon_pfsense_swap_critical_usage$"
+                },
+                "--critical-usage-free": {
+                    "description": "Threshold in bytes.",
+                    "value": "$nx_centreon_pfsense_swap_critical_usage_free$"
+                },
+                "--critical-usage-prct": {
+                    "description": "Threshold in percentage.",
+                    "value": "$nx_centreon_pfsense_swap_critical_usage_prct$"
+                },
+                "--filter-counters": {
+                    "description": "Only display some counters (regexp can be used). Example to check SSL connections only : --filter-counters='^xxxx|yyyy$'",
+                    "value": "$nx_centreon_pfsense_filter_counters$"
+                },
+                "--mode": "swap",
+                "--no-swap": {
+                    "description": "Threshold if no active swap (default: 'critical').",
+                    "value": "$nx_centreon_pfsense_swap_no_swap$"
+                },
+                "--swap": {
+                    "description": "Check swap also.",
+                    "set_if": "$nx_centreon_pfsense_mem_swap$",
+                    "set_if_format": "string"
+                },
+                "--warning-usage": {
+                    "description": "Threshold in bytes.",
+                    "value": "$nx_centreon_pfsense_swap_warning_usage$"
+                },
+                "--warning-usage-free": {
+                    "description": "Threshold in bytes.",
+                    "value": "$nx_centreon_pfsense_swap_warning_usage_free$"
+                },
+                "--warning-usage-prct": {
+                    "description": "Threshold in percentage.",
+                    "value": "$nx_centreon_pfsense_swap_warning_usage_prct$"
+                }
+            },
+            "command": "/usr/lib/centreon/plugins/centreon_pfsense.pl",
+            "fields": [],
+            "imports": [
+                "nx-ct-centreon-plugin-snmp"
+            ],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-centreon-pfsense-swap",
+            "object_type": "object"
+        },
+        "nx-c-centreon-pfsense-state-table": {
+            "arguments": {
+                "--critical-entries": {
+                    "description": "Set critical threshold for entries",
+                    "value": "$nx_centreon_pfsense_state_critical_entries$"
+                },
+                "--critical-entries-inserted": {
+                    "description": "Set critical threshold for entries-inserted",
+                    "value": "$nx_centreon_pfsense_state_critical_entries_inserted$"
+                },
+                "--critical-entries-removed": {
+                    "description": "Set critical threshold for entries-removed",
+                    "value": "$nx_centreon_pfsense_state_critical_entries_removed$"
+                },
+                "--critical-searches": {
+                    "description": "Set critical threshold for searches",
+                    "value": "$nx_centreon_pfsense_state_critical_searches$"
+                },
+                "--filter-counters": {
+                    "description": "Only display some counters (regexp can be used). Example to check SSL connections only : --filter-counters='^xxxx|yyyy$'",
+                    "value": "$nx_centreon_pfsense_filter_counters$"
+                },
+                "--mode": "state-table",
+                "--statefile-dir": {
+                    "description": "Directory for statefile (Default: '\\/var\\/lib\\/centreon\\/centplugins')",
+                    "value": "$nx_centreon_plugin_retention_statefile_dir$"
+                },
+                "--warning-entries": {
+                    "description": "Set warning threshold for entries",
+                    "value": "$nx_centreon_pfsense_state_warning_entries$"
+                },
+                "--warning-entries-inserted": {
+                    "description": "Set warning threshold for entries-inserted",
+                    "value": "$nx_centreon_pfsense_state_warning_entries_inserted$"
+                },
+                "--warning-entries-removed": {
+                    "description": "Set warning threshold for entries-removed",
+                    "value": "$nx_centreon_pfsense_state_warning_entries_removed$"
+                },
+                "--warning-searches": {
+                    "description": "Set warning threshold for searches",
+                    "value": "$nx_centreon_pfsense_state_warning_searches$"
+                }
+            },
+            "command": "/usr/lib/centreon/plugins/centreon_pfsense.pl",
+            "fields": [],
+            "imports": [
+                "nx-ct-centreon-plugin-snmp"
+            ],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-centreon-pfsense-state-table",
+            "object_type": "object"
+        },
+        "nx-c-centreon-pfsense-pfinterfaces": {
+            "arguments": {
+                "--critical-traffic-in-block": {
+                    "description": "Set critical threshold for traffic-in-block",
+                    "value": "$nx_centreon_pfsense_interfaces_critical_traffic_in_block$"
+                },
+                "--critical-traffic-in-pass": {
+                    "description": "Set critical threshold for traffic-in-pass",
+                    "value": "$nx_centreon_pfsense_interfaces_critical_traffic_in_pass$"
+                },
+                "--critical-traffic-out-block": {
+                    "description": "Set critical threshold for traffic-out-block",
+                    "value": "$nx_centreon_pfsense_interfaces_critical_traffic_out_block$"
+                },
+                "--critical-traffic-out-pass": {
+                    "description": "Set critical threshold for traffic-out-pass",
+                    "value": "$nx_centreon_pfsense_interfaces_critical_traffic_out_pass$"
+                },
+                "--filter-counters": {
+                    "description": "Only display some counters (regexp can be used). Example to check SSL connections only : --filter-counters='^xxxx|yyyy$'",
+                    "value": "$nx_centreon_pfsense_filter_counters$"
+                },
+                "--filter-name": {
+                    "description": "Filter by interface name (can be a regexp).",
+                    "value": "$nx_centreon_pfsense_filter_name$"
+                },
+                "--mode": "pfinterfaces",
+                "--statefile-dir": {
+                    "description": "Directory for statefile (Default: '\\/var\\/lib\\/centreon\\/centplugins')",
+                    "value": "$nx_centreon_plugin_retention_statefile_dir$"
+                },
+                "--warning-traffic-in-block": {
+                    "description": "Set warning threshold for traffic-in-block",
+                    "value": "$nx_centreon_pfsense_interfaces_warning_traffic_in_block$"
+                },
+                "--warning-traffic-in-pass": {
+                    "description": "Set warning threshold for traffic-in-pass",
+                    "value": "$nx_centreon_pfsense_interfaces_warning_traffic_in_pass$"
+                },
+                "--warning-traffic-out-block": {
+                    "description": "Set warning threshold for traffic-out-block",
+                    "value": "$nx_centreon_pfsense_interfaces_warning_traffic_out_block$"
+                },
+                "--warning-traffic-out-pass": {
+                    "description": "Set warning threshold for traffic-out-pass",
+                    "value": "$nx_centreon_pfsense_interfaces_warning_traffic_out_pass$"
+                }
+            },
+            "command": "/usr/lib/centreon/plugins/centreon_pfsense.pl",
+            "fields": [],
+            "imports": [
+                "nx-ct-centreon-plugin-snmp"
+            ],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-centreon-pfsense-pfinterfaces",
+            "object_type": "object"
+        },
+        "nx-c-centreon-pfsense-runtime": {
+            "arguments": {
+                "--critical": {
+                    "description": "Critical threshold in seconds.",
+                    "value": "$nx_centreon_pfsense_runtime_critical$"
+                },
+                "--mode": "runtime",
+                "--warning": {
+                    "description": "Warning threshold in seconds.",
+                    "value": "$nx_centreon_pfsense_runtime_warning$"
+                }
+            },
+            "command": "/usr/lib/centreon/plugins/centreon_pfsense.pl",
+            "fields": [],
+            "imports": [
+                "nx-ct-centreon-plugin-snmp"
+            ],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-centreon-pfsense-runtime",
+            "object_type": "object"
+        }
+    }
+}

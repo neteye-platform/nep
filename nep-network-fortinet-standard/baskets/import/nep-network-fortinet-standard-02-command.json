@@ -1,0 +1,128 @@
+{
+    "Command": {
+        "nx-c-centreon-fortinet-fortiswitch-cpu": {
+            "arguments": {
+                "--critical-cpu-utilization": {
+                    "description": "Thresholds. Can be: 'cpu-utilization' (%)",
+                    "value": "$nx_centreon_plugin_snmp_crit$"
+                },
+                "--mode": {
+                    "description": "Check cpu",
+                    "value": "cpu"
+                },
+                "--warning-cpu-utilization": {
+                    "description": "Thresholds. Can be: 'cpu-utilization' (%)",
+                    "value": "$nx_centreon_plugin_snmp_warn$"
+                }
+            },
+            "command": "/usr/lib/centreon/plugins/centreon_fortinet_fortiswitch_snmp.pl",
+            "fields": [],
+            "imports": [
+                "nx-ct-centreon-plugin-snmp"
+            ],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-centreon-fortinet-fortiswitch-cpu",
+            "object_type": "object",
+            "uuid": "b4f1fb3a-f7df-4f3f-afcb-17eacd908218"
+        },
+        "nx-c-centreon-fortinet-fortiswitch-disk": {
+            "arguments": {
+                "--critical-usage": {
+                    "description": "Thresholds. Can be: 'usage' (B), 'usage-free' (B), 'usage-prct' (%)",
+                    "value": "$nx_centreon_plugin_snmp_crit$"
+                },
+                "--mode": "disk",
+                "--warning-usage": {
+                    "description": "Thresholds. Can be: 'usage' (B), 'usage-free' (B), 'usage-prct' (%)",
+                    "value": "$nx_centreon_plugin_snmp_warn$"
+                }
+            },
+            "command": "/usr/lib/centreon/plugins/centreon_fortinet_fortiswitch_snmp.pl",
+            "fields": [],
+            "imports": [
+                "nx-ct-centreon-plugin-snmp"
+            ],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-centreon-fortinet-fortiswitch-disk",
+            "object_type": "object",
+            "uuid": "1946f828-f305-4364-a30c-24b891804cac"
+        },
+        "nx-c-centreon-fortinet-fortiswitch-interfaces": {
+            "arguments": {
+                "--add-errors": {
+                    "description": "Check interface errors."
+                },
+                "--add-traffic": {
+                    "description": "Check interface traffic."
+                },
+                "--critical-in-traffic": {
+                    "description": "Thresholds.",
+                    "value": "$nx_centreon_plugin_snmp_crit$"
+                },
+                "--filter-perfdata": {
+                    "description": "Filter perfdata that match the regexp. Example: adding --filter-perfdata='avg' will remove all metrics that do not contain 'avg' from performance data.",
+                    "value": "traffic*"
+                },
+                "--interface": {
+                    "description": "Description: Set the interface (number expected) example: 1,2,... (empty means 'check all interfaces'). If --name=1 use a regex. In the last case \"$$\" means end of the argument.",
+                    "value": "$nx_centreon_plugin_snmp_interface$"
+                },
+                "--mode": {
+                    "description": "Check interfaces.",
+                    "value": "interfaces"
+                },
+                "--name": {
+                    "description": "Allows you to define the interface (in option --interface) by name instead of OID index. The name matching mode supports regular expressions and default is \"1\". 0=index; 1=regex. In the last case \"$$\" means end of the argument",
+                    "value": "$nx_centreon_plugin_name_idx$"
+                },
+                "--speed-in": {
+                    "description": "Set interface speed for incoming traffic (in Mb).",
+                    "value": "$nx_centreon_plugin_snmp_speed$"
+                },
+                "--units-traffic": {
+                    "description": "Units of thresholds for the traffic (Default: 'percent_delta') ('percent_delta', 'bps', 'counter').",
+                    "value": "$nx_centreon_plugin_snmp_unit$"
+                },
+                "--warning-in-traffic": {
+                    "description": "Thresholds.",
+                    "value": "$nx_centreon_plugin_snmp_warn$"
+                }
+            },
+            "command": "/usr/lib/centreon/plugins/centreon_fortinet_fortiswitch_snmp.pl",
+            "fields": [],
+            "imports": [
+                "nx-ct-centreon-plugin-snmp",
+                "nx-ct-centreon-plugin-retention"
+            ],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-centreon-fortinet-fortiswitch-interfaces",
+            "object_type": "object",
+            "uuid": "97697ae8-1715-4e50-878e-354ae97399c3"
+        },
+        "nx-c-centreon-fortinet-fortiswitch-memory": {
+            "arguments": {
+                "--critical-usage": {
+                    "description": "Thresholds. Can be: 'usage' (B), 'usage-free' (B), 'usage-prct' (%)",
+                    "value": "$nx_centreon_plugin_snmp_crit$"
+                },
+                "--mode": {
+                    "description": "Check memory",
+                    "value": "memory"
+                },
+                "--warning-usage": {
+                    "description": "Thresholds. Can be: 'usage' (B), 'usage-free' (B), 'usage-prct' (%)",
+                    "value": "$nx_centreon_plugin_snmp_warn$"
+                }
+            },
+            "command": "/usr/lib/centreon/plugins/centreon_fortinet_fortiswitch_snmp.pl",
+            "fields": [],
+            "imports": [
+                "nx-ct-centreon-plugin-snmp"
+            ],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-centreon-fortinet-fortiswitch-memory",
+            "object_type": "object",
+            "uuid": "1ccc6e3b-7d9f-48fe-971c-e7fc7f9cc83e"
+        }
+    }
+}
