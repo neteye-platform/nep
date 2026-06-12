@@ -1,0 +1,761 @@
+{
+    "ServiceTemplate": {
+        "nx-st-agentless-snmp-centreon-pfsense-cpu": {
+            "check_command": "nx-c-centreon-pfsense-cpu",
+            "fields": [
+                {
+                    "datafield_id": 3122,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 3124,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 3127,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 3131,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 3128,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-st-agentless-snmp-centreon"
+            ],
+            "object_name": "nx-st-agentless-snmp-centreon-pfsense-cpu",
+            "object_type": "template"
+        },
+        "nx-st-agentless-snmp-centreon-pfsense-load": {
+            "check_command": "nx-c-centreon-pfsense-load",
+            "fields": [
+                {
+                    "datafield_id": 3137,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 3134,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 3136,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-st-agentless-snmp-centreon"
+            ],
+            "object_name": "nx-st-agentless-snmp-centreon-pfsense-load",
+            "object_type": "template"
+        },
+        "nx-st-agentless-snmp-centreon-pfsense-memory": {
+            "check_command": "nx-c-centreon-pfsense-memory",
+            "fields": [
+                {
+                    "datafield_id": 3140,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 3142,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 3143,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 3151,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 3146,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 3149,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-st-agentless-snmp-centreon"
+            ],
+            "object_name": "nx-st-agentless-snmp-centreon-pfsense-memory",
+            "object_type": "template"
+        },
+        "nx-st-agentless-snmp-centreon-pfsense-runtime": {
+            "check_command": "nx-c-centreon-pfsense-runtime",
+            "fields": [
+                {
+                    "datafield_id": 3152,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 3154,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-st-agentless-snmp-centreon"
+            ],
+            "object_name": "nx-st-agentless-snmp-centreon-pfsense-runtime",
+            "object_type": "template"
+        },
+        "nx-st-agentless-snmp-centreon-pfsense-swap": {
+            "check_command": "nx-c-centreon-pfsense-swap",
+            "fields": [
+                {
+                    "datafield_id": 3131,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 3155,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 3157,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 3158,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 3160,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 3163,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 3169,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 3166,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-st-agentless-snmp-centreon"
+            ],
+            "object_name": "nx-st-agentless-snmp-centreon-pfsense-swap",
+            "object_type": "template"
+        },
+        "nx-st-agentless-snmp-centreon-pfsense-state-table": {
+            "check_command": "nx-c-centreon-pfsense-state-table",
+            "fields": [
+                {
+                    "datafield_id": 3131,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 3170,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 3172,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 3173,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 3176,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 3178,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 3181,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 3184,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 3187,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 2112,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-st-agentless-snmp-centreon"
+            ],
+            "object_name": "nx-st-agentless-snmp-centreon-pfsense-state-table",
+            "object_type": "template",
+            "vars": {
+                "nx_centreon_plugin_retention_statefile_dir": "/neteye/shared/icinga2/data/lib/centreon-plugins/"
+            }
+        },
+        "nx-st-agentless-snmp-centreon-pfsense-pfinterfaces": {
+            "check_command": "nx-c-centreon-pfsense-pfinterfaces",
+            "fields": [
+                {
+                    "datafield_id": 3131,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 3190,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 3193,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 3194,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 3197,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 3200,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 3202,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 3203,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 3206,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 3209,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 2112,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-st-agentless-snmp-centreon"
+            ],
+            "object_name": "nx-st-agentless-snmp-centreon-pfsense-pfinterfaces",
+            "object_type": "template",
+            "vars": {
+                "nx_centreon_plugin_retention_statefile_dir": "/neteye/shared/icinga2/data/lib/centreon-plugins/"
+            }
+        }
+    },
+    "Datafield": {
+        "3122": {
+            "varname": "nx_centreon_pfsense_cpu_critical_avg",
+            "caption": "[NX] Centreon pfSense CPU Critical Average",
+            "description": "Critical threshold average CPU utilization.",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] Centreon plugin pfSense"
+        },
+        "3124": {
+            "varname": "nx_centreon_pfsense_cpu_warning_avg",
+            "caption": "[NX] Centreon pfSense CPU Warning Average",
+            "description": "Warning threshold average CPU utilization.",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] Centreon plugin pfSense"
+        },
+        "3127": {
+            "varname": "nx_centreon_pfsense_critical_core",
+            "caption": "[NX] Centreon pfSense Critical Core",
+            "description": "Critical thresholds for each CPU core",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] Centreon plugin pfSense"
+        },
+        "3131": {
+            "varname": "nx_centreon_pfsense_filter_counters",
+            "caption": "[NX] Centreon pfSense Filter Counters",
+            "description": "Only display some counters (regexp can be used). Example to check SSL connections only : --filter-counters='^xxxx|yyyy$'",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] Centreon plugin pfSense"
+        },
+        "3128": {
+            "varname": "nx_centreon_pfsense_warning_core",
+            "caption": "[NX] Centreon pfSense Warning Core",
+            "description": "Warning thresholds for each CPU core",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] Centreon plugin pfSense"
+        },
+        "3137": {
+            "varname": "nx_centreon_pfsense_load_avg",
+            "caption": "[NX] Centreon pfSense Load Average",
+            "description": "Load average for the number of CPUs.",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeBoolean",
+            "format": null,
+            "settings": {},
+            "category": "[NX] Centreon plugin pfSense"
+        },
+        "3134": {
+            "varname": "nx_centreon_pfsense_load_critical",
+            "caption": "[NX] Centreon pfSense Load Critical",
+            "description": "Critical threshold (1min,5min,15min).",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] Centreon plugin pfSense"
+        },
+        "3136": {
+            "varname": "nx_centreon_pfsense_load_warning",
+            "caption": "[NX] Centreon pfSense Load Warning",
+            "description": "Warning threshold (1min,5min,15min).",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] Centreon plugin pfSense"
+        },
+        "3140": {
+            "varname": "nx_centreon_pfsense_mem_critical",
+            "caption": "[NX] Centreon pfSense Memory Critical",
+            "description": "Critical threshold in percent.",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] Centreon plugin pfSense"
+        },
+        "3142": {
+            "varname": "nx_centreon_pfsense_mem_critical_swap",
+            "caption": "[NX] Centreon pfSense Memory Critical Swap",
+            "description": "Critical threshold in percent.",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] Centreon plugin pfSense"
+        },
+        "3143": {
+            "varname": "nx_centreon_pfsense_mem_no_swap",
+            "caption": "[NX] Centreon pfSense Memory NoSwap",
+            "description": "Threshold if no active swap (default: 'critical').",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] Centreon plugin pfSense"
+        },
+        "3151": {
+            "varname": "nx_centreon_pfsense_mem_swap",
+            "caption": "[NX] Centreon pfSense Memory Swap",
+            "description": "Check swap also.",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeBoolean",
+            "format": null,
+            "settings": {},
+            "category": "[NX] Centreon plugin pfSense"
+        },
+        "3146": {
+            "varname": "nx_centreon_pfsense_mem_warning",
+            "caption": "[NX] Centreon pfSense Memory Warning",
+            "description": "Warning threshold in percent.",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] Centreon plugin pfSense"
+        },
+        "3149": {
+            "varname": "nx_centreon_pfsense_mem_warning_swap",
+            "caption": "[NX] Centreon pfSense Memory Warning Swap",
+            "description": "Warning threshold in percent.",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] Centreon plugin pfSense"
+        },
+        "3152": {
+            "varname": "nx_centreon_pfsense_runtime_critical",
+            "caption": "[NX] Centreon pfSense Runtime Critical",
+            "description": "Critical threshold in seconds.",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] Centreon plugin pfSense"
+        },
+        "3154": {
+            "varname": "nx_centreon_pfsense_runtime_warning",
+            "caption": "[NX] Centreon pfSense Runtime Warning",
+            "description": "Warning threshold in seconds.",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] Centreon plugin pfSense"
+        },
+        "3155": {
+            "varname": "nx_centreon_pfsense_swap_critical_usage",
+            "caption": "[NX] Centreon pfSense Swap Critical Usage",
+            "description": "Threshold in bytes.",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] Centreon plugin pfSense"
+        },
+        "3157": {
+            "varname": "nx_centreon_pfsense_swap_critical_usage_free",
+            "caption": "[NX] Centreon pfSense Swap Critical Usage Free",
+            "description": "Threshold in bytes.",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] Centreon plugin pfSense"
+        },
+        "3158": {
+            "varname": "nx_centreon_pfsense_swap_critical_usage_prct",
+            "caption": "[NX] Centreon pfSense Swap Critical Usage Percentage",
+            "description": "Threshold in percentage.",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] Centreon plugin pfSense"
+        },
+        "3160": {
+            "varname": "nx_centreon_pfsense_swap_no_swap",
+            "caption": "[NX] Centreon pfSense Swap NoSwap",
+            "description": "Threshold if no active swap (default: 'critical').",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] Centreon plugin pfSense"
+        },
+        "3163": {
+            "varname": "nx_centreon_pfsense_swap_warning_usage",
+            "caption": "[NX] Centreon pfSense Swap Warning Usage",
+            "description": "Threshold in bytes.",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] Centreon plugin pfSense"
+        },
+        "3169": {
+            "varname": "nx_centreon_pfsense_swap_warning_usage_free",
+            "caption": "[NX] Centreon pfSense Swap Warning Usage Free",
+            "description": "Threshold in bytes.",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] Centreon plugin pfSense"
+        },
+        "3166": {
+            "varname": "nx_centreon_pfsense_swap_warning_usage_prct",
+            "caption": "[NX] Centreon pfSense Swap Warning Usage Percentage",
+            "description": "Threshold in percentage.",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] Centreon plugin pfSense"
+        },
+        "3170": {
+            "varname": "nx_centreon_pfsense_state_critical_entries",
+            "caption": "[NX] Centreon pfSense State Table Critical Entries",
+            "description": "Set critical threshold for entries",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] Centreon plugin pfSense"
+        },
+        "3172": {
+            "varname": "nx_centreon_pfsense_state_critical_entries_inserted",
+            "caption": "[NX] Centreon pfSense State Table Critical Entries Inserted",
+            "description": "Set critical threshold for entries-inserted",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] Centreon plugin pfSense"
+        },
+        "3173": {
+            "varname": "nx_centreon_pfsense_state_critical_entries_removed",
+            "caption": "[NX] Centreon pfSense State Table Critical Entries Removed",
+            "description": "Set critical threshold for entries-removed",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] Centreon plugin pfSense"
+        },
+        "3176": {
+            "varname": "nx_centreon_pfsense_state_critical_searches",
+            "caption": "[NX] Centreon pfSense State Table Critical Searches",
+            "description": "Set critical threshold for searches",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] Centreon plugin pfSense"
+        },
+        "3178": {
+            "varname": "nx_centreon_pfsense_state_warning_entries",
+            "caption": "[NX] Centreon pfSense State Table Warning Entries",
+            "description": "Set warning threshold for entries",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] Centreon plugin pfSense"
+        },
+        "3181": {
+            "varname": "nx_centreon_pfsense_state_warning_entries_inserted",
+            "caption": "[NX] Centreon pfSense State Table Warning Entries Inserted",
+            "description": "Set warning threshold for entries-inserted",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] Centreon plugin pfSense"
+        },
+        "3184": {
+            "varname": "nx_centreon_pfsense_state_warning_entries_removed",
+            "caption": "[NX] Centreon pfSense State Table Warning Entries Removed",
+            "description": "Set warning threshold for entries-removed",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] Centreon plugin pfSense"
+        },
+        "3187": {
+            "varname": "nx_centreon_pfsense_state_warning_searches",
+            "caption": "[NX] Centreon pfSense State Table Warning Searches",
+            "description": "Set warning threshold for searches",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] Centreon plugin pfSense"
+        },
+        "2112": {
+            "varname": "nx_centreon_plugin_retention_statefile_dir",
+            "caption": "[NX] Statefile directory",
+            "description": "Define the cache directory (default: '/var/lib/centreon/centplugins').",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "Centreon plugin opt Retention"
+        },
+        "3190": {
+            "varname": "nx_centreon_pfsense_filter_name",
+            "caption": "[NX] Centreon pfSense Filter Name",
+            "description": "Filter by interface name (can be a regexp).",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] Centreon plugin pfSense"
+        },
+        "3193": {
+            "varname": "nx_centreon_pfsense_interfaces_critical_traffic_in_block",
+            "caption": "[NX] Centreon pfSense Interfaces Critical Traffic-In-Block",
+            "description": "Set critical threshold for traffic-in-block",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] Centreon plugin pfSense"
+        },
+        "3194": {
+            "varname": "nx_centreon_pfsense_interfaces_critical_traffic_in_pass",
+            "caption": "[NX] Centreon pfSense Interfaces Critical Traffic-In-Pass",
+            "description": "Set critical threshold for traffic-in-pass",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] Centreon plugin pfSense"
+        },
+        "3197": {
+            "varname": "nx_centreon_pfsense_interfaces_critical_traffic_out_block",
+            "caption": "[NX] Centreon pfSense Interfaces Critical Traffic-Out-Block",
+            "description": "Set critical threshold for traffic-out-block",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] Centreon plugin pfSense"
+        },
+        "3200": {
+            "varname": "nx_centreon_pfsense_interfaces_critical_traffic_out_pass",
+            "caption": "[NX] Centreon pfSense Interfaces Critical Traffic-Out-Pass",
+            "description": "Set critical threshold for traffic-out-pass",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] Centreon plugin pfSense"
+        },
+        "3202": {
+            "varname": "nx_centreon_pfsense_interfaces_warning_traffic_in_block",
+            "caption": "[NX] Centreon pfSense Interfaces Warning Traffic-In-Block",
+            "description": "Set warning threshold for traffic-in-block",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] Centreon plugin pfSense"
+        },
+        "3203": {
+            "varname": "nx_centreon_pfsense_interfaces_warning_traffic_in_pass",
+            "caption": "[NX] Centreon pfSense Interfaces Warning Traffic-In-Pass",
+            "description": "Set warning threshold for traffic-in-pass",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] Centreon plugin pfSense"
+        },
+        "3206": {
+            "varname": "nx_centreon_pfsense_interfaces_warning_traffic_out_block",
+            "caption": "[NX] Centreon pfSense Interfaces Warning Traffic-Out-Block",
+            "description": "Set warning threshold for traffic-out-block",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] Centreon plugin pfSense"
+        },
+        "3209": {
+            "varname": "nx_centreon_pfsense_interfaces_warning_traffic_out_pass",
+            "caption": "[NX] Centreon pfSense Interfaces Warning Traffic-Out-Pass",
+            "description": "Set warning threshold for traffic-out-pass",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] Centreon plugin pfSense"
+        }
+    },
+    "DatafieldCategory": {
+        "[NX] Centreon plugin pfSense": {
+            "category_name": "[NX] Centreon plugin pfSense",
+            "description": "Centreon plugin pfSense",
+            "originalId": "97"
+        }
+    }
+}

@@ -1,0 +1,399 @@
+{
+    "Command": {
+        "nx-c-http": {
+            "arguments": [],
+            "command": null,
+            "disabled": false,
+            "fields": [
+                {
+                    "datafield_id": 145,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 146,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 147,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-ct-https"
+            ],
+            "is_string": null,
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-http",
+            "object_type": "object",
+            "timeout": null,
+            "vars": {},
+            "zone": null
+        },
+        "nx-c-http-only": {
+            "arguments": [],
+            "command": null,
+            "disabled": false,
+            "fields": [],
+            "imports": [
+                "nx-ct-http"
+            ],
+            "is_string": null,
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-http-only",
+            "object_type": "object",
+            "timeout": null,
+            "vars": {},
+            "zone": null
+        },
+        "nx-c-https-only": {
+            "arguments": {
+                "-p": {
+                    "description": "HTTPS Port number (default: 80)",
+                    "value": "$nx_http_port_https$"
+                }
+            },
+            "command": null,
+            "disabled": false,
+            "fields": [],
+            "imports": [
+                "nx-ct-https"
+            ],
+            "is_string": null,
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-https-only",
+            "object_type": "object",
+            "timeout": null,
+            "vars": {},
+            "zone": null
+        },
+        "nx-c-websitealive": {
+            "arguments": [],
+            "command": null,
+            "disabled": false,
+            "fields": [],
+            "imports": [
+                "nx-ct-https"
+            ],
+            "is_string": null,
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-websitealive",
+            "object_type": "object",
+            "timeout": null,
+            "vars": {},
+            "zone": null
+        }
+    },
+    "CommandTemplate": {
+        "nx-ct-http-base": {
+            "arguments": {
+                "-6": {
+                    "description": "Use IPv6 connection",
+                    "set_if": "$nx_http_ipv6$",
+                    "set_if_format": "string"
+                },
+                "-4": {
+                    "description": "Use IPv4 connection",
+                    "set_if": "$nx_http_ipv4$",
+                    "set_if_format": "string"
+                },
+                "--invert-regex": {
+                    "description": "Return CRITICAL if found, OK if not",
+                    "set_if": "$nx_http_invertregex$",
+                    "set_if_format": "string"
+                },
+                "--no-body": {
+                    "description": "Don't wait for document body: stop reading after headers",
+                    "set_if": "$nx_http_ignore_body$",
+                    "set_if_format": "string"
+                },
+                "-A": {
+                    "description": "String to be sent in http header as User Agent",
+                    "value": "$nx_http_useragent$"
+                },
+                "-E": {
+                    "description": "Print additional perfdata",
+                    "set_if": "$nx_http_extendedperfdata$",
+                    "set_if_format": "string"
+                },
+                "-H": {
+                    "description": "Host name argument for servers using host headers (virtual host)",
+                    "value": "$nx_http_vhost$"
+                },
+                "-I": {
+                    "description": "IP address or name (use numeric address if possible to bypass DNS lookup)",
+                    "value": "$nx_http_address$"
+                },
+                "-L": {
+                    "description": "Wrap output in HTML link",
+                    "set_if": "$nx_http_link$",
+                    "set_if_format": "string"
+                },
+                "-M": {
+                    "description": "Warn if document is more than seconds old",
+                    "value": "$nx_http_maxage$"
+                },
+                "-P": {
+                    "description": "URL encoded http POST data",
+                    "value": "$nx_http_post$"
+                },
+                "-R": {
+                    "description": "Search page for case-insensitive regex",
+                    "value": "$nx_http_expect_body_eregi$",
+                    "order": "2"
+                },
+                "-T": {
+                    "description": "Specify Content-Type header when POSTing",
+                    "value": "$nx_http_contenttype$"
+                },
+                "-a": {
+                    "description": "Username:password on sites with basic authentication",
+                    "value": "$nx_http_auth_pair$"
+                },
+                "-b": {
+                    "description": "Username:password on proxy-servers with basic authentication",
+                    "value": "$nx_http_proxy_auth_pair$"
+                },
+                "-c": {
+                    "description": "Response time to result in critical status (seconds)",
+                    "value": "$nx_http_critical_time$"
+                },
+                "-d": {
+                    "description": "String to expect in the response headers",
+                    "value": "$nx_http_headerstring$"
+                },
+                "-e": {
+                    "description": "Comma-delimited list of strings, at least one of them is expected in the first (status) line of the server response (default: HTTP\/1.)",
+                    "value": "$nx_http_expected$"
+                },
+                "-f": {
+                    "description": "How to handle redirect pages",
+                    "value": "$nx_http_onredirect$"
+                },
+                "-j": {
+                    "description": "Set http method (for example: HEAD, OPTIONS, TRACE, PUT, DELETE)",
+                    "value": "$nx_http_method$"
+                },
+                "-k": {
+                    "description": "Any other tags to be sent in http header",
+                    "value": "$nx_http_header$"
+                },
+                "-l": {
+                    "description": "Allow regex to span newline",
+                    "set_if": "$nx_http_linespan$",
+                    "set_if_format": "string",
+                    "order": "1"
+                },
+                "-m": {
+                    "description": "Minim page size required:Maximum page size required",
+                    "value": "$nx_http_pagesize$"
+                },
+                "-r": {
+                    "description": "Search page for regex",
+                    "value": "$nx_http_expect_body_regex$",
+                    "order": "2"
+                },
+                "-s": {
+                    "description": "String to expect in the content",
+                    "value": "$nx_http_string$"
+                },
+                "-t": {
+                    "description": "Seconds before connection times out",
+                    "value": "$nx_http_timeout$"
+                },
+                "-u": {
+                    "description": "URL to GET or POST (default: \/)",
+                    "value": "$nx_http_uri$"
+                },
+                "-v": {
+                    "description": "Show details for command-line debugging",
+                    "set_if": "$nx_http_verbose$",
+                    "set_if_format": "string"
+                },
+                "-w": {
+                    "description": "Response time to result in warning status (seconds)",
+                    "value": "$nx_http_warn_time$"
+                },
+                "-y": {
+                    "description": "Authentication method: basic, ntlm, ntlm2 (default basic)",
+                    "value": "$nx_http_auth_method$"
+                }
+            },
+            "command": "PluginDir + \/check_http",
+            "disabled": false,
+            "fields": [],
+            "imports": [],
+            "is_string": null,
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-ct-http-base",
+            "object_type": "template",
+            "timeout": "60",
+            "vars": {
+                "nx_http_address": "$host.address$"
+            },
+            "zone": null
+        },
+        "nx-ct-https": {
+            "arguments": {
+                "--sni": {
+                    "description": "Enable SSL\/TLS hostname extension support (SNI)",
+                    "set_if": "$nx_http_sni$",
+                    "set_if_format": "string"
+                },
+                "-C": {
+                    "description": "Minimum number of days a certificate has to be valid. This parameter explicitely sets the port to 443 and ignores the URL if passed.",
+                    "value": "$nx_http_min_certificate_validity$"
+                },
+                "-J": {
+                    "description": "Name of file contains the client certificate (PEM format)",
+                    "value": "$nx_http_clientcert$"
+                },
+                "-K": {
+                    "description": "Name of file contains the private key (PEM format)",
+                    "value": "$nx_http_privatekey$"
+                },
+                "-S": {
+                    "description": "Connect via SSL",
+                    "set_if": "$nx_http_port_https$",
+                    "set_if_format": "string"
+                },
+                "-S1": {
+                    "description": "Connect via SSL version TLSv1",
+                    "set_if": "$nx_http_ssl_force_tlsv1$",
+                    "set_if_format": "string"
+                },
+                "-S1+": {
+                    "description": "Connect via SSL version TLSv1 and newer",
+                    "set_if": "$nx_http_ssl_force_tlsv1_or_higher$",
+                    "set_if_format": "string"
+                },
+                "-S1.1": {
+                    "description": "Connect via SSL version TLSv1.1",
+                    "set_if": "$nx_http_ssl_force_tlsv1_1$",
+                    "set_if_format": "string"
+                },
+                "-S1.1+": {
+                    "description": "Connect via SSL version TLSv1.1 and newer",
+                    "set_if": "$nx_http_ssl_force_tlsv1_1_or_higher$",
+                    "set_if_format": "string"
+                },
+                "-S1.2": {
+                    "description": "Connect via SSL version TLSv1.2",
+                    "set_if": "$nx_http_ssl_force_tlsv1_2$",
+                    "set_if_format": "string"
+                },
+                "-S1.2+": {
+                    "description": "Connect via SSL version TLSv1.2 and newer",
+                    "set_if": "$nx_http_ssl_force_tlsv1_2_or_higher$",
+                    "set_if_format": "string"
+                },
+                "-S2": {
+                    "description": "Connect via SSL version SSLv2",
+                    "set_if": "$nx_http_ssl_force_sslv2$",
+                    "set_if_format": "string"
+                },
+                "-S2+": {
+                    "description": "Connect via SSL version SSLv2 and newer",
+                    "set_if": "$nx_http_ssl_force_sslv2_or_higher$",
+                    "set_if_format": "string"
+                },
+                "-S3": {
+                    "description": "Connect via SSL version SSLv3",
+                    "set_if": "$nx_http_ssl_force_sslv3$",
+                    "set_if_format": "string"
+                },
+                "-S3+": {
+                    "description": "Connect via SSL version SSLv3 and newer",
+                    "set_if": "$nx_http_ssl_force_sslv3_or_higher$",
+                    "set_if_format": "string"
+                },
+                "-p": {
+                    "description": "HTTP\/HTTPS Port number (default: 80)",
+                    "set_if": "var https_port = macro(\"$nx_http_port_https$\")\r\nif (https_port) {\r\n    return true\r\n}\r\n\r\nvar http_port = macro(\"$nx_http_port_http$\")\r\nif (http_port) {\r\n    return true\r\n}\r\n\r\nreturn false",
+                    "set_if_format": "expression",
+                    "value": {
+                        "type": "Function",
+                        "body": "var https_port = macro(\"$nx_http_port_https$\")\r\nif (https_port) {\r\n    return https_port\r\n} else {\r\n    return macro(\"$nx_http_port_http$\")\r\n}"
+                    }
+                }
+            },
+            "command": null,
+            "disabled": false,
+            "fields": [],
+            "imports": [
+                "nx-ct-http-base"
+            ],
+            "is_string": null,
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-ct-https",
+            "object_type": "template",
+            "timeout": null,
+            "vars": {},
+            "zone": null
+        },
+        "nx-ct-http": {
+            "arguments": {
+                "-p": {
+                    "description": "HTTP Port number (default: 80)",
+                    "value": "$nx_http_port_http$"
+                }
+            },
+            "command": null,
+            "disabled": false,
+            "fields": [],
+            "imports": [
+                "nx-ct-http-base"
+            ],
+            "is_string": null,
+            "methods_execute": null,
+            "object_name": "nx-ct-http",
+            "object_type": "template",
+            "timeout": null,
+            "vars": {},
+            "zone": null
+        }
+    },
+    "Datafield": {
+        "145": {
+            "varname": "nx_http_address",
+            "caption": "[NX] IP Address",
+            "description": "IP address or name (use numeric address if possible to bypass DNS lookup)",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "145",
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "Website Settings"
+        },
+        "146": {
+            "varname": "nx_http_port_http",
+            "caption": "[NX] TCP Port (HTTP)",
+            "description": "Port number (default: 80)",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeNumber",
+            "format": null,
+            "originalId": "146",
+            "settings": {},
+            "category": "Website Settings"
+        },
+        "147": {
+            "varname": "nx_http_port_https",
+            "caption": "[NX] TCP Port (HTTPS)",
+            "description": "Port number (default: 80)",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeNumber",
+            "format": null,
+            "originalId": "147",
+            "settings": {},
+            "category": "Website Settings"
+        }
+    },
+    "DatafieldCategory": {
+        "Website Settings": {
+            "category_name": "Website Settings",
+            "description": null,
+            "originalId": "1"
+        }
+    }
+}

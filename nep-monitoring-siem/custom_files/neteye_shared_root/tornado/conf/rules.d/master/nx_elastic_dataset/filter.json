@@ -1,0 +1,16 @@
+{
+    "type": "filter",
+    "name": "nx_elastic_dataset",
+    "description": "",
+    "active": true,
+    "filter": {
+      "type": "AND",
+      "operators": [
+        {
+          "type": "equals",
+          "first": "${event.type}",
+          "second": "nx_elastic_dataset"
+        }
+      ]
+    }
+}

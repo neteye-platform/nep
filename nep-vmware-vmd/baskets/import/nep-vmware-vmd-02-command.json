@@ -1,0 +1,111 @@
+{
+    "Command": {
+        "nx-c-check-vmd-object": {
+            "arguments": {
+                "-N": {
+                    "description": "UUID in HEX Format of the VMD Object of which its state you want to check. Takes precedence over -n.",
+                    "value": "$nx_vmd_object_uuid$",
+                    "order": "4"
+                },
+                "-c": {
+                    "description": "NAGIOS-Style interval describing a critical threshold for metric MetricName. Format: <Metric name>=<Range>",
+                    "repeat_key": true,
+                    "value": "$nx_vmd_critical_thresholds$",
+                    "order": "9"
+                },
+                "-i": {
+                    "description": "Name of a metric you want to include . This script will load only the specifiec metric.",
+                    "repeat_key": true,
+                    "value": "$nx_vmd_metrics_to_include$",
+                    "order": "6"
+                },
+                "-m": {
+                    "description": "Method used to determine the state of the object. Possible values: VCSA, Metrics, Both. VCSA means the state of the object is the state read directly from the source used by VMD. Metrics uses thresholds to determine the state of each metric, then the worst state will be selected. Both means both VCSA and Metrics methods will be used, and the worst one will be reported. Default: Both",
+                    "required": true,
+                    "value": "$nx_vmd_state_calculation_method$",
+                    "order": "3"
+                },
+                "-n": {
+                    "description": "Name of the VMD Object of which its state you want to check. Ignored if -N is used.",
+                    "set_if": "var uuid = macro(\"$nx_vmd_object_uuid$\") \r\nif (uuid) { \r\n    return false\r\n} else {\r\n    return true\r\n}",
+                    "set_if_format": "expression",
+                    "value": "$nx_vmware_object_name$",
+                    "order": "5"
+                },
+                "-s": {
+                    "description": "Name of the VCSA queried by VSphereDB. If VSphereDB queries directly an ESXi host, its name must be provided.",
+                    "required": true,
+                    "value": "$nx_vmware_vcsa_name$",
+                    "order": "1"
+                },
+                "-t": {
+                    "description": "Type of the VMD Object of which its state you want to check. Supported types are: ClusterComputeResource, Datastore, HostSystem, ResourcePool, VirtualMachine",
+                    "required": true,
+                    "value": "$nx_vmd_object_type$",
+                    "order": "2"
+                },
+                "-w": {
+                    "description": "NAGIOS-Style interval describing a warning threshold for metric MetricName. Format: <Metric name>=<Range>",
+                    "repeat_key": true,
+                    "value": "$nx_vmd_warning_thresholds$",
+                    "order": "8"
+                },
+                "-x": {
+                    "repeat_key": true,
+                    "value": "$nx_vmd_metrics_to_exclude$",
+                    "order": "7"
+                }
+            },
+            "command": "PluginContribDir + \/check_vmd_object.py",
+            "disabled": false,
+            "fields": [],
+            "imports": [],
+            "is_string": null,
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-check-vmd-object",
+            "object_type": "object",
+            "timeout": "10",
+            "vars": {},
+            "zone": "master"
+        },
+        "nx-c-vmd-vmalive": {
+            "arguments": {
+                "-c": {
+                    "description": null,
+                    "repeat_key": true,
+                    "value": "vm_running=1:",
+                    "order": "9"
+                },
+                "-i": {
+                    "description": null,
+                    "repeat_key": true,
+                    "value": "vm_running",
+                    "order": "6"
+                },
+                "-m": {
+                    "description": null,
+                    "required": true,
+                    "value": "Metrics",
+                    "order": "3"
+                },
+                "-t": {
+                    "description": null,
+                    "required": true,
+                    "value": "VirtualMachine",
+                    "order": "2"
+                }
+            },
+            "command": null,
+            "disabled": false,
+            "fields": [],
+            "imports": [ "nx-c-check-vmd-object" ],
+            "is_string": null,
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-vmd-vmalive",
+            "object_type": "object",
+            "timeout": "10",
+            "vars": {},
+            "zone": "master"
+        }
+    }
+}

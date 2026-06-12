@@ -1,0 +1,62 @@
+{
+    "Datafield": {
+        "481": {
+            "varname": "nx_office365_portal_mode",
+            "caption": "Office 365 Portal mode",
+            "description": "Office 365 Portal Mode",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "481",
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": null
+        },
+        "482": {
+            "varname": "nx_office365_portal_url",
+            "caption": "Office 365 Portal URL",
+            "description": "Office 365 Portal URL",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "482",
+            "settings": {},
+            "category": null
+        }
+    },
+    "Command": {
+        "nx-c-check-office-services": {
+            "arguments": {
+                "-m": {
+                    "description": "Office 365 Portal Mode",
+                    "required": true,
+                    "skip_key": false,
+                    "value": "$nx_office365_portal_mode$",
+                    "order": "2"
+                },
+                "-p": {
+                    "description": "Office 365 Portal",
+                    "required": true,
+                    "skip_key": false,
+                    "value": "$nx_office365_portal_url$",
+                    "order": "1"
+                }
+            },
+            "command": "PluginContribDir + /check_office_services.py",
+            "fields": [
+                {
+                    "datafield_id": 481,
+                    "is_required": "y",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 482,
+                    "is_required": "y",
+                    "var_filter": null
+                }
+            ],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-check-office-services",
+            "object_type": "object"
+        }
+    }
+}

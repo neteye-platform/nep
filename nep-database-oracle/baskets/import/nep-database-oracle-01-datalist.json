@@ -1,0 +1,76 @@
+{
+    "DataList": {
+        "[NX] Oracle Health method": {
+            "entries": [
+                {
+                    "entry_name": "dbi",
+                    "entry_value": "dbi",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "sqlplus",
+                    "entry_value": "sqlplus",
+                    "format": "string",
+                    "allowed_roles": null
+                }
+            ],
+            "list_name": "[NX] Oracle Health method",
+            "owner": "root"
+        },
+        "[NX] Oracle Health reports": {
+            "entries": [
+                {
+                    "entry_name": "html",
+                    "entry_value": "html",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "long",
+                    "entry_value": "long",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "short",
+                    "entry_value": "short",
+                    "format": "string",
+                    "allowed_roles": null
+                }
+            ],
+            "list_name": "[NX] Oracle Health reports",
+            "owner": "root"
+        },
+        "[NX] Oracle Health units": {
+            "entries": [
+                {
+                    "entry_name": "%",
+                    "entry_value": "%",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "GB",
+                    "entry_value": "GB",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "KB",
+                    "entry_value": "KB",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "MB",
+                    "entry_value": "MB",
+                    "format": "string",
+                    "allowed_roles": null
+                }
+            ],
+            "list_name": "[NX] Oracle Health units",
+            "owner": "root"
+        }
+    }
+}

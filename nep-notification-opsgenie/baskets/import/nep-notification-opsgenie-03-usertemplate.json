@@ -1,0 +1,88 @@
+{
+    "UserTemplate": {
+        "nx-ut-opsgenie": {
+            "enable_notifications": true,
+            "fields": [
+                {
+                    "datafield_id": 298,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "object_name": "nx-ut-opsgenie",
+            "object_type": "template",
+            "states": [
+                "Critical",
+                "Down",
+                "OK",
+                "Up"
+            ],
+            "types": [
+                "Custom",
+                "Problem",
+                "Recovery"
+            ]
+        },
+        "nx-ut-jsm-opsgenie": {
+            "enable_notifications": true,
+            "fields": [
+                {
+                    "datafield_id": 299,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "object_name": "nx-ut-jsm-opsgenie",
+            "object_type": "template",
+            "states": [
+                "Critical",
+                "Down",
+                "OK",
+                "Up"
+            ],
+            "types": [
+                "Custom",
+                "Problem",
+                "Recovery"
+            ]
+        }
+    },
+    "Datafield": {
+        "298": {
+            "varname": "nx_opsgenie_apikey",
+            "caption": "[NX] OpsGenie API Key",
+            "description": "API Key identifying a specific Team in OpsGenie Team Integrations",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "298",
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "OpsGenie Service Settings"
+        },
+        "299": {
+            "varname": "nx_jsm_opsgenie_apikey",
+            "caption": "[NX] JSM OpsGenie API Key",
+            "description": "API Key identifying a specific Team in JSM OpsGenie Team Integrations",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "22998",
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "JSM OpsGenie Service Settings"
+        }
+    },
+    "DatafieldCategory": {
+        "OpsGenie Service Settings": {
+            "category_name": "OpsGenie Service Settings",
+            "description": null,
+            "originalId": "1"
+        },
+        "JSM OpsGenie Service Settings": {
+            "category_name": "JSM OpsGenie Service Settings",
+            "description": null,
+            "originalId": "2"
+        }
+    }
+}

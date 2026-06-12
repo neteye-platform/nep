@@ -1,0 +1,86 @@
+{
+    "Command": {
+        "nx-c-sms-host-notification": {
+            "arguments": {
+                "--output": {
+                    "description": "HOST or SERVICE OUTPUT",
+                    "value": "$host.output$"
+                },
+                "--state": {
+                    "description": "HOST or SERVICE STATE",
+                    "value": "$host.state$"
+                }
+            },
+            "fields": [],
+            "imports": [
+                "nx-ct-sms-notification"
+            ],
+            "command": null,
+            "methods_execute": "PluginNotification",
+            "object_name": "nx-c-sms-host-notification",
+            "object_type": "object",
+            "uuid": "d4670a84-f1f4-4a24-83ea-f887531ba3aa"
+        },
+        "nx-c-sms-service-notification": {
+            "arguments": {
+                "--output": "$service.output$",
+                "--service-display-name": "$service.display_name$",
+                "--service-name": "$service.name$",
+                "--state": "$service.state$"
+            },
+            "fields": [],
+            "imports": [
+                "nx-ct-sms-notification"
+            ],
+            "command": null,
+            "methods_execute": "PluginNotification",
+            "object_name": "nx-c-sms-service-notification",
+            "object_type": "object",
+            "uuid": "52c30324-13e5-408b-ba55-0775c993f536"
+        }
+    },
+    "CommandTemplate": {
+        "nx-ct-sms-notification": {
+            "arguments": {
+                "--datetime": "$icinga.long_date_time$",
+                "--host-display-name": "$host.display_name$",
+                "--host-name": "$host.name$",
+                "--ipv4": {
+                    "description": "IPv4 address",
+                    "value": "$address$"
+                },
+                "--ipv6": {
+                    "description": "IPv6 address",
+                    "value": "$address6$"
+                },
+                "--notification-type": "$notification.type$",
+                "--phone-tone": {
+                    "description": "Custom tone",
+                    "set_if": "$user.vars.nx_phone_ring_enabled$",
+                    "set_if_format": "string",
+                    "value": "$user.vars.nx_phone_ring_tone$"
+                },
+                "--ring-number": {
+                    "description": "Recipient number (enables ring)",
+                    "set_if": "ring = macro(\"$user.vars.nx_phone_ring_enabled$\")\r\nif (ring == null) {\r\n  return false\r\n}\r\n\r\nif (ring == true) {\r\n  ring_number = macro(\"$user.vars.nx_phone_ring_mobile$\")\r\n  return (ring_number.trim().len() > 0)\r\n}\r\n\r\nreturn false",
+                    "set_if_format": "expression",
+                    "value": "$user.vars.nx_phone_ring_mobile$"
+                },
+                "--smsd-target-server": "$notification.vars.nx_smsd_target_server$",
+                "--user-mobile": {
+                    "required": true,
+                    "set_if": "pager = macro(\"$user.pager$\")\r\nif (pager == null) {\r\n  return false\r\n}\r\nreturn (pager.len() > 0)",
+                    "set_if_format": "expression",
+                    "value": "$user.pager$"
+                }
+            },
+            "command": "/neteye/shared/monitoring/plugins/nx-sms-with-ring-notification.py",
+            "fields": [],
+            "methods_execute": "PluginNotification",
+            "object_name": "nx-ct-sms-notification",
+            "object_type": "template",
+            "timeout": 60,
+            "uuid": "0092c2ef-3807-40bf-8969-ecd102a28fd5"
+        }
+    }
+}

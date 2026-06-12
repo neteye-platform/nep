@@ -1,0 +1,43 @@
+apiVersion: tekton.dev/v1
+kind: PipelineRun
+metadata:
+  name: nep-build-and-release
+  annotations:
+    pipelinesascode.tekton.dev/on-event: "[push]"
+    pipelinesascode.tekton.dev/on-target-branch: "[main, maint-*]"
+    pipelinesascode.tekton.dev/max-keep-runs: "5"
+spec:
+  serviceAccountName: pipeline
+  pipelineRef:
+    resolver: git
+    params:
+      - name: gitToken
+        value: "git-resolver"
+      - name: pathInRepo
+        value: rhel8-neteye-build/contrib-build-and-release.yaml
+      - name: revision
+        value: "master"
+      - name: useTestingRepos
+        value: "false"
+  timeouts:
+    pipeline: "0h30m0s"
+    tasks: "0h20m0s"
+    finally: "0h10m0s"
+  workspaces:
+    - name: shared-workspace
+      volumeClaimTemplate:
+        spec:
+          storageClassName: ocs-storagecluster-cephfs-sing-rep
+          volumeMode: Filesystem
+          accessModes:
+            - ReadWriteMany
+          resources:
+            requests:
+              storage: 1Gi
+  params:
+    - name: taskRevision
+      value: "master"
+    - name: version
+      value: "{{ source_branch }}"
+    - name: author
+      value: "{{ sender }}"

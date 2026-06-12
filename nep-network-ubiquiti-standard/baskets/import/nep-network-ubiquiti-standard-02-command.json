@@ -1,0 +1,50 @@
+{
+    "Command": {
+        "nx-c-centreon-ubiquiti-edge-cpu": {
+            "arguments": {
+                "--critical-1m": "$nx_centreon_ubiquiti_cpu_crit1m$",
+                "--critical-5m": "$nx_centreon_ubiquiti_cpu_crit5m$",
+                "--mode": "cpu",
+                "--warning-1m": "$nx_centreon_ubiquiti_cpu_warn1m$",
+                "--warning-5m": "$nx_centreon_ubiquiti_cpu_warn5m$"
+            },
+            "command": "/usr/lib/centreon/plugins/centreon_ubiquiti_edge_snmp.pl",
+            "fields": [],
+            "imports": [
+                "nx-ct-centreon-plugin-snmp"
+            ],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-centreon-ubiquiti-edge-cpu",
+            "object_type": "object"
+        },
+        "nx-c-centreon-ubiquiti-edge-hardware": {
+            "arguments": {
+                "--mode": "hardware"
+            },
+            "command": "/usr/lib/centreon/plugins/centreon_ubiquiti_edge_snmp.pl",
+            "fields": [],
+            "imports": [
+                "nx-ct-centreon-plugin-snmp"
+            ],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-centreon-ubiquiti-edge-hardware",
+            "object_type": "object"
+        },
+        "nx-c-centreon-ubiquiti-edge-memory": {
+            "arguments": {
+                "--change-perfdata": "traffic_in,,percent()",
+                "--critical-usage": "$nx_centreon_ubiquiti_mem_crit$",
+                "--mode": "memory",
+                "--warning-usage": "$nx_centreon_ubiquiti_mem_warn$"
+            },
+            "command": "/usr/lib/centreon/plugins/centreon_ubiquiti_edge_snmp.pl",
+            "fields": [],
+            "imports": [
+                "nx-ct-centreon-plugin-snmp"
+            ],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-centreon-ubiquiti-edge-memory",
+            "object_type": "object"
+        }
+    }
+}

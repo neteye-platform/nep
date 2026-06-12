@@ -1,0 +1,184 @@
+{
+    "ServiceTemplate": {
+        "nx-st-abstract-base": {
+            "action_url": null,
+            "apply_for": null,
+            "assign_filter": null,
+            "check_command": null,
+            "check_interval": null,
+            "check_period": null,
+            "check_timeout": null,
+            "command_endpoint": null,
+            "disabled": false,
+            "display_name": null,
+            "enable_active_checks": null,
+            "enable_event_handler": null,
+            "enable_flapping": null,
+            "enable_notifications": null,
+            "enable_passive_checks": null,
+            "enable_perfdata": null,
+            "event_command": null,
+            "fields": [],
+            "flapping_threshold_high": null,
+            "flapping_threshold_low": null,
+            "groups": [],
+            "host": null,
+            "icon_image": null,
+            "icon_image_alt": null,
+            "imports": [],
+            "max_check_attempts": null,
+            "notes": null,
+            "notes_url": null,
+            "object_name": "nx-st-abstract-base",
+            "object_type": "template",
+            "retry_interval": null,
+            "service_set": null,
+            "template_choice": null,
+            "use_agent": null,
+            "use_var_overrides": null,
+            "vars": {},
+            "volatile": null,
+            "zone": null
+        },
+        "nx-st-type-custom": {
+            "action_url": null,
+            "apply_for": null,
+            "assign_filter": null,
+            "check_command": null,
+            "check_interval": "180",
+            "check_period": null,
+            "check_timeout": null,
+            "command_endpoint": null,
+            "disabled": false,
+            "display_name": null,
+            "enable_active_checks": null,
+            "enable_event_handler": null,
+            "enable_flapping": null,
+            "enable_notifications": null,
+            "enable_passive_checks": null,
+            "enable_perfdata": null,
+            "event_command": null,
+            "fields": [
+                {
+                    "datafield_id": 161,
+                    "is_required": "n",
+                    "var_filter": "service.vars.nx_notification_basic_mode_service!=%22disabled%22"
+                },
+                {
+                    "datafield_id": 163,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 162,
+                    "is_required": "n",
+                    "var_filter": "service.vars.nx_notification_basic_mode_service!=%22disabled%22"
+                },
+                {
+                    "datafield_id": 165,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 164,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "flapping_threshold_high": null,
+            "flapping_threshold_low": null,
+            "groups": [],
+            "host": null,
+            "icon_image": null,
+            "icon_image_alt": null,
+            "imports": [
+                "nx-st-abstract-base"
+            ],
+            "max_check_attempts": "3",
+            "notes": null,
+            "notes_url": null,
+            "object_name": "nx-st-type-custom",
+            "object_type": "template",
+            "retry_interval": "60",
+            "service_set": null,
+            "template_choice": null,
+            "use_agent": null,
+            "use_var_overrides": null,
+            "vars": {
+                "nx_notification_basic_mode_service": "enabled",
+                "nx_on_host_down": "leave_check_enabled"
+            },
+            "volatile": null,
+            "zone": null
+        }
+    },
+    "Datafield": {
+        "161": {
+            "category_id": null,
+            "varname": "nx_notification_basic_groups_override",
+            "caption": "[NX] Notification Recipient groups override",
+            "description": "Overrides Recepient groups list from owning Host Object",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeDirectorObject",
+            "format": null,
+            "originalId": "161",
+            "settings": {
+                "data_type": "array",
+                "icinga_object_type": "usergroup"
+            }
+        },
+        "162": {
+            "category_id": null,
+            "varname": "nx_notification_basic_users_override",
+            "caption": "[NX] Notification Recipients override",
+            "description": "Override Recepients from onwing Host Object",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeDirectorObject",
+            "format": null,
+            "originalId": "162",
+            "settings": {
+                "data_type": "array",
+                "icinga_object_type": "user"
+            }
+        },
+        "163": {
+            "category_id": null,
+            "varname": "nx_notification_basic_mode_service",
+            "caption": "[NX] Notification Mode",
+            "description": "Determines the way notifications are sent for the Service",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeDatalist",
+            "format": null,
+            "originalId": "163",
+            "settings": {
+                "behavior": "strict",
+                "data_type": "string",
+                "datalist": "[NX] Service Notifications mode List"
+            }
+        },
+        "164": {
+            "category_id": null,
+            "varname": "nx_severity",
+            "caption": "[NX] Severity ",
+            "description": "Severity level for host or service",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeDatalist",
+            "format": null,
+            "originalId": "164",
+            "settings": {
+                "behavior": "strict",
+                "data_type": "string",
+                "datalist": "[NX] Severity List"
+            }
+        },
+        "165": {
+            "varname": "nx_on_host_down",
+            "caption": "[NX] Service behavior on Host Down List",
+            "description": "Describes what happens in case one the Host containing this Service goes down.",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeDatalist",
+            "format": null,
+            "originalId": "165",
+            "settings": {
+                "behavior": "strict",
+                "data_type": "string",
+                "datalist": "[NX] Service behavior on Host Down List"
+            }
+        }
+    }
+}

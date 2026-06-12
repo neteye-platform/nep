@@ -1,0 +1,319 @@
+{
+    "ServiceTemplate": {
+        "nx-st-agentless-email-receive": {
+            "action_url": null,
+            "apply_for": null,
+            "assign_filter": null,
+            "check_command": "nx-c-check-imap-receive",
+            "check_interval": null,
+            "check_period": null,
+            "check_timeout": null,
+            "command_endpoint": null,
+            "disabled": false,
+            "display_name": null,
+            "enable_active_checks": null,
+            "enable_event_handler": null,
+            "enable_flapping": null,
+            "enable_notifications": null,
+            "enable_passive_checks": null,
+            "enable_perfdata": null,
+            "event_command": null,
+            "fields": [
+                {
+                    "datafield_id": 10575,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 10576,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 10577,
+                    "is_required": "y",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 10578,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 10579,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 10588,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 10580,
+                    "is_required": "y",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 10581,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "flapping_threshold_high": null,
+            "flapping_threshold_low": null,
+            "groups": [],
+            "host": null,
+            "icon_image": null,
+            "icon_image_alt": null,
+            "imports": [
+                "nx-st-agentless"
+            ],
+            "max_check_attempts": null,
+            "notes": null,
+            "notes_url": null,
+            "object_name": "nx-st-agentless-email-receive",
+            "object_type": "template",
+            "retry_interval": null,
+            "service_set": null,
+            "template_choice": null,
+            "use_agent": null,
+            "use_var_overrides": null,
+            "vars": {},
+            "volatile": null,
+            "zone": null
+        },
+        "nx-st-agentless-email-send": {
+            "action_url": null,
+            "apply_for": null,
+            "assign_filter": null,
+            "check_command": "nx-c-check-smtp-send",
+            "check_interval": null,
+            "check_period": null,
+            "check_timeout": null,
+            "command_endpoint": null,
+            "disabled": false,
+            "display_name": null,
+            "enable_active_checks": null,
+            "enable_event_handler": null,
+            "enable_flapping": null,
+            "enable_notifications": null,
+            "enable_passive_checks": null,
+            "enable_perfdata": null,
+            "event_command": null,
+            "fields": [
+                {
+                    "datafield_id": 10582,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 10583,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 10589,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 10584,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 10585,
+                    "is_required": "y",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 10586,
+                    "is_required": "y",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 10587,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "flapping_threshold_high": null,
+            "flapping_threshold_low": null,
+            "groups": [],
+            "host": null,
+            "icon_image": null,
+            "icon_image_alt": null,
+            "imports": [
+                "nx-st-agentless"
+            ],
+            "max_check_attempts": null,
+            "notes": null,
+            "notes_url": null,
+            "object_name": "nx-st-agentless-email-send",
+            "object_type": "template",
+            "retry_interval": null,
+            "service_set": null,
+            "template_choice": null,
+            "use_agent": null,
+            "use_var_overrides": null,
+            "vars": {},
+            "volatile": null,
+            "zone": null
+        }
+    },
+    "Datafield": {
+            "10575": {
+                "category_id": null,
+                "varname": "imap_critical",
+                "caption": "imap_critical",
+                "description": "Critical Value (in sec)",
+                "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+                "format": null,
+                "originalId": "10575",
+                "settings": {}
+            },
+            "10576": {
+                "category_id": null,
+                "varname": "imap_header",
+                "caption": "imap_header",
+                "description": "Header (array)",
+                "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeArray",
+                "format": null,
+                "originalId": "10576",
+                "settings": {}
+            },
+            "10577": {
+                "category_id": null,
+                "varname": "imap_password",
+                "caption": "imap_password",
+                "description": "Password",
+                "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+                "format": null,
+                "originalId": "10577",
+                "settings": {
+                    "visibility": "hidden"
+                }
+            },
+            "10578": {
+                "category_id": null,
+                "varname": "imap_port",
+                "caption": "imap_port",
+                "description": "Port",
+                "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+                "format": null,
+                "originalId": "10578",
+                "settings": {}
+            },
+            "10579": {
+                "category_id": null,
+                "varname": "imap_retries",
+                "caption": "imap_retries",
+                "description": "Retries",
+                "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+                "format": null,
+                "originalId": "10579",
+                "settings": {}
+            },
+            "10588": {
+                "category_id": null,
+                "varname": "nx_enable_ssl",
+                "caption": "[NX] Enable SSL",
+                "description": "Enable SSL",
+                "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeBoolean",
+                "format": null,
+                "originalId": "227",
+                "settings": {}
+            },
+            "10580": {
+                "category_id": null,
+                "varname": "imap_user",
+                "caption": "imap_user",
+                "description": "Username",
+                "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+                "format": null,
+                "originalId": "10580",
+                "settings": {}
+            },
+            "10581": {
+                "category_id": null,
+                "varname": "imap_warning",
+                "caption": "imap_warning",
+                "description": "Warning Value (in sec)",
+                "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+                "format": null,
+                "originalId": "10581",
+                "settings": {}
+            },
+            "10582": {
+                "category_id": null,
+                "varname": "smtp_body",
+                "caption": "smtp_body",
+                "description": "Body of the message",
+                "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+                "format": null,
+                "originalId": "10582",
+                "settings": {}
+            },
+            "10583": {
+                "category_id": null,
+                "varname": "smtp_critical",
+                "caption": "smtp_critical",
+                "description": "Critical Value (in sec)",
+                "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+                "format": null,
+                "originalId": "10583",
+                "settings": {}
+            },
+            "10589": {
+                "category_id": null,
+                "varname": "smtp_header",
+                "caption": "smtp_header",
+                "description": "Header",
+                "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+                "format": null,
+                "originalId": "10589",
+                "settings": {}
+            },
+            "10584": {
+                "category_id": null,
+                "varname": "smtp_port",
+                "caption": "smtp_port",
+                "description": "Port",
+                "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+                "format": null,
+                "originalId": "10584",
+                "settings": {}
+            },
+            "10585": {
+                "category_id": null,
+                "varname": "smtp_recipient",
+                "caption": "smtp_recipient",
+                "description": "Recipient Address (array)",
+                "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeArray",
+                "format": null,
+                "originalId": "10585",
+                "settings": {}
+            },
+            "10586": {
+                "category_id": null,
+                "varname": "smtp_sender",
+                "caption": "smtp_sender",
+                "description": "Sender Address (array)",
+                "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeArray",
+                "format": null,
+                "originalId": "10586",
+                "settings": {}
+            },
+            "10587": {
+                "category_id": null,
+                "varname": "smtp_warning",
+                "caption": "smtp_warning",
+                "description": "Warning Value (in sec)",
+                "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+                "format": null,
+                "originalId": "10587",
+                "settings": {}
+            }
+    }
+}

@@ -1,0 +1,216 @@
+{
+    "ServiceTemplate": {
+        "nx-st-agentless-inventory": {
+            "action_url": null,
+            "apply_for": null,
+            "assign_filter": null,
+            "check_command": "nx-c-check-inventory",
+            "check_interval": null,
+            "check_period": null,
+            "check_timeout": null,
+            "command_endpoint": null,
+            "disabled": false,
+            "display_name": null,
+            "enable_active_checks": null,
+            "enable_event_handler": null,
+            "enable_flapping": null,
+            "enable_notifications": null,
+            "enable_passive_checks": null,
+            "enable_perfdata": null,
+            "event_command": null,
+            "fields": [
+                {
+                    "datafield_id": 259,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 263,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 261,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 262,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "flapping_threshold_high": null,
+            "flapping_threshold_low": null,
+            "groups": [],
+            "host": null,
+            "icon_image": null,
+            "icon_image_alt": null,
+            "imports": [
+                "nx-st-agentless"
+            ],
+            "max_check_attempts": null,
+            "notes": null,
+            "notes_url": null,
+            "object_name": "nx-st-agentless-inventory",
+            "object_type": "template",
+            "retry_interval": null,
+            "service_set": null,
+            "template_choice": null,
+            "use_agent": null,
+            "use_var_overrides": null,
+            "vars": {},
+            "volatile": null,
+            "zone": null
+        },
+        "nx-st-agent-linux-systemd-timer": {
+            "action_url": null,
+            "apply_for": null,
+            "assign_filter": null,
+            "check_command": "nx-c-check-systemd-timer",
+            "check_interval": null,
+            "check_period": null,
+            "check_timeout": null,
+            "command_endpoint": null,
+            "disabled": false,
+            "display_name": null,
+            "enable_active_checks": null,
+            "enable_event_handler": null,
+            "enable_flapping": null,
+            "enable_notifications": null,
+            "enable_passive_checks": null,
+            "enable_perfdata": null,
+            "event_command": null,
+            "fields": [
+                {
+                    "datafield_id": 254,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 251,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 252,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 253,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "flapping_threshold_high": null,
+            "flapping_threshold_low": null,
+            "groups": [],
+            "host": null,
+            "icon_image": null,
+            "icon_image_alt": null,
+            "imports": [
+                "nx-st-agent-linux"
+            ],
+            "max_check_attempts": null,
+            "notes": null,
+            "notes_url": null,
+            "object_name": "nx-st-agent-linux-systemd-timer",
+            "object_type": "template",
+            "retry_interval": null,
+            "service_set": null,
+            "template_choice": null,
+            "use_agent": null,
+            "use_var_overrides": null,
+            "vars": {},
+            "volatile": null,
+            "zone": null
+        }
+    },
+    "Datafield": {
+        "259": {
+            "category_id": null,
+            "varname": "nx_inventory_command",
+            "caption": "[NX] Inventory Command",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeDatalist",
+            "format": null,
+            "originalId": "259",
+            "settings": {
+                "behavior": "strict",
+                "data_type": "string",
+                "datalist": "[NX] Inventory Command List"
+            }
+        },
+        "263": {
+            "category_id": null,
+            "varname": "nx_inventory_critical",
+            "caption": "nx_inventory_critical",
+            "description": "specify the number of days an asset item has not to be updated before returning a critical. Default: 20",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "263",
+            "settings": {}
+        },
+        "261": {
+            "category_id": null,
+            "varname": "nx_inventory_exclude",
+            "caption": "nx_inventory_exclude",
+            "description": "\"host1,host2,neteye_.*,...\"     exclude those host name from the check results     Expression is taken as case insensitive Perl Regular Expression",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "261",
+            "settings": {}
+        },
+        "262": {
+            "category_id": null,
+            "varname": "nx_inventory_warning",
+            "caption": "nx_inventory_warning",
+            "description": "specify the number of days an asset item has not to be updated before returning a warning. Default: 10",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "262",
+            "settings": {}
+        },
+        "254": {
+            "category_id": null,
+            "varname": "systemd_timer_critical",
+            "caption": "systemd_timer_critical",
+            "description": "<time in seconds between runs that is not critical> ",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "254",
+            "settings": {}
+        },
+        "251": {
+            "category_id": null,
+            "varname": "systemd_timer_service_name",
+            "caption": "systemd_timer_service_name",
+            "description": "<service name>",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "251",
+            "settings": {}
+        },
+        "252": {
+            "category_id": null,
+            "varname": "systemd_timer_timer_name",
+            "caption": "systemd_timer_timer_name",
+            "description": "<timer name>",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "252",
+            "settings": {}
+        },
+        "253": {
+            "category_id": null,
+            "varname": "systemd_timer_warning",
+            "caption": "systemd_timer_warning",
+            "description": "<time in seconds between runs that is not warning> ",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "253",
+            "settings": {}
+        }
+    }
+}

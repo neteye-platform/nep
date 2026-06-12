@@ -1,0 +1,28 @@
+{
+    "DataList": {
+        "[NX] Centreon Cisco Interfaces Units Traffic List": {
+            "entries": [
+                {
+                    "entry_name": "bps",
+                    "entry_value": "bps",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "counter",
+                    "entry_value": "counter",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "percent_delta",
+                    "entry_value": "percent_delta",
+                    "format": "string",
+                    "allowed_roles": null
+                }
+            ],
+            "list_name": "[NX] Centreon Cisco Interfaces Units Traffic List",
+            "owner": "root"
+        }
+    }
+}

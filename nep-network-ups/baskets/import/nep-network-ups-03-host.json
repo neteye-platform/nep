@@ -1,0 +1,46 @@
+{
+    "HostTemplate": {
+        "nx-ht-snmp-ups": {
+            "accept_config": null,
+            "action_url": null,
+            "address": null,
+            "address6": null,
+            "api_key": null,
+            "check_command": null,
+            "check_interval": null,
+            "check_period": null,
+            "check_timeout": null,
+            "command_endpoint": null,
+            "disabled": false,
+            "display_name": null,
+            "enable_active_checks": null,
+            "enable_event_handler": null,
+            "enable_flapping": null,
+            "enable_notifications": null,
+            "enable_passive_checks": null,
+            "enable_perfdata": null,
+            "event_command": null,
+            "fields": [],
+            "flapping_threshold_high": null,
+            "flapping_threshold_low": null,
+            "groups": [],
+            "has_agent": null,
+            "icon_image": null,
+            "icon_image_alt": null,
+            "imports": [
+                "nx-ht-snmp"
+            ],
+            "master_should_connect": null,
+            "max_check_attempts": null,
+            "notes": null,
+            "notes_url": null,
+            "object_name": "nx-ht-snmp-ups",
+            "object_type": "template",
+            "retry_interval": null,
+            "template_choice": null,
+            "vars": {},
+            "volatile": null,
+            "zone": null
+        }
+    }
+}

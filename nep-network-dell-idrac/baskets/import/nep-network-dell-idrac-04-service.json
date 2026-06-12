@@ -1,0 +1,87 @@
+{
+    "ServiceTemplate": {
+        "nx-st-agentless-snmp-centreon-network-dell-idrac-snmp": {
+            "check_command": "nx-c-centreon-dell-idrac-snmp",
+            "fields": [
+                {
+                    "datafield_id": 349,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 322,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 323,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 144,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-st-agentless-snmp-centreon"
+            ],
+            "object_name": "nx-st-agentless-snmp-centreon-network-dell-idrac-snmp",
+            "object_type": "template",
+            "vars": {
+                "snmp_timeout": 30
+            }
+        }
+    },
+    "Datafield": {
+        "349": {
+            "varname": "nx_centreon_dell_idrac_snmp_mode_list",
+            "caption": "[NX] Centreon DELL iDRAC snmp Mode",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeDatalist",
+            "format": null,
+            "originalId": "349",
+            "settings": {
+                "behavior": "strict",
+                "data_type": "string",
+                "datalist": "[NX] Centreon Network Dell iDRAC SNMP Mode List"
+            },
+            "category": null
+        },
+        "322": {
+            "varname": "nx_centreon_snmp_critical",
+            "caption": "[NX] Centreon SNMP Critical",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "322",
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": null
+        },
+        "323": {
+            "varname": "nx_centreon_snmp_warning",
+            "caption": "[NX] Centreon SNMP Warning",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "323",
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": null
+        },
+        "144": {
+            "varname": "snmp_timeout",
+            "caption": "SNMP Timeout",
+            "description": "Timeout in secondes (default: 15) before exit.",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeNumber",
+            "format": null,
+            "originalId": "144",
+            "settings": {},
+            "category": null
+        }
+    }
+}

@@ -1,0 +1,166 @@
+{
+    "ServiceTemplate": {
+        "nx-st-agentless-restapi-centreon-storage-netapp-ontap": {
+            "action_url": null,
+            "apply_for": null,
+            "assign_filter": null,
+            "check_command": "nx-c-centreon-netapp-ontap-restapi",
+            "check_interval": null,
+            "check_period": null,
+            "check_timeout": null,
+            "command_endpoint": null,
+            "disabled": false,
+            "display_name": null,
+            "enable_active_checks": null,
+            "enable_event_handler": null,
+            "enable_flapping": null,
+            "enable_notifications": null,
+            "enable_passive_checks": null,
+            "enable_perfdata": null,
+            "event_command": null,
+            "fields": [
+                {
+                    "datafield_id": 10738,
+                    "is_required": "y",
+                    "var_filter": null
+                }
+            ],
+            "flapping_threshold_high": null,
+            "flapping_threshold_low": null,
+            "groups": [],
+            "host": null,
+            "icon_image": null,
+            "icon_image_alt": null,
+            "imports": [
+                "nx-st-agentless-restapi-centreon"
+            ],
+            "max_check_attempts": null,
+            "notes": null,
+            "notes_url": null,
+            "object_name": "nx-st-agentless-restapi-centreon-storage-netapp-ontap",
+            "object_type": "template",
+            "retry_interval": null,
+            "service_set": null,
+            "template_choice": null,
+            "use_agent": null,
+            "use_var_overrides": null,
+            "vars": {
+                "nx_centreon_netapp_ontap_restapi_mode_list": "hardware"
+            },
+            "volatile": null,
+            "zone": null
+        },
+        "nx-st-agentless-snmp-centreon-storage-netapp-ontap": {
+            "action_url": null,
+            "apply_for": null,
+            "assign_filter": null,
+            "check_command": "nx-c-centreon-netapp-ontap-snmp",
+            "check_interval": null,
+            "check_period": null,
+            "check_timeout": null,
+            "command_endpoint": null,
+            "disabled": false,
+            "display_name": null,
+            "enable_active_checks": null,
+            "enable_event_handler": null,
+            "enable_flapping": null,
+            "enable_notifications": null,
+            "enable_passive_checks": null,
+            "enable_perfdata": null,
+            "event_command": null,
+            "fields": [
+                {
+                    "datafield_id": 10769,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 10765,
+                    "is_required": "n",
+                    "var_filter": "service.vars.nx_centreon_netapp_ontap_snmp_mode_list=%5B%22shelf%22%2C%22cpuload%22%5D"
+                },
+                {
+                    "datafield_id": 10768,
+                    "is_required": "n",
+                    "var_filter": "service.vars.nx_centreon_netapp_ontap_snmp_mode_list=%5B%22shelf%22%2C%22cpuload%22%5D"
+                }
+            ],
+            "flapping_threshold_high": null,
+            "flapping_threshold_low": null,
+            "groups": [],
+            "host": null,
+            "icon_image": null,
+            "icon_image_alt": null,
+            "imports": [
+                "nx-st-agentless-snmp-centreon"
+            ],
+            "max_check_attempts": null,
+            "notes": null,
+            "notes_url": null,
+            "object_name": "nx-st-agentless-snmp-centreon-storage-netapp-ontap",
+            "object_type": "template",
+            "retry_interval": null,
+            "service_set": null,
+            "template_choice": null,
+            "use_agent": null,
+            "use_var_overrides": null,
+            "vars": {},
+            "volatile": null,
+            "zone": null
+        }
+    },
+    "Datafield": {
+        "10738": {
+            "category_id": null,
+            "varname": "nx_centreon_netapp_ontap_restapi_mode_list",
+            "caption": "[NX] Centreon Storage NetApp RestAPI Mode",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeDatalist",
+            "format": null,
+            "originalId": "10738",
+            "settings": {
+                "behavior": "strict",
+                "data_type": "string",
+                "datalist": "[NX] Centreon Storage NetApp ONTAP RestAPI Mode List"
+            }
+        },
+        "10769": {
+            "category_id": null,
+            "varname": "nx_centreon_netapp_ontap_snmp_mode_list",
+            "caption": "[NX] Centreon Storage NetApp SNMP Mode",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeDatalist",
+            "format": null,
+            "originalId": "10769",
+            "settings": {
+                "behavior": "strict",
+                "data_type": "string",
+                "datalist": "[NX] Centreon Storage NetApp ONTAP SNMP Mode List"
+            }
+        },
+        "10765": {
+            "category_id": null,
+            "varname": "nx_centreon_snmp_critical",
+            "caption": "[NX] Centreon SNMP Critical",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "10765",
+            "settings": {
+                "visibility": "visible"
+            }
+        },
+        "10768": {
+            "category_id": null,
+            "varname": "nx_centreon_snmp_warning",
+            "caption": "[NX] Centreon SNMP Warning",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "10768",
+            "settings": {
+                "visibility": "visible"
+            }
+        }
+    }
+}

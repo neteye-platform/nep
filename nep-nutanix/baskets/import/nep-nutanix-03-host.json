@@ -1,0 +1,101 @@
+{
+    "HostTemplate": {
+        "nx-ht-snmp-nutanix": {
+            "fields": [
+                {
+                    "datafield_id": 1497,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1500,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-ht-snmp"
+            ],
+            "object_name": "nx-ht-snmp-nutanix",
+            "object_type": "template",
+            "uuid": "586d9416-dde3-4050-8fa1-0869d23e429e",
+            "vars": {
+                "nx_nep_ss_to_exclude": [
+                    "nx-ss-snmp-uptime"
+                ]
+            }
+        },
+        "nx-ht-snmp-nutanix-cluster": {
+            "fields": [],
+            "imports": [
+                "nx-ht-snmp-nutanix"
+            ],
+            "object_name": "nx-ht-snmp-nutanix-cluster",
+            "object_type": "template",
+            "uuid": "8f6831a3-3c05-400d-99ac-8fa41acf28f1"
+        },
+        "nx-ht-snmp-nutanix-control-vm": {
+            "fields": [],
+            "imports": [
+                "nx-ht-snmp-nutanix"
+            ],
+            "object_name": "nx-ht-snmp-nutanix-control-vm",
+            "object_type": "template",
+            "uuid": "59aa4bb1-f2f2-4cfa-993a-949d9a0d33b2",
+            "vars": {
+                "snmp_community": "NetEye",
+                "snmp_version": "2c"
+            }
+        },
+        "nx-ht-snmp-nutanix-hypervisor": {
+            "fields": [],
+            "imports": [
+                "nx-ht-snmp-nutanix"
+            ],
+            "object_name": "nx-ht-snmp-nutanix-hypervisor",
+            "object_type": "template",
+            "uuid": "68e48601-12ab-4973-ad80-514916833e4f"
+        },
+        "nx-ht-status-centreon-nutanix-cluster-alive": {
+            "check_command": "nx-c-centreon-nutanix-cluster-alive",
+            "fields": [],
+            "imports": [
+                "nx-ht-type-status"
+            ],
+            "object_name": "nx-ht-status-centreon-nutanix-cluster-alive",
+            "object_type": "template",
+            "uuid": "d14c0c31-d108-4d4d-8732-95e6e3316d9f"
+        }
+    },
+    "Datafield": {
+        "1497": {
+            "uuid": "87246f58-974b-4a66-9708-c38b000005d9",
+            "varname": "nx_nutanix_cluster_cvm",
+            "caption": "[NX] Nutanix cluster CVM Servers",
+            "description": "List of CVMs managing the cluster; can be a FQDN or an IP Address. If more than one are listed, one will be randomly chosen. If they are monitored by NetEye, one between the available ones will be randomly chosen.",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeArray",
+            "format": null,
+            "settings": {},
+            "category": "Centreon Nutanix"
+        },
+        "1500": {
+            "uuid": "87246f58-974b-4a66-9708-c38b000005dc",
+            "varname": "nx_nutanix_object_name",
+            "caption": "[NX] Nutanix Object name",
+            "description": "Name of the object as reported by Nutanix infrastructure",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "Centreon Nutanix"
+        }
+    },
+    "DatafieldCategory": {
+        "Centreon Nutanix": {
+            "category_name": "Centreon Nutanix",
+            "description": null,
+            "originalId": "15"
+        }
+    }
+}

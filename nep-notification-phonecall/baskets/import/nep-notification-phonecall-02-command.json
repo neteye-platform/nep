@@ -1,0 +1,26 @@
+{
+    "Command": {
+        "nx-c-phonecall-notification": {
+            "arguments": {
+                "-r": {
+                    "required": true,
+                    "value": "$user.pager$"
+                },
+                "-t": {
+                    "value": "$phone_tone$"
+                }
+            },
+            "command": "\/neteye\/shared\/monitoring\/plugins\/phonecall-notification.sh",
+            "disabled": false,
+            "fields": [],
+            "imports": [],
+            "is_string": null,
+            "methods_execute": "PluginNotification",
+            "object_name": "nx-c-phonecall-notification",
+            "object_type": "object",
+            "timeout": "60",
+            "vars": {},
+            "zone": null
+        }
+    }
+}
