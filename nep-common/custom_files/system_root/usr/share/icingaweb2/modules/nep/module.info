@@ -1,4 +1,0 @@
-Module: icingaweb2-module-nep
-Version: 0.0.1
-Depends: director (>=1.9.r1)
-Description: NEP Module for Icingaweb 2

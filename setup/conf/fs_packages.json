@@ -1,8 +1,0 @@
-[
-    {"name":"icinga2", "user":"icinga",  "group":"icinga"},
-    {"name":"mysql",   "user":"mysql",   "group":"root"},
-    {"name":"influxdb","user":"influxdb","group":"influxdb"},
-    {"name":"grafana", "user":"grafana", "group":"grafana"},
-    {"name":"tornado", "user":"tornado", "group":"tornado"},
-    {"name":"tornado_webhook_collector", "user":"tornado", "group":"tornado"}
-]
