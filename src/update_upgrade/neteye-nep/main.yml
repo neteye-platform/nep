@@ -1,0 +1,13 @@
+- name: Neteye Nep configurator
+  hosts: all
+  any_errors_fatal: true
+  gather_facts: false
+
+  tasks:
+    - name: Update Neteye Nep
+      ansible.builtin.include_tasks: /usr/share/neteye/scripts/upgrade/tasks/update_packages_from_cache_and_check_rpm_new_save.yml
+      vars:
+        neteye_repos_string: 'neteye,neteye-extras,neteye-contrib'
+        packages:
+          - 'neteye-nep'
+      tags: update_nep_packages
