@@ -1,0 +1,1 @@
+Files and directories in this directory will be placed under NetEye Local filesystem (usually  ``/neteye/local/``), keeping the subpath intact

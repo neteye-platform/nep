@@ -1,0 +1,80 @@
+{
+  "ServiceSet": {
+        "nx-ss-network-centreon-pfsense": {
+            "assign_filter": "host.vars.nx_enable_nep_ss=true&!\"nx-ss-network-centreon-pfsense\"=host.vars.nx_nep_ss_to_exclude&\"nx-ht-network-firewall-snmp\"=host.templates&host.vars.nx_hardware_vendor=%22pfsense%22",
+            "description": "Service Set providing monitoring for pfSense",
+            "object_name": "nx-ss-network-centreon-pfsense",
+            "object_type": "template",
+            "services": [
+                {
+                    "fields": [],
+                    "icon_image": "img/nep/service/cpu.png",
+                    "imports": [
+                        "nx-st-agentless-snmp-centreon-pfsense-cpu"
+                    ],
+                    "object_name": "CPU Load",
+                    "object_type": "object"
+                },
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-agentless-snmp-centreon-pfsense-load"
+                    ],
+                    "object_name": "Load Status",
+                    "object_type": "object"
+                },
+                {
+                    "fields": [],
+                    "icon_image": "img/nep/service/ram.png",
+                    "imports": [
+                        "nx-st-agentless-snmp-centreon-pfsense-memory"
+                    ],
+                    "object_name": "Memory Usage",
+                    "object_type": "object"
+                },
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-agentless-snmp-centreon-pfsense-runtime"
+                    ],
+                    "object_name": "Runtime",
+                    "object_type": "object"
+                },
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-agentless-snmp-centreon-pfsense-swap"
+                    ],
+                    "object_name": "Swap Usage",
+                    "object_type": "object"
+                }
+            ]
+        },
+        "nx-ss-network-centreon-pfsense-extras": {
+            "assign_filter": "host.vars.nx_enable_nep_ss=true&!\"nx-ss-network-centreon-pfsense\"=host.vars.nx_nep_ss_to_exclude&\"nx-ht-network-firewall-snmp\"=host.templates&host.vars.nx_hardware_vendor=%22pfsense%22&host.vars.nx_enable_nep_extras=true",
+            "description": "Service Set providing monitoring for pfSense",
+            "object_name": "nx-ss-network-centreon-pfsense-extras",
+            "object_type": "template",
+            "services": [
+                {
+                    "fields": [],
+                    "icon_image": "img/nep/service/interface.png",
+                    "imports": [
+                        "nx-st-agentless-snmp-centreon-pfsense-pfinterfaces"
+                    ],
+                    "object_name": "Interfaces Status",
+                    "object_type": "object"
+                },
+                {
+                    "fields": [],
+                    "icon_image": "img/nep/service/table.png",
+                    "imports": [
+                        "nx-st-agentless-snmp-centreon-pfsense-state-table"
+                    ],
+                    "object_name": "State Table Connections Status",
+                    "object_type": "object"
+                }
+            ]
+        }
+    }
+}

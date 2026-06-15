@@ -1,0 +1,201 @@
+{
+    "Command": {
+        "nx-c-sap-check-hana-connection-time": {
+            "arguments": {
+                "--function": {
+                    "description": "function to be executed",
+                    "skip_key": false,
+                    "value": "connection_time"
+                }
+            },
+            "fields": [],
+            "imports": [
+                "nx-ct-sap-check-hana"
+            ],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-sap-check-hana-connection-time",
+            "object_type": "object",
+            "uuid": "f5ba1607-2e07-4aaf-b75e-e9a740e87c10"
+        },
+        "nx-c-sap-check-hana-failed-data-backups": {
+            "arguments": {
+                "--function": {
+                    "description": "function to be executed",
+                    "skip_key": false,
+                    "value": "failed_data_backups"
+                }
+            },
+            "fields": [],
+            "imports": [
+                "nx-ct-sap-check-hana"
+            ],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-sap-check-hana-failed-data-backups",
+            "object_type": "object",
+            "uuid": "98fe35b0-4a34-4b2f-80f8-478a75de0764"
+        },
+        "nx-c-sap-check-hana-failed-log-backups": {
+            "arguments": {
+                "--function": {
+                    "description": "function to be executed",
+                    "skip_key": false,
+                    "value": "failed_log_backups"
+                }
+            },
+            "fields": [],
+            "imports": [
+                "nx-ct-sap-check-hana"
+            ],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-sap-check-hana-failed-log-backups",
+            "object_type": "object",
+            "uuid": "7681efe6-6add-41fc-a008-724f1417b802"
+        },
+        "nx-c-sap-check-hana-last-backup": {
+            "arguments": {
+                "--function": {
+                    "description": "function to be executed",
+                    "skip_key": false,
+                    "value": "last_backup"
+                }
+            },
+            "fields": [],
+            "imports": [
+                "nx-ct-sap-check-hana"
+            ],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-sap-check-hana-last-backup",
+            "object_type": "object",
+            "uuid": "61cf4d41-a1e1-4e5d-a572-7095cb2ccb70"
+        },
+        "nx-c-sap-check-hana-memory-usage": {
+            "arguments": {
+                "--function": {
+                    "description": "function to be executed",
+                    "skip_key": false,
+                    "value": "memory_usage"
+                }
+            },
+            "fields": [],
+            "imports": [
+                "nx-ct-sap-check-hana"
+            ],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-sap-check-hana-memory-usage",
+            "object_type": "object",
+            "uuid": "466e2ea8-f5e3-416a-b43f-8d0d3901fd4f"
+        },
+        "nx-c-sap-check-hana-missing-index": {
+            "arguments": {
+                "--function": {
+                    "description": "function to be executed",
+                    "skip_key": false,
+                    "value": "missing_index"
+                }
+            },
+            "fields": [],
+            "imports": [
+                "nx-ct-sap-check-hana"
+            ],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-sap-check-hana-missing-index",
+            "object_type": "object",
+            "uuid": "2116edf0-0e02-4767-b27f-349b8f53eb1d"
+        },
+        "nx-c-sap-check-hana-replication-status": {
+            "arguments": {
+                "--function": {
+                    "description": "function to be executed",
+                    "skip_key": false,
+                    "value": "replication_status"
+                }
+            },
+            "fields": [],
+            "imports": [
+                "nx-ct-sap-check-hana"
+            ],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-sap-check-hana-replication-status",
+            "object_type": "object",
+            "uuid": "07f17b50-84a2-4c05-8435-d149574473ee"
+        },
+        "nx-c-sap-check-hana-used-space": {
+            "arguments": {
+                "--function": {
+                    "description": "function to be executed",
+                    "skip_key": false,
+                    "value": "used_space"
+                }
+            },
+            "fields": [],
+            "imports": [
+                "nx-ct-sap-check-hana"
+            ],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-sap-check-hana-used-space",
+            "object_type": "object",
+            "uuid": "6f15993a-8aaa-4687-8a64-306b7dbf3150"
+        }
+    },
+    "CommandTemplate": {
+        "nx-ct-sap-check-hana": {
+            "arguments": {
+                "--crit": {
+                    "description": "critical threshold",
+                    "set_if": "$nx_sap_hana_crit$",
+                    "set_if_format": "string",
+                    "value": "$nx_sap_hana_crit$"
+                },
+                "--function": {
+                    "description": "function to execute",
+                    "skip_key": false,
+                    "value": "$nx_sap_hana_function$"
+                },
+                "--host": {
+                    "description": "IP-address of host",
+                    "skip_key": false,
+                    "value": "$host.address$"
+                },
+                "--lookback": {
+                    "description": "lookback-time for functions like last_backup",
+                    "set_if": "$nx_sap_hana_lookback$",
+                    "set_if_format": "string",
+                    "value": "$nx_sap_hana_lookback$"
+                },
+                "--pass": {
+                    "description": "Password for SQL-connect",
+                    "skip_key": false,
+                    "value": "$nx_sap_hana_password$"
+                },
+                "--port": {
+                    "description": "SAP HANA Tenant SQL-Port",
+                    "skip_key": false,
+                    "value": "$nx_sap_hana_port$"
+                },
+                "--sid": {
+                    "description": "SID of HANA Datanase Instance",
+                    "skip_key": false,
+                    "value": "$nx_sap_hana_sid$"
+                },
+                "--user": {
+                    "description": "User for SQL-connect",
+                    "skip_key": false,
+                    "value": "$nx_sap_hana_user$"
+                },
+                "--warn": {
+                    "description": "warning threshold",
+                    "set_if": "$nx_sap_hana_warn$",
+                    "set_if_format": "string",
+                    "value": "$nx_sap_hana_warn$"
+                }
+            },
+            "command": "PluginContribDir + /check_hana.sh",
+            "fields": [],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-ct-sap-check-hana",
+            "object_type": "template",
+            "timeout": 60,
+            "uuid": "46847010-cf9e-475b-95d1-bce9a6d62bd7"
+        }
+    }
+}

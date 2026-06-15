@@ -1,0 +1,190 @@
+{
+    "ServiceTemplate": {
+        "nx-st-agentless-snmp-centreon-fortinet-fortiswitch-cpu": {
+            "check_command": "nx-c-centreon-fortinet-fortiswitch-cpu",
+            "fields": [
+                {
+                    "datafield_id": 1731,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1733,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-st-agentless-snmp-centreon"
+            ],
+            "object_name": "nx-st-agentless-snmp-centreon-fortinet-fortiswitch-cpu",
+            "object_type": "template",
+            "uuid": "6fed87a8-b3ff-41d5-a094-5c2f26d4ef7c",
+            "vars": {
+                "nx_centreon_plugin_snmp_crit": "90",
+                "nx_centreon_plugin_snmp_warn": "70"
+            }
+        },
+        "nx-st-agentless-snmp-centreon-fortinet-fortiswitch-disk": {
+            "check_command": "nx-c-centreon-fortinet-fortiswitch-disk",
+            "fields": [
+                {
+                    "datafield_id": 1731,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1733,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-st-agentless-snmp-centreon"
+            ],
+            "object_name": "nx-st-agentless-snmp-centreon-fortinet-fortiswitch-disk",
+            "object_type": "template",
+            "uuid": "299a49f4-1000-41e2-9ee0-f5b306cfb54b",
+            "vars": {
+                "nx_centreon_plugin_snmp_crit": "90",
+                "nx_centreon_plugin_snmp_warn": "70"
+            }
+        },
+        "nx-st-agentless-snmp-centreon-fortinet-fortiswitch-interfaces": {
+            "check_command": "nx-c-centreon-fortinet-fortiswitch-interfaces",
+            "fields": [
+                {
+                    "datafield_id": 1829,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1731,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1750,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1790,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1791,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1733,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-st-agentless-snmp-centreon"
+            ],
+            "object_name": "nx-st-agentless-snmp-centreon-fortinet-fortiswitch-interfaces",
+            "object_type": "template",
+            "uuid": "f0ddd010-783c-4619-a649-066edd798ae4"
+        },
+        "nx-st-agentless-snmp-centreon-fortinet-fortiswitch-memory": {
+            "check_command": "nx-c-centreon-fortinet-fortiswitch-memory",
+            "fields": [
+                {
+                    "datafield_id": 1731,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1733,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-st-agentless-snmp-centreon"
+            ],
+            "object_name": "nx-st-agentless-snmp-centreon-fortinet-fortiswitch-memory",
+            "object_type": "template",
+            "uuid": "57e35b1a-c4f0-4450-9608-06d271bdb442"
+        }
+    },
+    "Datafield": {
+        "1731": {
+            "uuid": "87246f58-974b-4a66-9708-c38b000006c3",
+            "varname": "nx_centreon_plugin_snmp_crit",
+            "caption": "[NX] Centreon Plugin Critical",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": null
+        },
+        "1733": {
+            "uuid": "87246f58-974b-4a66-9708-c38b000006c5",
+            "varname": "nx_centreon_plugin_snmp_warn",
+            "caption": "[NX] Centreon Plugin Warning",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": null
+        },
+        "1829": {
+            "uuid": "3db8cf3a-f1c3-4381-85f5-96d909d3a316",
+            "varname": "nx_centreon_plugin_name_idx",
+            "caption": "[NX] Centreon Plugin Index or Name",
+            "description": "Allows you to define the interface (in option --interface) by name instead of OID index. The name matching mode supports regular expressions and default is \"1\". 0=index; 1=regex. In the last case \"$$\" means end of the argument",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": null
+        },
+        "1750": {
+            "uuid": "87246f58-974b-4a66-9708-c38b000006d6",
+            "varname": "nx_centreon_plugin_snmp_interface",
+            "caption": "[NX] Centreon Plugin Interface",
+            "description": "Description: Set the interface (number expected) example: 1,2,... (empty means 'check all interfaces'). If --name=1 use a regex. In the last case \"$$\" means end of the argument.",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": null
+        },
+        "1790": {
+            "uuid": "87246f58-974b-4a66-9708-c38b000006fe",
+            "varname": "nx_centreon_plugin_snmp_speed",
+            "caption": "[NX] Centreon Speed",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": null
+        },
+        "1791": {
+            "uuid": "87246f58-974b-4a66-9708-c38b000006ff",
+            "varname": "nx_centreon_plugin_snmp_unit",
+            "caption": "[NX] Centreon Unit Traffic",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": null
+        }
+    }
+}

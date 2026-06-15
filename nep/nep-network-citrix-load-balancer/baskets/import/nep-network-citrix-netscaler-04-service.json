@@ -1,0 +1,370 @@
+{
+    "ServiceTemplate": {
+        "nx-st-agentless-snmp-centreon-citrix-netscaler-cpu": {
+            "check_command": "nx-c-centreon-citrix-netscaler-cpu",
+            "fields": [
+                {
+                    "datafield_id": 1731,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1733,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-st-agentless-snmp-centreon"
+            ],
+            "object_name": "nx-st-agentless-snmp-centreon-citrix-netscaler-cpu",
+            "object_type": "template"
+        },
+        "nx-st-agentless-snmp-centreon-citrix-netscaler-hardware": {
+            "check_command": "nx-c-centreon-citrix-netscaler-hardware",
+            "fields": [
+                {
+                    "datafield_id": 1731,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1733,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-st-agentless-snmp-centreon"
+            ],
+            "object_name": "nx-st-agentless-snmp-centreon-citrix-netscaler-hardware",
+            "object_type": "template"
+        },
+        "nx-st-agentless-snmp-centreon-citrix-netscaler-interfaces": {
+            "check_command": "nx-c-centreon-citrix-netscaler-interfaces",
+            "fields": [
+                {
+                    "datafield_id": 1731,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1750,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1790,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1791,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1733,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1761,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-st-agentless-snmp-centreon"
+            ],
+            "object_name": "nx-st-agentless-snmp-centreon-citrix-netscaler-interfaces",
+            "object_type": "template",
+            "vars": {
+                "nx_centreon_statefile_dir": "/neteye/shared/icinga2/data/lib/centreon-plugins/"
+            }
+        },
+        "nx-st-agentless-snmp-centreon-citrix-netscaler-memory": {
+            "check_command": "nx-c-centreon-citrix-netscaler-memory",
+            "fields": [
+                {
+                    "datafield_id": 1731,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1733,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-st-agentless-snmp-centreon"
+            ],
+            "object_name": "nx-st-agentless-snmp-centreon-citrix-netscaler-memory",
+            "object_type": "template"
+        },
+        "nx-st-agentless-snmp-centreon-citrix-netscaler-connections": {
+            "check_command": "nx-c-centreon-citrix-netscaler-connections",
+            "fields": [
+                {
+                    "datafield_id": 1731,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1733,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-st-agentless-snmp-centreon"
+            ],
+            "object_name": "nx-st-agentless-snmp-centreon-citrix-netscaler-connections",
+            "object_type": "template"
+        },
+        "nx-st-agentless-snmp-centreon-citrix-netscaler-certificates": {
+            "check_command": "nx-c-centreon-citrix-netscaler-certificates",
+            "fields": [
+                {
+                    "datafield_id": 1731,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1835,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1733,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-st-agentless-snmp-centreon"
+            ],
+            "object_name": "nx-st-agentless-snmp-centreon-citrix-netscaler-certificates",
+            "object_type": "template"
+        },
+        "nx-st-agentless-snmp-centreon-citrix-netscaler-vserver": {
+            "check_command": "nx-c-centreon-citrix-netscaler-vservers",
+            "fields": [
+                {
+                    "datafield_id": 1731,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1835,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 2855,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1587,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1733,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1761,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-st-agentless-snmp-centreon"
+            ],
+            "object_name": "nx-st-agentless-snmp-centreon-citrix-netscaler-vserver",
+            "object_type": "template",
+            "vars": {
+                "nx_centreon_statefile_dir": "/neteye/shared/icinga2/data/lib/centreon-plugins/"
+            }
+        },
+        "nx-st-agentless-snmp-centreon-citrix-netscaler-ha-state": {
+            "check_command": "nx-c-centreon-citrix-netscaler-ha-state",
+            "fields": [
+                {
+                    "datafield_id": 3211,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 3212,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 3215,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 3218,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 3220,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 3223,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-st-agentless-snmp-centreon"
+            ],
+            "object_name": "nx-st-agentless-snmp-centreon-citrix-netscaler-ha-state",
+            "object_type": "template"
+        }
+    },
+    "Datafield": {
+        "1731": {
+            "varname": "nx_centreon_plugin_snmp_crit",
+            "caption": "[NX] Centreon Plugin Critical",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "1731",
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": null
+        },
+        "1733": {
+            "varname": "nx_centreon_plugin_snmp_warn",
+            "caption": "[NX] Centreon Plugin Warning",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "1733",
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": null
+        },
+        "1750": {
+            "varname": "nx_centreon_plugin_snmp_interface",
+            "caption": "[NX] Centreon Plugin Interface",
+            "description": "Set the ID interface (number expected) ex: 1,2,... (empty means 'check all interface')",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "1750",
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": null
+        },
+        "1790": {
+            "varname": "nx_centreon_plugin_snmp_speed",
+            "caption": "[NX] Centreon Speed",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "1790",
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": null
+        },
+        "1791": {
+            "varname": "nx_centreon_plugin_snmp_unit",
+            "caption": "[NX] Centreon Unit Traffic",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "1791",
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": null
+        },
+        "3211": {
+            "varname": "nx_centreon_netscaler_ha_critical_ha_status",
+            "caption": "[NX] Centreon NetScaler High Availability Critical HA Status",
+            "description": "Define the conditions to match for the status to be CRITICAL. (Default: '%{ha_status} =~ /down|partialFail|monitorFail|completeFail|partialFailSsl|routem onitorFail/i'). Can use special variables like: %{ha_status}, %{ha_mode}",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] Centreon plugin Citrix NetScaler"
+        },
+        "3212": {
+            "varname": "nx_centreon_netscaler_ha_critical_peer_status",
+            "caption": "[NX] Centreon NetScaler High Availability Critical Peer Status",
+            "description": "Define the conditions to match for the status to be CRITICAL. (Default: ''). Can use special variables like: %{peer_status}",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] Centreon plugin Citrix NetScaler"
+        },
+        "3215": {
+            "varname": "nx_centreon_netscaler_ha_unknown_peer_status",
+            "caption": "[NX] Centreon NetScaler High Availability Unknown Peer Status",
+            "description": "Define the conditions to match for the status to be UNKNOWN. (Default: '%{peer_status} =~ /unknown/i'). Can use special variables like: %{peer_status}, %{ha_mode}",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] Centreon plugin Citrix NetScaler"
+        },
+        "3218": {
+            "varname": "nx_centreon_netscaler_ha_unkown_ha_status",
+            "caption": "[NX] Centreon NetScaler High Availability Unknown HA Status",
+            "description": "Define the conditions to match for the status to be UNKNOWN. (Default: '%{ha_status} =~ /unknown/i'). Can use special variables like: %{ha_status}",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] Centreon plugin Citrix NetScaler"
+        },
+        "3220": {
+            "varname": "nx_centreon_netscaler_ha_warning_ha_status",
+            "caption": "[NX] Centreon NetScaler High Availability Warning HA Status",
+            "description": "Define the conditions to match for the status to be WARNING. (Default: ''). Can use special variables like: %{ha_status}, %{ha_mode}",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] Centreon plugin Citrix NetScaler"
+        },
+        "3223": {
+            "varname": "nx_centreon_netscaler_ha_warning_peer_status",
+            "caption": "[NX] Centreon NetScaler High Availability Warning Peer Status",
+            "description": "Define the conditions to match for the status to be WARNING. (Default: ''). Can use special variables like: %{peer_status}",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] Centreon plugin Citrix NetScaler"
+        }
+    },
+    "DatafieldCategory": {
+        "[NX] Centreon plugin Citrix NetScaler": {
+            "category_name": "[NX] Centreon plugin Citrix NetScaler",
+            "description": "Centreon plugin NetScaler",
+            "originalId": "100"
+        }
+    }
+}

@@ -1,0 +1,109 @@
+{
+    "Command": {
+        "nx-c-check-as400-base": {
+            "fields": [],
+            "imports": [
+                "nx-ct-check-as400-base"
+            ],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-check-as400-base",
+            "object_type": "object"
+        },
+        "nx-c-check-as400-advanced": {
+            "fields": [],
+            "imports": [
+                "nx-ct-check-as400-advanced"
+            ],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-check-as400-advanced",
+            "object_type": "object"
+        }
+    },
+    "CommandTemplate": {
+        "nx-ct-check-as400-base": {
+            "arguments": {
+                "-H": {
+                    "description": "Name of the host to check",
+                    "required": true,
+                    "value": "$host.address$",
+                    "order": "1"
+                },
+                "-c": {
+                    "description": "Critical value",
+                    "value": "$nx-as400-critical$",
+                    "order": "7"
+                },
+                "-o": {
+                    "description": "Provide OS version in numberic format: 5.4, 5.3, ...",
+                    "value": "$nx-as400-os-version$",
+                    "order": "4"
+                },
+                "-p": {
+                    "description": "Password to login to host",
+                    "value": "$nx-as400-password$",
+                    "order": "3"
+                },
+                "-u": {
+                    "description": "Username to login to host",
+                    "value": "$nx-as400-username$",
+                    "order": "2"
+                },
+                "-v": {
+                    "description": "Variable to check",
+                    "value": "$nx-as400-variabile$",
+                    "order": "5"
+                },
+                "-w": {
+                    "description": "Warning value",
+                    "value": "$nx-as400-warning$",
+                    "order": "6"
+                }
+            },
+            "command": "PluginContribDir + /as400/check_as400",
+            "fields": [],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-ct-check-as400-base",
+            "object_type": "template"
+        },
+        "nx-ct-check-as400-advanced": {
+            "arguments": {
+                "custom1": {
+                    "description": "Optional custom param 1",
+                    "skip_key": true,
+                    "value": "$nx-as400-custom1$",
+                    "order": "11"
+                },
+                "custom2": {
+                    "description": "Optional custom param 2",
+                    "skip_key": true,
+                    "value": "$nx-as400-custom2$",
+                    "order": "12"
+                },
+                "job": {
+                    "description": "Job name",
+                    "skip_key": true,
+                    "value": "$nx-as400-job$",
+                    "order": "9"
+                },
+                "status": {
+                    "description": "Job status",
+                    "value": "$nx-as400-status$",
+                    "order": "10"
+                },
+                "subsystem": {
+                    "description": "Subsystem name",
+                    "skip_key": true,
+                    "value": "$nx-as400-subsystem$",
+                    "order": "8"
+                }
+            },
+            "fields": [],
+            "imports": [
+                "nx-ct-check-as400-base"
+            ],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-ct-check-as400-advanced",
+            "object_type": "template"
+        }
+    }
+}

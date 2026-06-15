@@ -1,0 +1,138 @@
+{
+    "DataList": {
+        "[NX] Centreon QNAP Storage Mode List": {
+            "list_name": "[NX] Centreon QNAP Storage Mode List",
+            "owner": "root",
+            "originalId": "27",
+            "entries": [
+                {
+                    "entry_name": "list-processes",
+                    "entry_value": "list-processes",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "list-interfaces",
+                    "entry_value": "list-interfaces",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "list-storages",
+                    "entry_value": "list-storages",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "hardware",
+                    "entry_value": "hardware",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "cpu",
+                    "entry_value": "cpu",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "interfaces",
+                    "entry_value": "interfaces",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "memory",
+                    "entry_value": "memory",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "pools",
+                    "entry_value": "pools",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "processcount",
+                    "entry_value": "processcount",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "storage",
+                    "entry_value": "storage",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "time",
+                    "entry_value": "time",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "upgrade",
+                    "entry_value": "upgrade",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "uptime",
+                    "entry_value": "uptime",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "volumes",
+                    "entry_value": "volumes",
+                    "format": "string",
+                    "allowed_roles": null
+                }
+            ]
+        },
+        "[NX] Centreon QNAP Storage Component List": {
+            "list_name": "[NX] Centreon QNAP Storage Component List",
+            "owner": "root",
+            "originalId": "148",
+            "entries": [
+                {
+                    "entry_name": "disk",
+                    "entry_value": "disk",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "mdisk",
+                    "entry_value": "mdisk",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "psu",
+                    "entry_value": "psu",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "raid",
+                    "entry_value": "raid",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "fan",
+                    "entry_value": "fan",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "temperature",
+                    "entry_value": "temperature",
+                    "format": "string",
+                    "allowed_roles": null
+                }
+            ]
+        }
+    }
+}

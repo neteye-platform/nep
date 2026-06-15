@@ -1,0 +1,57 @@
+{
+    "Command": {
+        "nx-c-centreon-emc-datadomain": {
+            "arguments": {
+                "--component": {
+                    "description": "Which component to check (Default: '.*'). Can be: 'psu', 'fan', 'disk', 'temperature', 'battery'.",
+                    "value": "$emc_datadomain_component$"
+                },
+                "--filter": {
+                    "description": "Exclude some parts (comma seperated list) (Example: --filter=fan --filter=psu) Can also exclude specific instance: --filter=psu,3.3",
+                    "repeat_key": true,
+                    "value": "$emc_datadomain_filter$"
+                },
+                "--mode": {
+                    "value": "$nx_emc_datadomain_mode$"
+                }
+            },
+            "command": "\/usr\/lib\/centreon\/plugins\/centreon_emc_datadomain.pl",
+            "disabled": false,
+            "fields": [],
+            "imports": [
+                "nx-ct-centreon-plugin-snmp"
+            ],
+            "is_string": null,
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-centreon-emc-datadomain",
+            "object_type": "object",
+            "timeout": null,
+            "vars": {},
+            "zone": null
+        },
+        "nx-c-check-dd": {
+            "arguments": {
+                "-C": {
+                    "value": "$snmp_community$"
+                },
+                "-H": {
+                    "value": "$host.address$"
+                },
+                "-v": {
+                    "value": "$check_dd_variable$"
+                }
+            },
+            "command": "PluginContribDir + \/check_dd.pl",
+            "disabled": false,
+            "fields": [],
+            "imports": [],
+            "is_string": null,
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-check-dd",
+            "object_type": "object",
+            "timeout": null,
+            "vars": {},
+            "zone": null
+        }
+    }
+}

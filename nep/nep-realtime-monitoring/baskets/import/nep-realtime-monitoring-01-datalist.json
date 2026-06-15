@@ -1,0 +1,148 @@
+{
+    "DataList": {
+        "[NX] Centreon InfluxDB Query aggregations List": {
+            "entries": [
+                {
+                    "entry_name": "COUNT",
+                    "entry_value": "Count values",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "DISTINCT",
+                    "entry_value": "Distinct value",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "FIRST",
+                    "entry_value": "First value",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "LAST",
+                    "entry_value": "Last value",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "MAX",
+                    "entry_value": "Max value",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "MEAN",
+                    "entry_value": "Mean value",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "MIN",
+                    "entry_value": "Min value",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "SUM",
+                    "entry_value": "Sum all values",
+                    "format": "string",
+                    "allowed_roles": null
+                }
+            ],
+            "list_name": "[NX] Centreon InfluxDB Query aggregations List",
+            "owner": "root"
+        },
+        "[NX] Centreon InfluxDB SystemD Active Code List": {
+            "entries": [
+                {
+                    "entry_name": "0",
+                    "entry_value": "Active",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "1",
+                    "entry_value": "Reloading",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "2",
+                    "entry_value": "Inactive",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "3",
+                    "entry_value": "Failed",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "4",
+                    "entry_value": "Activating",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "5",
+                    "entry_value": "Deactivating",
+                    "format": "string",
+                    "allowed_roles": null
+                }
+            ],
+            "list_name": "[NX] Centreon InfluxDB SystemD Active Code List",
+            "owner": "root"
+        },
+        "[NX] Centreon InfluxDB Windows Service State Code List": {
+            "entries": [
+                {
+                    "entry_name": "1",
+                    "entry_value": "Stopped",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "2",
+                    "entry_value": "Start Pending",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "3",
+                    "entry_value": "Stop Pending",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "4",
+                    "entry_value": "Running",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "5",
+                    "entry_value": "Continue Pending",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "6",
+                    "entry_value": "Pause Pending",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "7",
+                    "entry_value": "Paused",
+                    "format": "string",
+                    "allowed_roles": null
+                }
+            ],
+            "list_name": "[NX] Centreon InfluxDB Windows Service State Code List",
+            "owner": "root@vce01.local"
+        }
+    }
+}

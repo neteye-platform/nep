@@ -1,0 +1,446 @@
+{
+    "Command": {
+        "nx-c-mail-html-host-notification": {
+            "arguments": {
+                "-c": {
+                    "description": "Path to configuration file. Default will be path of the script and script name without .pl and .cfg instead",
+                    "value": "$user.vars.nx_mail_http_config_file$",
+                    "order": "1"
+                },
+                "-S": {
+                    "description": "SMTP gateway hostname or IP. Falls back to $smtphost in .cfg if not set.",
+                    "value": "$nx_mail_gateway$",
+                    "order": "2"
+                },
+                "-N": {
+                    "description": "NetEye FQDN used to build IcingaDB links. Set via notification template custom property 'nx_neteye_web_interface_fqdn', or inherited from NxEmailNotificationMaster constant.",
+                    "value": "$nx_neteye_web_interface_fqdn$",
+                    "order": "3"
+                },
+                "--ssl": {
+                    "description": "Use HTTPS when building notification links. Passed whenever nx_neteye_web_interface_fqdn is set.",
+                    "order": "4"
+                },
+                "-r": {
+                    "description": "Comma-separated list of all contact mail addresses that are being notified about the host or service",
+                    "value": "$user.email$",
+                    "order": "5"
+                },
+                "--notificationtype": {
+                    "description": "Notificationtype. A string identifying the type of notification that is being sent",
+                    "value": "$notification.type$",
+                    "order": "6"
+                },
+                "--datetime": {
+                    "description": "Datetime (long or short as handed over)",
+                    "value": "$icinga.long_date_time$",
+                    "order": "7"
+                },
+                "--hostaddress": {
+                    "description": "Address of the host. This value is taken from the address directive in the host definition",
+                    "value": "$address$",
+                    "order": "8"
+                },
+                "--hostname": {
+                    "description": "Short name for the host. This value is taken from the host_name directive in the host definition",
+                    "value": "$host.name$",
+                    "order": "9"
+                },
+                "--hostalias": {
+                    "description": "Hostalias. Long name/description for the host. This value is taken from the alias directive in the host definition",
+                    "value": "$host.display_name$",
+                    "order": "10"
+                },
+                "--notificationauthor": {
+                    "description": "A string containing the name of the user who authored the notification",
+                    "value": "$notification.author$",
+                    "order": "11"
+                },
+                "--notificationcmt": {
+                    "description": "A string containing the comment that was entered by the notification author",
+                    "value": "$notification.comment$",
+                    "order": "12"
+                },
+                "--mail_sender": {
+                    "description": "Sender email address. Set via notification template custom property 'notification_from', or inherited from NxEmailNotificationFrom constant via nx-nt-channel-html-email template chain.",
+                    "value": "$notification_from$"
+                },
+                "--state": {
+                    "description": "Host state",
+                    "value": "$host.state$"
+                }
+            },
+            "command": "/neteye/shared/icinga2/conf/icinga2/scripts/mail-html-notification.pl",
+            "fields": [
+                {
+                    "datafield_id": 1801,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1802,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1803,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "methods_execute": "PluginNotification",
+            "object_name": "nx-c-mail-html-host-notification",
+            "object_type": "object",
+            "timeout": "60"
+        },
+        "nx-c-mail-html-service-notification": {
+            "arguments": {
+                "-c": {
+                    "description": "Path to configuration file. Default will be path of the script and script name without .pl and .cfg instead",
+                    "value": "$user.vars.nx_mail_http_config_file$",
+                    "order": "1"
+                },
+                "-S": {
+                    "description": "SMTP gateway hostname or IP. Falls back to $smtphost in .cfg if not set.",
+                    "value": "$nx_mail_gateway$",
+                    "order": "2"
+                },
+                "-N": {
+                    "description": "NetEye FQDN used to build IcingaDB links. Set via notification template custom property 'nx_neteye_web_interface_fqdn', or inherited from NxEmailNotificationMaster constant.",
+                    "value": "$nx_neteye_web_interface_fqdn$",
+                    "order": "3"
+                },
+                "--ssl": {
+                    "description": "Use HTTPS when building notification links. Passed whenever nx_neteye_web_interface_fqdn is set.",
+                    "order": "4"
+                },
+                "-r": {
+                    "description": "Comma-separated list of all contact mail addresses that are being notified about the host or service",
+                    "value": "$user.email$",
+                    "order": "5"
+                },
+                "--notificationtype": {
+                    "description": "Notificationtype. A string identifying the type of notification that is being sent",
+                    "value": "$notification.type$",
+                    "order": "6"
+                },
+                "--datetime": {
+                    "description": "Datetime (long or short as handed over)",
+                    "value": "$icinga.long_date_time$",
+                    "order": "7"
+                },
+                "--hostaddress": {
+                    "description": "Address of the host. This value is taken from the address directive in the host definition",
+                    "value": "$address$",
+                    "order": "8"
+                },
+                "--hostname": {
+                    "description": "Short name for the host. This value is taken from the host_name directive in the host definition",
+                    "value": "$host.name$",
+                    "order": "9"
+                },
+                "--hostalias": {
+                    "description": "Hostalias. Long name/description for the host. This value is taken from the alias directive in the host definition",
+                    "value": "$host.display_name$",
+                    "order": "10"
+                },
+                "--notificationauthor": {
+                    "description": "A string containing the name of the user who authored the notification",
+                    "value": "$notification.author$",
+                    "order": "11"
+                },
+                "--notificationcmt": {
+                    "description": "A string containing the comment that was entered by the notification author",
+                    "value": "$notification.comment$",
+                    "order": "12"
+                },
+                "--servicedesc": "$service.name$",
+                "--servicedispname": {
+                    "description": "An alternate display name for the service. This value is taken from the display_name directive in the service definition",
+                    "value": "$service.display_name$",
+                    "order": "13"
+                },
+                "--serviceoutput": {
+                    "description": "The full text output (aside from the first line) from the last service check",
+                    "value": "$service.output$",
+                    "order": "14"
+                },
+                "--mail_sender": {
+                    "description": "Sender email address. Set via notification template custom property 'notification_from', or inherited from NxEmailNotificationFrom constant via nx-nt-channel-html-email template chain.",
+                    "value": "$notification_from$"
+                },
+                "--state": {
+                    "description": "Service state",
+                    "value": "$service.state$"
+                }
+            },
+            "command": "/neteye/shared/icinga2/conf/icinga2/scripts/mail-html-notification.pl",
+            "fields": [
+                {
+                    "datafield_id": 1801,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1802,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1803,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "methods_execute": "PluginNotification",
+            "object_name": "nx-c-mail-html-service-notification",
+            "object_type": "object",
+            "timeout": "60"
+        },
+        "nx-c-mail-text-host-notification": {
+            "arguments": {
+                "--format": {
+                    "description": "Output format: 'text' sends plain text only, no HTML part",
+                    "value": "text",
+                    "order": "0"
+                },
+                "-c": {
+                    "description": "Path to configuration file. Default will be path of the script and script name without .pl and .cfg instead",
+                    "value": "$user.vars.nx_mail_http_config_file$",
+                    "order": "1"
+                },
+                "-S": {
+                    "description": "SMTP gateway hostname or IP. Falls back to $smtphost in .cfg if not set.",
+                    "value": "$nx_mail_gateway$",
+                    "order": "2"
+                },
+                "-N": {
+                    "description": "NetEye FQDN used to build IcingaDB links. Set via notification template custom property 'nx_neteye_web_interface_fqdn', or inherited from NxEmailNotificationMaster constant.",
+                    "value": "$nx_neteye_web_interface_fqdn$",
+                    "order": "3"
+                },
+                "--ssl": {
+                    "description": "Use HTTPS when building notification links. Passed whenever nx_neteye_web_interface_fqdn is set.",
+                    "order": "4"
+                },
+                "-r": {
+                    "description": "Comma-separated list of all contact mail addresses that are being notified about the host or service",
+                    "value": "$user.email$",
+                    "order": "5"
+                },
+                "--notificationtype": {
+                    "description": "Notificationtype. A string identifying the type of notification that is being sent",
+                    "value": "$notification.type$",
+                    "order": "6"
+                },
+                "--datetime": {
+                    "description": "Datetime (long or short as handed over)",
+                    "value": "$icinga.long_date_time$",
+                    "order": "7"
+                },
+                "--hostaddress": {
+                    "description": "Address of the host. This value is taken from the address directive in the host definition",
+                    "value": "$address$",
+                    "order": "8"
+                },
+                "--hostname": {
+                    "description": "Short name for the host. This value is taken from the host_name directive in the host definition",
+                    "value": "$host.name$",
+                    "order": "9"
+                },
+                "--hostalias": {
+                    "description": "Hostalias. Long name/description for the host. This value is taken from the alias directive in the host definition",
+                    "value": "$host.display_name$",
+                    "order": "10"
+                },
+                "--notificationauthor": {
+                    "description": "A string containing the name of the user who authored the notification",
+                    "value": "$notification.author$",
+                    "order": "11"
+                },
+                "--notificationcmt": {
+                    "description": "A string containing the comment that was entered by the notification author",
+                    "value": "$notification.comment$",
+                    "order": "12"
+                },
+                "--mail_sender": {
+                    "description": "Sender email address. Set via notification template custom property 'notification_from', or inherited from NxEmailNotificationFrom constant via nx-nt-channel-html-email template chain.",
+                    "value": "$notification_from$"
+                },
+                "--state": {
+                    "description": "Host state",
+                    "value": "$host.state$"
+                }
+            },
+            "command": "/neteye/shared/icinga2/conf/icinga2/scripts/mail-html-notification.pl",
+            "fields": [
+                {
+                    "datafield_id": 1801,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1802,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1803,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "methods_execute": "PluginNotification",
+            "object_name": "nx-c-mail-text-host-notification",
+            "object_type": "object",
+            "timeout": "60"
+        },
+        "nx-c-mail-text-service-notification": {
+            "arguments": {
+                "--format": {
+                    "description": "Output format: 'text' sends plain text only, no HTML part",
+                    "value": "text",
+                    "order": "0"
+                },
+                "-c": {
+                    "description": "Path to configuration file. Default will be path of the script and script name without .pl and .cfg instead",
+                    "value": "$user.vars.nx_mail_http_config_file$",
+                    "order": "1"
+                },
+                "-S": {
+                    "description": "SMTP gateway hostname or IP. Falls back to $smtphost in .cfg if not set.",
+                    "value": "$nx_mail_gateway$",
+                    "order": "2"
+                },
+                "-N": {
+                    "description": "NetEye FQDN used to build IcingaDB links. Set via notification template custom property 'nx_neteye_web_interface_fqdn', or inherited from NxEmailNotificationMaster constant.",
+                    "value": "$nx_neteye_web_interface_fqdn$",
+                    "order": "3"
+                },
+                "--ssl": {
+                    "description": "Use HTTPS when building notification links. Passed whenever nx_neteye_web_interface_fqdn is set.",
+                    "order": "4"
+                },
+                "-r": {
+                    "description": "Comma-separated list of all contact mail addresses that are being notified about the host or service",
+                    "value": "$user.email$",
+                    "order": "5"
+                },
+                "--notificationtype": {
+                    "description": "Notificationtype. A string identifying the type of notification that is being sent",
+                    "value": "$notification.type$",
+                    "order": "6"
+                },
+                "--datetime": {
+                    "description": "Datetime (long or short as handed over)",
+                    "value": "$icinga.long_date_time$",
+                    "order": "7"
+                },
+                "--hostaddress": {
+                    "description": "Address of the host. This value is taken from the address directive in the host definition",
+                    "value": "$address$",
+                    "order": "8"
+                },
+                "--hostname": {
+                    "description": "Short name for the host. This value is taken from the host_name directive in the host definition",
+                    "value": "$host.name$",
+                    "order": "9"
+                },
+                "--hostalias": {
+                    "description": "Hostalias. Long name/description for the host. This value is taken from the alias directive in the host definition",
+                    "value": "$host.display_name$",
+                    "order": "10"
+                },
+                "--notificationauthor": {
+                    "description": "A string containing the name of the user who authored the notification",
+                    "value": "$notification.author$",
+                    "order": "11"
+                },
+                "--notificationcmt": {
+                    "description": "A string containing the comment that was entered by the notification author",
+                    "value": "$notification.comment$",
+                    "order": "12"
+                },
+                "--servicedesc": "$service.name$",
+                "--servicedispname": {
+                    "description": "An alternate display name for the service. This value is taken from the display_name directive in the service definition",
+                    "value": "$service.display_name$",
+                    "order": "13"
+                },
+                "--serviceoutput": {
+                    "description": "The full text output (aside from the first line) from the last service check",
+                    "value": "$service.output$",
+                    "order": "14"
+                },
+                "--mail_sender": {
+                    "description": "Sender email address. Set via notification template custom property 'notification_from', or inherited from NxEmailNotificationFrom constant via nx-nt-channel-html-email template chain.",
+                    "value": "$notification_from$"
+                },
+                "--state": {
+                    "description": "Service state",
+                    "value": "$service.state$"
+                }
+            },
+            "command": "/neteye/shared/icinga2/conf/icinga2/scripts/mail-html-notification.pl",
+            "fields": [
+                {
+                    "datafield_id": 1801,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1802,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1803,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "methods_execute": "PluginNotification",
+            "object_name": "nx-c-mail-text-service-notification",
+            "object_type": "object",
+            "timeout": "60"
+        }
+    },
+    "Datafield": {
+        "1801": {
+            "varname": "notification_from",
+            "caption": "[NX] Notification sender (From)",
+            "description": "Email address used as sender. If not set, falls back to NxEmailNotificationFrom constant (set by NEP setup script).",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "1801",
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": null
+        },
+        "1802": {
+            "varname": "nx_neteye_web_interface_fqdn",
+            "caption": "[NX] NetEye Web Interface FQDN",
+            "description": "Hostname used to build IcingaDB links in notifications. If not set, falls back to NxEmailNotificationMaster constant.",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "1802",
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": null
+        },
+        "1803": {
+            "varname": "nx_mail_gateway",
+            "caption": "[NX] Mail gateway (SMTP relay)",
+            "description": "SMTP relay hostname or IP. If not set, the value from mail-html-notification.cfg is used.",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "1803",
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": null
+        }
+    }
+}

@@ -1,0 +1,111 @@
+{
+    "HostTemplate": {
+        "nx-ht-oracle-object": {
+            "fields": [
+                {
+                    "datafield_id": 552,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 548,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 553,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 549,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 550,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-ht-virtual"
+            ],
+            "object_name": "nx-ht-oracle-object",
+            "object_type": "template"
+        },
+        "nx-ht-status-oracle-conn-time": {
+            "fields": [],
+            "imports": [
+                "nx-ht-type-status",
+                "nx-ht-oracle-object"
+            ],
+            "object_name": "nx-ht-status-oracle-conn-time",
+            "object_type": "template"
+        }
+    },
+    "Datafield": {
+        "552": {
+            "varname": "nx_oracle_health_connection_method",
+            "caption": "[NX] Oracle Health Connection method",
+            "description": "With this parameter you tell the plugin how it should connect to the database. (dbi for using DBD::Oracle (default), sqlplus for using the sqlplus-Tool).",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeDatalist",
+            "format": null,
+            "settings": {
+                "behavior": "strict",
+                "data_type": "string",
+                "datalist": "[NX] Oracle Health method"
+            },
+            "category": "Oracle Health"
+        },
+        "548": {
+            "varname": "nx_oracle_health_connection_string",
+            "caption": "[NX] Oracle Health Client Connection string",
+            "description": "Connection String (or SID) that identifies the Oracle Object to check",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "Oracle Health"
+        },
+        "553": {
+            "varname": "nx_oracle_health_environment",
+            "caption": "[NX] Oracle Health Environment variables",
+            "description": "With this you can pass environment variables to the script. For example: –environment ORACLE_HOME=/u01/oracle. Multiple declarations are possible.",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeArray",
+            "format": null,
+            "settings": {},
+            "category": "Oracle Health"
+        },
+        "549": {
+            "varname": "nx_oracle_health_password",
+            "caption": "[NX] Oracle Health Client User password",
+            "description": "Password of the database user.\r\n",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "hidden"
+            },
+            "category": "Oracle Health"
+        },
+        "550": {
+            "varname": "nx_oracle_health_username",
+            "caption": "[NX] Oracle Health Client User name",
+            "description": "The database user",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "Oracle Health"
+        }
+    },
+    "DatafieldCategory": {
+        "Oracle Health": {
+            "category_name": "Oracle Health",
+            "description": null,
+            "originalId": "20"
+        }
+    }
+}

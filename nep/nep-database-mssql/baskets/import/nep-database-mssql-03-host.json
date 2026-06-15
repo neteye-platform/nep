@@ -1,0 +1,222 @@
+{
+    "HostTemplate": {
+        "nx-ht-mssql-object": {
+            "accept_config": null,
+            "action_url": null,
+            "address": null,
+            "address6": null,
+            "api_key": null,
+            "check_command": null,
+            "check_interval": null,
+            "check_period": null,
+            "check_timeout": null,
+            "command_endpoint": null,
+            "disabled": false,
+            "display_name": null,
+            "enable_active_checks": null,
+            "enable_event_handler": null,
+            "enable_flapping": null,
+            "enable_notifications": null,
+            "enable_passive_checks": null,
+            "enable_perfdata": null,
+            "event_command": null,
+            "fields": [
+                {
+                    "datafield_id": 350,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 223,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 349,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 221,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 351,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 220,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "flapping_threshold_high": null,
+            "flapping_threshold_low": null,
+            "groups": [],
+            "has_agent": null,
+            "icon_image": "dbase-high.png",
+            "icon_image_alt": null,
+            "imports": [
+                "nx-ht-type-monitor"
+            ],
+            "master_should_connect": null,
+            "max_check_attempts": null,
+            "notes": null,
+            "notes_url": null,
+            "object_name": "nx-ht-mssql-object",
+            "object_type": "template",
+            "retry_interval": null,
+            "template_choice": null,
+            "vars": {
+                "mssql_health_commit": true,
+                "mssql_health_hostname": "$host.address$",
+                "mssql_health_password": "",
+                "mssql_health_username": ""
+            },
+            "volatile": null,
+            "zone": null
+        },
+        "nx-ht-mssql-object-instance": {
+            "accept_config": null,
+            "action_url": null,
+            "address": null,
+            "address6": null,
+            "api_key": null,
+            "check_command": null,
+            "check_interval": null,
+            "check_period": null,
+            "check_timeout": null,
+            "command_endpoint": null,
+            "disabled": false,
+            "display_name": null,
+            "enable_active_checks": null,
+            "enable_event_handler": null,
+            "enable_flapping": null,
+            "enable_notifications": null,
+            "enable_passive_checks": null,
+            "enable_perfdata": null,
+            "event_command": null,
+            "fields": [
+                {
+                    "datafield_id": 350,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 223,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 349,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 221,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 351,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 220,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "flapping_threshold_high": null,
+            "flapping_threshold_low": null,
+            "groups": [],
+            "has_agent": null,
+            "icon_image": "dbase-high.png",
+            "icon_image_alt": null,
+            "imports": [
+                "nx-ht-type-monitor"
+            ],
+            "master_should_connect": null,
+            "max_check_attempts": null,
+            "notes": null,
+            "notes_url": null,
+            "object_name": "nx-ht-mssql-object-instance",
+            "object_type": "template",
+            "retry_interval": null,
+            "template_choice": null,
+            "vars": {
+                "mssql_health_commit": true,
+                "mssql_health_hostname": "$host.address$",
+                "mssql_health_password": "",
+                "mssql_health_username": ""
+            },
+            "volatile": null,
+            "zone": null
+        }
+    },
+    "Datafield": {
+        "350": {
+            "category_id": null,
+            "varname": "mssql_health_commit",
+            "caption": "MSSQL Health Commit",
+            "description": "Add --commit to the mssql call",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeBoolean",
+            "format": null,
+            "originalId": "350",
+            "settings": {}
+        },
+        "223": {
+            "category_id": null,
+            "varname": "mssql_health_hostname",
+            "caption": "MSSQL Health Address",
+            "description": "the database server's hostname",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "223",
+            "settings": {}
+        },
+        "349": {
+            "category_id": null,
+            "varname": "mssql_health_name",
+            "caption": "MSSQL Health Name",
+            "description": "the name of the database etc depending on the mode",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "349",
+            "settings": {}
+        },
+        "221": {
+            "category_id": null,
+            "varname": "mssql_health_password",
+            "caption": "MSSQL Health Password",
+            "description": "the mssql db user's password",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "221",
+            "settings": {}
+        },
+        "351": {
+            "category_id": null,
+            "varname": "mssql_health_port",
+            "caption": "MSSQL Health Port",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeNumber",
+            "format": null,
+            "originalId": "351",
+            "settings": {}
+        },
+        "220": {
+            "category_id": null,
+            "varname": "mssql_health_username",
+            "caption": "MSSQL Health Username",
+            "description": "the mssql db user",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "220",
+            "settings": {}
+        }
+    }
+}

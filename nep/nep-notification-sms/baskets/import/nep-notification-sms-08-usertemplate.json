@@ -1,0 +1,78 @@
+{
+    "UserTemplate": {
+        "nx-ut-sms": {
+            "enable_notifications": true,
+            "fields": [
+                {
+                    "datafield_id": 2751,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 2754,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 2757,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-ut-abstract-base"
+            ],
+            "object_name": "nx-ut-sms",
+            "object_type": "template",
+            "uuid": "cf7d7000-056b-4563-bb15-883873dfc203",
+            "vars": {
+                "nx_phone_ring_enabled": false,
+                "nx_phone_ring_mobile": "$user.pager$",
+                "nx_phone_ring_tone": "TIME: 60 1,9,3,3,6,2,2,1,2,3,6"
+            }
+        }
+    },
+    "Datafield": {
+        "2751": {
+            "uuid": "b714be1d-2274-431c-8439-91bb9f70951c",
+            "varname": "nx_phone_ring_enabled",
+            "caption": "[NX] Enable Phone ring",
+            "description": "Ring a Phone right after the SMS is sent",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeBoolean",
+            "format": null,
+            "settings": {},
+            "category": "[NX] Phone ring Settings"
+        },
+        "2754": {
+            "uuid": "ac4fa5f0-30f0-4fda-bda5-20eda4ef32a4",
+            "varname": "nx_phone_ring_mobile",
+            "caption": "[NX] Phone ring Pager",
+            "description": "Mobile phone Number to ring",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] Phone ring Settings"
+        },
+        "2757": {
+            "uuid": "ab2de954-8fec-4845-9630-6b05047244ac",
+            "varname": "nx_phone_ring_tone",
+            "caption": "[NX] Phone ring Tone",
+            "description": "Sequence of Tones sent when User picks up the call. Example: \"TIME: 60 1,9,3,3,6,2,2,1,2,3,6\"",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] Phone ring Settings"
+        }
+    },
+    "DatafieldCategory": {
+        "[NX] Phone ring Settings": {
+            "category_name": "[NX] Phone ring Settings",
+            "description": null,
+            "originalId": "81"
+        }
+    }
+}

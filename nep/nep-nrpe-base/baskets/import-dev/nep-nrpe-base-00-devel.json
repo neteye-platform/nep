@@ -1,0 +1,82 @@
+{
+    "Basket": {
+        "nep-nrpe-base-05-serviceset": {
+            "basket_name": "nep-nrpe-base-05-serviceset",
+            "objects": {
+                "ServiceSet": [
+                    "nx-ss-server-agentless-nrpe-linux-basic",
+                    "nx-ss-server-agentless-nrpe-windows-basic",
+                    "nx-ss-server-agentless-nrpe-windows-basic-legacy"
+                ]
+            },
+            "owner_type": "user",
+            "owner_value": "root"
+        },
+        "nep-nrpe-base-01-datalist": {
+            "basket_name": "nep-nrpe-base-01-datalist",
+            "objects": {
+                "DataList": [
+                    "[NX] NRPE Target Type"
+                ]
+            },
+            "owner_type": "user",
+            "owner_value": "root"
+        },
+        "nep-nrpe-base-04-service": {
+            "basket_name": "nep-nrpe-base-04-service",
+            "objects": {
+                "ServiceTemplate": [
+                    "nx-st-agentless-nrpe",
+                    "nx-st-agentless-nrpe-linux",
+                    "nx-st-agentless-nrpe-linux-check-nrpe",
+                    "nx-st-agentless-nrpe-linux-cpu-load",
+                    "nx-st-agentless-nrpe-linux-disk-space-usage",
+                    "nx-st-agentless-nrpe-linux-memory-usage",
+                    "nx-st-agentless-nrpe-linux-swap-usage",
+                    "nx-st-agentless-nrpe-linux-uptime",
+                    "nx-st-agentless-nrpe-windows",
+                    "nx-st-agentless-nrpe-windows-counters",
+                    "nx-st-agentless-nrpe-windows-cpu-load",
+                    "nx-st-agentless-nrpe-windows-cpu-load-legacy",
+                    "nx-st-agentless-nrpe-windows-disk-space-usage",
+                    "nx-st-agentless-nrpe-windows-disk-space-usage-legacy",
+                    "nx-st-agentless-nrpe-windows-memory-usage",
+                    "nx-st-agentless-nrpe-windows-memory-usage-legacy",
+                    "nx-st-agentless-nrpe-windows-network",
+                    "nx-st-agentless-nrpe-windows-os-version",
+                    "nx-st-agentless-nrpe-windows-pagefile-usage",
+                    "nx-st-agentless-nrpe-windows-process",
+                    "nx-st-agentless-nrpe-windows-service",
+                    "nx-st-agentless-nrpe-windows-uptime",
+                    "nx-st-agentless-nrpe-windows-uptime-legacy",
+                    "nx-st-agentless-nrpe-windows-wmi"
+                ]
+            },
+            "owner_type": "user",
+            "owner_value": "root"
+        },
+        "nep-nrpe-base-02-command": {
+            "basket_name": "nep-nrpe-base-02-command",
+            "objects": {
+                "Command": [
+                    "nx-c-check-nrpe"
+                ]
+            },
+            "owner_type": "user",
+            "owner_value": "root"
+        },
+        "nep-nrpe-base-03-host": {
+            "basket_name": "nep-nrpe-base-03-host",
+            "objects": {
+                "HostTemplate": [
+                    "nx-ht-server-agentless-nrpe",
+                    "nx-ht-server-agentless-nrpe-linux",
+                    "nx-ht-server-agentless-nrpe-windows",
+                    "nx-ht-server-agentless-nrpe-windows-legacy"
+                ]
+            },
+            "owner_type": "user",
+            "owner_value": "root"
+        }
+    }
+}

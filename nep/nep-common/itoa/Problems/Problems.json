@@ -1,0 +1,1841 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "limit": 100,
+        "name": "Annotations & Alerts",
+        "showIn": 0,
+        "type": "dashboard"
+      }
+    ]
+  },
+  "description": "NetEye open problems",
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": 82,
+  "iteration": 1635437707012,
+  "links": [],
+  "panels": [
+    {
+      "datasource": null,
+      "description": "",
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 33,
+      "options": {
+        "content": "# WARNING\n\nThis dashboard does not take into account the user’s role and related permissions and it is intended for use by an administrator on an on-premise non multi-tenant installation of NetEye.         ",
+        "mode": "markdown"
+      },
+      "pluginVersion": "7.5.5",
+      "targets": [
+        {
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "type": "text"
+    },
+    {
+      "cacheTimeout": null,
+      "datasource": "icinga-mysql",
+      "fieldConfig": {
+        "defaults": {
+          "links": [
+            {
+              "targetBlank": true,
+              "title": "Show details",
+              "url": "../../monitoring/list/hosts?host_state=1&host_handled=0&sort=host_last_check&dir=asc"
+            }
+          ],
+          "mappings": [
+            {
+              "id": 0,
+              "op": "=",
+              "text": "N/A",
+              "type": 1,
+              "value": "null"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "rgba(68, 176, 15, 0.9)",
+                "value": null
+              },
+              {
+                "color": "rgba(207, 18, 18, 0.97)",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 3,
+        "x": 0,
+        "y": 3
+      },
+      "id": 17,
+      "links": [],
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "vertical",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "7.5.5",
+      "targets": [
+        {
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT COUNT(*) AS down \r\nFROM icinga_objects AS ho\r\nINNER JOIN icinga_hosts AS h ON h.host_object_id = ho.object_id AND ho.is_active = 1 AND ho.objecttype_id = 1\r\nINNER JOIN icinga_hoststatus AS hs ON hs.host_object_id = ho.object_id\r\n-- INNER JOIN icinga_customvariables cv_lista ON cv_lista.object_id = ho.object_id \r\n-- INNER JOIN icinga_customvariables cv_cliente ON cv_cliente.object_id = ho.object_id \r\nWHERE \r\n\t-- cv_lista.varname = 'lista' and cv_lista.varvalue IN(${lista}) \r\n\t-- AND cv_cliente.varname = 'cliente' AND cv_cliente.varvalue IN(${clienti})\r\n\t-- AND ho.is_active = '1'\r\n\tho.is_active = '1'\r\n\tAND\r\n\ths.current_state = '1'\r\n\tAND \r\n\t(hs.problem_has_been_acknowledged + hs.scheduled_downtime_depth) = 0",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "acknowledgement_id"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "icinga_acknowledgements",
+          "timeColumn": "entry_time",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "title": "Hosts Down",
+      "type": "stat"
+    },
+    {
+      "cacheTimeout": null,
+      "datasource": "icinga-mysql",
+      "fieldConfig": {
+        "defaults": {
+          "links": [
+            {
+              "targetBlank": true,
+              "title": "Show details",
+              "url": "../../monitoring/list/hosts?host_state=1&sort=host_last_check&dir=asc"
+            }
+          ],
+          "mappings": [
+            {
+              "id": 0,
+              "op": "=",
+              "text": "N/A",
+              "type": 1,
+              "value": "null"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "rgba(68, 176, 15, 0.9)",
+                "value": null
+              },
+              {
+                "color": "light-red",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 3,
+        "x": 3,
+        "y": 3
+      },
+      "id": 19,
+      "links": [],
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "vertical",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "7.5.5",
+      "targets": [
+        {
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT COUNT(*) AS cnt \r\nFROM icinga_objects AS ho\r\nINNER JOIN icinga_hosts AS h ON h.host_object_id = ho.object_id AND ho.is_active = 1 AND ho.objecttype_id = 1\r\nINNER JOIN icinga_hoststatus AS hs ON hs.host_object_id = ho.object_id\r\n-- INNER JOIN icinga_customvariables cv_lista ON cv_lista.object_id = ho.object_id \r\n-- INNER JOIN icinga_customvariables cv_cliente ON cv_cliente.object_id = ho.object_id \r\nWHERE \r\n\t-- cv_lista.varname = 'lista' and cv_lista.varvalue IN(${lista}) \r\n\t-- AND cv_cliente.varname = 'cliente' AND cv_cliente.varvalue IN(${clienti})\r\n\t-- AND\r\n\tho.is_active = '1'\r\n\tAND hs.current_state = '1' \r\n\tAND (hs.problem_has_been_acknowledged + hs.scheduled_downtime_depth) > 0",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "acknowledgement_id"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "icinga_acknowledgements",
+          "timeColumn": "entry_time",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "title": "Hosts Down (handled)",
+      "type": "stat"
+    },
+    {
+      "cacheTimeout": null,
+      "datasource": "icinga-mysql",
+      "fieldConfig": {
+        "defaults": {
+          "links": [
+            {
+              "targetBlank": true,
+              "title": "Show details",
+              "url": "../../monitoring/list/services?service_state=2&sort=service_last_check&dir=asc"
+            }
+          ],
+          "mappings": [
+            {
+              "id": 0,
+              "op": "=",
+              "text": "N/A",
+              "type": 1,
+              "value": "null"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "rgba(68, 176, 15, 0.9)",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 3,
+        "x": 6,
+        "y": 3
+      },
+      "id": 21,
+      "links": [],
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "vertical",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "7.5.5",
+      "targets": [
+        {
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT COUNT(*) AS cnt \r\nFROM\r\n   icinga_services s\r\n   INNER JOIN icinga_objects os ON s.service_object_id = os.object_id\r\n   INNER JOIN icinga_objects oh ON s.host_object_id = oh.object_id\r\n   INNER JOIN icinga_hosts AS h ON h.host_object_id = s.host_object_id\r\n   INNER JOIN icinga_hoststatus AS hs ON hs.host_object_id = s.host_object_id\r\n   INNER JOIN icinga_servicestatus AS ss ON ss.service_object_id =os.object_id \r\n   -- INNER JOIN icinga_customvariables cv_lista ON cv_lista.object_id = oh.object_id\r\n   -- INNER JOIN icinga_customvariables cv_cliente ON cv_cliente.object_id = oh.object_id\r\nWHERE\r\n   os.is_active = 1\r\n   AND oh.is_active = 1\r\n   AND ss.current_state = 2\r\n   AND \tss.problem_has_been_acknowledged + ss.scheduled_downtime_depth = 0\r\n   -- AND cv_lista.varname = 'lista' and cv_lista.varvalue IN(${lista}) \r\n   -- AND cv_cliente.varname = 'cliente' AND cv_cliente.varvalue IN(${clienti})",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "acknowledgement_id"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "icinga_acknowledgements",
+          "timeColumn": "entry_time",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "title": "Services Critical",
+      "type": "stat"
+    },
+    {
+      "cacheTimeout": null,
+      "datasource": "icinga-mysql",
+      "fieldConfig": {
+        "defaults": {
+          "links": [
+            {
+              "targetBlank": true,
+              "title": "Show details",
+              "url": "../../monitoring/list/services?service_state=2&sort=service_last_check&dir=asc"
+            }
+          ],
+          "mappings": [
+            {
+              "id": 0,
+              "op": "=",
+              "text": "N/A",
+              "type": 1,
+              "value": "null"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "rgba(68, 176, 15, 0.9)",
+                "value": null
+              },
+              {
+                "color": "super-light-red",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 3,
+        "x": 9,
+        "y": 3
+      },
+      "id": 23,
+      "links": [],
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "vertical",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "7.5.5",
+      "targets": [
+        {
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT COUNT(*) AS cnt \r\nFROM\r\n   icinga_services s\r\n   INNER JOIN icinga_objects os ON s.service_object_id = os.object_id\r\n   INNER JOIN icinga_objects oh ON s.host_object_id = oh.object_id\r\n   INNER JOIN icinga_hosts AS h ON h.host_object_id = s.host_object_id\r\n   INNER JOIN icinga_hoststatus AS hs ON hs.host_object_id = s.host_object_id\r\n   INNER JOIN icinga_servicestatus AS ss ON ss.service_object_id =os.object_id \r\n   -- INNER JOIN icinga_customvariables cv_lista ON cv_lista.object_id = oh.object_id\r\n   -- INNER JOIN icinga_customvariables cv_cliente ON cv_cliente.object_id = oh.object_id\r\nWHERE\r\n   os.is_active = 1\r\n   AND oh.is_active = 1\r\n   AND ss.current_state = 2\r\n   AND (ss.problem_has_been_acknowledged + ss.scheduled_downtime_depth + COALESCE(hs.current_state, 0)) > 0 \r\n   -- AND cv_lista.varname = 'lista' and cv_lista.varvalue IN(${lista}) \r\n   -- AND cv_cliente.varname = 'cliente' AND cv_cliente.varvalue IN(${clienti})",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "acknowledgement_id"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "icinga_acknowledgements",
+          "timeColumn": "entry_time",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "title": "Services Critical (handled)",
+      "type": "stat"
+    },
+    {
+      "cacheTimeout": null,
+      "datasource": "icinga-mysql",
+      "fieldConfig": {
+        "defaults": {
+          "links": [
+            {
+              "targetBlank": true,
+              "title": "Show details",
+              "url": "../../neteye/monitoring/list/services?service_state=1&sort=service_last_check&dir=asc"
+            }
+          ],
+          "mappings": [
+            {
+              "id": 0,
+              "op": "=",
+              "text": "N/A",
+              "type": 1,
+              "value": "null"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "rgba(68, 176, 15, 0.9)",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 3,
+        "x": 12,
+        "y": 3
+      },
+      "id": 25,
+      "links": [],
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "vertical",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "7.5.5",
+      "targets": [
+        {
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT COUNT(*) AS cnt \r\nFROM\r\n   icinga_services s\r\n   INNER JOIN icinga_objects os ON s.service_object_id = os.object_id\r\n   INNER JOIN icinga_objects oh ON s.host_object_id = oh.object_id\r\n   INNER JOIN icinga_hosts AS h ON h.host_object_id = s.host_object_id\r\n   INNER JOIN icinga_hoststatus AS hs ON hs.host_object_id = s.host_object_id\r\n   INNER JOIN icinga_servicestatus AS ss ON ss.service_object_id =os.object_id \r\n   -- INNER JOIN icinga_customvariables cv_lista ON cv_lista.object_id = oh.object_id\r\n   -- INNER JOIN icinga_customvariables cv_cliente ON cv_cliente.object_id = oh.object_id\r\nWHERE\r\n   os.is_active = 1\r\n   AND oh.is_active = 1\r\n   AND ss.current_state = 1\r\n   AND ss.problem_has_been_acknowledged + ss.scheduled_downtime_depth = 0\r\n   -- AND cv_lista.varname = 'lista' and cv_lista.varvalue IN(${lista}) \r\n   -- AND cv_cliente.varname = 'cliente' AND cv_cliente.varvalue IN(${clienti})",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "acknowledgement_id"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "icinga_acknowledgements",
+          "timeColumn": "entry_time",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "title": "Services Warning",
+      "type": "stat"
+    },
+    {
+      "cacheTimeout": null,
+      "datasource": "icinga-mysql",
+      "fieldConfig": {
+        "defaults": {
+          "links": [
+            {
+              "targetBlank": true,
+              "title": "Show details",
+              "url": "../../monitoring/list/services?service_state=1&sort=service_last_check&dir=asc"
+            }
+          ],
+          "mappings": [
+            {
+              "id": 0,
+              "op": "=",
+              "text": "N/A",
+              "type": 1,
+              "value": "null"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "rgba(68, 176, 15, 0.9)",
+                "value": null
+              },
+              {
+                "color": "super-light-yellow",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 3,
+        "x": 15,
+        "y": 3
+      },
+      "id": 27,
+      "links": [],
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "vertical",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "7.5.5",
+      "targets": [
+        {
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT COUNT(*) AS cnt \r\nFROM\r\n   icinga_services s\r\n   INNER JOIN icinga_objects os ON s.service_object_id = os.object_id\r\n   INNER JOIN icinga_objects oh ON s.host_object_id = oh.object_id\r\n   INNER JOIN icinga_hosts AS h ON h.host_object_id = s.host_object_id\r\n   INNER JOIN icinga_hoststatus AS hs ON hs.host_object_id = s.host_object_id\r\n   INNER JOIN icinga_servicestatus AS ss ON ss.service_object_id =os.object_id \r\n   -- INNER JOIN icinga_customvariables cv_lista ON cv_lista.object_id = oh.object_id\r\n   -- INNER JOIN icinga_customvariables cv_cliente ON cv_cliente.object_id = oh.object_id\r\nWHERE\r\n   os.is_active = 1\r\n   AND oh.is_active = 1\r\n   AND ss.current_state = 1\r\n   -- AND cv_lista.varname = 'lista' and cv_lista.varvalue IN(${lista}) \r\n   -- AND cv_cliente.varname = 'cliente' AND cv_cliente.varvalue IN(${clienti})\r\n   AND (ss.problem_has_been_acknowledged + ss.scheduled_downtime_depth + COALESCE(hs.current_state, 0)) > 0 ",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "acknowledgement_id"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "icinga_acknowledgements",
+          "timeColumn": "entry_time",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "title": "Services Warning (handled)",
+      "type": "stat"
+    },
+    {
+      "cacheTimeout": null,
+      "datasource": "icinga-mysql",
+      "fieldConfig": {
+        "defaults": {
+          "links": [
+            {
+              "targetBlank": true,
+              "title": "Show details",
+              "url": "../../monitoring/list/services?service_state=3&sort=service_last_check&dir=asc"
+            }
+          ],
+          "mappings": [
+            {
+              "id": 0,
+              "op": "=",
+              "text": "N/A",
+              "type": 1,
+              "value": "null"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "rgba(68, 176, 15, 0.9)",
+                "value": null
+              },
+              {
+                "color": "purple",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 3,
+        "x": 18,
+        "y": 3
+      },
+      "id": 29,
+      "links": [],
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "vertical",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "7.5.5",
+      "targets": [
+        {
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT COUNT(*) AS cnt \r\nFROM\r\n   icinga_services s\r\n   INNER JOIN icinga_objects os ON s.service_object_id = os.object_id\r\n   INNER JOIN icinga_objects oh ON s.host_object_id = oh.object_id\r\n   INNER JOIN icinga_hosts AS h ON h.host_object_id = s.host_object_id\r\n   INNER JOIN icinga_hoststatus AS hs ON hs.host_object_id = s.host_object_id\r\n   INNER JOIN icinga_servicestatus AS ss ON ss.service_object_id =os.object_id \r\n   -- INNER JOIN icinga_customvariables cv_lista ON cv_lista.object_id = oh.object_id\r\n   -- INNER JOIN icinga_customvariables cv_cliente ON cv_cliente.object_id = oh.object_id\r\nWHERE\r\n   os.is_active = 1\r\n   AND oh.is_active = 1\r\n   AND ss.current_state = 3\r\n   AND \tss.problem_has_been_acknowledged + ss.scheduled_downtime_depth = 0\r\n   -- AND cv_lista.varname = 'lista' and cv_lista.varvalue IN(${lista}) \r\n   -- AND cv_cliente.varname = 'cliente' AND cv_cliente.varvalue IN(${clienti})",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "acknowledgement_id"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "icinga_acknowledgements",
+          "timeColumn": "entry_time",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "title": "Services Unknown",
+      "type": "stat"
+    },
+    {
+      "cacheTimeout": null,
+      "datasource": "icinga-mysql",
+      "fieldConfig": {
+        "defaults": {
+          "links": [
+            {
+              "targetBlank": true,
+              "title": "Show details",
+              "url": "../../monitoring/list/services?service_state=3&sort=service_last_check&dir=asc"
+            }
+          ],
+          "mappings": [
+            {
+              "id": 0,
+              "op": "=",
+              "text": "N/A",
+              "type": 1,
+              "value": "null"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "rgba(68, 176, 15, 0.9)",
+                "value": null
+              },
+              {
+                "color": "light-purple",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 3,
+        "x": 21,
+        "y": 3
+      },
+      "id": 31,
+      "links": [],
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "vertical",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "7.5.5",
+      "targets": [
+        {
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT COUNT(*) AS cnt \r\nFROM\r\n   icinga_services s\r\n   INNER JOIN icinga_objects os ON s.service_object_id = os.object_id\r\n   INNER JOIN icinga_objects oh ON s.host_object_id = oh.object_id\r\n   INNER JOIN icinga_hosts AS h ON h.host_object_id = s.host_object_id\r\n   INNER JOIN icinga_hoststatus AS hs ON hs.host_object_id = s.host_object_id\r\n   INNER JOIN icinga_servicestatus AS ss ON ss.service_object_id =os.object_id \r\n   -- INNER JOIN icinga_customvariables cv_lista ON cv_lista.object_id = oh.object_id\r\n   -- INNER JOIN icinga_customvariables cv_cliente ON cv_cliente.object_id = oh.object_id\r\nWHERE\r\n   os.is_active = 1\r\n   AND oh.is_active = 1\r\n   AND ss.current_state = 3\r\n   -- AND cv_lista.varname = 'lista' and cv_lista.varvalue IN(${lista}) \r\n   -- AND cv_cliente.varname = 'cliente' AND cv_cliente.varvalue IN(${clienti})\r\n   AND (ss.problem_has_been_acknowledged + ss.scheduled_downtime_depth + COALESCE(hs.current_state, 0)) > 0 ",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "acknowledgement_id"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "icinga_acknowledgements",
+          "timeColumn": "entry_time",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "title": "Services Unknown (handled)",
+      "type": "stat"
+    },
+    {
+      "datasource": "icinga-mysql",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": null,
+            "filterable": true
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "host_last_state_change"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Last state change"
+              },
+              {
+                "id": "unit",
+                "value": "accG"
+              },
+              {
+                "id": "decimals",
+                "value": 2
+              },
+              {
+                "id": "unit",
+                "value": "time: YYYY-MM-DD HH:mm:ss"
+              },
+              {
+                "id": "custom.align",
+                "value": null
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "host_state"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Host state"
+              },
+              {
+                "id": "unit",
+                "value": "none"
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "color-background"
+              },
+              {
+                "id": "custom.align",
+                "value": "center"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "rgba(50, 172, 45, 0.97)",
+                      "value": null
+                    },
+                    {
+                      "color": "dark-red",
+                      "value": 1
+                    },
+                    {
+                      "color": "dark-purple",
+                      "value": 2
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "from": "",
+                    "id": 1,
+                    "text": "DOWN",
+                    "to": "",
+                    "type": 1,
+                    "value": "1"
+                  },
+                  {
+                    "from": "2",
+                    "id": 2,
+                    "text": "UNREACHABLE",
+                    "to": "99999",
+                    "type": 2
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "acknowledged"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Acknownledged"
+              },
+              {
+                "id": "custom.align",
+                "value": null
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "in downtime"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Downtime"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "host_name"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Hostname"
+              },
+              {
+                "id": "unit",
+                "value": "short"
+              },
+              {
+                "id": "decimals",
+                "value": 2
+              },
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "targetBlank": true,
+                    "title": "host details on NetEye Web Interface",
+                    "url": "../../monitoring/host/show?host=${__data.fields.host_name}"
+                  }
+                ]
+              },
+              {
+                "id": "custom.align",
+                "value": null
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "ip address"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Host address"
+              },
+              {
+                "id": "unit",
+                "value": "short"
+              },
+              {
+                "id": "custom.align",
+                "value": null
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "output"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Output"
+              },
+              {
+                "id": "unit",
+                "value": "short"
+              },
+              {
+                "id": "decimals",
+                "value": 2
+              },
+              {
+                "id": "custom.align",
+                "value": null
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "output"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 657
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "hostname"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 268
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": " state"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 145
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "duration"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 114
+              },
+              {
+                "id": "displayName",
+                "value": "Duration"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "last state change"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 176
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Hostname"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 216
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Host address"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 129
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Host state"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 211
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Last state change"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 211
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Output"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 418
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Downtime"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 216
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Handled"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 100
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Acknownledged"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 215
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 24,
+        "x": 0,
+        "y": 5
+      },
+      "id": 2,
+      "options": {
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "7.5.5",
+      "targets": [
+        {
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n   o.name1 AS host_name,\n   h.address AS 'ip address',\n   hs.current_state AS 'host_state',\n   convert_tz(hs.last_state_change, 'Europe/Rome','Etc/UTC') AS host_last_state_change,\n   CONCAT(\n\t  TIMESTAMPDIFF(day,hs.last_state_change,now()) , ' d ',\n\t  MOD( TIMESTAMPDIFF(hour,hs.last_state_change,now()), 24), ' h ',\n\t  MOD( TIMESTAMPDIFF(minute,hs.last_state_change,now()), 60), ' m '\n\t) as duration,\n   hs.output AS 'output',\n   IF(hs.problem_has_been_acknowledged=0, 'Not acknowledged', 'Acknowledged') AS 'acknowledged',\n   IF(hs.scheduled_downtime_depth=0, 'Not in Downtime', 'In Downtime') AS 'in downtime',\n   IF((hs.problem_has_been_acknowledged + hs.scheduled_downtime_depth) > 0, 'Handled', 'Not handled') AS 'Handled'\nFROM\n   icinga_hoststatus hs\n   INNER JOIN icinga_objects o ON hs.host_object_id = o.object_id AND hs.instance_id = o.instance_id\n   INNER JOIN icinga_hosts h ON hs.host_object_id = h.host_object_id AND hs.instance_id = h.instance_id\n   -- INNER JOIN icinga_customvariables cv_lista ON cv_lista.object_id = o.object_id \n   -- INNER JOIN icinga_customvariables cv_cliente ON cv_cliente.object_id = o.object_id\nWHERE\n   o.is_active = 1\n   AND \n    CASE\n\tWHEN '${problem_handled}' = 'Handled' THEN \n\t\ths.problem_has_been_acknowledged + hs.scheduled_downtime_depth > 0\n\tWHEN '${problem_handled}' = 'Not Handled' THEN \n\t\ths.problem_has_been_acknowledged + hs.scheduled_downtime_depth = 0\n\tWHEN '${problem_handled}' = 'All' THEN \n\t\ths.problem_has_been_acknowledged + hs.scheduled_downtime_depth >= 0\n\tEND  \n  AND hs.current_state > 0\n  -- AND cv_lista.varname = 'lista' and cv_lista.varvalue IN(${lista}) \n  -- AND cv_cliente.varname = 'cliente' AND cv_cliente.varvalue IN(${clienti})",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "acknowledgement_id"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "icinga_acknowledgements",
+          "timeColumn": "entry_time",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Hosts DOWN [$problem_handled]",
+      "transformations": [
+        {
+          "id": "merge",
+          "options": {
+            "reducers": []
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": "icinga-mysql",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": null,
+            "filterable": true
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "service_state"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Service state"
+              },
+              {
+                "id": "unit",
+                "value": "short"
+              },
+              {
+                "id": "decimals",
+                "value": 0
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "color-background"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "#E0B400",
+                      "value": null
+                    },
+                    {
+                      "color": "#C4162A",
+                      "value": 2
+                    },
+                    {
+                      "color": "dark-purple",
+                      "value": 3
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "from": "",
+                    "id": 1,
+                    "text": "WARNING",
+                    "to": "",
+                    "type": 1,
+                    "value": "1"
+                  },
+                  {
+                    "from": "",
+                    "id": 2,
+                    "text": "CRITICAL",
+                    "to": "",
+                    "type": 1,
+                    "value": "2"
+                  }
+                ]
+              },
+              {
+                "id": "custom.align",
+                "value": "center"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "service_in_downtime"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Downtime"
+              },
+              {
+                "id": "unit",
+                "value": "short"
+              },
+              {
+                "id": "decimals",
+                "value": 2
+              },
+              {
+                "id": "custom.align",
+                "value": null
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "service_acknowledged"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Acknowledged"
+              },
+              {
+                "id": "unit",
+                "value": "short"
+              },
+              {
+                "id": "decimals",
+                "value": 2
+              },
+              {
+                "id": "custom.align",
+                "value": null
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "State time"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Last state change"
+              },
+              {
+                "id": "unit",
+                "value": "dateTimeAsIso"
+              },
+              {
+                "id": "decimals",
+                "value": 2
+              },
+              {
+                "id": "custom.align",
+                "value": null
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "host_name"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Hostname"
+              },
+              {
+                "id": "unit",
+                "value": "short"
+              },
+              {
+                "id": "decimals",
+                "value": 2
+              },
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "targetBlank": true,
+                    "title": "host details on NetEye Web Interface",
+                    "url": "../../../neteye/monitoring/host/show?host=${__data.fields.host_name}"
+                  }
+                ]
+              },
+              {
+                "id": "custom.align",
+                "value": null
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "service_description"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Service name"
+              },
+              {
+                "id": "unit",
+                "value": "short"
+              },
+              {
+                "id": "decimals",
+                "value": 2
+              },
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "targetBlank": true,
+                    "title": "service details on NetEye Web Interface",
+                    "url": "/../../monitoring/service/show?host=${__data.fields.host_name}&service=${__data.fields.service_description}"
+                  }
+                ]
+              },
+              {
+                "id": "custom.align",
+                "value": null
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "service_output"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Output"
+              },
+              {
+                "id": "unit",
+                "value": "short"
+              },
+              {
+                "id": "decimals",
+                "value": 2
+              },
+              {
+                "id": "custom.align",
+                "value": null
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "hostname"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 271
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "host_address"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 129
+              },
+              {
+                "id": "displayName",
+                "value": "Host address"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "service name"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 332
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "service state"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 141
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "last state change"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 121
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "duration"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 108
+              },
+              {
+                "id": "displayName",
+                "value": "Duration"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "output"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 355
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "acknowledged"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 134
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "in downtime"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 123
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Handled"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 110
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 15,
+        "w": 24,
+        "x": 0,
+        "y": 14
+      },
+      "id": 3,
+      "options": {
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "7.5.5",
+      "targets": [
+        {
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\r\n   os.name1 AS host_name,\r\n   h.address AS host_address,\r\n   os.name2 AS service_description,\r\n   ss.current_state AS service_state,\r\n   -- ss.last_state_change AS service_last_state_change,\r\n   convert_tz(ss.last_state_change, 'Europe/Rome','Etc/UTC') AS 'State time',\r\n   CONCAT(\r\n\tTIMESTAMPDIFF(day,ss.last_state_change,now()) , ' d ',\r\n\tMOD( TIMESTAMPDIFF(hour,ss.last_state_change,now()), 24), ' h ',\r\n\tMOD( TIMESTAMPDIFF(minute,ss.last_state_change,now()), 60), ' m '\r\n\t) as duration,\r\n   if(length(ss.output) > 80, concat(left(ss.output, 80),'    (...)'), ss.output) as service_output,\r\n   IF(ss.problem_has_been_acknowledged=0, 'Not acknowledged', 'Acknowledged') AS service_acknowledged,\r\n   IF(ss.scheduled_downtime_depth=0, 'Not in Downtime', 'In Downtime') AS service_in_downtime,\r\n   IF((ss.problem_has_been_acknowledged + ss.scheduled_downtime_depth) > 0, 'Handled', 'Not handled') AS 'Handled'\r\nFROM\r\n   icinga_services s\r\n   INNER JOIN icinga_objects os ON s.service_object_id = os.object_id\r\n   INNER JOIN icinga_objects oh ON s.host_object_id = oh.object_id\r\n   INNER JOIN icinga_hosts AS h ON h.host_object_id = s.host_object_id\r\n   INNER JOIN icinga_hoststatus AS hs ON hs.host_object_id = s.host_object_id\r\n   INNER JOIN icinga_servicestatus AS ss ON ss.service_object_id =os.object_id \r\n   -- INNER JOIN icinga_customvariables cv_lista ON cv_lista.object_id = oh.object_id\r\n   -- INNER JOIN icinga_customvariables cv_cliente ON cv_cliente.object_id = oh.object_id\r\nWHERE\r\n   os.is_active = 1\r\n   AND oh.is_active = 1\r\n   AND ss.current_state IN ($service_state)\r\n   AND\r\n   CASE\r\n\tWHEN '${problem_handled}' = 'Handled' THEN \r\n\t\tss.problem_has_been_acknowledged + ss.scheduled_downtime_depth > 0\r\n\tWHEN '${problem_handled}' = 'Not Handled' THEN \r\n\t\tss.problem_has_been_acknowledged + ss.scheduled_downtime_depth = 0\r\n\tWHEN '${problem_handled}' = 'All' THEN \r\n\t  ss.problem_has_been_acknowledged + ss.scheduled_downtime_depth >= 0\r\n\tEND   \r\n  -- AND cv_lista.varname = 'lista' and cv_lista.varvalue IN(${lista}) \r\n  -- AND cv_cliente.varname = 'cliente' AND cv_cliente.varvalue IN(${clienti})\r\nORDER BY ss.last_state_change DESC",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Services WARNING and CRITICAL [$problem_handled]",
+      "transformations": [
+        {
+          "id": "merge",
+          "options": {
+            "reducers": []
+          }
+        }
+      ],
+      "type": "table"
+    }
+  ],
+  "refresh": "30s",
+  "schemaVersion": 27,
+  "style": "dark",
+  "tags": [
+    "neteye"
+  ],
+  "templating": {
+    "list": [
+      {
+        "allValue": null,
+        "current": {
+          "selected": true,
+          "text": "All",
+          "value": "All"
+        },
+        "description": null,
+        "error": null,
+        "hide": 0,
+        "includeAll": false,
+        "label": "problem handled",
+        "multi": false,
+        "name": "problem_handled",
+        "options": [
+          {
+            "selected": false,
+            "text": "Handled",
+            "value": "Handled"
+          },
+          {
+            "selected": false,
+            "text": "Not handled",
+            "value": "Not handled"
+          },
+          {
+            "selected": true,
+            "text": "All",
+            "value": "All"
+          }
+        ],
+        "query": "Handled,Not handled,All",
+        "queryValue": "",
+        "skipUrlSync": false,
+        "type": "custom"
+      },
+      {
+        "allValue": null,
+        "current": {
+          "selected": true,
+          "tags": [],
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
+        },
+        "description": null,
+        "error": null,
+        "hide": 0,
+        "includeAll": true,
+        "label": "service state",
+        "multi": true,
+        "name": "service_state",
+        "options": [
+          {
+            "selected": true,
+            "text": "All",
+            "value": "$__all"
+          },
+          {
+            "selected": false,
+            "text": "WARNING",
+            "value": "1"
+          },
+          {
+            "selected": false,
+            "text": "CRITICAL",
+            "value": "2"
+          }
+        ],
+        "query": "WARNING : 1 ,CRITICAL : 2",
+        "queryValue": "",
+        "skipUrlSync": false,
+        "type": "custom"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-7d",
+    "to": "now"
+  },
+  "timepicker": {
+    "hidden": true,
+    "refresh_intervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ]
+  },
+  "timezone": "browser",
+  "title": "NetEye Problems",
+  "uid": "XfwT78pMz1",
+  "version": 23
+}

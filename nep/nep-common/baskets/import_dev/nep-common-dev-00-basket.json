@@ -1,0 +1,207 @@
+{
+    "Basket": {
+        "nep-common-once-01-datalist": {
+            "basket_name": "nep-common-once-01-datalist",
+            "objects": {
+                "DataList": [
+                    "[NX] Application List",
+                    "[NX] System Role List",
+                    "[NX] Environment List",
+                    "[NX] Dependencies behavior List",
+                    "[NX] Notification Channels List",
+                    "[NX] Notification Timings List",
+                    "[NX] Host Notifications mode List",
+                    "[NX] Service Notifications mode List"
+                ]
+            },
+            "owner_type": "user",
+            "owner_value": "root"
+        },
+        "nep-common-once-02-host": {
+            "basket_name": "nep-common-once-02-host",
+            "objects": {
+                "HostTemplate": [
+                    "nx-ht-abstract-base",
+                    "nx-ht-type-custom"
+                ]
+            },
+            "owner_type": "user",
+            "owner_value": "root"
+        },
+        "nep-common-once-03-service": {
+            "basket_name": "nep-common-once-03-service",
+            "objects": {
+                "ServiceTemplate": [
+                    "nx-st-abstract-base",
+                    "nx-st-type-custom"
+                ]
+            },
+            "owner_type": "user",
+            "owner_value": "root"
+        },
+        "nep-common-01-datalist": {
+            "basket_name": "nep-common-01-datalist",
+            "objects": {
+                "DataList": [
+                    "[NX] Business Process State type List",
+                    "[NX] Byte Unit Lowercase List",
+                    "[NX] Byte Unit Uppercase List",
+                    "[NX] Plugin-check Command State List",
+                    "[NX] Uptime Unit List",
+                    "[NX] Windows Performance counter type List",
+                    "[NX] SNMP Version List",
+                    "[NX] Host OS Name List",
+                    "[NX] Dependencies behavior List",
+                    "[NX] Host Notifications mode List",
+                    "[NX] Notification Channels List",
+                    "[NX] Notification Timings List",
+                    "[NX] Available Time Periods",
+                    "[NX] Service Notifications mode List",
+                    "[NX] Default service sets List"
+                ]
+            },
+            "owner_type": "user",
+            "owner_value": "root"
+        },
+        "nep-common-02-command": {
+            "basket_name": "nep-common-02-command",
+            "objects": {
+                "Command": [
+                    "nx-c-businessprocess-process-check",
+                    "nx-c-check-systemd-unit",
+                    "nx-c-check-uptime",
+                    "nx-c-cmd-script",
+                    "nx-c-cscript-script",
+                    "nx-c-powershell-script",
+                    "nx-c-powershell-check-process"
+                ]
+            },
+            "owner_type": "user",
+            "owner_value": "root"
+        },
+        "nep-common-03-host": {
+            "basket_name": "nep-common-03-host",
+            "objects": {
+                "HostTemplate": [
+                    "nx-ht-abstract-base",
+                    "nx-ht-client-agent",
+                    "nx-ht-client-agent-linux",
+                    "nx-ht-client-agent-windows",
+                    "nx-ht-computer",
+                    "nx-ht-cli",
+                    "nx-ht-dummy",
+                    "nx-ht-passive",
+                    "nx-ht-restapi",
+                    "nx-ht-server-agent",
+                    "nx-ht-server-agent-linux",
+                    "nx-ht-server-agent-windows",
+                    "nx-ht-snmp",
+                    "nx-ht-type-location",
+                    "nx-ht-type-monitor",
+                    "nx-ht-virtual"
+                ]
+            },
+            "owner_type": "user",
+            "owner_value": "root"
+        },
+        "nep-common-04-service": {
+            "basket_name": "nep-common-04-service",
+            "objects": {
+                "ServiceTemplate": [
+                    "nx-st-abstract-base",
+                    "nx-st-active",
+                    "nx-st-agent",
+                    "nx-st-agent-linux",
+                    "nx-st-agent-linux-cpu-load",
+                    "nx-st-agent-linux-disk-freespace",
+                    "nx-st-agent-linux-initd-service-state",
+                    "nx-st-agent-linux-memory-usage",
+                    "nx-st-agent-linux-processes-status",
+                    "nx-st-agent-linux-swap-usage",
+                    "nx-st-agent-linux-systemd-unit-state",
+                    "nx-st-agent-linux-uptime",
+                    "nx-st-agent-windows",
+                    "nx-st-agent-windows-cpu-load",
+                    "nx-st-agent-windows-disk-space-usage",
+                    "nx-st-agent-windows-logged-users",
+                    "nx-st-agent-windows-memory-usage",
+                    "nx-st-agent-windows-network-performance",
+                    "nx-st-agent-windows-performance-counter",
+                    "nx-st-agent-windows-ping",
+                    "nx-st-agent-windows-processes-count",
+                    "nx-st-agent-windows-processes-status",
+                    "nx-st-agent-windows-script",
+                    "nx-st-agent-windows-script-cscript",
+                    "nx-st-agent-windows-script-cmd",
+                    "nx-st-agent-windows-script-powershell",
+                    "nx-st-agent-windows-service-status",
+                    "nx-st-agent-windows-swap-usage",
+                    "nx-st-agent-windows-updates-pending",
+                    "nx-st-agent-windows-uptime",
+                    "nx-st-agentless",
+                    "nx-st-agentless-agent-connected",
+                    "nx-st-agentless-businessprocess-status",
+                    "nx-st-agentless-database",
+                    "nx-st-agentless-ping",
+                    "nx-st-agentless-snmp",
+                    "nx-st-agentless-snmp-oid",
+                    "nx-st-passive",
+                    "nx-st-passive-with-autoreset",
+                    "nx-st-type-monitor"
+                ]
+            },
+            "owner_type": "user",
+            "owner_value": "root"
+        },
+        "nep-common-05-serviceset": {
+            "basket_name": "nep-common-05-serviceset",
+            "objects": {
+                "ServiceSet": [
+                    "nx-ss-client-agent-windows-basic",
+                    "nx-ss-server-agent-windows-basic",
+                    "nx-ss-server-agent-linux-init",
+                    "nx-ss-server-agent-linux-systemd",
+                    "nx-ss-server-agent-linux-basic"
+                ]
+            },
+            "owner_type": "user",
+            "owner_value": "root"
+        },
+        "nep-common-06-automations": {
+            "basket_name": "nep-common-06-automations",
+            "objects": {
+                "ImportSource": [
+                    "nx-is-default-ss-list"
+                ],
+                "SyncRule": [
+                    "nx-sr-default-ss-list"
+                ],
+                "DirectorJob": [
+                    "nx-j-is-default-ss-list",
+                    "nx-j-sr-default-ss-list"
+                ]
+            },
+            "owner_type": "user",
+            "owner_value": "root"
+        },
+        "nep-common-dev-00-basket": {
+            "basket_name": "nep-common-dev-00-basket",
+            "objects": {
+                "Basket": [
+                    "nep-common-once-01-datalist",
+                    "nep-common-once-02-host",
+                    "nep-common-once-03-service",
+                    "nep-common-01-datalist",
+                    "nep-common-02-command",
+                    "nep-common-03-host",
+                    "nep-common-04-service",
+                    "nep-common-05-serviceset",
+                    "nep-common-06-automations",
+                    "nep-common-dev-00-basket"
+                ]
+            },
+            "owner_type": "user",
+            "owner_value": "root"
+        }
+    }
+}

@@ -1,0 +1,60 @@
+{
+    "ServiceSet": {
+        "nx-ss-network-centreon-sophos-firewall": {
+            "assign_filter": "host.vars.nx_enable_nep_ss=true&!\"nx-ss-network-centreon-sophos-firewall\"=host.vars.nx_nep_ss_to_exclude&\"nx-ht-network-firewall-snmp\"=host.templates&host.vars.nx_hardware_vendor=%22sophos%22",
+            "description": "Service Set providing a common base in order to monitor a Sophos XG firewall",
+            "object_name": "nx-ss-network-centreon-sophos-firewall",
+            "object_type": "template",
+            "services": {
+                "CPU Load": {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-agentless-snmp-nwc-health",
+                        "nx-st-type-custom"
+                    ],
+                    "object_name": "CPU Load",
+                    "object_type": "object",
+                    "vars": {
+                        "nx_nwc_health_mode": "cpu-load"
+                    }
+                },
+                "HW Health": {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-agentless-snmp-centreon-cyberoam-services",
+                        "nx-st-type-custom"
+                    ],
+                    "object_name": "HW Health",
+                    "object_type": "object"
+                },
+                "Memory Usage": {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-agentless-snmp-centreon-cyberoam-memory",
+                        "nx-st-type-custom"
+                    ],
+                    "object_name": "Memory Usage",
+                    "object_type": "object"
+                },
+                "Disk Usage": {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-agentless-snmp-centreon-cyberoam-storage",
+                        "nx-st-type-custom"
+                    ],
+                    "object_name": "Disk Usage",
+                    "object_type": "object"
+                },
+                "Licenses": {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-agentless-snmp-centreon-cyberoam-license",
+                        "nx-st-type-custom"
+                    ],
+                    "object_name": "Licenses",
+                    "object_type": "object"
+                }
+            }
+        }
+    }
+}

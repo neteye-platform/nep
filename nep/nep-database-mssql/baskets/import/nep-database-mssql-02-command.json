@@ -1,0 +1,34 @@
+{
+    "Command": {
+        "nx-c-mssql-health": {
+            "arguments": {
+                "--commit": "$mssql_health_commit$",
+                "--critical": "$mssql_health_critical$",
+                "--currentdb": "$mssql_health_currentdb$",
+                "--hostname": "$mssql_health_hostname$",
+                "--mode": "$mssql_health_mode$",
+                "--name": "$mssql_health_name$",
+                "--name2": "$mssql_health_name2$",
+                "--password": "$mssql_health_password$",
+                "--port": "$mssql_health_port$",
+                "--regexp": {
+                    "set_if": "$mssql_health_regexp$",
+                    "set_if_format": "string"
+                },
+                "--username": "$mssql_health_username$",
+                "--warning": "$mssql_health_warning$"
+            },
+            "command": "PluginContribDir + \/check_mssql_health",
+            "disabled": false,
+            "fields": [],
+            "imports": [],
+            "is_string": null,
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-mssql-health",
+            "object_type": "object",
+            "timeout": "60",
+            "vars": {},
+            "zone": null
+        }
+    }
+}

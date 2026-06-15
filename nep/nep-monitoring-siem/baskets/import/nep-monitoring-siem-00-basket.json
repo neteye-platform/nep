@@ -1,0 +1,45 @@
+{
+    "Basket": {
+        "nep-monitoring-siem-command": {
+            "basket_name": "nep-monitoring-siem-command",
+            "objects": {
+                "Command": [
+                    "nx-c-check_es_system",
+                    "nx-c-check_logstash",
+                    "nx-c-check_logstash_queue"
+                ]
+            },
+            "owner_type": "user",
+            "owner_value": "root"
+        },
+        "nep-monitoring-siem-service": {
+            "basket_name": "nep-monitoring-siem-service",
+            "objects": {
+                "ServiceTemplate": [
+                    "nx-st-agent-elastic",
+                    "nx-st-agent-elastic-neteye",
+                    "nx-st-agent-logstash",
+                    "nx-st-agent-logstash-neteye"
+                ],
+                "ServiceSet": [
+                    "nx-ss-neteye-siem-clustered-state",
+                    "nx-ss-neteye-siem-state",
+                    "nx-ss-neteye-endpoint-elastic-state",
+                    "nx-ss-neteye-endpoint-logstash-state"
+                ]
+            },
+            "owner_type": "user",
+            "owner_value": "root"
+        },
+        "nep-monitoring-siem-datalist": {
+            "basket_name": "nep-monitoring-siem-datalist",
+            "objects": {
+                "DataList": [
+                    "[NX] Elastic Check Types List"
+                ]
+            },
+            "owner_type": "user",
+            "owner_value": "root"
+        }
+    }
+}

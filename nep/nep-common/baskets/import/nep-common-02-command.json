@@ -1,0 +1,460 @@
+{
+    "Command": {
+        "nx-c-check-icinga-startup-log-linux": {
+            "arguments": {
+                "-c": {
+                    "required": true,
+                    "value": "[ -f $nx_icinga_datadir$\/api\/zones-stage\/startup.log ] && { echo \"ERROR: last icinga2 reload failed.\"; exit $nx_plugin_return_state$; } || { echo \"OK: icinga2 configuration loaded correctly.\"; exit 0; }",
+                    "order": "1"
+                }
+            },
+            "command": "\/bin\/bash --noprofile --norc",
+            "disabled": false,
+            "fields": [],
+            "imports": [],
+            "is_string": null,
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-check-icinga-startup-log-linux",
+            "object_type": "object",
+            "timeout": "15",
+            "vars": {},
+            "zone": null
+        },
+        "nx-c-check-icinga-startup-log-windows": {
+            "arguments": {
+                "\/C": {
+                    "required": true,
+                    "value": "IF EXIST $nx_icinga_datadir$\/api\/zones-stage\/startup.log (ECHO ERROR: last icinga2 reload failed. && EXIT $nx_plugin_return_state$) ELSE (ECHO OK: icinga2 configuration loaded correctly. && EXIT 0)",
+                    "order": "1"
+                }
+            },
+            "command": "C:\\Windows\\System32\\cmd.exe \/D",
+            "disabled": false,
+            "fields": [],
+            "imports": [],
+            "is_string": null,
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-check-icinga-startup-log-windows",
+            "object_type": "object",
+            "timeout": "15",
+            "vars": {},
+            "zone": null
+        },
+        "nx-c-businessprocess-process-check": {
+            "arguments": {
+                "--ack-is-ok": {
+                    "description": "Treat acknowledged hosts\/services always as UP\/OK",
+                    "set_if": "$businessprocess_ack_is_ok$",
+                    "skip_key": true,
+                    "value": "--ack-is-ok",
+                    "order": "5"
+                },
+                "--colors": {
+                    "description": "Paints state's name with state's color",
+                    "set_if": "$businessprocess_show_colors$",
+                    "skip_key": true,
+                    "value": "--colors",
+                    "order": "4"
+                },
+                "--config": {
+                    "description": "Name of the Business Process containing the Node to check",
+                    "required": true,
+                    "value": "$businessprocess_bp_name$",
+                    "order": "1"
+                },
+                "--details": {
+                    "description": "Show problem details as a tree",
+                    "set_if": "$businessprocess_show_details$",
+                    "skip_key": true,
+                    "value": "--details",
+                    "order": "3"
+                },
+                "--downtime-is-ok": {
+                    "description": "Treat hosts\/services in downtime always as UP\/OK",
+                    "set_if": "$businessprocess_downtime_is_ok$",
+                    "skip_key": true,
+                    "value": "--downtime-is-ok",
+                    "order": "6"
+                },
+                "--state-type": {
+                    "description": "Define which state type to look at. Could be either soft or hard, overrides an eventually configured default",
+                    "value": "$nx_businessprocess_state_type$",
+                    "order": "7"
+                },
+                "BP Node's name": {
+                    "description": "Name of the Node to check",
+                    "required": true,
+                    "skip_key": true,
+                    "value": "$businessprocess_bp_node_name$",
+                    "order": "2"
+                }
+            },
+            "command": "\/usr\/bin\/icingacli businessprocess process check",
+            "disabled": false,
+            "fields": [],
+            "imports": [],
+            "is_string": null,
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-businessprocess-process-check",
+            "object_type": "object",
+            "timeout": "60",
+            "vars": {
+                "icingacli_businessprocess_details": false
+            },
+            "zone": null
+        },
+        "nx-c-check-systemd-unit": {
+            "arguments": {
+                "(no key)": {
+                    "required": false,
+                    "set_if": "$systemd_restart_if_failed$",
+                    "skip_key": true,
+                    "value": "--inverse",
+                    "order": "2"
+                },
+                "--no-enable": {
+                    "required": false,
+                    "set_if": "$systemd_skip_enabled_check$",
+                    "skip_key": true,
+                    "value": "--no-enable",
+                    "order": "3"
+                },
+                "--restart": {
+                    "required": false,
+                    "set_if": "$systemd_enable_restart$",
+                    "skip_key": true,
+                    "value": "--restart",
+                    "order": "1"
+                },
+                "-s": {
+                    "required": true,
+                    "skip_key": true,
+                    "value": "$systemd_unit_name$",
+                    "order": "0"
+                }
+            },
+            "command": "PluginContribDir + \/check_systemd_service",
+            "disabled": false,
+            "fields": [],
+            "imports": [],
+            "is_string": null,
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-check-systemd-unit",
+            "object_type": "object",
+            "timeout": null,
+            "vars": {},
+            "zone": null
+        },
+        "nx-c-check-uptime": {
+            "arguments": {
+                "-C": {
+                    "value": "$uptime_critical_max_uptime$"
+                },
+                "-W": {
+                    "value": "$uptime_warning_max_uptime$"
+                },
+                "-c": {
+                    "value": "$uptime_critical_min_uptime$"
+                },
+                "-w": {
+                    "value": "$uptime_warning_min_uptime$"
+                }
+            },
+            "command": "PluginDir + \/check_uptime",
+            "disabled": false,
+            "fields": [],
+            "imports": [],
+            "is_string": null,
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-check-uptime",
+            "object_type": "object",
+            "timeout": null,
+            "vars": {},
+            "zone": null
+        },
+        "nx-c-check-cpu-usage-linux": {
+            "arguments": {
+                "-c": {
+                    "description": "Critical threshold ",
+                    "value": "$cpu_critical$"
+                },
+                "-w": {
+                    "description": "Warning threshold",
+                    "value": "$cpu_warning$"
+                }
+            },
+            "command": "PluginContribDir + \/check_cpu.sh",
+            "disabled": false,
+            "fields": [],
+            "imports": [],
+            "is_string": null,
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-check-cpu-usage-linux",
+            "object_type": "object",
+            "timeout": "15",
+            "vars": {},
+            "zone": null
+        },
+        "nx-c-cmd-script": {
+            "arguments": {
+                "\/C": {
+                    "description": "Run Command and then terminate",
+                    "required": true,
+                    "value": "$cmd_command$",
+                    "order": "1"
+                },
+                "CMD Arguments": {
+                    "description": "Command arguments (optional)",
+                    "repeat_key": true,
+                    "required": false,
+                    "skip_key": true,
+                    "value": "$cmd_commandarguments$",
+                    "order": "2"
+                }
+            },
+            "command": "C:\\Windows\\System32\\cmd.exe",
+            "disabled": false,
+            "fields": [],
+            "imports": [],
+            "is_string": null,
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-cmd-script",
+            "object_type": "object",
+            "timeout": null,
+            "vars": {},
+            "zone": null
+        },
+        "nx-c-cscript-script": {
+            "arguments": {
+                "\/\/B": {
+                    "description": "Batch mode: Suppresses script errors and prompts from displaying",
+                    "set_if": "$cscript_batchmode$",
+                    "skip_key": true,
+                    "value": "\/\/B",
+                    "order": "1"
+                },
+                "\/\/Nologo": {
+                    "description": "Hide startup logo",
+                    "set_if": "$cscript_nologo$",
+                    "skip_key": false,
+                    "value": "\/\/Nologo",
+                    "order": "2"
+                },
+                "CScript Script arguments": {
+                    "description": "Script arguments",
+                    "repeat_key": true,
+                    "required": false,
+                    "skip_key": true,
+                    "value": "$cscript_scriptarguments$",
+                    "order": "4"
+                },
+                "CScript Script name": {
+                    "description": "Text file containing VBS commands to be execute. You must include the extension (normally .vbs)",
+                    "required": true,
+                    "skip_key": true,
+                    "value": "$cscript_scriptname$",
+                    "order": "3"
+                }
+            },
+            "command": "C:\\Windows\\System32\\\\cscript.exe",
+            "disabled": false,
+            "fields": [],
+            "imports": [],
+            "is_string": null,
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-cscript-script",
+            "object_type": "object",
+            "timeout": null,
+            "vars": {
+                "cscript_batchmode": false,
+                "cscript_nologo": true
+            },
+            "zone": null
+        },
+        "nx-c-powershell-script": {
+            "arguments": {
+                "-Arguments": {
+                    "description": "Arguments to the script",
+                    "repeat_key": true,
+                    "required": false,
+                    "skip_key": true,
+                    "value": "$powershell_scriptarguments$",
+                    "order": "5"
+                },
+                "-ExecutionPolicy": {
+                    "description": "Set the default execution policy for the session.",
+                    "value": "$powershell_executionpolicy$",
+                    "order": "2"
+                },
+                "-File": {
+                    "description": "Execute a script file. The filename is required. If the file\/pathname contains spaces then surround with double quotation marks:  -file \"path to\\your script.ps1\"",
+                    "required": true,
+                    "value": "$powershell_scriptfile$",
+                    "order": "4"
+                },
+                "-NoProfile": {
+                    "description": "Do not load the PowerShell profile. No pre-defined functions will be available. When setting up a scheduled job, using -NoProfile can be a quick way to document the fact that nothing special in the profile is needed. It also ensures that any future profile changes will not affect the job.",
+                    "set_if": "$powershell_noprofile$",
+                    "skip_key": true,
+                    "value": "-NoProfile",
+                    "order": "1"
+                },
+                "-Noninteractive": {
+                    "description": "Don't present an interactive prompt to the user.",
+                    "set_if": "$powershell_noninteractive$",
+                    "skip_key": true,
+                    "value": "-Noninteractive",
+                    "order": "3"
+                }
+            },
+            "command": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+            "disabled": false,
+            "fields": [],
+            "imports": [],
+            "is_string": null,
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-powershell-script",
+            "object_type": "object",
+            "timeout": "60",
+            "vars": {
+                "powershell_executionpolicy": "Bypass",
+                "powershell_noninteractive": false,
+                "powershell_noprofile": true
+            },
+            "zone": null
+        },
+        "nx-c-powershell-check-process": {
+            "arguments": {
+                "-Arguments": {
+                    "description": "Arguments to the script",
+                    "repeat_key": true,
+                    "required": false,
+                    "skip_key": true,
+                    "value": "$powershell_scriptarguments$",
+                    "order": "5"
+                },
+                "-Command": {
+                    "skip_key": true,
+                    "value": "$$output = ''; $$result = (Get-Process -ErrorAction SilentlyContinue -Name '$powershell_process_name$' | Select-Object -Property ProcessName | Group-Object -Property ProcessName); if ($$result.count -eq 0) { $$output += '$powershell_process_name$ | CRITICAL - No instance are running!'; $$code = 2 } else { if ($$result.count -eq 1) {$$output += $$result.name + ' | OK - ' + $$result.count.ToString() + ' instance are running'; $$code = 0}; if ($$result.count -gt 1) { $$output += $$result.name + ' | WARNING - ' + $$result.count.ToString() + ' instance are running'; $$code = 1} }; Write-Output $$output; exit($$code);",
+                    "order": "4"
+                },
+                "-ExecutionPolicy": {
+                    "description": "Set the default execution policy for the session.",
+                    "value": "$powershell_executionpolicy$",
+                    "order": "2"
+                },
+                "-NoProfile": {
+                    "description": "Do not load the PowerShell profile. No pre-defined functions will be available. When setting up a scheduled job, using -NoProfile can be a quick way to document the fact that nothing special in the profile is needed. It also ensures that any future profile changes will not affect the job.",
+                    "set_if": "$powershell_noprofile$",
+                    "skip_key": true,
+                    "value": "-NoProfile",
+                    "order": "1"
+                },
+                "-Noninteractive": {
+                    "description": "Don't present an interactive prompt to the user.",
+                    "set_if": "$powershell_noninteractive$",
+                    "skip_key": true,
+                    "value": "-Noninteractive",
+                    "order": "3"
+                }
+            },
+            "command": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+            "disabled": false,
+            "fields": [],
+            "imports": [],
+            "is_string": null,
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-powershell-check-process",
+            "object_type": "object",
+            "timeout": "60",
+            "vars": {
+                "powershell_executionpolicy": "Bypass",
+                "powershell_noninteractive": false,
+                "powershell_noprofile": true
+            },
+            "zone": null
+        },
+        "nx-c-check-netstat": {
+            "arguments": {
+                "-c": {
+                    "description": "Comma separated. Critical level(s) (if more than one attrib, must have multiple values). Critical values can have the same prefix modifiers as warning (see above) except '^'",
+                    "required": true,
+                    "value": "$nx_netstat_critical$",
+                    "order": "4"
+                },
+                "-f": {
+                    "description": "Collects metrics",
+                    "repeat_key": false,
+                    "set_if": "$nx_netstat_metrics$",
+                    "set_if_format": "string",
+                    "skip_key": true,
+                    "value": "-f",
+                    "order": "6"
+                },
+                "-p": {
+                    "description": "Comma separated. Which tcp ports (attributes) to check. The value here can be either numeric or name that would be come from /etc/services. The value should be prefixed with: > : check outgoing TCP connections, < : check incoming TCP connections (default). Special value of '>@' or just '>' allow to specify that you want to check on total number of TCP connections (this is reported in perfomance data as 'all_out').",
+                    "required": true,
+                    "value": "$nx_netstat_port$",
+                    "order": "1"
+                },
+                "-r": {
+                    "description": "protocol=TCP|TCP6|UDP|UDP6 Query the specified protocol, default is TCP. Combinations of protocols will be supported in the future, but not right now",
+                    "value": "$nx_netstat_protocol$",
+                    "order": "2"
+                },
+                "-s": {
+                    "description": "Report only sessions in specific state. The most common states used here are \"ESTABLISHED' and 'CLOSE_WAIT'",
+                    "value": "$nx_netstat_state$",
+                    "order": "5"
+                },
+                "-w": {
+                    "description": "Comma separated. Warning level(s) - usually numbers (same number of values specified as number of attributes). Warning values can have the following prefix modifiers: > : warn if data is above this value (default), < : warn if data is below this value, = : warn if data is equal to this value, ! : warn if data is not equal to this value, ~ : do not check this data (must not be followed by number), ^ : this disables checks that warning is less than critical",
+                    "required": true,
+                    "value": "$nx_netstat_warning$",
+                    "order": "3"
+                }
+            },
+            "command": "PluginContribDir + /check_netstat.pl",
+            "fields": [
+
+            ],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-check-netstat",
+            "object_type": "object"
+        },
+        "nx-c-dummy-host": {
+            "fields": [],
+            "imports": [
+                "nx-ct-dummy"
+            ],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-dummy-host",
+            "object_type": "object",
+            "uuid": "5d031c2c-361e-40f4-b096-80f8797323fa"
+        },
+        "nx-c-dummy-service": {
+            "fields": [],
+            "imports": [
+                "nx-ct-dummy"
+            ],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-dummy-service",
+            "object_type": "object",
+            "uuid": "a8ef1df3-46fe-462f-991e-a0fc0ce89c07"
+        }
+    },
+    "CommandTemplate": {
+        "nx-ct-dummy": {
+            "command": "icinga",
+            "fields": [],
+            "imports": [
+                "dummy"
+            ],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-ct-dummy",
+            "object_type": "template",
+            "timeout": 5,
+            "uuid": "eb49dad4-0701-4c28-b689-71b0543f2987"
+        }
+    }
+}

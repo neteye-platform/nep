@@ -1,0 +1,53 @@
+#!/bin/sh
+#
+WAITMAX=/usr/bin/waitmax
+TIMEOUT="-s 9 60"
+NAGIOS_PATH=`dirname $0`
+PWDFILE="$NAGIOS_PATH/.as400"
+PROG=$(basename $0)
+JAR=$NAGIOS_PATH/lib/${PROG}.jar
+
+JAVA_START="/usr/bin/java -jar $JAR"
+
+if [ "$1" = "-C" ]
+then
+	shift
+	PWDFILE="$NAGIOS_PATH/.as400_$1"
+	shift
+fi
+
+if [ -f $NAGIOS_PATH/.as400 ]
+then
+	ASUSER="-u `cat $PWDFILE |grep -e USER | cut -d = -f 2`"
+	ASPASS="-p `cat $PWDFILE |grep -e PASS | cut -d = -f 2`"
+else
+	echo "WARNING: Password file $PWDFILE not found!"
+fi
+
+found=0
+for i in $*
+do
+	if [ $found -eq 1 ]
+	then
+		ping -c 1 -W 2 $i >/dev/null 2>&1
+		RET=$?
+		if [ $RET -ne 0 ]
+		then
+			echo "Cannot ping host ($i)"
+			exit 2
+		fi
+		break
+	fi
+	str=`echo $i | cut -c1-2`
+	if [ "$i" = "-H" ]
+	then
+		found=1
+	fi
+done
+
+if [ -x $WAITMAX ]
+then
+	$WAITMAX $TIMEOUT $JAVA_START $ASUSER $ASPASS $*
+else
+	$JAVA_START $ASUSER $ASPASS $*
+fi

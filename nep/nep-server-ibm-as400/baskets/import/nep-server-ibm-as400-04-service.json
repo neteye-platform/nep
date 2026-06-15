@@ -1,0 +1,179 @@
+{
+    "ServiceTemplate": {
+        "nx-st-agentless-as400-base": {
+            "check_command": "nx-c-check-as400-base",
+            "fields": [
+                {
+                    "datafield_id": 594,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 588,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 593,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-st-agentless"
+            ],
+            "object_name": "nx-st-agentless-as400-base",
+            "object_type": "template"
+        },
+        "nx-st-agentless-as400-advanced": {
+            "check_command": "nx-c-check-as400-advanced",
+            "fields": [
+                {
+                    "datafield_id": 594,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 598,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 599,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 596,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 597,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 595,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 588,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 593,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-st-agentless"
+            ],
+            "object_name": "nx-st-agentless-as400-advanced",
+            "object_type": "template"
+        }
+    },
+    "Datafield": {
+        "594": {
+            "varname": "nx-as400-critical",
+            "caption": "[NX] AS400 Critical value",
+            "description": "Critical value",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "594",
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] AS400 Options"
+        },
+        "588": {
+            "varname": "nx-as400-variabile",
+            "caption": "[NX] AS400 Variable",
+            "description": "Variable to check",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeDatalist",
+            "format": null,
+            "originalId": "588",
+            "settings": {
+                "behavior": "strict",
+                "data_type": "string",
+                "datalist": "[NX] AS400 - Variable to check"
+            },
+            "category": "[NX] AS400 Options"
+        },
+        "593": {
+            "varname": "nx-as400-warning",
+            "caption": "[NX] AS400 Warning value",
+            "description": "Warning value",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "593",
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] AS400 Options"
+        },
+        "598": {
+            "varname": "nx-as400-custom1",
+            "caption": "[NX] AS400 Custom var 1",
+            "description": "AS400 Custom variable 1",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "598",
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] AS400 Options"
+        },
+        "599": {
+            "varname": "nx-as400-custom2",
+            "caption": "[NX] AS400 Custom var 2",
+            "description": "AS400 Custom variable 2",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "599",
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] AS400 Options"
+        },
+        "596": {
+            "varname": "nx-as400-job",
+            "caption": "[NX] AS400 Job",
+            "description": "AS400 Job name",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "596",
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] AS400 Options"
+        },
+        "597": {
+            "varname": "nx-as400-status",
+            "caption": "[NX] AS400 Status",
+            "description": "Job Status",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "597",
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] AS400 Options"
+        },
+        "595": {
+            "varname": "nx-as400-subsystem",
+            "caption": "[NX] AS400 Subsystem",
+            "description": "AS400 Subsystem name",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "595",
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] AS400 Options"
+        }
+    }
+}

@@ -1,0 +1,29 @@
+{
+    "DataList": {
+        "[NX] UPS Mode List": {
+            "list_name": "[NX] UPS Mode List",
+            "owner": "root",
+            "originalId": "10059",
+            "entries": [
+                {
+                    "entry_name": "battery-health",
+                    "entry_value": "Battery Health",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "hardware-health",
+                    "entry_value": "HW Health",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "uptime",
+                    "entry_value": "Uptime",
+                    "format": "string",
+                    "allowed_roles": null
+                }
+            ]
+        }
+    }
+}

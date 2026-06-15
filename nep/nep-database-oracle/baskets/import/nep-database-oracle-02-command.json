@@ -1,0 +1,194 @@
+{
+    "Command": {
+        "nx-c-oracle-health-connected-users": {
+            "arguments": {
+                "--mode": {
+                    "description": "Number of currently connected users",
+                    "value": "connected-users"
+                }
+            },
+            "fields": [],
+            "imports": [
+                "nx-ct-check-oracle-health"
+            ],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-oracle-health-connected-users",
+            "object_type": "object"
+        },
+        "nx-c-oracle-health-connection-time": {
+            "arguments": {
+                "--mode": {
+                    "description": "Time to connect to the server",
+                    "value": "connection-time"
+                }
+            },
+            "fields": [],
+            "imports": [
+                "nx-ct-check-oracle-health"
+            ],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-oracle-health-connection-time",
+            "object_type": "object"
+        },
+        "nx-c-oracle-health-process-usage": {
+            "arguments": {
+                "--mode": {
+                    "description": "Percentage of processes used",
+                    "value": "process-usage"
+                }
+            },
+            "fields": [],
+            "imports": [
+                "nx-ct-check-oracle-health"
+            ],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-oracle-health-process-usage",
+            "object_type": "object"
+        },
+        "nx-c-oracle-health-session-usage": {
+            "arguments": {
+                "--mode": {
+                    "description": "Percentage of sessions used",
+                    "value": "session-usage"
+                }
+            },
+            "fields": [],
+            "imports": [
+                "nx-ct-check-oracle-health"
+            ],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-oracle-health-session-usage",
+            "object_type": "object"
+        },
+        "nx-c-oracle-health-sql": {
+            "arguments": {
+                "--mode": {
+                    "description": "any sql command returning a single number",
+                    "value": "sql"
+                }
+            },
+            "fields": [],
+            "imports": [
+                "nx-ct-check-oracle-health"
+            ],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-oracle-health-sql",
+            "object_type": "object"
+        },
+        "nx-c-oracle-health-tablespace-free": {
+            "arguments": {
+                "--mode": {
+                    "description": "Free space in tablespaces",
+                    "value": "tablespace-free"
+                }
+            },
+            "fields": [],
+            "imports": [
+                "nx-ct-check-oracle-health"
+            ],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-oracle-health-tablespace-free",
+            "object_type": "object"        },
+        "nx-c-oracle-health-tablespace-usage": {
+            "arguments": {
+                "--mode": {
+                    "description": "Used space in tablespaces",
+                    "value": "tablespace-usage"
+                }
+            },
+            "fields": [],
+            "imports": [
+                "nx-ct-check-oracle-health"
+            ],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-oracle-health-tablespace-usage",
+            "object_type": "object"
+        },
+        "nx-c-oracle-health-tnsping": {
+            "arguments": {
+                "--mode": {
+                    "description": "Check the reachability of the server",
+                    "value": "tnsping"
+                }
+            },
+            "fields": [],
+            "imports": [
+                "nx-ct-check-oracle-health"
+            ],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-oracle-health-tnsping",
+            "object_type": "object"
+        }
+    },
+    "CommandTemplate": {
+        "nx-ct-check-oracle-health": {
+            "arguments": {
+                "--connect": {
+                    "description": "Oracle Connection string",
+                    "value": "$nx_oracle_health_connection_string$"
+                },
+                "--critical": {
+                    "description": "Determined values outside of this range trigger a CRITICAL.",
+                    "value": "$nx_oracle_health_critical_threshold$"
+                },
+                "--environment": {
+                    "description": "With this you can pass environment variables to the script. For example: –environment ORACLE_HOME=/u01/oracle. Multiple declarations are possible.",
+                    "repeat_key": true,
+                    "value": "$nx_oracle_health_environment$"
+                },
+                "--ident": {
+                    "description": "Add to outputs the Oracle Instance and Database names",
+                    "set_if": "$nx_oracle_health_ident$",
+                    "set_if_format": "string"
+                },
+                "--method": {
+                    "description": "With this parameter you tell the plugin how it should connect to the database. (dbi for using DBD::Oracle (default), sqlplus for using the sqlplus-Tool).",
+                    "value": "$nx_oracle_health_connection_method$"
+                },
+
+                "--name": {
+                    "description": "The name of the tablespace, datafile, wait event, latch, enqueue, or SQL statement depending on the check to perform.",
+                    "value": "$nx_oracle_health_name$"
+                },
+                "--name2": {
+                    "description": "If you use –mode=sql, then the SQL-Statement appears in the output and performance values. With the parameter name2 you’re able to specify a custom string for this.",
+                    "value": "$nx_oracle_health_name2$"
+                },
+                "--password": {
+                    "description": "Password of the User used to access the Oracle Instance",
+                    "value": "$nx_oracle_health_password$"
+                },
+                "--regexp": {
+                    "description": "Through this switch the value of the –name Parameters will be interpreted as regular expression.",
+                    "set_if": "$nx_oracle_health_regex$",
+                    "set_if_format": "string"
+                },
+                "--report": {
+                    "description": "<short|long|html> Some modes output more than one line.",
+                    "value": "$nx_oracle_health_report$"
+                },
+                "--units": {
+                    "description": "<%|KB|MB|GB> The declaration from units servers the “beautification” of the output from mode=sql and simplification from threshold values when using mode=tablespace-free",
+                    "value": "$nx_oracle_health_units$"
+                },
+                "--username": {
+                    "description": "Name of the User used to access the Oracle Instance",
+                    "value": "$nx_oracle_health_username$"
+                },
+                "--warning": {
+                    "description": "Determined values outside of this range trigger a WARNING.",
+                    "value": "$nx_oracle_health_warning_threshold$"
+                },
+                "-t": {
+                    "description": "Connection Timeout in seconds",
+                    "value": "$nx_oracle_health_connection_timeout$"
+                }
+            },
+            "command": "PluginContribDir + /check_oracle_health",
+            "fields": [],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-ct-check-oracle-health",
+            "object_type": "template"
+        }
+    }
+}

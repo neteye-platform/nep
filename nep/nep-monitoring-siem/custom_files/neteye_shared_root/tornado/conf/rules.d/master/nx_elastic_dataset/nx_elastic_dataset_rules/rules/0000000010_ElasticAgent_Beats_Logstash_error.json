@@ -1,0 +1,59 @@
+{
+  "name": "ElasticAgent_Beats_Logstash_error",
+  "description": "",
+  "continue": true,
+  "active": true,
+  "constraint": {
+    "WHERE": {
+      "type": "AND",
+      "operators": [
+        {
+          "type": "regex",
+          "regex": "\\.error",
+          "target": "${event.payload.data.dataset}"
+        }
+      ]
+    },
+    "WITH": {}
+  },
+  "actions": [
+    {
+      "id": "smart_monitoring_check_result",
+      "payload": {
+        "check_result": {
+          "exit_status": "1",
+          "performance_data": "'documents'=${event.payload.data.docs};;;0;",
+          "plugin_output": "CRITICAL - ${event.payload.data.docs} events found on Elasticsearch\nTenant: ${event.payload.data.tenant}<br>Agent: ${event.payload.data.agent}"
+        },
+        "host": {
+          "address": "127.0.0.1",
+          "imports": [
+            "nx-ht-passive",
+            "nx-ht-status-dummy",
+            "nx-ht-type-custom"
+          ],
+          "object_name": "${event.payload.data.hostname}",
+          "vars": {
+            "created_by": "tornado",
+            "rulename": "root/master/nx_elastic_dataset/nx_elastic_dataset_rules"
+          }
+        },
+        "service": {
+          "imports": [
+            "nx-st-interval-24h",
+            "nx-st-passive-with-autoreset"
+          ],
+          "object_name": "Elastic Ingest Status - ${event.payload.data.dataset} (${event.payload.data.type})",
+          "vars": {
+            "created_by": "tornado",
+            "dummy_state": "0",
+            "dummy_text": "No document ingested on Elasticsearch in the last $service.check_interval$ seconds",
+            "nx_neteye_tenant": "${event.payload.data.tenant}",
+            "nx_on_host_down": "disable_check_on_down_hard",
+            "rulename": "root/master/nx_elastic_dataset/nx_elastic_dataset_rules"
+          }
+        }
+      }
+    }
+  ]
+}

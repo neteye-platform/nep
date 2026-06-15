@@ -1,0 +1,1962 @@
+{
+    "ServiceTemplate": {
+        "nx-st-agentless-director-health-check": {
+            "action_url": null,
+            "apply_for": null,
+            "assign_filter": null,
+            "check_command": "nx-c-director-health-check",
+            "check_interval": null,
+            "check_period": null,
+            "check_timeout": null,
+            "command_endpoint": null,
+            "disabled": false,
+            "display_name": null,
+            "enable_active_checks": null,
+            "enable_event_handler": null,
+            "enable_flapping": null,
+            "enable_notifications": null,
+            "enable_passive_checks": null,
+            "enable_perfdata": null,
+            "event_command": null,
+            "fields": [
+                {
+                    "datafield_id": 10430,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "flapping_threshold_high": null,
+            "flapping_threshold_low": null,
+            "groups": [],
+            "host": null,
+            "icon_image": null,
+            "icon_image_alt": null,
+            "imports": [
+                "nx-st-agentless"
+            ],
+            "max_check_attempts": null,
+            "notes": null,
+            "notes_url": null,
+            "object_name": "nx-st-agentless-director-health-check",
+            "object_type": "template",
+            "retry_interval": null,
+            "service_set": null,
+            "template_choice": null,
+            "use_agent": null,
+            "use_var_overrides": null,
+            "vars": {},
+            "volatile": null,
+            "zone": null
+        },
+        "nx-st-agentless-byssh": {
+            "action_url": null,
+            "apply_for": null,
+            "assign_filter": null,
+            "check_command": "by_ssh",
+            "check_interval": null,
+            "check_period": null,
+            "check_timeout": null,
+            "command_endpoint": null,
+            "disabled": false,
+            "display_name": null,
+            "enable_active_checks": null,
+            "enable_event_handler": null,
+            "enable_flapping": null,
+            "enable_notifications": null,
+            "enable_passive_checks": null,
+            "enable_perfdata": null,
+            "event_command": null,
+            "fields": [
+                {
+                    "datafield_id": 128,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 129,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 130,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 131,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 132,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 133,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 134,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 135,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 136,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 137,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 138,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "flapping_threshold_high": null,
+            "flapping_threshold_low": null,
+            "groups": [],
+            "host": null,
+            "icon_image": null,
+            "icon_image_alt": null,
+            "imports": [
+                "nx-st-agentless"
+            ],
+            "max_check_attempts": null,
+            "notes": null,
+            "notes_url": null,
+            "object_name": "nx-st-agentless-byssh",
+            "object_type": "template",
+            "retry_interval": null,
+            "service_set": null,
+            "template_choice": null,
+            "use_agent": null,
+            "use_var_overrides": null,
+            "vars": {
+                "by_ssh_logname": "root",
+                "by_ssh_options": [
+                    "StrictHostKeyChecking no",
+                    "UserKnownHostsFile=\/dev\/null"
+                ],
+                "by_ssh_quiet": true,
+                "by_ssh_skip_stderr": "1000"
+            },
+            "volatile": null,
+            "zone": null
+        },
+        "nx-st-agentless-byssh-disk-free-space": {
+            "action_url": null,
+            "apply_for": null,
+            "assign_filter": null,
+            "check_command": null,
+            "check_interval": null,
+            "check_period": null,
+            "check_timeout": null,
+            "command_endpoint": null,
+            "disabled": false,
+            "display_name": null,
+            "enable_active_checks": null,
+            "enable_event_handler": null,
+            "enable_flapping": null,
+            "enable_notifications": null,
+            "enable_passive_checks": null,
+            "enable_perfdata": null,
+            "event_command": null,
+            "fields": [
+                {
+                    "datafield_id": 25,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 139,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 41,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 42,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "flapping_threshold_high": null,
+            "flapping_threshold_low": null,
+            "groups": [],
+            "host": null,
+            "icon_image": null,
+            "icon_image_alt": null,
+            "imports": [
+                "nx-st-agentless-byssh"
+            ],
+            "max_check_attempts": null,
+            "notes": null,
+            "notes_url": null,
+            "object_name": "nx-st-agentless-byssh-disk-free-space",
+            "object_type": "template",
+            "retry_interval": null,
+            "service_set": null,
+            "template_choice": null,
+            "use_agent": null,
+            "use_var_overrides": null,
+            "vars": {
+                "by_ssh_command": "\/usr\/lib64\/neteye\/monitoring\/plugins\/check_disk -c $disk_cfree$ -w $disk_wfree$ -u $disk_units$ -r $disk_single_ereg_path$",
+                "disk_cfree": "10%",
+                "disk_ereg_path": [
+                    "*"
+                ],
+                "disk_units": "MB",
+                "disk_wfree": "20%"
+            },
+            "volatile": null,
+            "zone": null
+        },
+        "nx-st-agentless-byssh-unit-state": {
+            "action_url": null,
+            "apply_for": null,
+            "assign_filter": null,
+            "check_command": null,
+            "check_interval": null,
+            "check_period": null,
+            "check_timeout": null,
+            "command_endpoint": null,
+            "disabled": false,
+            "display_name": null,
+            "enable_active_checks": null,
+            "enable_event_handler": null,
+            "enable_flapping": null,
+            "enable_notifications": null,
+            "enable_passive_checks": null,
+            "enable_perfdata": null,
+            "event_command": null,
+            "fields": [
+                {
+                    "datafield_id": 140,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "flapping_threshold_high": null,
+            "flapping_threshold_low": null,
+            "groups": [],
+            "host": null,
+            "icon_image": null,
+            "icon_image_alt": null,
+            "imports": [
+                "nx-st-agentless-byssh"
+            ],
+            "max_check_attempts": null,
+            "notes": null,
+            "notes_url": null,
+            "object_name": "nx-st-agentless-byssh-unit-state",
+            "object_type": "template",
+            "retry_interval": null,
+            "service_set": null,
+            "template_choice": null,
+            "use_agent": null,
+            "use_var_overrides": null,
+            "vars": {
+                "by_ssh_command": "\/neteye\/shared\/monitoring\/plugins\/check_systemd_service $systemd_unit_name$"
+            },
+            "volatile": null,
+            "zone": null
+        },
+        "nx-st-agentless-byssh-unit-state-no-enable": {
+            "action_url": null,
+            "apply_for": null,
+            "assign_filter": null,
+            "check_command": null,
+            "check_interval": null,
+            "check_period": null,
+            "check_timeout": null,
+            "command_endpoint": null,
+            "disabled": false,
+            "display_name": null,
+            "enable_active_checks": null,
+            "enable_event_handler": null,
+            "enable_flapping": null,
+            "enable_notifications": null,
+            "enable_passive_checks": null,
+            "enable_perfdata": null,
+            "event_command": null,
+            "fields": [
+                {
+                    "datafield_id": 140,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "flapping_threshold_high": null,
+            "flapping_threshold_low": null,
+            "groups": [],
+            "host": null,
+            "icon_image": null,
+            "icon_image_alt": null,
+            "imports": [
+                "nx-st-agentless-byssh-unit-state"
+            ],
+            "max_check_attempts": null,
+            "notes": null,
+            "notes_url": null,
+            "object_name": "nx-st-agentless-byssh-unit-state-no-enable",
+            "object_type": "template",
+            "retry_interval": null,
+            "service_set": null,
+            "template_choice": null,
+            "use_agent": null,
+            "use_var_overrides": null,
+            "vars": {
+                "by_ssh_command": "\/neteye\/shared\/monitoring\/plugins\/check_systemd_service $systemd_unit_name$ --no-enable"
+            },
+            "volatile": null,
+            "zone": null
+        },
+        "nx-st-agent-linux-database": {
+            "action_url": null,
+            "apply_for": null,
+            "assign_filter": null,
+            "check_command": null,
+            "check_interval": null,
+            "check_period": null,
+            "check_timeout": null,
+            "command_endpoint": null,
+            "disabled": false,
+            "display_name": null,
+            "enable_active_checks": null,
+            "enable_event_handler": null,
+            "enable_flapping": null,
+            "enable_notifications": null,
+            "enable_passive_checks": null,
+            "enable_perfdata": null,
+            "event_command": null,
+            "fields": [],
+            "flapping_threshold_high": null,
+            "flapping_threshold_low": null,
+            "groups": [],
+            "host": null,
+            "icon_image": null,
+            "icon_image_alt": null,
+            "imports": [
+                "nx-st-agent-linux"
+            ],
+            "max_check_attempts": null,
+            "notes": null,
+            "notes_url": null,
+            "object_name": "nx-st-agent-linux-database",
+            "object_type": "template",
+            "retry_interval": null,
+            "service_set": null,
+            "template_choice": null,
+            "use_agent": null,
+            "use_var_overrides": null,
+            "vars": {},
+            "volatile": null,
+            "zone": null
+        },
+        "nx-st-agent-linux-database-mysql-health-neteye": {
+            "action_url": null,
+            "apply_for": null,
+            "assign_filter": null,
+            "check_command": null,
+            "check_interval": null,
+            "check_period": null,
+            "check_timeout": null,
+            "command_endpoint": null,
+            "disabled": false,
+            "display_name": null,
+            "enable_active_checks": null,
+            "enable_event_handler": null,
+            "enable_flapping": null,
+            "enable_notifications": null,
+            "enable_passive_checks": null,
+            "enable_perfdata": null,
+            "event_command": null,
+            "fields": [],
+            "flapping_threshold_high": null,
+            "flapping_threshold_low": null,
+            "groups": [],
+            "host": null,
+            "icon_image": null,
+            "icon_image_alt": null,
+            "imports": [
+                "nx-st-agent-linux-database-mysql-health"
+            ],
+            "max_check_attempts": null,
+            "notes": null,
+            "notes_url": null,
+            "object_name": "nx-st-agent-linux-database-mysql-health-neteye",
+            "object_type": "template",
+            "retry_interval": null,
+            "service_set": null,
+            "template_choice": null,
+            "use_agent": null,
+            "use_var_overrides": null,
+            "vars": {
+                "mysql_health_environment": [
+                    "NAGIOS__SERVICEMYSQL_MYCNF=\/neteye\/local\/icinga2\/data\/spool\/icinga2\/.my.cnf"
+                ],
+                "mysql_health_hostname": "mariadb.neteyelocal"
+            },
+            "volatile": null,
+            "zone": null
+        },
+        "nx-st-agent-linux-database-mysql-health": {
+            "action_url": null,
+            "apply_for": null,
+            "assign_filter": null,
+            "check_command": "nx-c-check-mysql-health",
+            "check_interval": null,
+            "check_period": null,
+            "check_timeout": null,
+            "command_endpoint": null,
+            "disabled": false,
+            "display_name": null,
+            "enable_active_checks": null,
+            "enable_event_handler": null,
+            "enable_flapping": null,
+            "enable_notifications": null,
+            "enable_passive_checks": null,
+            "enable_perfdata": null,
+            "event_command": null,
+            "fields": [
+                {
+                    "datafield_id": 157,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 151,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 152,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 153,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 154,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 10622,
+                    "is_required": "n",
+                    "var_filter": "service.vars.mysql_health_mode=%22sql%22"
+                },
+                {
+                    "datafield_id": 10623,
+                    "is_required": "n",
+                    "var_filter": "service.vars.mysql_health_mode=%22sql%22"
+                },
+                {
+                    "datafield_id": 155,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 156,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 158,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "flapping_threshold_high": null,
+            "flapping_threshold_low": null,
+            "groups": [],
+            "host": null,
+            "icon_image": null,
+            "icon_image_alt": null,
+            "imports": [
+                "nx-st-agent-linux-database"
+            ],
+            "max_check_attempts": null,
+            "notes": null,
+            "notes_url": null,
+            "object_name": "nx-st-agent-linux-database-mysql-health",
+            "object_type": "template",
+            "retry_interval": null,
+            "service_set": null,
+            "template_choice": null,
+            "use_agent": null,
+            "use_var_overrides": null,
+            "vars": {},
+            "volatile": null,
+            "zone": null
+        },
+        "nx-st-agent-linux-byssh": {
+            "action_url": null,
+            "apply_for": null,
+            "assign_filter": null,
+            "check_command": "by_ssh",
+            "check_interval": null,
+            "check_period": null,
+            "check_timeout": null,
+            "command_endpoint": null,
+            "disabled": false,
+            "display_name": null,
+            "enable_active_checks": null,
+            "enable_event_handler": null,
+            "enable_flapping": null,
+            "enable_notifications": null,
+            "enable_passive_checks": null,
+            "enable_perfdata": null,
+            "event_command": null,
+            "fields": [
+                {
+                    "datafield_id": 128,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 129,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 130,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 131,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 132,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 133,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 134,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 135,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 136,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 137,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 138,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "flapping_threshold_high": null,
+            "flapping_threshold_low": null,
+            "groups": [],
+            "host": null,
+            "icon_image": null,
+            "icon_image_alt": null,
+            "imports": [
+                "nx-st-agent-linux"
+            ],
+            "max_check_attempts": null,
+            "notes": null,
+            "notes_url": null,
+            "object_name": "nx-st-agent-linux-byssh",
+            "object_type": "template",
+            "retry_interval": null,
+            "service_set": null,
+            "template_choice": null,
+            "use_agent": null,
+            "use_var_overrides": null,
+            "vars": {
+                "by_ssh_logname": "root",
+                "by_ssh_options": [
+                    "StrictHostKeyChecking no",
+                    "UserKnownHostsFile=\/dev\/null"
+                ],
+                "by_ssh_quiet": true,
+                "by_ssh_skip_stderr": "1000"
+            },
+            "volatile": null,
+            "zone": null
+        },
+        "nx-st-agent-linux-byssh-disk-free-space": {
+            "action_url": null,
+            "apply_for": null,
+            "assign_filter": null,
+            "check_command": null,
+            "check_interval": null,
+            "check_period": null,
+            "check_timeout": null,
+            "command_endpoint": null,
+            "disabled": false,
+            "display_name": null,
+            "enable_active_checks": null,
+            "enable_event_handler": null,
+            "enable_flapping": null,
+            "enable_notifications": null,
+            "enable_passive_checks": null,
+            "enable_perfdata": null,
+            "event_command": null,
+            "fields": [
+                {
+                    "datafield_id": 25,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 139,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 41,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 42,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "flapping_threshold_high": null,
+            "flapping_threshold_low": null,
+            "groups": [],
+            "host": null,
+            "icon_image": null,
+            "icon_image_alt": null,
+            "imports": [
+                "nx-st-agent-linux-byssh"
+            ],
+            "max_check_attempts": null,
+            "notes": null,
+            "notes_url": null,
+            "object_name": "nx-st-agent-linux-byssh-disk-free-space",
+            "object_type": "template",
+            "retry_interval": null,
+            "service_set": null,
+            "template_choice": null,
+            "use_agent": null,
+            "use_var_overrides": null,
+            "vars": {
+                "by_ssh_command": "\/usr\/lib64\/neteye\/monitoring\/plugins\/check_disk -c $disk_cfree$ -w $disk_wfree$ -u $disk_units$ -r $disk_single_ereg_path$",
+                "disk_cfree": "10%",
+                "disk_ereg_path": [
+                    "*"
+                ],
+                "disk_units": "MB",
+                "disk_wfree": "20%"
+            },
+            "volatile": null,
+            "zone": null
+        },
+        "nx-st-agent-linux-byssh-unit-state": {
+            "action_url": null,
+            "apply_for": null,
+            "assign_filter": null,
+            "check_command": null,
+            "check_interval": null,
+            "check_period": null,
+            "check_timeout": null,
+            "command_endpoint": null,
+            "disabled": false,
+            "display_name": null,
+            "enable_active_checks": null,
+            "enable_event_handler": null,
+            "enable_flapping": null,
+            "enable_notifications": null,
+            "enable_passive_checks": null,
+            "enable_perfdata": null,
+            "event_command": null,
+            "fields": [
+                {
+                    "datafield_id": 140,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "flapping_threshold_high": null,
+            "flapping_threshold_low": null,
+            "groups": [],
+            "host": null,
+            "icon_image": null,
+            "icon_image_alt": null,
+            "imports": [
+                "nx-st-agent-linux-byssh"
+            ],
+            "max_check_attempts": null,
+            "notes": null,
+            "notes_url": null,
+            "object_name": "nx-st-agent-linux-byssh-unit-state",
+            "object_type": "template",
+            "retry_interval": null,
+            "service_set": null,
+            "template_choice": null,
+            "use_agent": null,
+            "use_var_overrides": null,
+            "vars": {
+                "by_ssh_command": "\/neteye\/shared\/monitoring\/plugins\/check_systemd_service $systemd_unit_name$"
+            },
+            "volatile": null,
+            "zone": null
+        },
+        "nx-st-agent-linux-byssh-unit-state-no-enable": {
+            "action_url": null,
+            "apply_for": null,
+            "assign_filter": null,
+            "check_command": null,
+            "check_interval": null,
+            "check_period": null,
+            "check_timeout": null,
+            "command_endpoint": null,
+            "disabled": false,
+            "display_name": null,
+            "enable_active_checks": null,
+            "enable_event_handler": null,
+            "enable_flapping": null,
+            "enable_notifications": null,
+            "enable_passive_checks": null,
+            "enable_perfdata": null,
+            "event_command": null,
+            "fields": [
+                {
+                    "datafield_id": 140,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "flapping_threshold_high": null,
+            "flapping_threshold_low": null,
+            "groups": [],
+            "host": null,
+            "icon_image": null,
+            "icon_image_alt": null,
+            "imports": [
+                "nx-st-agent-linux-byssh-unit-state"
+            ],
+            "max_check_attempts": null,
+            "notes": null,
+            "notes_url": null,
+            "object_name": "nx-st-agent-linux-byssh-unit-state-no-enable",
+            "object_type": "template",
+            "retry_interval": null,
+            "service_set": null,
+            "template_choice": null,
+            "use_agent": null,
+            "use_var_overrides": null,
+            "vars": {
+                "by_ssh_command": "\/neteye\/shared\/monitoring\/plugins\/check_systemd_service $systemd_unit_name$ --no-enable"
+            },
+            "volatile": null,
+            "zone": null
+        },
+        "nx-st-agent-icinga-cluster-performance": {
+            "action_url": null,
+            "apply_for": null,
+            "assign_filter": null,
+            "check_command": "cluster",
+            "check_interval": null,
+            "check_period": null,
+            "check_timeout": null,
+            "command_endpoint": null,
+            "disabled": false,
+            "display_name": null,
+            "enable_active_checks": null,
+            "enable_event_handler": null,
+            "enable_flapping": null,
+            "enable_notifications": null,
+            "enable_passive_checks": null,
+            "enable_perfdata": null,
+            "event_command": null,
+            "fields": [],
+            "flapping_threshold_high": null,
+            "flapping_threshold_low": null,
+            "groups": [],
+            "host": null,
+            "icon_image": null,
+            "icon_image_alt": null,
+            "imports": [
+                "nx-st-agent-icinga"
+            ],
+            "max_check_attempts": null,
+            "notes": null,
+            "notes_url": null,
+            "object_name": "nx-st-agent-icinga-cluster-performance",
+            "object_type": "template",
+            "retry_interval": null,
+            "service_set": null,
+            "template_choice": null,
+            "use_agent": null,
+            "use_var_overrides": null,
+            "vars": {},
+            "volatile": null,
+            "zone": null
+        },
+        "nx-st-agent-icinga-cluster-zone-performance": {
+            "action_url": null,
+            "apply_for": null,
+            "assign_filter": null,
+            "check_command": "cluster-zone",
+            "check_interval": null,
+            "check_period": null,
+            "check_timeout": null,
+            "command_endpoint": null,
+            "disabled": false,
+            "display_name": null,
+            "enable_active_checks": null,
+            "enable_event_handler": null,
+            "enable_flapping": null,
+            "enable_notifications": null,
+            "enable_passive_checks": null,
+            "enable_perfdata": null,
+            "event_command": null,
+            "fields": [
+                {
+                    "datafield_id": 141,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 142,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 143,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "flapping_threshold_high": null,
+            "flapping_threshold_low": null,
+            "groups": [],
+            "host": null,
+            "icon_image": null,
+            "icon_image_alt": null,
+            "imports": [
+                "nx-st-agent-icinga"
+            ],
+            "max_check_attempts": null,
+            "notes": null,
+            "notes_url": null,
+            "object_name": "nx-st-agent-icinga-cluster-zone-performance",
+            "object_type": "template",
+            "retry_interval": null,
+            "service_set": null,
+            "template_choice": null,
+            "use_agent": null,
+            "use_var_overrides": null,
+            "vars": {
+                "cluster_lag_critical": 300,
+                "cluster_lag_warning": 60
+            },
+            "volatile": null,
+            "zone": null
+        },
+        "nx-st-agent-icinga-duplicated-ips": {
+            "action_url": null,
+            "apply_for": null,
+            "assign_filter": null,
+            "check_command": "nx-c-check-icinga-duplicated-ips",
+            "check_interval": null,
+            "check_period": null,
+            "check_timeout": null,
+            "command_endpoint": null,
+            "disabled": false,
+            "display_name": null,
+            "enable_active_checks": null,
+            "enable_event_handler": null,
+            "enable_flapping": null,
+            "enable_notifications": null,
+            "enable_passive_checks": null,
+            "enable_perfdata": null,
+            "event_command": null,
+            "fields": [
+                {
+                    "datafield_id": 322,
+                    "is_required": "y",
+                    "var_filter": null
+                }
+            ],
+            "flapping_threshold_high": null,
+            "flapping_threshold_low": null,
+            "groups": [],
+            "host": null,
+            "icon_image": null,
+            "icon_image_alt": null,
+            "imports": [
+                "nx-st-agent-icinga"
+            ],
+            "max_check_attempts": null,
+            "notes": null,
+            "notes_url": null,
+            "object_name": "nx-st-agent-icinga-duplicated-ips",
+            "object_type": "template",
+            "retry_interval": null,
+            "service_set": null,
+            "template_choice": null,
+            "use_agent": null,
+            "use_var_overrides": null,
+            "vars": {
+                "mysql_health_environment": [
+                    "NAGIOS__SERVICEMYSQL_MYCNF=\/neteye\/local\/icinga2\/data\/spool\/icinga2\/.my.cnf"
+                ],
+                "mysql_health_hostname": "mariadb.neteyelocal"
+            },
+            "volatile": null,
+            "zone": null
+        },
+        "nx-st-agentless-database-mysql-health": {
+            "action_url": null,
+            "apply_for": null,
+            "assign_filter": null,
+            "check_command": "nx-c-check-mysql-health",
+            "check_interval": null,
+            "check_period": null,
+            "check_timeout": null,
+            "command_endpoint": null,
+            "disabled": false,
+            "display_name": null,
+            "enable_active_checks": null,
+            "enable_event_handler": null,
+            "enable_flapping": null,
+            "enable_notifications": null,
+            "enable_passive_checks": null,
+            "enable_perfdata": null,
+            "event_command": null,
+            "fields": [
+                {
+                    "datafield_id": 151,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 152,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 153,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 154,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 155,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 156,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 157,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 158,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "flapping_threshold_high": null,
+            "flapping_threshold_low": null,
+            "groups": [],
+            "host": null,
+            "icon_image": null,
+            "icon_image_alt": null,
+            "imports": [
+                "nx-st-agentless-database"
+            ],
+            "max_check_attempts": null,
+            "notes": null,
+            "notes_url": null,
+            "object_name": "nx-st-agentless-database-mysql-health",
+            "object_type": "template",
+            "retry_interval": null,
+            "service_set": null,
+            "template_choice": null,
+            "use_agent": null,
+            "use_var_overrides": null,
+            "vars": {},
+            "volatile": null,
+            "zone": null
+        },
+        "nx-st-agentless-database-mysql-health-neteye": {
+            "action_url": null,
+            "apply_for": null,
+            "assign_filter": null,
+            "check_command": null,
+            "check_interval": null,
+            "check_period": null,
+            "check_timeout": null,
+            "command_endpoint": null,
+            "disabled": false,
+            "display_name": null,
+            "enable_active_checks": null,
+            "enable_event_handler": null,
+            "enable_flapping": null,
+            "enable_notifications": null,
+            "enable_passive_checks": null,
+            "enable_perfdata": null,
+            "event_command": null,
+            "fields": [],
+            "flapping_threshold_high": null,
+            "flapping_threshold_low": null,
+            "groups": [],
+            "host": null,
+            "icon_image": null,
+            "icon_image_alt": null,
+            "imports": [
+                "nx-st-agentless-database-mysql-health"
+            ],
+            "max_check_attempts": null,
+            "notes": null,
+            "notes_url": null,
+            "object_name": "nx-st-agentless-database-mysql-health-neteye",
+            "object_type": "template",
+            "retry_interval": null,
+            "service_set": null,
+            "template_choice": null,
+            "use_agent": null,
+            "use_var_overrides": null,
+            "vars": {
+                "mysql_health_environment": [
+                    "NAGIOS__SERVICEMYSQL_MYCNF=\/neteye\/local\/icinga2\/data\/spool\/icinga2\/.my.cnf"
+                ],
+                "mysql_health_hostname": "$host.address$",
+		"mysql_health_port": "3307"
+            },
+            "volatile": null,
+            "zone": null
+        },
+        "nx-st-agent-linux-cluster-crm-state": {
+            "action_url": null,
+            "apply_for": null,
+            "assign_filter": null,
+            "check_command": "nx-c-check-crm",
+            "check_interval": null,
+            "check_period": null,
+            "check_timeout": null,
+            "command_endpoint": null,
+            "disabled": false,
+            "display_name": null,
+            "enable_active_checks": null,
+            "enable_event_handler": null,
+            "enable_flapping": null,
+            "enable_notifications": null,
+            "enable_passive_checks": null,
+            "enable_perfdata": null,
+            "event_command": null,
+            "fields": [
+                {
+                    "datafield_id": 118,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 164,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 119,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 120,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 121,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "flapping_threshold_high": null,
+            "flapping_threshold_low": null,
+            "groups": [],
+            "host": null,
+            "icon_image": null,
+            "icon_image_alt": null,
+            "imports": [
+                "nx-st-agent-linux"
+            ],
+            "max_check_attempts": null,
+            "notes": null,
+            "notes_url": null,
+            "object_name": "nx-st-agent-linux-cluster-crm-state",
+            "object_type": "template",
+            "retry_interval": null,
+            "service_set": null,
+            "template_choice": null,
+            "use_agent": null,
+            "use_var_overrides": null,
+            "vars": {},
+            "volatile": null,
+            "zone": null
+        },
+        "nx-st-agent-linux-drbd9-replica-health-state": {
+            "action_url": null,
+            "apply_for": null,
+            "assign_filter": null,
+            "check_command": "nx-c-check-drbd9",
+            "check_interval": null,
+            "check_period": null,
+            "check_timeout": null,
+            "command_endpoint": null,
+            "disabled": false,
+            "display_name": null,
+            "enable_active_checks": null,
+            "enable_event_handler": null,
+            "enable_flapping": null,
+            "enable_notifications": null,
+            "enable_passive_checks": null,
+            "enable_perfdata": null,
+            "event_command": null,
+            "fields": [
+                {
+                    "datafield_id": 122,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 123,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 124,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 125,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 126,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 127,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "flapping_threshold_high": null,
+            "flapping_threshold_low": null,
+            "groups": [],
+            "host": null,
+            "icon_image": null,
+            "icon_image_alt": null,
+            "imports": [
+                "nx-st-agent-linux"
+            ],
+            "max_check_attempts": null,
+            "notes": null,
+            "notes_url": null,
+            "object_name": "nx-st-agent-linux-drbd9-replica-health-state",
+            "object_type": "template",
+            "retry_interval": null,
+            "service_set": null,
+            "template_choice": null,
+            "use_agent": null,
+            "use_var_overrides": null,
+            "vars": {},
+            "volatile": null,
+            "zone": null
+        },
+        "nx-st-agent-icinga-modem-sms": {
+            "action_url": null,
+            "apply_for": null,
+            "assign_filter": null,
+            "check_command": "nx-c-check-modem-smst",
+            "check_interval": null,
+            "check_period": null,
+            "check_timeout": null,
+            "command_endpoint": null,
+            "disabled": false,
+            "display_name": null,
+            "enable_active_checks": null,
+            "enable_event_handler": null,
+            "enable_flapping": null,
+            "enable_notifications": null,
+            "enable_passive_checks": null,
+            "enable_perfdata": null,
+            "event_command": null,
+            "fields": [
+                {
+                    "datafield_id": 160,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 161,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 162,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 163,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "flapping_threshold_high": null,
+            "flapping_threshold_low": null,
+            "groups": [],
+            "host": null,
+            "icon_image": null,
+            "icon_image_alt": null,
+            "imports": [
+                "nx-st-agent-icinga"
+            ],
+            "max_check_attempts": null,
+            "notes": null,
+            "notes_url": null,
+            "object_name": "nx-st-agent-icinga-modem-sms",
+            "object_type": "template",
+            "retry_interval": null,
+            "service_set": null,
+            "template_choice": null,
+            "use_agent": null,
+            "use_var_overrides": null,
+            "vars": {
+                "modem_bytes_seek": "-10000",
+                "modem_critical_signal": "8",
+                "modem_log_file": "\/neteye\/local\/smsd\/log\/smstools.log",
+                "modem_warning_signal": "11"
+            },
+            "volatile": null,
+            "zone": null
+        },
+        "nx-st-agent-icinga-sms-queue": {
+            "action_url": null,
+            "apply_for": null,
+            "assign_filter": null,
+            "check_command": "nx-c-check-sms-queue",
+            "check_interval": null,
+            "check_period": null,
+            "check_timeout": null,
+            "command_endpoint": null,
+            "disabled": false,
+            "display_name": null,
+            "enable_active_checks": null,
+            "enable_event_handler": null,
+            "enable_flapping": null,
+            "enable_notifications": null,
+            "enable_passive_checks": null,
+            "enable_perfdata": null,
+            "event_command": null,
+            "fields": [
+                {
+                    "datafield_id": 159,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "flapping_threshold_high": null,
+            "flapping_threshold_low": null,
+            "groups": [],
+            "host": null,
+            "icon_image": null,
+            "icon_image_alt": null,
+            "imports": [
+                "nx-st-agent-icinga"
+            ],
+            "max_check_attempts": null,
+            "notes": null,
+            "notes_url": null,
+            "object_name": "nx-st-agent-icinga-sms-queue",
+            "object_type": "template",
+            "retry_interval": null,
+            "service_set": null,
+            "template_choice": null,
+            "use_agent": null,
+            "use_var_overrides": null,
+            "vars": {
+                "sms_queue": "\/neteye\/local\/smsd\/data\/spool"
+            },
+            "volatile": null,
+            "zone": null
+        },
+        "nx-st-agentless-mirror-repo-sync": {
+            "check_command": "nx-c-check-mirror-repo-sync",
+            "check_interval": 3600,
+            "check_timeout": 300,
+            "fields": [
+                {
+                    "datafield_id": 389,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 85,
+                    "is_required": "y",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 88,
+                    "is_required": "y",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-st-agentless"
+            ],
+            "max_check_attempts": "3",
+            "object_name": "nx-st-agentless-mirror-repo-sync",
+            "object_type": "template",
+            "retry_interval": 30,
+            "use_agent": false,
+            "uuid": "d099a215-4891-4962-be89-a3b5d233ecde",
+            "vars": {
+                "src_repo": "https://repo.wuerth-phoenix.com/rhel8/"
+            }
+        },
+        "nx-st-agent-linux-timesync": {
+            "fields": [
+                {
+                    "datafield_id": 2473,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-st-agent-linux"
+            ],
+            "object_name": "nx-st-agent-linux-timesync",
+            "object_type": "template",
+            "uuid": "4b822b70-032a-4abb-b0a5-70f1e88d1677",
+            "vars": {
+                "nx_linux_timesync_status_daemon": "chronyc"
+            }
+        },
+        "nx-st-agent-linux-timesync-false-ticker": {
+            "check_command": "nx-c-linux-timesync-status-falseticker",
+            "fields": [],
+            "imports": [
+                "nx-st-agent-linux-timesync"
+            ],
+            "object_name": "nx-st-agent-linux-timesync-false-ticker",
+            "object_type": "template",
+            "uuid": "1744102d-88ca-41ba-b1db-aa4c37a9c6e6"
+        },
+        "nx-st-agent-linux-timesync-leap-status": {
+            "check_command": "nx-c-linux-timesync-status-leap-status",
+            "fields": [],
+            "imports": [
+                "nx-st-agent-linux-timesync"
+            ],
+            "object_name": "nx-st-agent-linux-timesync-leap-status",
+            "object_type": "template",
+            "uuid": "6b3dc281-12ba-4cc4-8886-d1caa0053b8c"
+        },
+        "nx-st-agent-linux-timesync-sources": {
+            "check_command": "nx-c-linux-timesync-status-sources",
+            "fields": [],
+            "imports": [
+                "nx-st-agent-linux-timesync"
+            ],
+            "object_name": "nx-st-agent-linux-timesync-sources",
+            "object_type": "template",
+            "uuid": "46a64a29-d3b1-4835-a1ff-88ca45b9b270"
+        }
+    },
+    "Datafield": {
+        "322": {
+            "varname": "nx_zone_name",
+            "caption": "[NX] Zone Name",
+            "description": "Zone name to monitor",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "322",
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": null
+        },
+        "128": {
+            "category_id": null,
+            "varname": "by_ssh_address",
+            "caption": "BySSH Server Address",
+            "description": "Host name, IP Address, or unix socket (must be an absolute path)",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "128",
+            "settings": {}
+        },
+        "129": {
+            "category_id": null,
+            "varname": "by_ssh_command",
+            "caption": "BySSH Remote Command",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "129",
+            "settings": {}
+        },
+        "130": {
+            "category_id": null,
+            "varname": "by_ssh_crit",
+            "caption": "BySSH Command Timeout Critical Threshold",
+            "description": "Response time to result in critical status (seconds)",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "130",
+            "settings": {}
+        },
+        "131": {
+            "category_id": null,
+            "varname": "by_ssh_identity",
+            "caption": "BySSH Identity file",
+            "description": "identity of an authorized key [optional]",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "131",
+            "settings": {}
+        },
+        "132": {
+            "category_id": null,
+            "varname": "by_ssh_logname",
+            "caption": "BySSH Remote Username",
+            "description": "SSH user name on remote host [optional]",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "132",
+            "settings": {}
+        },
+        "133": {
+            "category_id": null,
+            "varname": "by_ssh_options",
+            "caption": "BySSH SSH Options",
+            "description": "Provide ssh options (may be repeated)",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeArray",
+            "format": null,
+            "originalId": "133",
+            "settings": {}
+        },
+        "134": {
+            "category_id": null,
+            "varname": "by_ssh_port",
+            "caption": "BySSH Alternative TCP Port",
+            "description": "Port number (default: none)",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "134",
+            "settings": {}
+        },
+        "135": {
+            "category_id": null,
+            "varname": "by_ssh_quiet",
+            "caption": "BySSH Enable quiet output",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeBoolean",
+            "format": null,
+            "originalId": "135",
+            "settings": {}
+        },
+        "136": {
+            "category_id": null,
+            "varname": "by_ssh_skip_stderr",
+            "caption": "BySSH STDERR lines to skip",
+            "description": "Ignore all or (if specified) first n lines on STDERR [optional]",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "136",
+            "settings": {}
+        },
+        "137": {
+            "category_id": null,
+            "varname": "by_ssh_timeout",
+            "caption": "BySSH Connection Timeout",
+            "description": "Seconds before connection times out (default: 10)",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "137",
+            "settings": {}
+        },
+        "138": {
+            "category_id": null,
+            "varname": "by_ssh_warn",
+            "caption": "BySSH Connection Timeout Warning Threshold",
+            "description": "Response time to result in warning status (seconds)",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "138",
+            "settings": {}
+        },
+        "25": {
+            "category_id": null,
+            "varname": "disk_cfree",
+            "caption": "Disk Free space critical threshold",
+            "description": "Exit with CRITICAL status if less than INTEGER units of disk are free or Exit with CRITCAL status if less than PERCENT of disk space is free",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "25",
+            "settings": {}
+        },
+        "139": {
+            "category_id": null,
+            "varname": "disk_single_ereg_path",
+            "caption": "Disk Include path or partitions (regex case sensitive)",
+            "description": "Regular expression for path or partition (can not  be repeated)",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "139",
+            "settings": {}
+        },
+        "41": {
+            "category_id": null,
+            "varname": "disk_units",
+            "caption": "Disk Space unit",
+            "description": "Choose bytes, kB, MB, GB, TB (default: MB)",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeDatalist",
+            "format": null,
+            "originalId": "41",
+            "settings": {
+                "data_type": "string",
+                "datalist": "[NX] Byte Unit Uppercase List"
+            }
+        },
+        "42": {
+            "category_id": null,
+            "varname": "disk_wfree",
+            "caption": "Disk Free space warning threshold",
+            "description": "Exit with WARNING status if less than INTEGER units of disk are free or Exit with WARNING status if less than PERCENT of disk space is free",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "42",
+            "settings": {}
+        },
+        "140": {
+            "category_id": null,
+            "varname": "systemd_unit_name",
+            "caption": "SystemD Unit Name",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "140",
+            "settings": {}
+        },
+        "141": {
+            "category_id": null,
+            "varname": "cluster_lag_critical",
+            "caption": "Icinga Cluster Zone Lag Critical Threshold",
+            "description": "Critical threshold for log lag in seconds. Applies if the log lag is greater than the threshold.",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeNumber",
+            "format": null,
+            "originalId": "141",
+            "settings": {}
+        },
+        "142": {
+            "category_id": null,
+            "varname": "cluster_lag_warning",
+            "caption": "Icinga Cluster Zone Lag Warning Threshold",
+            "description": "Warning threshold for log lag in seconds. Applies if the log lag is greater than the threshold.",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeNumber",
+            "format": null,
+            "originalId": "142",
+            "settings": {}
+        },
+        "143": {
+            "category_id": null,
+            "varname": "cluster_zone",
+            "caption": "Icinga Cluster Zone Name",
+            "description": "The zone name. Defaults to $host.name$.",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "143",
+            "settings": {}
+        },
+        "151": {
+            "category_id": null,
+            "varname": "mysql_health_database",
+            "caption": "MySQL Database name",
+            "description": "the database's name",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "151",
+            "settings": {}
+        },
+        "152": {
+            "category_id": null,
+            "varname": "mysql_health_environment",
+            "caption": "MySQL Environment settings",
+            "description": "Add a variable to the plugin's environment.",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeArray",
+            "format": null,
+            "originalId": "152",
+            "settings": {}
+        },
+        "153": {
+            "category_id": null,
+            "varname": "mysql_health_hostname",
+            "caption": "MySQL DBMS Hostname",
+            "description": "the database server's hostname",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "153",
+            "settings": {
+                "visibility": "visible"
+            }
+        },
+        "154": {
+            "category_id": null,
+            "varname": "mysql_health_mode",
+            "caption": "MySQL Health Mode",
+            "description": "the mode of the plugin",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeDatalist",
+            "format": null,
+            "originalId": "154",
+            "settings": {
+                "behavior": "strict",
+                "data_type": "string",
+                "datalist": "[NX] MySQL Health Modes List"
+            }
+        },
+        "155": {
+            "category_id": null,
+            "varname": "mysql_health_password",
+            "caption": "MySQL DBMS Password",
+            "description": "the mysql db user's password",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "155",
+            "settings": {
+                "visibility": "hidden"
+            }
+        },
+        "156": {
+            "category_id": null,
+            "varname": "mysql_health_username",
+            "caption": "MySQL DBMS Username",
+            "description": "the mysql db user",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "156",
+            "settings": {}
+        },
+        "157": {
+            "category_id": null,
+            "varname": "mysql_health_critical",
+            "caption": "MySQL Critical",
+            "description": "the critical range",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "157",
+            "settings": {}
+        },
+        "158": {
+            "category_id": null,
+            "varname": "mysql_health_warning",
+            "caption": "MySQL Warning",
+            "description": "the warning range",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "158",
+            "settings": {}
+        },
+        "160": {
+            "category_id": null,
+            "varname": "modem_bytes_seek",
+            "caption": "Modem bytes seek",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "160",
+            "settings": {
+                "visibility": "visible"
+            }
+        },
+        "161": {
+            "category_id": null,
+            "varname": "modem_critical_signal",
+            "caption": "Modem critical signal",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "161",
+            "settings": {
+                "visibility": "visible"
+            }
+        },
+        "162": {
+            "category_id": null,
+            "varname": "modem_log_file",
+            "caption": "Modem log file",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "162",
+            "settings": {
+                "visibility": "visible"
+            }
+        },
+        "163": {
+            "category_id": null,
+            "varname": "modem_warning_signal",
+            "caption": "Modem warning signal",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "163",
+            "settings": {
+                "visibility": "visible"
+            }
+        },
+        "159": {
+            "category_id": null,
+            "varname": "sms_queue",
+            "caption": "SMS Queue",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "157",
+            "settings": {
+                "visibility": "visible"
+            }
+        },
+        "118": {
+            "category_id": null,
+            "varname": "crm_critical_on_resource_failed_only",
+            "caption": "CRM Return Critical only on Resource failure",
+            "description": "If failed Nodes, stopped Resources detected or Standby Nodes sends Warning instead of Critical (default) as long as there are no other errors and there is Quorum",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeBoolean",
+            "format": null,
+            "originalId": "118",
+            "settings": {}
+        },
+        "119": {
+            "category_id": null,
+            "varname": "crm_ignore_standby_nodes",
+            "caption": "CRM Ignore standby nodes",
+            "description": "Ignore any node(s) in standby, by default sends Critical",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeBoolean",
+            "format": null,
+            "originalId": "119",
+            "settings": {}
+        },
+        "120": {
+            "category_id": null,
+            "varname": "crm_plugin_timeout",
+            "caption": "CRM Plugin Timeout",
+            "description": "Seconds before plugin times out",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeNumber",
+            "format": null,
+            "originalId": "120",
+            "settings": {}
+        },
+        "121": {
+            "category_id": null,
+            "varname": "crm_resource_fail_count",
+            "caption": "CRM Resource fail count",
+            "description": "Resource fail count to start warning on [default = 1]",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeNumber",
+            "format": null,
+            "originalId": "121",
+            "settings": {}
+        },
+        "164": {
+            "varname": "crm_ignore_disabled_resources",
+            "caption": "CRM Ignore disabled and unmanaged resources",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeBoolean",
+            "format": null,
+            "settings": {},
+            "category": null
+        },
+        "122": {
+            "category_id": null,
+            "varname": "drbd9_display_ok_resources",
+            "caption": "DRBD Display All OK Resources",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeBoolean",
+            "format": null,
+            "originalId": "122",
+            "settings": {}
+        },
+        "123": {
+            "category_id": null,
+            "varname": "drbd9_display_terse_details",
+            "caption": "DRBD Display Terse Details",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeBoolean",
+            "format": null,
+            "originalId": "123",
+            "settings": {}
+        },
+        "124": {
+            "category_id": null,
+            "varname": "drbd9_exclude_resources",
+            "caption": "DRBD Exclude Resources",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "124",
+            "settings": {}
+        },
+        "125": {
+            "category_id": null,
+            "varname": "drbd9_include_resources",
+            "caption": "DRBD Include Resources",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "125",
+            "settings": {}
+        },
+        "126": {
+            "category_id": null,
+            "varname": "drbd9_list_ok_resources",
+            "caption": "DRBD Display OK Resources",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeBoolean",
+            "format": null,
+            "originalId": "126",
+            "settings": {}
+        },
+        "127": {
+            "category_id": null,
+            "varname": "drbd9_return_unknown_on_no_resources",
+            "caption": "DRBD Return Unknown if No Reources",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeBoolean",
+            "format": null,
+            "originalId": "127",
+            "settings": {}
+        },
+        "10622": {
+            "varname": "mysql_health_name",
+            "caption": "MySQL SQL Statement",
+            "description": "The name of a specific component to check",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "10622",
+            "settings": {},
+            "category": null
+        },
+        "10623": {
+            "varname": "mysql_health_name2",
+            "caption": "MySQL SQL Statement Metric",
+            "description": "The secondary name of a component",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "10623",
+            "settings": {},
+            "category": null
+        },
+        "10430": {
+            "varname": "nx_director_health_check",
+            "caption": "[NX] Director Health check",
+            "description": "Provide a list of director health checks",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeDatalist",
+            "format": null,
+            "originalId": "10430",
+            "settings": {
+                "behavior": "strict",
+                "data_type": "string",
+                "datalist": "[NX] Director health check List"
+            },
+            "category": null
+        },
+        "389": {
+            "uuid": "b512b3c6-63a9-4d6e-8a28-154100000185",
+            "varname": "nx_enable_experimental",
+            "caption": "[NX] enable experimental neteye version",
+            "description": "Check if the mirror has successfully cloned the latest NetEye version",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeBoolean",
+            "format": null,
+            "settings": {},
+            "category": null
+        },
+        "85": {
+            "uuid": "b512b3c6-63a9-4d6e-8a28-154100000055",
+            "varname": "nx_mirror_repo",
+            "caption": "[NX] NetEye mirror repo url",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": null
+        },
+        "88": {
+            "uuid": "b512b3c6-63a9-4d6e-8a28-154100000058",
+            "varname": "nx_src_repo",
+            "caption": "[NX] NetEye source repo url",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": null
+        },
+        "2473": {
+            "uuid": "f952d4cd-effc-4461-beae-e1b3f2a5abdd",
+            "varname": "nx_linux_timesync_status_daemon",
+            "caption": "[NX] Timesync Daemon to monitor",
+            "description": "Time Sync daemon to query. With systemd-timesyncd, the only mode supported is leap_status",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeDatalist",
+            "format": null,
+            "settings": {
+                "behavior": "strict",
+                "data_type": "string",
+                "datalist": "[NX] Linux Timesync Daemons List"
+            },
+            "category": null
+        }
+    }
+}

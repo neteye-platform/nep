@@ -1,0 +1,133 @@
+{
+    "DataList": {
+        "[NX] Centreon IBM Storage Storwize Mode List": {
+            "list_name": "[NX] Centreon IBM Storage Storwize Mode List",
+            "owner": "admin191",
+            "originalId": "147",
+            "entries": [
+                {
+                    "entry_name": "components",
+                    "entry_value": "components",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "eventlog",
+                    "entry_value": "eventlog",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "pool-usage",
+                    "entry_value": "pool-usage",
+                    "format": "string",
+                    "allowed_roles": null
+                }
+            ]
+        },
+        "[NX] Centreon IBM Storage Storwize Component List": {
+            "list_name": "[NX] Centreon IBM Storage Storwize Component List",
+            "owner": "root",
+            "originalId": "148",
+            "entries": [
+                {
+                    "entry_name": "array",
+                    "entry_value": "array",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "drive",
+                    "entry_value": "drive",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "enclosure",
+                    "entry_value": "enclosure",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "enclosurebattery",
+                    "entry_value": "enclosurebattery",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "enclosurecanister",
+                    "entry_value": "enclosurecanister",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "enclosurepsu",
+                    "entry_value": "enclosurepsu",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "host",
+                    "entry_value": "host",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "portfc",
+                    "entry_value": "portfc",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "portsas",
+                    "entry_value": "portsas",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "vdisk",
+                    "entry_value": "vdisk",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "node",
+                    "entry_value": "node",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "quorum",
+                    "entry_value": "quorum",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "mdisk",
+                    "entry_value": "mdisk",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "systemstats",
+                    "entry_value": "systemstats",
+                    "format": "string",
+                    "allowed_roles": null
+                }
+            ]
+        },
+        "[NX] Centreon Storage IBM DS Mode List": {
+            "list_name": "[NX] Centreon Storage IBM DS Mode List",
+            "owner": "admin191",
+            "originalId": "145",
+            "entries": [
+                {
+                    "entry_name": "health-status",
+                    "entry_value": "health-status",
+                    "format": "string",
+                    "allowed_roles": null
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,417 @@
+{
+    "ServiceSet": {
+        "nx-ss-hana-instance-all": {
+            "assign_filter": "\"nx-ht-hana-instance\"=host.templates",
+            "description": "Serviceset to monitor SAP Instances (all types)",
+            "object_name": "nx-ss-hana-instance-all",
+            "object_type": "template",
+            "services": [
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-hana-instance-status"
+                    ],
+                    "object_name": "HANA Instance Status",
+                    "object_type": "object",
+                    "uuid": "f67380a2-8951-4898-9000-c7a740999881"
+                }
+            ],
+            "uuid": "0525f677-86a2-4b3f-b5b7-742aca70ca32"
+        },
+        "nx-ss-sap-instance-all": {
+            "assign_filter": "\"nx-ht-sap-instance\"=host.templates",
+            "description": "Serviceset to monitor SAP Instances (all types)",
+            "object_name": "nx-ss-sap-instance-all",
+            "object_type": "template",
+            "services": [
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-sap-instance-status"
+                    ],
+                    "object_name": "SAP Instance Status",
+                    "object_type": "object",
+                    "uuid": "3517b640-37ff-4fd6-963d-1a6bf39a7e87"
+                }
+            ],
+            "uuid": "d796368a-da0f-4b88-821f-256a81e3ca0e"
+        },
+        "nx-ss-sap-instance-ascs-scs": {
+            "assign_filter": "\"nx-ht-sap-instance\"=host.templates&host.vars.nx_sap_instance_type=%5B%22ASCS%22%2C%22SCS%22%5D",
+            "description": "Serviceset to monitor SAP ASCS- and SCS-Instances",
+            "object_name": "nx-ss-sap-instance-ascs-scs",
+            "object_type": "template",
+            "services": [
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-sap-system-enqueue-stats"
+                    ],
+                    "object_name": "SAP Instance Enqueue Status",
+                    "object_type": "object",
+                    "uuid": "f36630a6-cf75-4111-98d1-d57b0eb7e40e",
+                    "vars": {
+                        "nx_sap_sapcontrol_crit": "90",
+                        "nx_sap_sapcontrol_warn": "80"
+                    }
+                },
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-sap-instance-version-info"
+                    ],
+                    "object_name": "SAP Instance Version Info",
+                    "object_type": "object",
+                    "uuid": "51a77b79-542f-4300-a58b-eea571bd590a"
+                }
+            ],
+            "uuid": "c3ed618b-3f29-4c3c-8613-303391329694"
+        },
+        "nx-ss-sap-instance-dialog": {
+            "assign_filter": "\"nx-ht-sap-instance\"=host.templates&host.vars.nx_sap_instance_type=%5B%22D%22%2C%22DVEBMGS%22%5D",
+            "description": "Serviceset to monitor SAP Dialog-Instances",
+            "object_name": "nx-ss-sap-instance-dialog",
+            "object_type": "template",
+            "services": [
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-sap-instance-wp-table"
+                    ],
+                    "object_name": "SAP Instance Dialog free",
+                    "object_type": "object",
+                    "uuid": "18c299f5-9de1-4bf3-bfbb-2f56046f375a",
+                    "vars": {
+                        "nx_sap_sapcontrol_crit": "1",
+                        "nx_sap_sapcontrol_warn": "3"
+                    }
+                },
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-sap-instance-wp-table"
+                    ],
+                    "object_name": "SAP Instance Dialog privmode",
+                    "object_type": "object",
+                    "uuid": "6fa79d06-192e-4570-8c14-79fbfff07e40",
+                    "vars": {
+                        "nx_sap_sapcontrol_crit": "4",
+                        "nx_sap_sapcontrol_pattern": "PRIV",
+                        "nx_sap_sapcontrol_warn": "2"
+                    }
+                },
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-sap-instance-queue-stats"
+                    ],
+                    "object_name": "SAP Instance Queue Stats",
+                    "object_type": "object",
+                    "uuid": "4e60555c-9df4-4691-be22-4c546c8eb118",
+                    "vars": {
+                        "nx_sap_sapcontrol_crit": "90",
+                        "nx_sap_sapcontrol_warn": "70"
+                    }
+                },
+                {
+                    "disabled": true,
+                    "fields": [],
+                    "imports": [
+                        "nx-st-sap-instance-version-info"
+                    ],
+                    "object_name": "SAP Instance Version Info",
+                    "object_type": "object",
+                    "uuid": "29c96c66-2094-43d4-a37e-ea392c0485d8"
+                }
+            ],
+            "uuid": "a15b88ff-a1dd-4234-b2ee-fcbc040ce7ba"
+        },
+        "nx-ss-sap-instance-has-messageserver": {
+            "assign_filter": "\"nx-ht-sap-instance\"=host.templates&host.vars.nx_sap_instance_type=%5B%22ASCS%22%2C%22DVEBMGS%22%5D&host.vars.nx_sap_instance_is_msserver=true",
+            "description": "Serviceset to monitor SAP ABAP Instances containing a message-server",
+            "object_name": "nx-ss-sap-instance-has-messageserver",
+            "object_type": "template",
+            "services": [
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-sap-instance-connection-time"
+                    ],
+                    "object_name": "SAP Instance Connection Time",
+                    "object_type": "object",
+                    "uuid": "8fdfc960-4cba-45dc-89d4-6de4fb558f26",
+                    "vars": {
+                        "nx_sap_saphealth_group": "SPACE",
+                        "nx_sap_saphealth_mshost": "$host.address$",
+                        "nx_sap_saphealth_msserv": "36$host.vars.nx_sap_instance_number$",
+                        "nx_sap_saphealth_sysnr": "$host.vars.nx_sap_instance_number$"
+                    }
+                },
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-sap-system-failed-jobs"
+                    ],
+                    "object_name": "SAP System Failed Jobs last 12h",
+                    "object_type": "object",
+                    "uuid": "8b95f326-fe67-40ee-a1c9-bfbc23b3af24",
+                    "vars": {
+                        "nx_sap_saphealth_group": "SPACE",
+                        "nx_sap_saphealth_lookback": "43200",
+                        "nx_sap_saphealth_mshost": "$host.address$",
+                        "nx_sap_saphealth_msserv": "36$host.vars.nx_sap_instance_number$",
+                        "nx_sap_saphealth_sysnr": "$host.vars.nx_sap_instance_number$"
+                    }
+                },
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-sap-system-failed-updates"
+                    ],
+                    "object_name": "SAP System Failed Updates last 24h",
+                    "object_type": "object",
+                    "uuid": "43b83199-afa8-4475-a804-e74334d6d40f",
+                    "vars": {
+                        "nx_sap_saphealth_critical": "20",
+                        "nx_sap_saphealth_group": "SPACE",
+                        "nx_sap_saphealth_lookback": "86400",
+                        "nx_sap_saphealth_mshost": "$host.address$",
+                        "nx_sap_saphealth_msserv": "36$host.vars.nx_sap_instance_number$",
+                        "nx_sap_saphealth_sysnr": "$host.vars.nx_sap_instance_number$",
+                        "nx_sap_saphealth_warning": "10"
+                    }
+                },
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-sap-system-ccms-mte-check"
+                    ],
+                    "object_name": "SAP System License expiration",
+                    "object_type": "object",
+                    "uuid": "1655664b-0022-47be-8786-9572c54e3aec",
+                    "vars": {
+                        "nx_sap_saphealth_group": "SPACE",
+                        "nx_sap_saphealth_mshost": "$host.address$",
+                        "nx_sap_saphealth_msserv": "36$host.vars.nx_sap_instance_number$",
+                        "nx_sap_saphealth_name": "SAP CCMS Technical Expert Monitors",
+                        "nx_sap_saphealth_name2": "All Contexts on Local Application Server",
+                        "nx_sap_saphealth_name3": ".*#SAPLicense.*#.*SAPLicense status",
+                        "nx_sap_saphealth_regexp": "1",
+                        "nx_sap_saphealth_report": "long",
+                        "nx_sap_saphealth_separator": "#"
+                    }
+                },
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-sap-system-shortdumps-recurrence"
+                    ],
+                    "object_name": "SAP System Shortdumps Recurrence last 12h",
+                    "object_type": "object",
+                    "uuid": "2f75844e-f4e2-4274-bb3c-4307c3541d4c",
+                    "vars": {
+                        "nx_sap_saphealth_criticalx": [
+                            "shortdumps=100",
+                            "max_unique_shortdumps=20"
+                        ],
+                        "nx_sap_saphealth_group": "SPACE",
+                        "nx_sap_saphealth_lookback": "43200",
+                        "nx_sap_saphealth_mshost": "$host.address$",
+                        "nx_sap_saphealth_msserv": "36$host.vars.nx_sap_instance_number$",
+                        "nx_sap_saphealth_report": "long",
+                        "nx_sap_saphealth_sysnr": "$host.vars.nx_sap_instance_number$",
+                        "nx_sap_saphealth_warningx": [
+                            "shortdumps=80",
+                            "max_unique_shortdumps=10"
+                        ]
+                    }
+                },
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-sap-system-shortdumps-count"
+                    ],
+                    "object_name": "SAP System Shortdumps last 15m",
+                    "object_type": "object",
+                    "uuid": "5c73a0da-c79f-411e-bd3a-982b24d235ea",
+                    "vars": {
+                        "nx_sap_saphealth_critical": "5",
+                        "nx_sap_saphealth_group": "SPACE",
+                        "nx_sap_saphealth_lookback": "900",
+                        "nx_sap_saphealth_mshost": "$host.address$",
+                        "nx_sap_saphealth_msserv": "36$host.vars.nx_sap_instance_number$",
+                        "nx_sap_saphealth_report": "long",
+                        "nx_sap_saphealth_sysnr": "$host.vars.nx_sap_instance_number$",
+                        "nx_sap_saphealth_warning": "1"
+                    }
+                },
+                {
+                    "disabled": true,
+                    "fields": [],
+                    "imports": [
+                        "nx-st-sap-system-ccms-mte-check"
+                    ],
+                    "object_name": "SAP System Update status",
+                    "object_type": "object",
+                    "uuid": "579b390f-8e24-4959-b625-5eee44676a11",
+                    "vars": {
+                        "nx_sap_saphealth_critical": "200",
+                        "nx_sap_saphealth_group": "SPACE",
+                        "nx_sap_saphealth_lookback": "900",
+                        "nx_sap_saphealth_mshost": "$host.address$",
+                        "nx_sap_saphealth_msserv": "36$host.vars.nx_sap_instance_number$",
+                        "nx_sap_saphealth_mtelong": "1",
+                        "nx_sap_saphealth_multiline": "1",
+                        "nx_sap_saphealth_name": "SAP CCMS Technical Expert Monitors",
+                        "nx_sap_saphealth_name2": "All Monitoring Contexts",
+                        "nx_sap_saphealth_name3": "Update#UpdateServices",
+                        "nx_sap_saphealth_regexp": "1",
+                        "nx_sap_saphealth_report": "long",
+                        "nx_sap_saphealth_separator": "#",
+                        "nx_sap_saphealth_sysnr": "$host.vars.nx_sap_instance_number$",
+                        "nx_sap_saphealth_timeout": "120",
+                        "nx_sap_saphealth_warning": "100"
+                    }
+                },
+                {
+                    "disabled": true,
+                    "fields": [],
+                    "imports": [
+                        "nx-st-sap-system-ccms-mte-check"
+                    ],
+                    "object_name": "SAP System tRFC SM58",
+                    "object_type": "object",
+                    "uuid": "00ffcf3f-04d6-4acd-b622-f15719e21f2b",
+                    "vars": {
+                        "nx_sap_saphealth_critical": "200",
+                        "nx_sap_saphealth_criticalx": [
+                            ".*#Total Calls=5000",
+                            ".*#Calls w/Execution Errors - SYSFAIL=1",
+                            ".*#Calls w/Communication Errors - CPICERR=100"
+                        ],
+                        "nx_sap_saphealth_group": "SPACE",
+                        "nx_sap_saphealth_lookback": "900",
+                        "nx_sap_saphealth_mshost": "$host.address$",
+                        "nx_sap_saphealth_msserv": "36$host.vars.nx_sap_instance_number$",
+                        "nx_sap_saphealth_mtelong": "1",
+                        "nx_sap_saphealth_multiline": "1",
+                        "nx_sap_saphealth_name": "SAP CCMS Monitor Templates",
+                        "nx_sap_saphealth_name2": "Communications",
+                        "nx_sap_saphealth_name3": ".*#Transactional RFC and Queued RFC#ARFC.*",
+                        "nx_sap_saphealth_regexp": "1",
+                        "nx_sap_saphealth_report": "long",
+                        "nx_sap_saphealth_separator": "#",
+                        "nx_sap_saphealth_sysnr": "$host.vars.nx_sap_instance_number$",
+                        "nx_sap_saphealth_timeout": "120",
+                        "nx_sap_saphealth_warning": "100",
+                        "nx_sap_saphealth_warningx": [
+                            ".*#Total Calls=2500",
+                            ".*#Calls w/Execution Errors - SYSFAIL=0",
+                            ".*#Calls w/Communication Errors - CPICERR=0"
+                        ]
+                    }
+                },
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-sap-system-ccms-mte-check"
+                    ],
+                    "object_name": "SAP System tRFC SM58 Communication Errors",
+                    "object_type": "object",
+                    "uuid": "f0fbcff9-f2ac-4edf-a1cc-dfbdeaa57a00",
+                    "vars": {
+                        "nx_sap_saphealth_critical": "200",
+                        "nx_sap_saphealth_criticalx": [
+                            ".*#Calls w/Communication Errors - CPICERR=100"
+                        ],
+                        "nx_sap_saphealth_group": "SPACE",
+                        "nx_sap_saphealth_lookback": "900",
+                        "nx_sap_saphealth_mshost": "$host.address$",
+                        "nx_sap_saphealth_msserv": "36$host.vars.nx_sap_instance_number$",
+                        "nx_sap_saphealth_mtelong": "1",
+                        "nx_sap_saphealth_multiline": "1",
+                        "nx_sap_saphealth_name": "SAP CCMS Monitor Templates",
+                        "nx_sap_saphealth_name2": "Communications",
+                        "nx_sap_saphealth_name3": ".*#Transactional RFC and Queued RFC#ARFCSSTATE: Outbound tRFC Calls#Calls w/Communication Errors - CPICERR.*",
+                        "nx_sap_saphealth_regexp": "1",
+                        "nx_sap_saphealth_report": "long",
+                        "nx_sap_saphealth_separator": "#",
+                        "nx_sap_saphealth_sysnr": "$host.vars.nx_sap_instance_number$",
+                        "nx_sap_saphealth_timeout": "120",
+                        "nx_sap_saphealth_warning": "100",
+                        "nx_sap_saphealth_warningx": [
+                            ".*#Calls w/Communication Errors - CPICERR=0"
+                        ]
+                    }
+                },
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-sap-system-ccms-mte-check"
+                    ],
+                    "object_name": "SAP System tRFC SM58 Execution Errors",
+                    "object_type": "object",
+                    "uuid": "2fa7eb8c-21d2-45b8-90e3-1b964cc9cbc4",
+                    "vars": {
+                        "nx_sap_saphealth_critical": "200",
+                        "nx_sap_saphealth_criticalx": [
+                            ".*#Calls w/Execution Errors - SYSFAIL = 2"
+                        ],
+                        "nx_sap_saphealth_group": "SPACE",
+                        "nx_sap_saphealth_lookback": "900",
+                        "nx_sap_saphealth_mshost": "$host.address$",
+                        "nx_sap_saphealth_msserv": "36$host.vars.nx_sap_instance_number$",
+                        "nx_sap_saphealth_mtelong": "1",
+                        "nx_sap_saphealth_multiline": "1",
+                        "nx_sap_saphealth_name": "SAP CCMS Monitor Templates",
+                        "nx_sap_saphealth_name2": "Communications",
+                        "nx_sap_saphealth_name3": ".*Transactional RFC and Queued RFC#ARFCSSTATE: Outbound tRFC Calls#Calls w/Execution Errors - SYSFAIL",
+                        "nx_sap_saphealth_regexp": "1",
+                        "nx_sap_saphealth_report": "long",
+                        "nx_sap_saphealth_separator": "#",
+                        "nx_sap_saphealth_sysnr": "$host.vars.nx_sap_instance_number$",
+                        "nx_sap_saphealth_timeout": "120",
+                        "nx_sap_saphealth_warning": "100",
+                        "nx_sap_saphealth_warningx": [
+                            ".*#Calls w/Execution Errors - SYSFAIL = 1"
+                        ]
+                    }
+                },
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-sap-system-ccms-mte-check"
+                    ],
+                    "object_name": "SAP System tRFC SM58 Total Calls",
+                    "object_type": "object",
+                    "uuid": "570febcc-4d84-4948-a72c-4b5014a30e29",
+                    "vars": {
+                        "nx_sap_saphealth_critical": "200",
+                        "nx_sap_saphealth_criticalx": [
+                            ".*#Total Calls=5000"
+                        ],
+                        "nx_sap_saphealth_group": "SPACE",
+                        "nx_sap_saphealth_lookback": "900",
+                        "nx_sap_saphealth_mshost": "$host.address$",
+                        "nx_sap_saphealth_msserv": "36$host.vars.nx_sap_instance_number$",
+                        "nx_sap_saphealth_mtelong": "1",
+                        "nx_sap_saphealth_multiline": "1",
+                        "nx_sap_saphealth_name": "SAP CCMS Monitor Templates",
+                        "nx_sap_saphealth_name2": "Communications",
+                        "nx_sap_saphealth_name3": ".*Transactional RFC and Queued RFC#ARFCRSTATE: Inbound tRFC/qRFC Calls#Total Calls",
+                        "nx_sap_saphealth_regexp": "1",
+                        "nx_sap_saphealth_report": "long",
+                        "nx_sap_saphealth_separator": "#",
+                        "nx_sap_saphealth_sysnr": "$host.vars.nx_sap_instance_number$",
+                        "nx_sap_saphealth_timeout": "120",
+                        "nx_sap_saphealth_warning": "100",
+                        "nx_sap_saphealth_warningx": [
+                            ".*#Total Calls=2500"
+                        ]
+                    }
+                }
+            ],
+            "uuid": "45a6d749-9bc5-491e-850a-7db2bb23118c"
+        }
+    }
+}
