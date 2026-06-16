@@ -1,0 +1,4 @@
+*.pyc
+# Phyton tests
+*.coverage
+.idea
