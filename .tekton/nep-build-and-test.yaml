@@ -42,5 +42,5 @@ spec:
     - name: version
       value: "{{ target_branch }}"
     - name: sourceGitBranch
-      value: "{{ target_branch }}"
+      value: "{{ source_branch }}"
 
