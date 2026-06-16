@@ -1,9 +1,9 @@
 apiVersion: tekton.dev/v1
 kind: PipelineRun
 metadata:
-  name: nep-build-and-release
+  name: nep-build-and-test
   annotations:
-    pipelinesascode.tekton.dev/on-event: "[push]"
+    pipelinesascode.tekton.dev/on-event: "[pull_request]"
     pipelinesascode.tekton.dev/on-target-branch: "[main, maint-*]"
     pipelinesascode.tekton.dev/max-keep-runs: "5"
 spec:
@@ -36,10 +36,11 @@ spec:
     # This project is used only by RD to test the build so we don't want to release packages in case we touch
     # the spec file. If we need to do so we can run the pipeline manually
     - name: useTestingRepos
-      value: "false"
+      value: "true"
     - name: taskRevision
       value: "master"
-    - name: author
-      value: "{{ sender }}"
-    - name: sourceGitBranch
+    - name: version
       value: "{{ target_branch }}"
+    - name: sourceGitBranch
+      value: "{{ source_branch }}"
+
