@@ -34,7 +34,7 @@ spec:
               storage: 1Gi
   params:
     - name: version
-      value: "{{ source_branch }}"
+      value: "{{ target_branch }}"
     - name: projects
       value: "gh-pub:nep:{{ source_branch }}"
     - name: releaseTag
