@@ -1,9 +1,9 @@
 apiVersion: tekton.dev/v1
 kind: PipelineRun
 metadata:
-  name: nep-build-and-test
+  name: nep-build-and-release
   annotations:
-    pipelinesascode.tekton.dev/on-event: "[pull_request]"
+    pipelinesascode.tekton.dev/on-event: "[push]"
     pipelinesascode.tekton.dev/on-target-branch: "[main, maint-*]"
     pipelinesascode.tekton.dev/max-keep-runs: "5"
 spec:
@@ -14,7 +14,7 @@ spec:
       - name: gitToken
         value: "git-resolver"
       - name: pathInRepo
-        value: rhel8-neteye-build/contrib-build-and-release.yaml
+        value: rhel8-neteye-build/rhel8-neteye-build.yaml
       - name: revision
         value: "master"
   timeouts:
@@ -34,11 +34,11 @@ spec:
               storage: 1Gi
   params:
     - name: version
-      value: "{{ source_branch }}"
+      value: "{{ target_branch }}"
     - name: projects
-      value: "gh-pub:nep:{{ source_branch }}"
+      value: "gh-pub:nep:{{ target_branch }}"
     - name: releaseTag
-      value: "alpha"
+      value: "contrib"
     - name: skipTests
       value: "true"
     - name: destroyVMs
