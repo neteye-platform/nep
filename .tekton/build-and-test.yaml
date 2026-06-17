@@ -14,7 +14,7 @@ spec:
       - name: gitToken
         value: "git-resolver"
       - name: pathInRepo
-        value: rhel8-neteye-build/contrib-build-and-release.yaml
+        value: rhel8-neteye-build/rhel8-neteye-build.yaml
       - name: revision
         value: "master"
   timeouts:
@@ -33,14 +33,13 @@ spec:
             requests:
               storage: 1Gi
   params:
-    # This project is used only by RD to test the build so we don't want to release packages in case we touch
-    # the spec file. If we need to do so we can run the pipeline manually
-    - name: useTestingRepos
-      value: "true"
-    - name: taskRevision
-      value: "master"
     - name: version
       value: "{{ target_branch }}"
-    - name: sourceGitBranch
-      value: "{{ source_branch }}"
-
+    - name: projects
+      value: "gh-pub:nep:{{ source_branch }}"
+    - name: releaseTag
+      value: "alpha"
+    - name: skipTests
+      value: "true"
+    - name: destroyVMs
+      value: "true"
