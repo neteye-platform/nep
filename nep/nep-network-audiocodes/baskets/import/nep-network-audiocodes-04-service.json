@@ -1,0 +1,939 @@
+{
+  "ServiceTemplate": {
+    "nx-st-agentless-snmp-centreon-audiocodes-cpu": {
+      "check_command": "nx-c-centreon-audiocodes-cpu",
+      "fields": [
+        {
+          "datafield_id": 2857,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 2860,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 2863,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 2869,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 2864,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 2866,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 2867,
+          "is_required": "n",
+          "var_filter": null
+        }
+      ],
+      "imports": "nx-st-agentless-snmp-centreon",
+      "object_name": "nx-st-agentless-snmp-centreon-audiocodes-cpu",
+      "object_type": "template"
+    },
+    "nx-st-agentless-snmp-centreon-audiocodes-hardware": {
+      "check_command": "nx-c-centreon-audiocodes-hardware",
+      "fields": [
+        {
+          "datafield_id": 2873,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 2876,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 2879,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 2881,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 2884,
+          "is_required": "n",
+          "var_filter": null
+        }
+      ],
+      "imports": "nx-st-agentless-snmp-centreon",
+      "object_name": "nx-st-agentless-snmp-centreon-audiocodes-hardware",
+      "object_type": "template"
+    },
+    "nx-st-agentless-snmp-centreon-audiocodes-interfaces": {
+      "check_command": "nx-c-centreon-audiocodes-interfaces",
+      "fields": [
+        {
+          "datafield_id": 3109,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 3112,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 3113,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 2887,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 2888,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 2890,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 2893,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 3115,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 2896,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 2899,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 2900,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 2902,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 2903,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 2112,
+          "is_required": "n",
+          "var_filter": null
+        }
+      ],
+      "imports": "nx-st-agentless-snmp-centreon",
+      "object_name": "nx-st-agentless-snmp-centreon-audiocodes-interfaces",
+      "object_type": "template",
+      "vars": {
+        "nx_centreon_plugin_retention_statefile_dir": "/neteye/shared/icinga2/data/lib/centreon-plugins/"
+      }
+    },
+    "nx-st-agentless-snmp-centreon-audiocodes-sbc-calls": {
+      "check_command": "nx-c-centreon-audiocodes-sbc-calls",
+      "fields": [
+        {
+          "datafield_id": 2869,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 2906,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 2909,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 2912,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 2914,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 2917,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 2939,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 2935,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 2918,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 2920,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 2923,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 2926,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 2927,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 2930,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 2938,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 2941,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 2933,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 2112,
+          "is_required": "y",
+          "var_filter": null
+        }
+      ],
+      "imports": "nx-st-agentless-snmp-centreon",
+      "object_name": "nx-st-agentless-snmp-centreon-audiocodes-sbc-calls",
+      "object_type": "template",
+      "vars": {
+        "nx_centreon_plugin_retention_statefile_dir": "/neteye/shared/icinga2/data/lib/centreon-plugins/"
+      }
+    },
+    "nx-st-agentless-snmp-centreon-audiocodes-trunk-status": {
+      "check_command": "nx-c-centreon-audiocodes-trunk-status",
+      "fields": [
+        {
+          "datafield_id": 2944,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 2948,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 2950,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 2953,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 2956,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 2957,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 2959,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 2947,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 2112,
+          "is_required": "n",
+          "var_filter": null
+        }
+      ],
+      "imports": "nx-st-agentless-snmp-centreon",
+      "object_name": "nx-st-agentless-snmp-centreon-audiocodes-trunk-status",
+      "object_type": "template",
+      "vars": {
+        "nx_centreon_plugin_retention_statefile_dir": "/neteye/shared/icinga2/data/lib/centreon-plugins/"
+      }
+    },
+    "nx-st-agentless-snmp-centreon-audiocodes-memory": {
+      "check_command": "nx-c-centreon-audiocodes-memory",
+      "fields": [
+        {
+          "datafield_id": 2860,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 2870,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 2863,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 2869,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 2866,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 2872,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 2867,
+          "is_required": "n",
+          "var_filter": null
+        }
+      ],
+      "imports": "nx-st-agentless-snmp-centreon",
+      "object_name": "nx-st-agentless-snmp-centreon-audiocodes-memory",
+      "object_type": "template"
+    }
+  },
+  "Datafield": {
+    "2857": {
+      "varname": "nx_centreon_audiocodes_critical_cpu_utilization",
+      "caption": "[NX] Centreon Audiocodes Critical CPU",
+      "description": null,
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+      "format": null,
+      "settings": {
+        "visibility": "visible"
+      },
+      "category": "[NX] Centreon plugin Audiocodes"
+    },
+    "2860": {
+      "varname": "nx_centreon_audiocodes_critical_data",
+      "caption": "[NX] Centreon Audiocodes Critical Data",
+      "description": null,
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+      "format": null,
+      "settings": {
+        "visibility": "visible"
+      },
+      "category": "[NX] Centreon plugin Audiocodes"
+    },
+    "2863": {
+      "varname": "nx_centreon_audiocodes_critical_voip",
+      "caption": "[NX] Centreon Audiocodes Critical VoIP",
+      "description": null,
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+      "format": null,
+      "settings": {
+        "visibility": "visible"
+      },
+      "category": "[NX] Centreon plugin Audiocodes"
+    },
+    "2869": {
+      "varname": "nx_centreon_audiocodes_filter_counters",
+      "caption": "[NX] Centreon Audiocodes Filter Counters",
+      "description": "Only display some counters (regexp can be used). Example: --filter-counters='^voip$'",
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+      "format": null,
+      "settings": {
+        "visibility": "visible"
+      },
+      "category": "[NX] Centreon plugin Audiocodes"
+    },
+    "2864": {
+      "varname": "nx_centreon_audiocodes_warning_cpu_utilization",
+      "caption": "[NX] Centreon Audiocodes Warning CPU",
+      "description": null,
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+      "format": null,
+      "settings": {
+        "visibility": "visible"
+      },
+      "category": "[NX] Centreon plugin Audiocodes"
+    },
+    "2866": {
+      "varname": "nx_centreon_audiocodes_warning_data",
+      "caption": "[NX] Centreon Audiocodes Warning Data",
+      "description": null,
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+      "format": null,
+      "settings": {
+        "visibility": "visible"
+      },
+      "category": "[NX] Centreon plugin Audiocodes"
+    },
+    "2867": {
+      "varname": "nx_centreon_audiocodes_warning_voip",
+      "caption": "[NX] Centreon Audiocodes Warning VoIP",
+      "description": null,
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+      "format": null,
+      "settings": {
+        "visibility": "visible"
+      },
+      "category": "[NX] Centreon plugin Audiocodes"
+    },
+    "2873": {
+      "varname": "nx_centreon_audiocodes_hardware_absent_problem",
+      "caption": "[NX] Centreon Audiocodes Hardware Absent Problem",
+      "description": "Return an error if an entity is not 'present' (default is skipping) (comma seperated list) Can be specific or global: --absent-problem=psu,1",
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+      "format": null,
+      "settings": {
+        "visibility": "visible"
+      },
+      "category": "[NX] Centreon plugin Audiocodes"
+    },
+    "2876": {
+      "varname": "nx_centreon_audiocodes_hardware_component",
+      "caption": "[NX] Centreon Audiocodes Hardware Component",
+      "description": "Which component to check (Default: '.*'). Can be: 'fantray', 'module', 'psu'.",
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+      "format": null,
+      "settings": {
+        "visibility": "visible"
+      },
+      "category": "[NX] Centreon plugin Audiocodes"
+    },
+    "2879": {
+      "varname": "nx_centreon_audiocodes_hardware_filter",
+      "caption": "[NX] Centreon Audiocodes Hardware Filter",
+      "description": "Exclude the items given as a comma-separated list (example: --filter=fan --filter=psu). You can also exclude items from specific instances: --filter=fantray,1",
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+      "format": null,
+      "settings": {
+        "visibility": "visible"
+      },
+      "category": "[NX] Centreon plugin Audiocodes"
+    },
+    "2881": {
+      "varname": "nx_centreon_audiocodes_hardware_no_component",
+      "caption": "[NX] Centreon Audiocodes Hardware No Component",
+      "description": "Define the expected status if no components are found (default: critical).",
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+      "format": null,
+      "settings": {
+        "visibility": "visible"
+      },
+      "category": "[NX] Centreon plugin Audiocodes"
+    },
+    "2884": {
+      "varname": "nx_centreon_audiocodes_hardware_threshold_overload",
+      "caption": "[NX] Centreon Audiocodes Hardware Threshold Overload",
+      "description": "Use this option to override the status returned by the plugin when the status label matches a regular expression (syntax: section,[instance,]status,regexp). Example: --threshold-overload='psu,CRITICAL,^(?!(cleared)$)'",
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+      "format": null,
+      "settings": {
+        "visibility": "visible"
+      },
+      "category": "[NX] Centreon plugin Audiocodes"
+    },
+    "3109": {
+      "varname": "nx_centreon_audiocodes_add_errors",
+      "caption": "[NX] Centreon Audiocodes Interfaces Add Errors",
+      "description": "Check interface errors.",
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeBoolean",
+      "format": null,
+      "settings": {},
+      "category": "[NX] Centreon plugin Audiocodes"
+    },
+    "3112": {
+      "varname": "nx_centreon_audiocodes_add_speed",
+      "caption": "[NX] Centreon Audiocodes Interfaces Add Speed",
+      "description": "Check interface speed.",
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeBoolean",
+      "format": null,
+      "settings": {},
+      "category": "[NX] Centreon plugin Audiocodes"
+    },
+    "3113": {
+      "varname": "nx_centreon_audiocodes_add_traffic",
+      "caption": "[NX] Centreon Audiocodes Interfaces Add Traffic",
+      "description": "Check interface traffic.",
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeBoolean",
+      "format": null,
+      "settings": {},
+      "category": "[NX] Centreon plugin Audiocodes"
+    },
+    "2887": {
+      "varname": "nx_centreon_audiocodes_interfaces_critical_in_traffic",
+      "caption": "[NX] Centreon Audiocodes Interfaces Critical In-Traffic",
+      "description": "Set critical threshold for in-traffic",
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+      "format": null,
+      "settings": {
+        "visibility": "visible"
+      },
+      "category": "[NX] Centreon plugin Audiocodes"
+    },
+    "2888": {
+      "varname": "nx_centreon_audiocodes_interfaces_critical_out_traffic",
+      "caption": "[NX] Centreon Audiocodes Interfaces Critical Out-Traffic",
+      "description": "Set critical threshold for out-traffic",
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+      "format": null,
+      "settings": {
+        "visibility": "visible"
+      },
+      "category": "[NX] Centreon plugin Audiocodes"
+    },
+    "2890": {
+      "varname": "nx_centreon_audiocodes_interfaces_critical_speed",
+      "caption": "[NX] Centreon Audiocodes Interfaces Critical Speed",
+      "description": "(b/s)",
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+      "format": null,
+      "settings": {
+        "visibility": "visible"
+      },
+      "category": "[NX] Centreon plugin Audiocodes"
+    },
+    "2893": {
+      "varname": "nx_centreon_audiocodes_interfaces_interface",
+      "caption": "[NX] Centreon Audiocodes Interfaces Interface",
+      "description": "Set the interface (number expected) ex: 1,2,... (empty means 'check all interface').",
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+      "format": null,
+      "settings": {
+        "visibility": "visible"
+      },
+      "category": "[NX] Centreon plugin Audiocodes"
+    },
+    "3115": {
+      "varname": "nx_centreon_audiocodes_interfaces_name",
+      "caption": "[NX] Centreon Audiocodes Interfaces Interface Name",
+      "description": "Allows you to define the interface (in option --interface) by name instead of OID index. The name matching mode supports regular expressions.",
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeBoolean",
+      "format": null,
+      "settings": {},
+      "category": "[NX] Centreon plugin Audiocodes"
+    },
+    "2896": {
+      "varname": "nx_centreon_audiocodes_interfaces_speed",
+      "caption": "[NX] Centreon Audiocodes Interfaces Speed",
+      "description": "Set interface speed for incoming/outgoing traffic (in Mb).",
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+      "format": null,
+      "settings": {
+        "visibility": "visible"
+      },
+      "category": "[NX] Centreon plugin Audiocodes"
+    },
+    "2899": {
+      "varname": "nx_centreon_audiocodes_interfaces_units_traffic",
+      "caption": "[NX] Centreon Audiocodes Interfaces Units Traffic",
+      "description": "Units of thresholds for the traffic (default: 'percent_delta') ('percent_delta', 'bps', 'counter').",
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+      "format": null,
+      "settings": {
+        "visibility": "visible"
+      },
+      "category": "[NX] Centreon plugin Audiocodes"
+    },
+    "2900": {
+      "varname": "nx_centreon_audiocodes_interfaces_warning_in_traffic",
+      "caption": "[NX] Centreon Audiocodes Interfaces Warning In-Traffic",
+      "description": "Set warning threshold for in-traffic",
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+      "format": null,
+      "settings": {
+        "visibility": "visible"
+      },
+      "category": "[NX] Centreon plugin Audiocodes"
+    },
+    "2902": {
+      "varname": "nx_centreon_audiocodes_interfaces_warning_out_traffic",
+      "caption": "[NX] Centreon Audiocodes Interfaces Warning Out-Traffic",
+      "description": "Set warning threshold for out-traffic",
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+      "format": null,
+      "settings": {
+        "visibility": "visible"
+      },
+      "category": "[NX] Centreon plugin Audiocodes"
+    },
+    "2903": {
+      "varname": "nx_centreon_audiocodes_interfaces_warning_speed",
+      "caption": "[NX] Centreon Audiocodes Interfaces Warning Speed",
+      "description": "(b/s)",
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+      "format": null,
+      "settings": {
+        "visibility": "visible"
+      },
+      "category": "[NX] Centreon plugin Audiocodes"
+    },
+    "2112": {
+      "varname": "nx_centreon_plugin_retention_statefile_dir",
+      "caption": "[NX] Statefile directory",
+      "description": "Define the cache directory (default: '/var/lib/centreon/centplugins').",
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+      "format": null,
+      "settings": {
+        "visibility": "visible"
+      },
+      "category": "Centreon plugin Rention"
+    },
+    "2906": {
+      "varname": "nx_centreon_audiocodes_sbc_calls_critical_active_inbound",
+      "caption": "[NX] Centreon Audiocodes SBC-Calls Critical Active Inbound",
+      "description": "Set critical threshold for sbc-calls-active-inbound",
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+      "format": null,
+      "settings": {
+        "visibility": "visible"
+      },
+      "category": "[NX] Centreon plugin Audiocodes"
+    },
+    "2909": {
+      "varname": "nx_centreon_audiocodes_sbc_calls_critical_active_outbound",
+      "caption": "[NX] Centreon Audiocodes SBC-Calls Critical Active Outbound",
+      "description": "Set critical threshold for sbc-calls-active-outbound",
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+      "format": null,
+      "settings": {
+        "visibility": "visible"
+      },
+      "category": "[NX] Centreon plugin Audiocodes"
+    },
+    "2912": {
+      "varname": "nx_centreon_audiocodes_sbc_calls_critical_duration_average",
+      "caption": "[NX] Centreon Audiocodes SBC-Calls Critical Duration Average",
+      "description": "Set critical threshold for sbc-calls-duration-average",
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+      "format": null,
+      "settings": {
+        "visibility": "visible"
+      },
+      "category": "[NX] Centreon plugin Audiocodes"
+    },
+    "2914": {
+      "varname": "nx_centreon_audiocodes_sbc_calls_critical_estabilished_inbound",
+      "caption": "[NX] Centreon Audiocodes SBC-Calls Critical Established Inbound",
+      "description": "Set critical threshold for sbc-calls-established-inbound",
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+      "format": null,
+      "settings": {
+        "visibility": "visible"
+      },
+      "category": "[NX] Centreon plugin Audiocodes"
+    },
+    "2917": {
+      "varname": "nx_centreon_audiocodes_sbc_calls_critical_established_outbound",
+      "caption": "[NX] Centreon Audiocodes SBC-Calls Critical Established Outbound",
+      "description": "Set critical threshold for sbc-calls-established-outbound",
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+      "format": null,
+      "settings": {
+        "visibility": "visible"
+      },
+      "category": "[NX] Centreon plugin Audiocodes"
+    },
+    "2939": {
+      "varname": "nx_centreon_audiocodes_sbc_calls_critical_notestab_inbound_fail",
+      "caption": "[NX] Centreon Audiocodes SBC-Calls Critical NotEstablished Inbound Failed",
+      "description": "Set critical threshold for sbc-calls-notestablished-inbound-failed",
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+      "format": null,
+      "settings": {
+        "visibility": "visible"
+      },
+      "category": "[NX] Centreon plugin Audiocodes"
+    },
+    "2935": {
+      "varname": "nx_centreon_audiocodes_sbc_calls_critical_notestab_outbound",
+      "caption": "[NX] Centreon Audiocodes SBC-Calls Critical NotEstablished Outbound",
+      "description": "Set critical threshold for sbc-calls-notestablished-outbound",
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+      "format": null,
+      "settings": {
+        "visibility": "visible"
+      },
+      "category": "[NX] Centreon plugin Audiocodes"
+    },
+    "2918": {
+      "varname": "nx_centreon_audiocodes_sbc_calls_critical_sessions_active",
+      "caption": "[NX] Centreon Audiocodes SBC-Calls Critical Sessions Active",
+      "description": "Set critical threshold for sbc-sessions-active",
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+      "format": null,
+      "settings": {
+        "visibility": "visible"
+      },
+      "category": "[NX] Centreon plugin Audiocodes"
+    },
+    "2920": {
+      "varname": "nx_centreon_audiocodes_sbc_calls_warning_active_inbound",
+      "caption": "[NX] Centreon Audiocodes SBC-Calls Warning Active Inbound",
+      "description": "Set warning threshold for sbc-calls-active-inbound",
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+      "format": null,
+      "settings": {
+        "visibility": "visible"
+      },
+      "category": "[NX] Centreon plugin Audiocodes"
+    },
+    "2923": {
+      "varname": "nx_centreon_audiocodes_sbc_calls_warning_active_outbound",
+      "caption": "[NX] Centreon Audiocodes SBC-Calls Warning Active Outbound",
+      "description": "Set warning threshold for sbc-calls-active-outbound",
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+      "format": null,
+      "settings": {
+        "visibility": "visible"
+      },
+      "category": "[NX] Centreon plugin Audiocodes"
+    },
+    "2926": {
+      "varname": "nx_centreon_audiocodes_sbc_calls_warning_duration_average",
+      "caption": "[NX] Centreon Audiocodes SBC-Calls Warning Duration Average",
+      "description": "Set warning threshold for sbc-calls-duration-average",
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+      "format": null,
+      "settings": {
+        "visibility": "visible"
+      },
+      "category": "[NX] Centreon plugin Audiocodes"
+    },
+    "2927": {
+      "varname": "nx_centreon_audiocodes_sbc_calls_warning_established_inbound",
+      "caption": "[NX] Centreon Audiocodes SBC-Calls Warning Established Inbound",
+      "description": "Set warning threshold for sbc-calls-established-inbound",
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+      "format": null,
+      "settings": {
+        "visibility": "visible"
+      },
+      "category": "[NX] Centreon plugin Audiocodes"
+    },
+    "2930": {
+      "varname": "nx_centreon_audiocodes_sbc_calls_warning_established_outbound",
+      "caption": "[NX] Centreon Audiocodes SBC-Calls Warning Established Outbound",
+      "description": "Set warning threshold for sbc-calls-established-outbound",
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+      "format": null,
+      "settings": {
+        "visibility": "visible"
+      },
+      "category": "[NX] Centreon plugin Audiocodes"
+    },
+    "2938": {
+      "varname": "nx_centreon_audiocodes_sbc_calls_warning_nonestab_outbound",
+      "caption": "[NX] Centreon Audiocodes SBC-Calls Critical NotEstablished Outbound",
+      "description": "Set critical threshold for sbc-calls-notestablished-inbound-failed",
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+      "format": null,
+      "settings": {
+        "visibility": "visible"
+      },
+      "category": "[NX] Centreon plugin Audiocodes"
+    },
+    "2941": {
+      "varname": "nx_centreon_audiocodes_sbc_calls_warning_notestab_inbound_fail",
+      "caption": "[NX] Centreon Audiocodes SBC-Calls Critical NotEstablished Inbound Failed",
+      "description": "Set warning threshold for sbc-calls-notestablished-inbound-failed",
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+      "format": null,
+      "settings": {
+        "visibility": "visible"
+      },
+      "category": "[NX] Centreon plugin Audiocodes"
+    },
+    "2933": {
+      "varname": "nx_centreon_audiocodes_sbc_calls_warning_sessions_active",
+      "caption": "[NX] Centreon Audiocodes SBC-Calls Warning Sessions Active",
+      "description": "Set warning threshold for sbc-sessions-active",
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+      "format": null,
+      "settings": {
+        "visibility": "visible"
+      },
+      "category": "[NX] Centreon plugin Audiocodes"
+    },
+    "2944": {
+      "varname": "nx_centreon_audiocodes_critical_status",
+      "caption": "[NX] Centreon Audiocodes Critical Status",
+      "description": "Define the conditions to match for the status to be CRITICAL (default: '%{state} =~ /activated/ and %{alarm} !~ /greenActive/i'). You can use the following variables: %{display}, %{alarm}, %{dchannel}, %{state}",
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+      "format": null,
+      "settings": {
+        "visibility": "visible"
+      },
+      "category": "[NX] Centreon plugin Audiocodes"
+    },
+    "2948": {
+      "varname": "nx_centreon_audiocodes_trunk_critical_avg_calls",
+      "caption": "[NX] Centreon Audiocodes Trunk Critical Avg Calls",
+      "description": "Set critical threshold for avg-calls",
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+      "format": null,
+      "settings": {
+        "visibility": "visible"
+      },
+      "category": "[NX] Centreon plugin Audiocodes"
+    },
+    "2950": {
+      "varname": "nx_centreon_audiocodes_trunk_critical_count_calls",
+      "caption": "[NX] Centreon Audiocodes Trunk Critical Count Calls",
+      "description": "Set critical threshold for count-calls",
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+      "format": null,
+      "settings": {
+        "visibility": "visible"
+      },
+      "category": "[NX] Centreon plugin Audiocodes"
+    },
+    "2953": {
+      "varname": "nx_centreon_audiocodes_trunk_critical_max_calls",
+      "caption": "[NX] Centreon Audiocodes Trunk Critical Max Calls",
+      "description": "Set critical threshold for max-calls",
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+      "format": null,
+      "settings": {
+        "visibility": "visible"
+      },
+      "category": "[NX] Centreon plugin Audiocodes"
+    },
+    "2956": {
+      "varname": "nx_centreon_audiocodes_trunk_warning_avg_calls",
+      "caption": "[NX] Centreon Audiocodes Trunk Warning Avg Calls",
+      "description": "Set warning threshold for avg-calls",
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+      "format": null,
+      "settings": {
+        "visibility": "visible"
+      },
+      "category": "[NX] Centreon plugin Audiocodes"
+    },
+    "2957": {
+      "varname": "nx_centreon_audiocodes_trunk_warning_count_calls",
+      "caption": "[NX] Centreon Audiocodes Trunk Warning Count Calls",
+      "description": "Set warning threshold for count-calls",
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+      "format": null,
+      "settings": {
+        "visibility": "visible"
+      },
+      "category": "[NX] Centreon plugin Audiocodes"
+    },
+    "2959": {
+      "varname": "nx_centreon_audiocodes_trunk_warning_max_calls",
+      "caption": "[NX] Centreon Audiocodes Trunk Warning Max Calls",
+      "description": "Set warning threshold for max-calls",
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+      "format": null,
+      "settings": {
+        "visibility": "visible"
+      },
+      "category": "[NX] Centreon plugin Audiocodes"
+    },
+    "2947": {
+      "varname": "nx_centreon_audiocodes_warning_status",
+      "caption": "[NX] Centreon Audiocodes Warning Status",
+      "description": "Define the conditions to match for the status to be WARNING. You can use the following variables: %{display}, %{alarm}, %{dchannel}, %{state}",
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+      "format": null,
+      "settings": {
+        "visibility": "visible"
+      },
+      "category": "[NX] Centreon plugin Audiocodes"
+    },
+    "2870": {
+      "varname": "nx_centreon_audiocodes_critical_system",
+      "caption": "[NX] Centreon Audiocodes Critical System",
+      "description": null,
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+      "format": null,
+      "settings": {
+        "visibility": "visible"
+      },
+      "category": "[NX] Centreon plugin Audiocodes"
+    },
+    "2872": {
+      "varname": "nx_centreon_audiocodes_warning_system",
+      "caption": "[NX] Centreon Audiocodes Warning System",
+      "description": null,
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+      "format": null,
+      "settings": {
+        "visibility": "visible"
+      },
+      "category": "[NX] Centreon plugin Audiocodes"
+    }
+  },
+  "DatafieldCategory": {
+    "[NX] Centreon plugin Audiocodes": {
+      "category_name": "[NX] Centreon plugin Audiocodes",
+      "description": "Centreon plugin Audiocodes",
+      "originalId": "91"
+    },
+    "Centreon plugin Rention": {
+      "category_name": "Centreon plugin Rention",
+      "description": null,
+      "originalId": "44"
+    }
+  }
+}
