@@ -1,0 +1,301 @@
+{
+  "Command": {
+    "nx-c-centreon-audiocodes-cpu": {
+      "arguments": {
+        "--critical-core-cpu-utilization": "$nx_centreon_audiocodes_critical_cpu_utilization$",
+        "--critical-data": "$nx_centreon_audiocodes_critical_data$",
+        "--critical-voip": "$nx_centreon_audiocodes_critical_voip$",
+        "--filter-counters": {
+          "description": "Only display some counters (regexp can be used). Example: --filter-counters='^voip$'",
+          "value": "$nx_centreon_audiocodes_filter_counters$"
+        },
+        "--mode": {
+          "skip_key": false,
+          "value": "cpu"
+        },
+        "--warning-core-cpu-utilization": "$nx_centreon_audiocodes_warning_cpu_utilization$",
+        "--warning-data": "$nx_centreon_audiocodes_warning_data$",
+        "--warning-voip": "$nx_centreon_audiocodes_warning_voip$"
+      },
+      "command": "/usr/lib/centreon/plugins/centreon_audiocodes.pl",
+      "fields": null,
+      "imports": "nx-ct-centreon-plugin-snmp",
+      "methods_execute": "PluginCheck",
+      "object_name": "nx-c-centreon-audiocodes-cpu",
+      "object_type": "object"
+    },
+    "nx-c-centreon-audiocodes-hardware": {
+      "arguments": {
+        "--absent-problem": {
+          "description": "Return an error if an entity is not 'present' (default is skipping) (comma seperated list) Can be specific or global: --absent-problem=psu,1",
+          "value": "$nx_centreon_audiocodes_hardware_absent_problem$"
+        },
+        "--component": {
+          "description": "Which component to check (Default: '.*'). Can be: 'fantray', 'module', 'psu'.",
+          "value": "$nx_centreon_audiocodes_hardware_component$"
+        },
+        "--filter": {
+          "description": "Exclude the items given as a comma-separated list (example: --filter=fan --filter=psu). You can also exclude items from specific instances: --filter=fantray,1",
+          "value": "$nx_centreon_audiocodes_hardware_filter$"
+        },
+        "--mode": "hardware",
+        "--no-component": {
+          "description": "Define the expected status if no components are found (default: critical).",
+          "value": "$nx_centreon_audiocodes_hardware_no_component$"
+        },
+        "--threshold-overload": {
+          "description": "Use this option to override the status returned by the plugin when the status label matches a regular expression (syntax: section,[instance,]status,regexp). Example: --threshold-overload='psu,CRITICAL,^(?!(cleared)$)'",
+          "value": "$nx_centreon_audiocodes_hardware_threshold_overload$"
+        }
+      },
+      "command": "/usr/lib/centreon/plugins/centreon_audiocodes.pl",
+      "fields": null,
+      "imports": "nx-ct-centreon-plugin-snmp",
+      "methods_execute": "PluginCheck",
+      "object_name": "nx-c-centreon-audiocodes-hardware",
+      "object_type": "object"
+    },
+    "nx-c-centreon-audiocodes-interfaces": {
+      "arguments": {
+        "--add-errors": {
+          "description": "Check interface errors.",
+          "set_if": "$nx_centreon_audiocodes_add_errors$",
+          "set_if_format": "string"
+        },
+        "--add-speed": {
+          "description": "Check interface speed.",
+          "set_if": "$nx_centreon_audiocodes_add_speed$",
+          "set_if_format": "string"
+        },
+        "--add-traffic": {
+          "description": "Check interface traffic.",
+          "set_if": "$nx_centreon_audiocodes_add_traffic$",
+          "set_if_format": "string"
+        },
+        "--critical-in-traffic": {
+          "description": "Set critical threshold for in-traffic",
+          "value": "$nx_centreon_audiocodes_interfaces_critical_in_traffic$"
+        },
+        "--critical-out-traffic": {
+          "description": "Set critical threshold for out-traffic",
+          "value": "$nx_centreon_audiocodes_interfaces_critical_out_traffic$"
+        },
+        "--critical-speed": {
+          "description": "(b/s)",
+          "value": "$nx_centreon_audiocodes_interfaces_critical_speed$"
+        },
+        "--interface": {
+          "description": "Set the interface (number expected) ex: 1,2,... (empty means 'check all interface').",
+          "value": "$nx_centreon_audiocodes_interfaces_interface$"
+        },
+        "--mode": "interfaces",
+        "--name": {
+          "description": "Allows you to define the interface (in option --interface) by name instead of OID index. The name matching mode supports regular expressions.",
+          "set_if": "$nx_centreon_audiocodes_interfaces_name$",
+          "set_if_format": "string"
+        },
+        "--speed": {
+          "description": "Set interface speed for incoming/outgoing traffic (in Mb).",
+          "value": "$nx_centreon_audiocodes_interfaces_speed$"
+        },
+        "--speed-in": {
+          "description": "Set interface speed for incoming traffic (in Mb).",
+          "value": "$nx_centreon_audiocodes_interfaces_speed-in$"
+        },
+        "--statefile-dir": {
+          "description": "Define the cache directory (default: '/var/lib/centreon/centplugins').",
+          "value": "$nx_centreon_plugin_retention_statefile_dir$"
+        },
+        "--units-traffic": {
+          "description": "Units of thresholds for the traffic (default: 'percent_delta') ('percent_delta', 'bps', 'counter').",
+          "value": "$nx_centreon_audiocodes_interfaces_units_traffic$"
+        },
+        "--warning-in-traffic": {
+          "description": "Set warning threshold for in-traffic",
+          "value": "$nx_centreon_audiocodes_interfaces_warning_in_traffic$"
+        },
+        "--warning-out-traffic": {
+          "description": "Set warning threshold for out-traffic",
+          "value": "$nx_centreon_audiocodes_interfaces_warning_out_traffic$"
+        },
+        "--warning-speed": {
+          "description": "(b/s)",
+          "value": "$nx_centreon_audiocodes_interfaces_warning_speed$"
+        }
+      },
+      "command": "/usr/lib/centreon/plugins/centreon_audiocodes.pl",
+      "fields": null,
+      "imports": [
+        "nx-ct-centreon-plugin-snmp",
+        "nx-ct-centreon-plugin-retention"
+      ],
+      "methods_execute": "PluginCheck",
+      "object_name": "nx-c-centreon-audiocodes-interfaces",
+      "object_type": "object"
+    },
+    "nx-c-centreon-audiocodes-memory": {
+      "arguments": {
+        "--critical-data": "$nx_centreon_audiocodes_critical_data$",
+        "--critical-system": "$nx_centreon_audiocodes_critical_system$",
+        "--critical-voip": {
+          "description": "Define the expected status if no components are found (default: critical).",
+          "value": "$nx_centreon_audiocodes_critical_voip$"
+        },
+        "--filter-counters": {
+          "description": "Only display some counters (regexp can be used). Example: --filter-counters='^voip$'",
+          "value": "$nx_centreon_audiocodes_filter_counters$"
+        },
+        "--mode": "memory",
+        "--warning-data": "$nx_centreon_audiocodes_warning_data$",
+        "--warning-system": "$nx_centreon_audiocodes_warning_system$",
+        "--warning-voip": "$nx_centreon_audiocodes_warning_voip$"
+      },
+      "command": "/usr/lib/centreon/plugins/centreon_audiocodes.pl",
+      "fields": null,
+      "imports": "nx-ct-centreon-plugin-snmp",
+      "methods_execute": "PluginCheck",
+      "object_name": "nx-c-centreon-audiocodes-memory",
+      "object_type": "object"
+    },
+    "nx-c-centreon-audiocodes-sbc-calls": {
+      "arguments": {
+        "--critical-sbc-calls-active-inbound": {
+          "description": "Set critical threshold for sbc-calls-active-inbound",
+          "value": "$nx_centreon_audiocodes_sbc_calls_critical_active_inbound$"
+        },
+        "--critical-sbc-calls-active-outbound": {
+          "description": "Set critical threshold for sbc-calls-active-outbound",
+          "value": "$nx_centreon_audiocodes_sbc_calls_critical_active_outbound$"
+        },
+        "--critical-sbc-calls-duration-average": {
+          "description": "Set critical threshold for sbc-calls-duration-average",
+          "value": "$nx_centreon_audiocodes_sbc_calls_critical_duration_average$"
+        },
+        "--critical-sbc-calls-established-inbound": {
+          "description": "Set critical threshold for sbc-calls-established-inbound",
+          "value": "$nx_centreon_audiocodes_sbc_calls_critical_estabilished_inbound$"
+        },
+        "--critical-sbc-calls-established-outbound": {
+          "description": "Set critical threshold for sbc-calls-established-outbound",
+          "value": "$nx_centreon_audiocodes_sbc_calls_critical_established_outbound$"
+        },
+        "--critical-sbc-calls-notestablished-inbound-failed": {
+          "description": "Set critical threshold for sbc-calls-notestablished-inbound-failed",
+          "value": "$nx_centreon_audiocodes_sbc_calls_critical_notestab_inbound_fail$"
+        },
+        "--critical-sbc-calls-notestablished-outbound": {
+          "description": "Set critical threshold for sbc-calls-notestablished-outbound",
+          "value": "$nx_centreon_audiocodes_sbc_calls_critical_notestab_outbound$"
+        },
+        "--critical-sbc-sessions-active": {
+          "description": "Set critical threshold for sbc-sessions-active",
+          "value": "$nx_centreon_audiocodes_sbc_calls_critical_sessions_active$"
+        },
+        "--filter-counters": {
+          "description": "Only display some counters (regexp can be used). Example: --filter-counters='^calls'",
+          "value": "$nx_centreon_audiocodes_filter_counters$"
+        },
+        "--mode": "sbc-calls",
+        "--statefile-dir": {
+          "description": "Define the cache directory (default: '/var/lib/centreon/centplugins').",
+          "value": "$nx_centreon_plugin_retention_statefile_dir$"
+        },
+        "--warning-sbc-calls-active-inbound": {
+          "description": "Set warning threshold for sbc-calls-active-inbound",
+          "value": "$nx_centreon_audiocodes_sbc_calls_warning_active_inbound$"
+        },
+        "--warning-sbc-calls-active-outbound": {
+          "description": "Set warning threshold for sbc-calls-active-outbound",
+          "value": "$nx_centreon_audiocodes_sbc_calls_warning_active_outbound$"
+        },
+        "--warning-sbc-calls-duration-average": {
+          "description": "Set warning threshold for sbc-calls-duration-average",
+          "value": "$nx_centreon_audiocodes_sbc_calls_warning_duration_average$"
+        },
+        "--warning-sbc-calls-established-inbound": {
+          "description": "Set warning threshold for sbc-calls-established-inbound",
+          "value": "$nx_centreon_audiocodes_sbc_calls_warning_established_inbound$"
+        },
+        "--warning-sbc-calls-established-outbound": {
+          "description": "Set warning threshold for sbc-calls-established-outbound",
+          "value": "$nx_centreon_audiocodes_sbc_calls_warning_established_outbound$"
+        },
+        "--warning-sbc-calls-notestablished-inbound-failed": {
+          "description": "Set warning threshold for sbc-calls-notestablished-inbound-failed",
+          "value": "$nx_centreon_audiocodes_sbc_calls_warning_notestab_inbound_fail$"
+        },
+        "--warning-sbc-calls-notestablished-outbound": {
+          "description": "Set warning threshold for sbc-calls-notestablished-outbound",
+          "value": "$nx_centreon_audiocodes_sbc_calls_warning_nonestab_outbound$"
+        },
+        "--warning-sbc-sessions-active": {
+          "description": "Set warning threshold for sbc-sessions-active",
+          "value": "$nx_centreon_audiocodes_sbc_calls_warning_sessions_active$"
+        }
+      },
+      "command": "/usr/lib/centreon/plugins/centreon_audiocodes.pl",
+      "fields": null,
+      "imports": [
+        "nx-ct-centreon-plugin-snmp",
+        "nx-ct-centreon-plugin-retention"
+      ],
+      "methods_execute": "PluginCheck",
+      "object_name": "nx-c-centreon-audiocodes-sbc-calls",
+      "object_type": "object"
+    },
+    "nx-c-centreon-audiocodes-trunk-status": {
+      "arguments": {
+        "--critical-avg-calls": {
+          "description": "Set critical threshold for avg-calls",
+          "value": "$nx_centreon_audiocodes_trunk_critical_avg_calls$"
+        },
+        "--critical-count-calls": {
+          "description": "Set critical threshold for count-calls",
+          "value": "$nx_centreon_audiocodes_trunk_critical_count_calls$"
+        },
+        "--critical-max-calls": {
+          "description": "Set critical threshold for max-calls",
+          "value": "$nx_centreon_audiocodes_trunk_critical_max_calls$"
+        },
+        "--critical-status": {
+          "description": "Define the conditions to match for the status to be CRITICAL (default: '%{state} =~ /activated/ and %{alarm} !~ /greenActive/i'). You can use the following variables: %{display}, %{alarm}, %{dchannel}, %{state}",
+          "value": "$nx_centreon_audiocodes_critical_status$"
+        },
+        "--filter-name": {
+          "description": "Filter by name (can be a regexp).",
+          "value": "$nx_centreon_plugin_snmp_filter-name$"
+        },
+        "--mode": "trunk-status",
+        "--statefile-dir": {
+          "description": "Define the cache directory (default: '/var/lib/centreon/centplugins').",
+          "value": "$nx_centreon_plugin_retention_statefile_dir$"
+        },
+        "--warning-avg-calls": {
+          "description": "Set warning threshold for avg-calls",
+          "value": "$nx_centreon_audiocodes_trunk_warning_avg_calls$"
+        },
+        "--warning-count-calls": {
+          "description": "Set warning threshold for count-calls",
+          "value": "$nx_centreon_audiocodes_trunk_warning_count_calls$"
+        },
+        "--warning-max-calls": {
+          "description": "Set warning threshold for max-calls",
+          "value": "$nx_centreon_audiocodes_trunk_warning_max_calls$"
+        },
+        "--warning-status": {
+          "description": "Define the conditions to match for the status to be WARNING. You can use the following variables: %{display}, %{alarm}, %{dchannel}, %{state}",
+          "value": "$nx_centreon_audiocodes_warning_status$"
+        }
+      },
+      "command": "/usr/lib/centreon/plugins/centreon_audiocodes.pl",
+      "fields": null,
+      "imports": [
+        "nx-ct-centreon-plugin-snmp",
+        "nx-ct-centreon-plugin-retention"
+      ],
+      "methods_execute": "PluginCheck",
+      "object_name": "nx-c-centreon-audiocodes-trunk-status",
+      "object_type": "object"
+    }
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "ServiceSet": {
+    "nx-ss-network-centreon-audiocodes": {
+      "assign_filter": "host.vars.nx_enable_nep_ss=true&!\"nx-ss-network-centreon-audiocodes\"=host.vars.nx_nep_ss_to_exclude&\"nx-ht-network-voip-snmp\"=host.templates&host.vars.nx_hardware_vendor=%22audiocodes%22",
+      "description": "Service Set providing monitoring for Audiocodes ",
+      "object_name": "nx-ss-network-centreon-audiocodes",
+      "object_type": "template",
+      "services": [
+        {
+          "fields": null,
+          "icon_image": "img/nep/service/cpu.png",
+          "imports": "nx-st-agentless-snmp-centreon-audiocodes-cpu",
+          "object_name": "CPU Load",
+          "object_type": "object"
+        },
+        {
+          "fields": null,
+          "icon_image": "img/nep/service/hwhealth.png",
+          "imports": "nx-st-agentless-snmp-centreon-audiocodes-hardware",
+          "object_name": "Hardware Health",
+          "object_type": "object"
+        },
+        {
+          "fields": null,
+          "icon_image": "img/nep/service/ram.png",
+          "imports": "nx-st-agentless-snmp-centreon-audiocodes-memory",
+          "object_name": "Memory Usage",
+          "object_type": "object"
+        }
+      ]
+    },
+    "nx-ss-network-centreon-audiocodes-extras": {
+      "assign_filter": "host.vars.nx_enable_nep_ss=true&!\"nx-ss-network-centreon-audiocodes-extras\"=host.vars.nx_nep_ss_to_exclude&\"nx-ht-network-voip-snmp\"=host.templates&host.vars.nx_hardware_vendor=%22audiocodes%22&host.vars.nx_enable_nep_extras=true",
+      "description": "Service Set providing monitoring for Audiocodes Extras\r\n",
+      "object_name": "nx-ss-network-centreon-audiocodes-extras",
+      "object_type": "template",
+      "services": [
+        {
+          "fields": null,
+          "icon_image": "img/nep/service/interface.png",
+          "imports": "nx-st-agentless-snmp-centreon-audiocodes-interfaces",
+          "object_name": "Interfaces Status",
+          "object_type": "object"
+        },
+        {
+          "fields": null,
+          "imports": "nx-st-agentless-snmp-centreon-audiocodes-sbc-calls",
+          "object_name": "SBC Calls",
+          "object_type": "object"
+        },
+        {
+          "fields": null,
+          "imports": "nx-st-agentless-snmp-centreon-audiocodes-trunk-status",
+          "object_name": "Trunk Status",
+          "object_type": "object"
+        }
+      ]
+    }
+  }
+}
