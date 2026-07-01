@@ -8,5 +8,5 @@ permissions: write-all
 
 jobs:
   common-cron-checks:
-    uses: neteye-platform/repo-commons/.github/workflows/common-cron-checks.yaml@4829e194102d1b2aaeed233ffa89d2fe31fff976 # main
+    uses: neteye-platform/repo-commons/.github/workflows/common-cron-checks.yaml@57a2c206c506227dcd15b87273da3bf43946a867 # main
     secrets: inherit
