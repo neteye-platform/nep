@@ -1,7 +1,8 @@
-python.requests.security.disabled-cert-validation.disabled-cert-validation
-python.sqlalchemy.security.sqlalchemy-execute-raw-query.sqlalchemy-execute-raw-query
+bash.lang.security.ifs-tampering.ifs-tampering
 php.lang.security.unserialize-use.unserialize-use
 python.lang.security.audit.formatted-sql-query.formatted-sql-query
 python.lang.security.audit.insecure-file-permissions.insecure-file-permissions
-bash.lang.security.ifs-tampering.ifs-tampering
 python.lang.security.audit.insecure-transport.requests.request-with-http.request-with-http
+python.lang.security.audit.insecure-transport.requests.request-with-http.request-with-http
+python.requests.security.disabled-cert-validation.disabled-cert-validation
+python.sqlalchemy.security.sqlalchemy-execute-raw-query.sqlalchemy-execute-raw-query
