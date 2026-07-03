@@ -173,7 +173,9 @@
             "template_choice": null,
             "use_agent": null,
             "use_var_overrides": null,
-            "vars": {},
+            "vars": {
+                "nx_is_infrastructural": "y"
+            },
             "volatile": null,
             "zone": null
         },
@@ -2658,6 +2660,11 @@
             "event_command": null,
             "fields": [
                 {
+                    "datafield_id": 183,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
                     "datafield_id": 3500,
                     "is_required": "n",
                     "var_filter": null
@@ -4445,6 +4452,20 @@
                 "datalist": "[NX] Monitoring Modes List"
             },
             "category": "[NX] Advanced Monitoring Settings"
+        },
+        "183": {
+            "uuid": "4642b7d7-7b19-4fb2-b04f-776d30a5eafb",
+            "varname": "nx_is_infrastructural",
+            "caption": "[NX] Mark as Infrastructural Object",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeDatalist",
+            "format": null,
+            "settings": {
+                "behavior": "strict",
+                "data_type": "string",
+                "datalist": "[NX] Infrastructural Object List"
+            },
+            "category": "Common Settings (Advanced)"
         }
     },
     "DatafieldCategory": {
