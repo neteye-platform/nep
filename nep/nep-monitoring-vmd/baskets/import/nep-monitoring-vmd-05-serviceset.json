@@ -48,6 +48,7 @@
                     "vars": {
                         "by_ssh_address": "icinga2-master.neteyelocal",
                         "by_ssh_logname": "monitoring",
+                        "nx_is_infrastructural": "y",
                         "systemd_unit_name": "icinga-vspheredb.service"
                     },
                     "volatile": null,
