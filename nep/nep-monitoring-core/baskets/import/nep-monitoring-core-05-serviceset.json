@@ -181,7 +181,7 @@
                     "use_var_overrides": null,
                     "vars": {
                         "nx_director_health_check": "import",
-                        "nx_is_infrastructural": "y",
+                        "nx_is_infrastructural": "y"
                     },
                     "volatile": null,
                     "zone": null
