@@ -234,7 +234,7 @@
             "use_var_overrides": null,
             "vars": {
                 "filebeat_hostname": "localhost",
-                "filebeat_port": 5067
+                "filebeat_port": 5067,
                 "nx_is_infrastructural": "y"
             },
             "volatile": null,
