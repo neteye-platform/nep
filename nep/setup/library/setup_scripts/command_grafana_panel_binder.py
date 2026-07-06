@@ -34,19 +34,19 @@ def bind_target_to_source(config, source_cmd, target_cmd, update=False, dry_run=
     then insert or update the target_cmd in the config.
 
     Returns:
-        (config, errors)    
+        (config, errors)
     """
     section_removed = []
     section_added = []
     errors = []
 
 
-    # Validate source section exists 
+    # Validate source section exists
     if not config.has_section(source_cmd):
         errors.append(f"Source section [{source_cmd}] not found in graphs.ini.")
         return config, errors
 
-    # Remove existing target section if updating 
+    # Remove existing target section if updating
     if config.has_section(target_cmd) and update:
         config.remove_section(target_cmd)
         section_removed.append(target_cmd)
@@ -60,7 +60,7 @@ def bind_target_to_source(config, source_cmd, target_cmd, update=False, dry_run=
     else:
         logging.info(f"[{target_cmd}] section does not exists.")
 
-    # Copy all key-value pairs from source to target 
+    # Copy all key-value pairs from source to target
     source_items = dict(config[source_cmd])
 
     # Create target section in config
@@ -140,7 +140,7 @@ def main():
 
     if (args.verbose):
         logging.basicConfig(level=logging.DEBUG)
-    else: 
+    else:
         logging.basicConfig(level=logging.INFO)
     logging.debug(f"args: {args}")
 
@@ -174,7 +174,7 @@ def main():
         logger.info(f"Dry run - no changes written.")
 
     # === Exit code === #
-    if errors: 
+    if errors:
         sys.exit(1)
     sys.exit(0)
 
