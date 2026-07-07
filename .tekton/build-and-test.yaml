@@ -18,8 +18,8 @@ spec:
       - name: revision
         value: "master"
   timeouts:
-    pipeline: "0h30m0s"
-    tasks: "0h20m0s"
+    pipeline: "1h00m0s"
+    tasks: "0h50m0s"
     finally: "0h10m0s"
   workspaces:
     - name: shared-workspace

@@ -647,6 +647,19 @@
             "list_name": "[NX] Monitoring Modes List",
             "owner": "root",
             "uuid": "b57a2716-7088-48be-b93a-b5d612b610cf"
+        },
+        "[NX] Infrastructural Object List": {
+            "entries": [
+                {
+                    "entry_name": "y",
+                    "entry_value": "Yes",
+                    "format": "string",
+                    "allowed_roles": null
+                }
+            ],
+            "list_name": "[NX] Infrastructural Object List",
+            "owner": "root",
+            "uuid": "e95d94a4-31ee-4128-b4b4-b5cfe05afc5b"
         }
     }
 }
