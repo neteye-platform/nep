@@ -45,6 +45,7 @@
                     "use_agent": null,
                     "use_var_overrides": null,
                     "vars": {
+                        "nx_is_infrastructural": "y",
                         "nx_director_health_check": "config"
                     },
                     "volatile": null,
@@ -89,6 +90,7 @@
                     "use_agent": null,
                     "use_var_overrides": null,
                     "vars": {
+                        "nx_is_infrastructural": "y",
                         "nx_director_health_check": "jobs"
                     },
                     "volatile": null,
@@ -133,7 +135,8 @@
                     "use_agent": null,
                     "use_var_overrides": null,
                     "vars": {
-                        "nx_director_health_check": "deployment"
+                        "nx_director_health_check": "deployment",
+                        "nx_is_infrastructural": "y"
                     },
                     "volatile": null,
                     "zone": null
@@ -177,7 +180,8 @@
                     "use_agent": null,
                     "use_var_overrides": null,
                     "vars": {
-                        "nx_director_health_check": "import"
+                        "nx_director_health_check": "import",
+                        "nx_is_infrastructural": "y"
                     },
                     "volatile": null,
                     "zone": null
@@ -221,7 +225,8 @@
                     "use_agent": null,
                     "use_var_overrides": null,
                     "vars": {
-                        "nx_director_health_check": "sync"
+                        "nx_director_health_check": "sync",
+                        "nx_is_infrastructural": "y"
                     },
                     "volatile": null,
                     "zone": null
@@ -273,7 +278,8 @@
                     "use_agent": null,
                     "use_var_overrides": null,
                     "vars": {
-                        "nx_director_health_check": "config"
+                        "nx_director_health_check": "config",
+                        "nx_is_infrastructural": "y"
                     },
                     "volatile": null,
                     "zone": null
@@ -317,7 +323,8 @@
                     "use_agent": null,
                     "use_var_overrides": null,
                     "vars": {
-                        "nx_director_health_check": "jobs"
+                        "nx_director_health_check": "jobs",
+                        "nx_is_infrastructural": "y"
                     },
                     "volatile": null,
                     "zone": null
@@ -361,7 +368,8 @@
                     "use_agent": null,
                     "use_var_overrides": null,
                     "vars": {
-                        "nx_director_health_check": "deployment"
+                        "nx_director_health_check": "deployment",
+                        "nx_is_infrastructural": "y"
                     },
                     "volatile": null,
                     "zone": null
@@ -405,7 +413,8 @@
                     "use_agent": null,
                     "use_var_overrides": null,
                     "vars": {
-                        "nx_director_health_check": "import"
+                        "nx_director_health_check": "import",
+                        "nx_is_infrastructural": "y"
                     },
                     "volatile": null,
                     "zone": null
@@ -449,7 +458,8 @@
                     "use_agent": null,
                     "use_var_overrides": null,
                     "vars": {
-                        "nx_director_health_check": "sync"
+                        "nx_director_health_check": "sync",
+                        "nx_is_infrastructural": "y"
                     },
                     "volatile": null,
                     "zone": null
@@ -972,6 +982,7 @@
                     "use_agent": null,
                     "use_var_overrides": null,
                     "vars": {
+                        "nx_is_infrastructural": "y",
                         "systemd_unit_name": "lampod.service"
                     },
                     "volatile": null,
@@ -994,7 +1005,8 @@
                     "object_type": "object",
                     "uuid": "4e7522ac-edfb-4d2a-a591-47d777cd768b",
                     "vars": {
-                        "mysql_health_mode": "connection-time"
+                        "mysql_health_mode": "connection-time",
+                        "nx_is_infrastructural": "y"
                     }
                 },
                 {
@@ -1007,7 +1019,8 @@
                     "object_type": "object",
                     "uuid": "998bb872-985a-40e7-bdad-b16e411c5088",
                     "vars": {
-                        "mysql_health_mode": "open-files"
+                        "mysql_health_mode": "open-files",
+                        "nx_is_infrastructural": "y"
                     }
                 },
                 {
@@ -1020,7 +1033,8 @@
                     "object_type": "object",
                     "uuid": "5d07f9d7-7480-44dc-9cf4-35e44e4e2c0c",
                     "vars": {
-                        "mysql_health_mode": "threads-running"
+                        "mysql_health_mode": "threads-running",
+                        "nx_is_infrastructural": "y"
                     }
                 },
                 {
@@ -1033,7 +1047,8 @@
                     "object_type": "object",
                     "uuid": "258fb67e-c975-48a8-8b7d-6feeba78406c",
                     "vars": {
-                        "mysql_health_mode": "uptime"
+                        "mysql_health_mode": "uptime",
+                        "nx_is_infrastructural": "y"
                     }
                 },
                 {
@@ -1048,7 +1063,8 @@
                     "vars": {
                         "mysql_health_critical": "151",
                         "mysql_health_mode": "threads-connected",
-                        "mysql_health_warning": "130"
+                        "mysql_health_warning": "130",
+                        "nx_is_infrastructural": "y"
                     }
                 }
             ],
@@ -1100,6 +1116,7 @@
                     "use_agent": null,
                     "use_var_overrides": null,
                     "vars": {
+                        "nx_is_infrastructural": "y",
                         "systemd_skip_enabled_check": true,
                         "systemd_unit_name": "smsd.service"
                     },
@@ -1145,7 +1162,9 @@
                     "template_choice": null,
                     "use_agent": null,
                     "use_var_overrides": null,
-                    "vars": {},
+                    "vars": {
+                        "nx_is_infrastructural": "y"
+                    },
                     "volatile": null,
                     "zone": null
                 },
@@ -1188,7 +1207,9 @@
                     "template_choice": null,
                     "use_agent": null,
                     "use_var_overrides": null,
-                    "vars": {},
+                    "vars": {
+                        "nx_is_infrastructural": "y"
+                    },
                     "volatile": null,
                     "zone": null
                 }
@@ -1239,7 +1260,9 @@
                     "template_choice": null,
                     "use_agent": null,
                     "use_var_overrides": null,
-                    "vars": {},
+                    "vars": {
+                        "nx_is_infrastructural": "y"
+                    },
                     "volatile": null,
                     "zone": null
                 },
@@ -1283,6 +1306,7 @@
                     "use_agent": null,
                     "use_var_overrides": null,
                     "vars": {
+                        "nx_is_infrastructural": "y",
                         "systemd_unit_name": "drbd.service"
                     },
                     "volatile": null,
@@ -1328,6 +1352,7 @@
                     "use_agent": null,
                     "use_var_overrides": null,
                     "vars": {
+                        "nx_is_infrastructural": "y",
                         "systemd_unit_name": "corosync.service"
                     },
                     "volatile": null,
@@ -1373,6 +1398,7 @@
                     "use_agent": null,
                     "use_var_overrides": null,
                     "vars": {
+                        "nx_is_infrastructural": "y",
                         "systemd_unit_name": "pcsd.service"
                     },
                     "volatile": null,
@@ -1418,6 +1444,7 @@
                     "use_agent": null,
                     "use_var_overrides": null,
                     "vars": {
+                        "nx_is_infrastructural": "y",
                         "systemd_unit_name": "pacemaker.service"
                     },
                     "volatile": null,
@@ -1463,7 +1490,8 @@
                     "use_agent": null,
                     "use_var_overrides": null,
                     "vars": {
-			"systemd_skip_enabled_check": true,
+                        "nx_is_infrastructural": "y",
+			                  "systemd_skip_enabled_check": true,
                         "systemd_unit_name": "keepalived.service"
                     },
                     "volatile": null,
@@ -1509,7 +1537,8 @@
                     "use_agent": null,
                     "use_var_overrides": null,
                     "vars": {
-			"systemd_skip_enabled_check": true,
+                        "nx_is_infrastructural": "y",
+			                  "systemd_skip_enabled_check": true,
                         "systemd_unit_name": "pacemaker.service"
                     },
                     "volatile": null,
@@ -1565,7 +1594,8 @@
                     "vars": {
                         "by_ssh_address": "icinga2-master.neteyelocal",
                         "by_ssh_logname": "monitoring",
-                        "disk_single_ereg_path": "\/neteye\/shared\/icinga2"
+                        "disk_single_ereg_path": "\/neteye\/shared\/icinga2",
+                        "nx_is_infrastructural": "y"
                     },
                     "volatile": null,
                     "zone": null
@@ -1612,7 +1642,8 @@
                     "vars": {
                         "by_ssh_address": "influxdb.neteyelocal",
                         "by_ssh_logname": "monitoring",
-                        "disk_single_ereg_path": "\/neteye\/shared\/influxdb"
+                        "disk_single_ereg_path": "\/neteye\/shared\/influxdb",
+                        "nx_is_infrastructural": "y"
                     },
                     "volatile": null,
                     "zone": null
@@ -1659,7 +1690,8 @@
                     "vars": {
                         "by_ssh_address": "grafana.neteyelocal",
                         "by_ssh_logname": "monitoring",
-                        "disk_single_ereg_path": "\/neteye\/shared\/grafana"
+                        "disk_single_ereg_path": "\/neteye\/shared\/grafana",
+                        "nx_is_infrastructural": "y"
                     },
                     "volatile": null,
                     "zone": null
@@ -1706,7 +1738,8 @@
                     "vars": {
                         "by_ssh_address": "httpd.neteyelocal",
                         "by_ssh_logname": "monitoring",
-                        "disk_single_ereg_path": "\/neteye\/shared\/httpd"
+                        "disk_single_ereg_path": "\/neteye\/shared\/httpd",
+                        "nx_is_infrastructural": "y"
                     },
                     "volatile": null,
                     "zone": null
@@ -1753,7 +1786,8 @@
                     "vars": {
                         "by_ssh_address": "keycloak.neteyelocal",
                         "by_ssh_logname": "monitoring",
-                        "disk_single_ereg_path": "\/neteye\/shared\/keycloak"
+                        "disk_single_ereg_path": "\/neteye\/shared\/keycloak",
+                        "nx_is_infrastructural": "y"
                     },
                     "volatile": null,
                     "zone": null
@@ -1800,7 +1834,8 @@
                     "vars": {
                         "by_ssh_address": "nginx.neteyelocal",
                         "by_ssh_logname": "monitoring",
-                        "disk_single_ereg_path": "\/neteye\/shared\/nginx"
+                        "disk_single_ereg_path": "\/neteye\/shared\/nginx",
+                        "nx_is_infrastructural": "y"
                     },
                     "volatile": null,
                     "zone": null
@@ -1847,7 +1882,8 @@
                     "vars": {
                         "by_ssh_address": "icingaweb2.neteyelocal",
                         "by_ssh_logname": "monitoring",
-                        "disk_single_ereg_path": "\/neteye\/shared\/icingaweb2"
+                        "disk_single_ereg_path": "\/neteye\/shared\/icingaweb2",
+                        "nx_is_infrastructural": "y"
                     },
                     "volatile": null,
                     "zone": null
@@ -1894,7 +1930,8 @@
                     "vars": {
                         "by_ssh_address": "snmptrapd.neteyelocal",
                         "by_ssh_logname": "monitoring",
-                        "disk_single_ereg_path": "\/neteye\/shared\/snmptrapd"
+                        "disk_single_ereg_path": "\/neteye\/shared\/snmptrapd",
+                        "nx_is_infrastructural": "y"
                     },
                     "volatile": null,
                     "zone": null
@@ -1941,7 +1978,8 @@
                     "vars": {
                         "by_ssh_address": "nagvis.neteyelocal",
                         "by_ssh_logname": "monitoring",
-                        "disk_single_ereg_path": "\/neteye\/shared\/nagvis"
+                        "disk_single_ereg_path": "\/neteye\/shared\/nagvis",
+                        "nx_is_infrastructural": "y"
                     },
                     "volatile": null,
                     "zone": null
@@ -1988,7 +2026,8 @@
                     "vars": {
                         "by_ssh_address": "tornado.neteyelocal",
                         "by_ssh_logname": "monitoring",
-                        "disk_single_ereg_path": "\/neteye\/shared\/tornado"
+                        "disk_single_ereg_path": "\/neteye\/shared\/tornado",
+                        "nx_is_infrastructural": "y"
                     },
                     "volatile": null,
                     "zone": null
@@ -2035,7 +2074,8 @@
                     "vars": {
                         "by_ssh_address": "neteye.neteyelocal",
                         "by_ssh_logname": "monitoring",
-                        "disk_single_ereg_path": "\/neteye\/shared\/tornado_email_collector"
+                        "disk_single_ereg_path": "\/neteye\/shared\/tornado_email_collector",
+                        "nx_is_infrastructural": "y"
                     },
                     "volatile": null,
                     "zone": null
@@ -2082,7 +2122,8 @@
                     "vars": {
                         "by_ssh_address": "tornado.neteyelocal",
                         "by_ssh_logname": "monitoring",
-                        "disk_single_ereg_path": "\/neteye\/shared\/tornado_icinga2_collector"
+                        "disk_single_ereg_path": "\/neteye\/shared\/tornado_icinga2_collector",
+                        "nx_is_infrastructural": "y"
                     },
                     "volatile": null,
                     "zone": null
@@ -2129,7 +2170,8 @@
                     "vars": {
                         "by_ssh_address": "tornado.neteyelocal",
                         "by_ssh_logname": "monitoring",
-                        "disk_single_ereg_path": "\/neteye\/shared\/tornado_nats_json_collector"
+                        "disk_single_ereg_path": "\/neteye\/shared\/tornado_nats_json_collector",
+                        "nx_is_infrastructural": "y"
                     },
                     "volatile": null,
                     "zone": null
@@ -2176,7 +2218,8 @@
                     "vars": {
                         "by_ssh_address": "httpd.neteyelocal",
                         "by_ssh_logname": "monitoring",
-                        "disk_single_ereg_path": "\/neteye\/shared\/tornado_webhook_collector"
+                        "disk_single_ereg_path": "\/neteye\/shared\/tornado_webhook_collector",
+                        "nx_is_infrastructural": "y"
                     },
                     "volatile": null,
                     "zone": null
@@ -2223,7 +2266,8 @@
                     "vars": {
                         "by_ssh_address": "nats-server.neteyelocal",
                         "by_ssh_logname": "monitoring",
-                        "disk_single_ereg_path": "\/neteye\/shared\/nats-server"
+                        "disk_single_ereg_path": "\/neteye\/shared\/nats-server",
+                        "nx_is_infrastructural": "y"
                     },
                     "volatile": null,
                     "zone": null
@@ -2267,7 +2311,9 @@
                     "template_choice": null,
                     "use_agent": null,
                     "use_var_overrides": null,
-                    "vars": {},
+                    "vars": {
+                        "nx_is_infrastructural": "y"
+                    },
                     "volatile": null,
                     "zone": null
                 }
@@ -2321,6 +2367,7 @@
                     "vars": {
                         "by_ssh_address": "influxdb.neteyelocal",
                         "by_ssh_logname": "monitoring",
+                        "nx_is_infrastructural": "y",
                         "systemd_unit_name": "influxdb.service"
                     },
                     "volatile": null,
@@ -2368,6 +2415,7 @@
                     "vars": {
                         "by_ssh_address": "nats-server.neteyelocal",
                         "by_ssh_logname": "monitoring",
+                        "nx_is_infrastructural": "y",
                         "systemd_unit_name": "nats-server.service"
                     },
                     "volatile": null,
@@ -2419,6 +2467,7 @@
                             "StrictHostKeyChecking no",
                             "UserKnownHostsFile=\/dev\/null"
                         ],
+                        "nx_is_infrastructural": "y",
                         "systemd_unit_name": "grafana-server.service"
                     },
                     "volatile": null,
@@ -2466,6 +2515,7 @@
                     "vars": {
                         "by_ssh_address": "httpd.neteyelocal",
                         "by_ssh_logname": "monitoring",
+                        "nx_is_infrastructural": "y",
                         "systemd_unit_name": "httpd.service"
                     },
                     "volatile": null,
@@ -2513,6 +2563,7 @@
                     "vars": {
                         "by_ssh_address": "keycloak.neteyelocal",
                         "by_ssh_logname": "monitoring",
+                        "nx_is_infrastructural": "y",
                         "systemd_unit_name": "keycloak.service"
                     },
                     "volatile": null,
@@ -2560,6 +2611,7 @@
                     "vars": {
                         "by_ssh_address": "nginx.neteyelocal",
                         "by_ssh_logname": "monitoring",
+                        "nx_is_infrastructural": "y",
                         "systemd_unit_name": "nginx.service"
                     },
                     "volatile": null,
@@ -2607,6 +2659,7 @@
                     "vars": {
                         "by_ssh_address": "icinga2-master.neteyelocal",
                         "by_ssh_logname": "monitoring",
+                        "nx_is_infrastructural": "y",
                         "systemd_unit_name": "icinga-director.service"
                     },
                     "volatile": null,
@@ -2654,6 +2707,7 @@
                     "vars": {
                         "by_ssh_address": "icinga2-master.neteyelocal",
                         "by_ssh_logname": "monitoring",
+                        "nx_is_infrastructural": "y",
                         "systemd_unit_name": "icinga2-master.service"
                     },
                     "volatile": null,
@@ -2701,6 +2755,7 @@
                     "vars": {
                         "by_ssh_address": "icingaweb2.neteyelocal",
                         "by_ssh_logname": "monitoring",
+                        "nx_is_infrastructural": "y",
                         "systemd_unit_name": "php-fpm.service"
                     },
                     "volatile": null,
@@ -2748,6 +2803,7 @@
                     "vars": {
                         "by_ssh_address": "snmptrapd.neteyelocal",
                         "by_ssh_logname": "monitoring",
+                        "nx_is_infrastructural": "y",
                         "systemd_unit_name": "snmptrapd.service"
                     },
                     "volatile": null,
@@ -2795,6 +2851,7 @@
                     "vars": {
                         "by_ssh_address": "tornado.neteyelocal",
                         "by_ssh_logname": "monitoring",
+                        "nx_is_infrastructural": "y",
                         "systemd_unit_name": "tornado.service"
                     },
                     "volatile": null,
@@ -2842,6 +2899,7 @@
                     "vars": {
                         "by_ssh_address": "neteye.neteyelocal",
                         "by_ssh_logname": "monitoring",
+                        "nx_is_infrastructural": "y",
                         "systemd_unit_name": "tornado_email_collector.service"
                     },
                     "volatile": null,
@@ -2889,6 +2947,7 @@
                     "vars": {
                         "by_ssh_address": "tornado.neteyelocal",
                         "by_ssh_logname": "monitoring",
+                        "nx_is_infrastructural": "y",
                         "systemd_unit_name": "tornado_nats_json_collector.service"
                     },
                     "volatile": null,
@@ -2936,6 +2995,7 @@
                     "vars": {
                         "by_ssh_address": "httpd.neteyelocal",
                         "by_ssh_logname": "monitoring",
+                        "nx_is_infrastructural": "y",
                         "systemd_unit_name": "tornado_webhook_collector.service"
                     },
                     "volatile": null,
@@ -2983,6 +3043,7 @@
                     "vars": {
                         "by_ssh_address": "tornado.neteyelocal",
                         "by_ssh_logname": "monitoring",
+                        "nx_is_infrastructural": "y",
                         "systemd_unit_name": "tornado_icinga2_collector.service"
                     },
                     "volatile": null,
@@ -3036,7 +3097,9 @@
                     "use_agent": null,
                     "use_var_overrides": null,
                     "uuid": "02c807d3-cfee-422d-b082-85650b8e8c35",
-                    "vars": {},
+                    "vars": {
+                        "nx_is_infrastructural": "y"
+                    },
                     "volatile": null,
                     "zone": null
                 },
@@ -3080,7 +3143,9 @@
                     "use_agent": null,
                     "use_var_overrides": null,
                     "uuid": "24787a5a-c2f7-4699-ab53-bc142297dfe7",
-                    "vars": {},
+                    "vars": {
+                        "nx_is_infrastructural": "y"
+                    },
                     "volatile": null,
                     "zone": null
                 },
@@ -3133,7 +3198,8 @@
                             "^/neteye",
                             "^/var",
                             "^/mnt/"
-                        ]
+                        ],
+                        "nx_is_infrastructural": "y"
                     },
                     "volatile": null,
                     "zone": null
@@ -3178,7 +3244,9 @@
                     "use_agent": null,
                     "use_var_overrides": null,
                     "uuid": "e93dd62d-cb15-48c5-9e05-a964c05c7501",
-                    "vars": {},
+                    "vars": {
+                        "nx_is_infrastructural": "y"
+                    },
                     "volatile": null,
                     "zone": null
                 },
@@ -3222,7 +3290,9 @@
                     "use_agent": null,
                     "use_var_overrides": null,
                     "uuid": "82241135-ad86-4c63-8a8d-8a22f8811ad5",
-                    "vars": {},
+                    "vars": {
+                        "nx_is_infrastructural": "y"
+                    },
                     "volatile": null,
                     "zone": null
                 },
@@ -3267,6 +3337,7 @@
                     "use_var_overrides": null,
                     "uuid": "3b7475ff-0fcd-41c0-985b-09b94fd41168",
                     "vars": {
+                        "nx_is_infrastructural": "y",
                         "systemd_unit_name": "sshd.service"
                     },
                     "volatile": null,
@@ -3313,6 +3384,7 @@
                     "use_var_overrides": null,
                     "uuid": "58b97114-e31f-45a5-b277-2d0badcad61c",
                     "vars": {
+                        "nx_is_infrastructural": "y",
                         "systemd_skip_enabled_check": true,
                         "systemd_unit_name": "postfix.service"
                     },
@@ -3363,7 +3435,8 @@
                         "disk_all": false,
                         "disk_partitions": [
                             "/"
-                        ]
+                        ],
+                        "nx_is_infrastructural": "y"
                     },
                     "volatile": null,
                     "zone": null
@@ -3412,7 +3485,8 @@
                         "disk_all": false,
                         "disk_partitions": [
                             "/neteye"
-                        ]
+                        ],
+                        "nx_is_infrastructural": "y"
                     },
                     "volatile": null,
                     "zone": null
@@ -3461,7 +3535,8 @@
                         "disk_all": false,
                         "disk_partitions": [
                             "/var"
-                        ]
+                        ],
+                        "nx_is_infrastructural": "y"
                     },
                     "volatile": null,
                     "zone": null
@@ -3510,7 +3585,8 @@
                         "disk_all": false,
                         "disk_partitions": [
                             "/data"
-                        ]
+                        ],
+                        "nx_is_infrastructural": "y"
                     },
                     "volatile": null,
                     "zone": null
@@ -3556,6 +3632,7 @@
                     "use_var_overrides": null,
                     "uuid": "16214cc5-3995-4b76-8484-8511fb2dcf0b",
                     "vars": {
+                        "nx_is_infrastructural": "y",
                         "systemd_skip_enabled_check": true,
                         "systemd_unit_name": "neteye-agent.service"
                     },
@@ -3601,7 +3678,9 @@
                     "use_agent": null,
                     "use_var_overrides": null,
                     "uuid": "6712cf9e-e8a7-4a2b-be08-88d1842cec37",
-                    "vars": {},
+                    "vars": {
+                        "nx_is_infrastructural": "y"
+                    },
                     "volatile": null,
                     "zone": null
                 },
@@ -3649,7 +3728,8 @@
                         "ntp_address": "0.rhel.pool.ntp.org",
                         "ntp_critical": "30",
                         "ntp_timeout": "20",
-                        "ntp_warning": "3"
+                        "ntp_warning": "3",
+                        "nx_is_infrastructural": "y"
                     },
                     "volatile": null,
                     "zone": null
@@ -3695,6 +3775,7 @@
                     "use_var_overrides": null,
                     "uuid": "b776531c-5542-4475-997d-f3967152c005",
                     "vars": {
+                        "nx_is_infrastructural": "y",
                         "systemd_unit_name": "chronyd.service"
                     },
                     "volatile": null,
@@ -3749,6 +3830,7 @@
                     "use_agent": null,
                     "use_var_overrides": null,
                     "vars": {
+                        "nx_is_infrastructural": "y",
                         "systemd_skip_enabled_check": true,
                         "systemd_unit_name": "nats-server.service"
                     },
@@ -3795,6 +3877,7 @@
                     "use_agent": null,
                     "use_var_overrides": null,
                     "vars": {
+                        "nx_is_infrastructural": "y",
                         "systemd_skip_enabled_check": true,
                         "systemd_unit_name": "telegraf-local@neteye_collector_local_perfs.service"
                     },
@@ -3841,6 +3924,7 @@
                     "use_agent": null,
                     "use_var_overrides": null,
                     "vars": {
+                        "nx_is_infrastructural": "y",
                         "systemd_unit_name": "neteye-satellite.target"
                     },
                     "volatile": null,
@@ -3886,6 +3970,7 @@
                     "use_agent": null,
                     "use_var_overrides": null,
                     "vars": {
+                        "nx_is_infrastructural": "y",
                         "systemd_skip_enabled_check": true,
                         "systemd_unit_name": "nginx-satellite.service"
                     },
@@ -3932,6 +4017,7 @@
                     "use_agent": null,
                     "use_var_overrides": null,
                     "vars": {
+                        "nx_is_infrastructural": "y",
                         "systemd_skip_enabled_check": true,
                         "systemd_unit_name": "snmptrapd.service"
                     },
@@ -3978,6 +4064,7 @@
                     "use_agent": null,
                     "use_var_overrides": null,
                     "vars": {
+                        "nx_is_infrastructural": "y",
                         "systemd_skip_enabled_check": true,
                         "systemd_unit_name": "tornado_email_collector.service"
                     },
@@ -4024,6 +4111,7 @@
                     "use_agent": null,
                     "use_var_overrides": null,
                     "vars": {
+                        "nx_is_infrastructural": "y",
                         "systemd_skip_enabled_check": true,
                         "systemd_unit_name": "tornado_nats_json_collector.service"
                     },
@@ -4070,6 +4158,7 @@
                     "use_agent": null,
                     "use_var_overrides": null,
                     "vars": {
+                        "nx_is_infrastructural": "y",
                         "systemd_skip_enabled_check": true,
                         "systemd_unit_name": "tornado_webhook_collector.service"
                     },
@@ -4124,6 +4213,7 @@
                     "use_agent": null,
                     "use_var_overrides": null,
                     "vars": {
+                        "nx_is_infrastructural": "y",
                         "nx_zone_name": "master"
                     },
                     "volatile": null,
@@ -4176,7 +4266,9 @@
                     "template_choice": null,
                     "use_agent": null,
                     "use_var_overrides": null,
-                    "vars": {},
+                    "vars": {
+                        "nx_is_infrastructural": "y"
+                    },
                     "volatile": null,
                     "zone": null
                 }
@@ -4228,7 +4320,8 @@
                     "use_agent": null,
                     "use_var_overrides": null,
                     "vars": {
-                        "nx_icinga_datadir": "\/neteye\/local\/icinga2\/data\/lib\/icinga2\/"
+                        "nx_icinga_datadir": "\/neteye\/local\/icinga2\/data\/lib\/icinga2\/",
+                        "nx_is_infrastructural": "y"
                     },
                     "volatile": null,
                     "zone": null
@@ -4280,7 +4373,9 @@
                     "template_choice": null,
                     "use_agent": null,
                     "use_var_overrides": null,
-                    "vars": {},
+                    "vars": {
+                        "nx_is_infrastructural": "y"
+                    },
                     "volatile": null,
                     "zone": null
                 }
@@ -4332,6 +4427,7 @@
                     "use_agent": null,
                     "use_var_overrides": null,
                     "vars": {
+                        "nx_is_infrastructural": "y",
                         "systemd_unit_name": "icinga2.service"
                     },
                     "volatile": null,
@@ -4354,6 +4450,7 @@
                     "object_type": "object",
                     "uuid": "e8c47fcf-d348-4edd-87ec-e29baf539fe9",
                     "vars": {
+                        "nx_is_infrastructural": "y",
                         "systemd_skip_enabled_check": true,
                         "systemd_unit_name": "mariadb-galera-arbitrator.service"
                     }
@@ -4379,7 +4476,8 @@
                         "disk_partitions": [
                             "/neteye/local/mariadb"
                         ],
-                        "disk_units": "MB"
+                        "disk_units": "MB",
+                        "nx_is_infrastructural": "y"
                     }
                 },
                 {
@@ -4392,6 +4490,7 @@
                     "object_type": "object",
                     "uuid": "d174193a-60f4-41c9-8370-9b119abe8520",
                     "vars": {
+                        "nx_is_infrastructural": "y",
                         "systemd_skip_enabled_check": true,
                         "systemd_unit_name": "mariadb-galera.service"
                     }

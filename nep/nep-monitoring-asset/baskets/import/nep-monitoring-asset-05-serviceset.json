@@ -16,6 +16,7 @@
                     "object_name": "Asset Duplicates",
                     "object_type": "object",
                     "vars": {
+                        "nx_is_infrastructural": "y",
                         "nx_inventory_command": "duplicates",
                         "nx_inventory_critical": "30",
                         "nx_inventory_warning": "10"
@@ -31,6 +32,7 @@
                     "object_name": "Asset Old not up-to-date",
                     "object_type": "object",
                     "vars": {
+                        "nx_is_infrastructural": "y",
                         "nx_inventory_command": "age",
                         "nx_inventory_critical": "60",
                         "nx_inventory_warning": "45"
@@ -45,6 +47,7 @@
                     "object_name": "Timer GLPI automatic actions",
                     "object_type": "object",
                     "vars": {
+                        "nx_is_infrastructural": "y",
                         "systemd_timer_critical": "240",
                         "systemd_timer_service_name": "glpi-execute-automatic-actions",
                         "systemd_timer_timer_name": "glpi-execute-automatic-actions",
@@ -60,6 +63,7 @@
                     "object_name": "Timer OCS GLPI full sync",
                     "object_type": "object",
                     "vars": {
+                        "nx_is_infrastructural": "y",
                         "systemd_timer_critical": "1200",
                         "systemd_timer_service_name": "ocs-glpi-full-sync",
                         "systemd_timer_timer_name": "ocs-glpi-full-sync",
@@ -85,7 +89,8 @@
                     "vars": {
                         "by_ssh_address": "httpd.neteyelocal",
                         "by_ssh_logname": "monitoring",
-                        "disk_single_ereg_path": "/neteye/shared/glpi"
+                        "disk_single_ereg_path": "/neteye/shared/glpi",
+                        "nx_is_infrastructural": "y"
                     }
                 },
                 "Disk OCS Reports Free space": {
@@ -99,7 +104,8 @@
                     "vars": {
                         "by_ssh_address": "httpd.neteyelocal",
                         "by_ssh_logname": "monitoring",
-                        "disk_single_ereg_path": "/neteye/shared/ocsinventory-ocsreports"
+                        "disk_single_ereg_path": "/neteye/shared/ocsinventory-ocsreports",
+                        "nx_is_infrastructural": "y"
                     }
                 },
                 "Disk OCS Server Free space": {
@@ -113,7 +119,8 @@
                     "vars": {
                         "by_ssh_address": "httpd.neteyelocal",
                         "by_ssh_logname": "monitoring",
-                        "disk_single_ereg_path": "/neteye/shared/ocsinventory-server"
+                        "disk_single_ereg_path": "/neteye/shared/ocsinventory-server",
+                        "nx_is_infrastructural": "y"
                     }
                 }
             }
