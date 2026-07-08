@@ -14,14 +14,14 @@ import json
 import requests
 import sys
 import re
-import urllib3
-urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)  # Disable warning for Self Signed Certs
 
 ### GLOBAL VARS ###
 headers = {"Content-Type": "application/json"}
 cert_path = "/neteye/local/elasticsearch/conf/monitoring-certs/certs/"
 cert_file = "NetEyeElasticCheck.crt.pem"
 key_file = "private/NetEyeElasticCheck.key.pem"
+root_ca_path = "/usr/share/pki/ca-trust-source/anchors/root-ca.crt"
+icinga2_ca_path = "/usr/share/pki/ca-trust-source/anchors/neteye-icinga2-master-ca.crt"
 URL = "https://elasticsearch.neteyelocal:9200"
 
 # Icinga API config
@@ -53,7 +53,7 @@ def get_icinga_service(blockchain):
             ICINGA_URL,
             auth=(ICINGA_USER, ICINGA_PASSWORD),
             headers=ICINGA_HEADERS,
-            verify=False,
+            verify = f"{ icinga2_ca_path }",
             data=json.dumps(payload),
             timeout=30
         )
@@ -176,7 +176,7 @@ def main():
             f"{URL}/*-{blockchain}/_search",
             headers=headers,
             cert=(cert_path + cert_file, cert_path + key_file),
-            verify=False,
+            verify = f"{ root_ca_path }",
             data=json.dumps(payload)
         )
         if http_response.status_code != 200:
@@ -195,7 +195,7 @@ def main():
                 f"{URL}/{hit['_index']}/_settings",
                 headers=headers,
                 cert=(cert_path + cert_file, cert_path + key_file),
-                verify=False
+                verify = f"{ root_ca_path }"
             )
             if writes_request.status_code != 200:
                 message = f"WARNING - Elasticsearch is throwing an error.\n{http_response.text}"
@@ -215,7 +215,7 @@ def main():
                     f"{URL}/{hit['_index']}/_settings",
                     headers=headers,
                     cert=(cert_path + cert_file, cert_path + key_file),
-                    verify=False,
+                    verify = f"{ root_ca_path }",
                     json={"index.blocks.write": False}
                 )
                 if writes_request.status_code != 200:
@@ -231,7 +231,7 @@ def main():
                 f"{URL}/{hit['_index']}/_doc/{hit['_id']}",
                 headers=headers,
                 cert=(cert_path + cert_file, cert_path + key_file),
-                verify=False
+                verify = f"{ root_ca_path }"
             )
             if http_response.status_code != 200:
                 message = (
