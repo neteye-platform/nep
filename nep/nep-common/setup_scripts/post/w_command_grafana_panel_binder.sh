@@ -5,7 +5,7 @@
 # DESCRIPTION:
 #   Automatically links Grafana dashboard configurations from a source Icinga
 #   command to a target command by cloning sections in graphs.ini.
-#   
+#
 #   This script is part of NEP post-setup automation and should be executed
 #   after `reimport_grafana_panes.sh` to ensure all base dashboards are
 #   available in graphs.ini before linking operations begin.
