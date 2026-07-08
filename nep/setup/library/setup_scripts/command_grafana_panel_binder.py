@@ -28,7 +28,7 @@ def load_graphs_ini(graphs_path):
 
 
 
-def bind_target_to_source(config, source_cmd, target_cmd, update=False, dry_run=False):
+def bind_target_to_source(config, source_cmd, target_cmd, update=True, dry_run=False):
     """
     Clone the source_cmd section and change the title to target_cmd,
     then insert or update the target_cmd in the config.
@@ -126,7 +126,7 @@ def main():
     parser.add_argument(
         "-u", "--update",
         action="store_true",
-        default=False,
+        default=True,
         help="Allow update of existing commmand in graphs.ini",
     )
     parser.add_argument(
