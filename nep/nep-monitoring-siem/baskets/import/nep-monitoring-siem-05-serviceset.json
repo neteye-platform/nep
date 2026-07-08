@@ -166,7 +166,8 @@
                     "vars": {
                         "by_ssh_address": "rsyslog-logmanager.neteyelocal",
                         "by_ssh_logname": "monitoring",
-                        "disk_single_ereg_path": "\/neteye\/shared\/tornado_rsyslog_collector"
+                        "disk_single_ereg_path": "\/neteye\/shared\/tornado_rsyslog_collector",
+                        "nx_is_infrastructural": "y"
                     },
                     "volatile": null,
                     "zone": null
@@ -213,7 +214,8 @@
                     "vars": {
                         "by_ssh_address": "filebeat.neteyelocal",
                         "by_ssh_logname": "monitoring",
-                        "disk_single_ereg_path": "\/neteye\/shared\/filebeat"
+                        "disk_single_ereg_path": "\/neteye\/shared\/filebeat",
+                        "nx_is_infrastructural": "y"
                     },
                     "volatile": null,
                     "zone": null
@@ -260,7 +262,8 @@
                     "vars": {
                         "by_ssh_address": "elastic-blockchain-proxy.neteyelocal",
                         "by_ssh_logname": "monitoring",
-                        "disk_single_ereg_path": "\/neteye\/shared\/elastic-blockchain-proxy"
+                        "disk_single_ereg_path": "\/neteye\/shared\/elastic-blockchain-proxy",
+                        "nx_is_infrastructural": "y"
                     },
                     "volatile": null,
                     "zone": null
@@ -307,7 +310,8 @@
                     "vars": {
                         "by_ssh_address": "logstash.neteyelocal",
                         "by_ssh_logname": "monitoring",
-                        "disk_single_ereg_path": "\/neteye\/shared\/logstash"
+                        "disk_single_ereg_path": "\/neteye\/shared\/logstash",
+                        "nx_is_infrastructural": "y"
                     },
                     "volatile": null,
                     "zone": null
@@ -354,7 +358,8 @@
                     "vars": {
                         "by_ssh_address": "rsyslog-logmanager.neteyelocal",
                         "by_ssh_logname": "monitoring",
-                        "disk_single_ereg_path": "\/neteye\/shared\/rsyslog"
+                        "disk_single_ereg_path": "\/neteye\/shared\/rsyslog",
+                        "nx_is_infrastructural": "y"
                     },
                     "volatile": null,
                     "zone": null
@@ -408,7 +413,8 @@
                     "use_var_overrides": null,
                     "vars": {
                         "nx_elastic_check_types_list": "status",
-                        "es_hostname": "elasticsearch.neteyelocal"
+                        "es_hostname": "elasticsearch.neteyelocal",
+                        "nx_is_infrastructural": "y"
                     },
                     "volatile": null,
                     "zone": null
@@ -454,7 +460,8 @@
                     "use_var_overrides": null,
                     "vars": {
                         "nx_elastic_check_types_list": "master",
-                        "es_hostname": "elasticsearch.neteyelocal"
+                        "es_hostname": "elasticsearch.neteyelocal",
+                        "nx_is_infrastructural": "y"
                     },
                     "volatile": null,
                     "zone": null
@@ -502,7 +509,8 @@
                         "nx_elastic_check_types_list": "maxshards",
                         "es_hostname": "elasticsearch.neteyelocal",
                         "nx_elastic_critical": "90",
-                        "nx_elastic_warning": "80"
+                        "nx_elastic_warning": "80",
+                        "nx_is_infrastructural": "y"
                     },
                     "volatile": null,
                     "zone": null
@@ -548,7 +556,8 @@
                     "use_var_overrides": null,
                     "vars": {
                         "nx_elastic_check_types_list": "disk",
-                        "es_hostname": "elasticsearch.neteyelocal"
+                        "es_hostname": "elasticsearch.neteyelocal",
+                        "nx_is_infrastructural": "y"
                     },
                     "volatile": null,
                     "zone": null
@@ -594,7 +603,8 @@
                     "use_var_overrides": null,
                     "vars": {
                         "nx_elastic_check_types_list": "mem",
-                        "es_hostname": "elasticsearch.neteyelocal"
+                        "es_hostname": "elasticsearch.neteyelocal",
+                        "nx_is_infrastructural": "y"
                     },
                     "volatile": null,
                     "zone": null
@@ -639,7 +649,8 @@
                     "use_agent": null,
                     "use_var_overrides": null,
                     "vars": {
-                        "filebeat_hostname": "filebeat.neteyelocal"
+                        "filebeat_hostname": "filebeat.neteyelocal",
+                        "nx_is_infrastructural": "y"
                     },
                     "volatile": null,
                     "zone": null
@@ -686,7 +697,8 @@
                     "vars": {
                         "logstash_hostname": "logstash.neteyelocal",
                         "logstash_heap_crit": "90",
-                        "logstash_heap_warn": "80"
+                        "logstash_heap_warn": "80",
+                        "nx_is_infrastructural": "y"
                     },
                     "volatile": null,
                     "zone": null
@@ -731,7 +743,8 @@
                     "use_agent": null,
                     "use_var_overrides": null,
                     "vars": {
-                        "logstash_hostname": "logstash.neteyelocal"
+                        "logstash_hostname": "logstash.neteyelocal",
+                        "nx_is_infrastructural": "y"
                     },
                     "volatile": null,
                     "zone": null
@@ -777,7 +790,8 @@
                     "use_var_overrides": null,
                     "vars": {
                         "logstash_pipeline": "ebp_persistent",
-                        "logstash_hostname": "logstash.neteyelocal"
+                        "logstash_hostname": "logstash.neteyelocal",
+                        "nx_is_infrastructural": "y"
                     },
                     "volatile": null,
                     "zone": null
@@ -800,6 +814,7 @@
                             "elastic_agent.metricbeat",
                             "elastic_agent.elastic_agent"
                         ],
+                        "nx_is_infrastructural": "y",
                         "nx_neteye_tenant": "master",
                         "nx_tornado_webhook_name": "nx_elastic_dataset",
                         "nx_tornado_webhook_secret": "@@PASSWORD@@"
@@ -856,6 +871,7 @@
                     "vars": {
                         "by_ssh_address": "rsyslog-logmanager.neteyelocal",
                         "by_ssh_logname": "monitoring",
+                        "nx_is_infrastructural": "y",
                         "systemd_unit_name": "rsyslog-logmanager.service"
                     },
                     "volatile": null,
@@ -903,6 +919,7 @@
                     "vars": {
                         "by_ssh_address": "elastic-blockchain-proxy.neteyelocal",
                         "by_ssh_logname": "monitoring",
+                        "nx_is_infrastructural": "y",
                         "systemd_unit_name": "elastic-blockchain-proxy.service",
                         "systemd_skip_enabled_check": true
                     },
@@ -951,6 +968,7 @@
                     "vars": {
                         "by_ssh_address": "logstash.neteyelocal",
                         "by_ssh_logname": "monitoring",
+                        "nx_is_infrastructural": "y",
                         "systemd_unit_name": "logstash.service"
                     },
                     "volatile": null,
@@ -1002,6 +1020,7 @@
                             "StrictHostKeyChecking no",
                             "UserKnownHostsFile=\/dev\/null"
                         ],
+                        "nx_is_infrastructural": "y",
                         "systemd_unit_name": "filebeat.service"
                     },
                     "volatile": null,
@@ -1055,6 +1074,7 @@
                     "use_agent": null,
                     "use_var_overrides": null,
                     "vars": {
+                        "nx_is_infrastructural": "y",
                         "systemd_unit_name": "elasticsearch.service",
                         "systemd_skip_enabled_check": true
                     },
@@ -1105,7 +1125,8 @@
                         "disk_partitions": [
                             "\/neteye\/local\/elasticsearch\/"
                         ],
-                        "disk_wfree": "25%"
+                        "disk_wfree": "25%",
+                        "nx_is_infrastructural": "y"
                     },
                     "volatile": null,
                     "zone": null
@@ -1151,7 +1172,8 @@
                     "use_var_overrides": null,
                     "vars": {
                         "nx_elastic_check_types_list": "cpu",
-                        "es_local_enabled": true
+                        "es_local_enabled": true,
+                        "nx_is_infrastructural": "y"
                     },
                     "volatile": null,
                     "zone": null
@@ -1197,7 +1219,8 @@
                     "use_var_overrides": null,
                     "vars": {
                         "nx_elastic_check_types_list": "mem",
-                        "es_local_enabled": true
+                        "es_local_enabled": true,
+                        "nx_is_infrastructural": "y"
                     },
                     "volatile": null,
                     "zone": null
@@ -1243,7 +1266,8 @@
                     "use_var_overrides": null,
                     "vars": {
                         "nx_elastic_check_types_list": "disk",
-                        "es_local_enabled": true
+                        "es_local_enabled": true,
+                        "nx_is_infrastructural": "y"
                     },
                     "volatile": null,
                     "zone": null
@@ -1257,7 +1281,8 @@
                     "vars": {
                         "nx_elastic_data_path": "/neteye/local/elasticsearch/data",
                         "nx_elastic_disk_watermark_warning_multiplier_threshold": 2.0,
-                        "nx_elastic_disk_watermark_critical_multiplier_threshold": 1.5
+                        "nx_elastic_disk_watermark_critical_multiplier_threshold": 1.5,
+                        "nx_is_infrastructural": "y"
                     },
                     "object_name": "Elastic Disk Watermark Flooding",
                     "object_type": "object"
@@ -1309,7 +1334,9 @@
                     "template_choice": null,
                     "use_agent": null,
                     "use_var_overrides": null,
-                    "vars": {},
+                    "vars": {
+                        "nx_is_infrastructural": "y"
+                    },
                     "volatile": null,
                     "zone": null
                 },
@@ -1353,6 +1380,7 @@
                     "use_agent": null,
                     "use_var_overrides": null,
                     "vars": {
+                        "nx_is_infrastructural": "y",
                         "systemd_unit_name": "filebeat.service",
                         "systemd_skip_enabled_check": true
                     },
@@ -1375,7 +1403,10 @@
                     ],
                     "object_name": "APM Server Status",
                     "object_type": "object",
-                    "uuid": "33fe0107-3c61-4b47-be99-23d46d150e4f"
+                    "uuid": "33fe0107-3c61-4b47-be99-23d46d150e4f",
+                    "vars": {
+                        "nx_is_infrastructural": "y"
+                    }
                 }
             ],
             "uuid": "050e6707-c979-42b5-9997-8a845fe07bbf"
@@ -1427,7 +1458,8 @@
                     "use_var_overrides": null,
                     "vars": {
                         "logstash_heap_crit": "90",
-                        "logstash_heap_warn": "80"
+                        "logstash_heap_warn": "80",
+                        "nx_is_infrastructural": "y"
                     },
                     "volatile": null,
                     "zone": null
@@ -1471,7 +1503,9 @@
                     "template_choice": null,
                     "use_agent": null,
                     "use_var_overrides": null,
-                    "vars": {},
+                    "vars": {
+                        "nx_is_infrastructural": "y"
+                    },
                     "volatile": null,
                     "zone": null
                 },
@@ -1515,6 +1549,7 @@
                     "use_agent": null,
                     "use_var_overrides": null,
                     "vars": {
+                        "nx_is_infrastructural": "y",
                         "systemd_unit_name": "logstash.service",
                         "systemd_skip_enabled_check": true
                     },
@@ -1538,6 +1573,7 @@
                     "object_name": "Logstash Current ESTABLISHED Connection",
                     "object_type": "object",
                     "vars": {
+                        "nx_is_infrastructural": "y",
                         "nx_netstat_critical": "<3",
                         "nx_netstat_port": "<5045",
                         "nx_netstat_protocol": "TCP6",
@@ -1565,7 +1601,8 @@
                     "vars": {
                         "disk_partitions": [
                             "/neteye/local/kibana"
-                        ]
+                        ],
+                        "nx_is_infrastructural": "y"
                     }
                 },
                 {
@@ -1579,6 +1616,7 @@
                     "uuid": "e1db7c07-c103-4838-8653-9ba42d9f675e",
                     "vars": {
                         "http_ssl": true,
+                        "nx_is_infrastructural": "y",
                         "nx_kibana_auth_file": "/neteye/local/icinga2/conf/.elastic_api_key",
                         "nx_kibana_check_types_list": "rt",
                         "nx_kibana_critical": "1000",
@@ -1598,6 +1636,7 @@
                     "uuid": "45e95cf8-16c4-4cc1-b864-5461697641c6",
                     "vars": {
                         "http_ssl": true,
+                        "nx_is_infrastructural": "y",
                         "nx_kibana_auth_file": "/neteye/local/icinga2/conf/.elastic_api_key",
                         "nx_kibana_check_types_list": "task"
                     }
@@ -1612,6 +1651,7 @@
                     "object_type": "object",
                     "uuid": "dbe80cdc-ea10-4d5c-9280-794623c8e260",
                     "vars": {
+                        "nx_is_infrastructural": "y",
                         "systemd_skip_enabled_check": true,
                         "systemd_unit_name": "kibana.service"
                     }
@@ -1655,7 +1695,10 @@
                         "nx-st-type-custom"
                     ],
                     "object_name": "Elastic Agent Status",
-                    "object_type": "object"
+                    "object_type": "object",
+                    "vars": {
+                        "nx_is_infrastructural": "y"
+                    }
                 },
                 "Unit Elastic Agent State": {
                     "action_url": null,
@@ -1697,6 +1740,7 @@
                     "use_agent": null,
                     "use_var_overrides": null,
                     "vars": {
+                        "nx_is_infrastructural": "y",
                         "systemd_unit_name": "elastic-agent.service",
                         "systemd_skip_enabled_check": true
                     },
@@ -1720,6 +1764,7 @@
                     "object_name": "Elasticsearch Current ESTABLISHED Connection",
                     "object_type": "object",
                     "vars": {
+                        "nx_is_infrastructural": "y",
                         "nx_netstat_critical": "<3",
                         "nx_netstat_port": ">9200",
                         "nx_netstat_protocol": "TCP",
@@ -1743,6 +1788,7 @@
                             "NETEYE.zone=$host.vars.cluster_zone$"
                         ],
                         "nx_enable_eps": true,
+                        "nx_is_infrastructural": "y",
                         "nx_neteye_tenant": "$host.vars.nx_neteye_tenant$"
                     }
                 }
@@ -1763,7 +1809,8 @@
                     "object_name": "Fleet Agent Status",
                     "object_type": "object",
                     "vars": {
-                         "http_ssl": true
+                         "http_ssl": true,
+                         "nx_is_infrastructural": "y"
                     }
                 },
                 "Endpoint Agent Status": {
@@ -1782,7 +1829,10 @@
                         "nx-st-type-custom"
                     ],
                     "object_name": "Elastic SLM Policy",
-                    "object_type": "object"
+                    "object_type": "object",
+                    "vars": {
+                        "nx_is_infrastructural": "y"
+                    }
                 },
                 "Elastic SLM Status": {
                     "fields": [],
@@ -1791,7 +1841,10 @@
                         "nx-st-type-custom"
                     ],
                     "object_name": "Elastic SLM Status",
-                    "object_type": "object"
+                    "object_type": "object",
+                    "vars": {
+                        "nx_is_infrastructural": "y"
+                    }
                 },
                 "Elastic Transforms Status": {
                     "fields": [],
@@ -1802,6 +1855,7 @@
                     "object_name": "Elastic Transforms Status",
                     "object_type": "object",
                     "vars": {
+                        "nx_is_infrastructural": "y",
                         "nx_tornado_webhook_name": "nx_elastic_transforms",
                         "nx_tornado_webhook_secret": "@@PASSWORD_TRANSFORMS@@"
                     }
@@ -1815,6 +1869,7 @@
                     "object_name": "Elastic Watchers Status",
                     "object_type": "object",
                     "vars": {
+                        "nx_is_infrastructural": "y",
                         "nx_tornado_webhook_name": "nx_elastic_watchers",
                         "nx_tornado_webhook_secret": "@@PASSWORD_WATCHERS@@"
                     }
@@ -1838,6 +1893,7 @@
                     "object_type": "object",
                     "uuid": "11fe1523-6946-417a-9c35-c9244b68aa79",
                     "vars": {
+                        "nx_is_infrastructural": "y",
                         "nx_neteye_tenant": "$host.vars.nx_neteye_tenant$"
                     }
                 }
@@ -1872,6 +1928,7 @@
                             "elastic_agent.endpoint_security",
                             "elastic_agent.apm_server"
                         ],
+                        "nx_is_infrastructural": "y",
                         "nx_neteye_tenant": "neteye_system_internal",
                         "nx_tornado_webhook_name": "nx_elastic_dataset",
                         "nx_tornado_webhook_secret": "@@PASSWORD@@"
@@ -1895,6 +1952,9 @@
                     ],
                     "object_name": "Elastic Datasets Check",
                     "object_type": "object",
+                    "vars": {
+                        "nx_is_infrastructural": "y"
+                    },
                     "uuid": "deff60f0-f3be-4c90-be18-5e4d824a28a0"
                 }
             ],
