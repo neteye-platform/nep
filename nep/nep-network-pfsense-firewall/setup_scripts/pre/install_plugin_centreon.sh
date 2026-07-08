@@ -10,7 +10,7 @@ SETUP_LIBRARY=${NEP_STAGE_DIR}/setup/library
 ## Script main code: add your code here ##
 ##########################################
 function install_plugin() {
-    dnf --enablerepo=centreon-*-stable* install -y  centreon-plugin-Network-Firewalls-Pfsense-Snmp
+    dnf --enablerepo=centreon-*-stable*,epel install -y centreon-plugin-Network-Firewalls-Pfsense-Snmp
     exit $?
 }
 

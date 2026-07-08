@@ -125,7 +125,8 @@
                 "es_auth_cert": "\/neteye\/local\/elasticsearch\/conf\/monitoring-certs\/certs\/NetEyeElasticCheck.crt.pem",
                 "es_auth_key": "\/neteye\/local\/elasticsearch\/conf\/monitoring-certs\/certs\/private\/NetEyeElasticCheck.key.pem",
                 "es_hostname": "localhost",
-                "http_ssl": true
+                "http_ssl": true,
+                "nx_is_infrastructural": "y"
             },
             "volatile": null,
             "zone": null
@@ -233,7 +234,8 @@
             "use_var_overrides": null,
             "vars": {
                 "filebeat_hostname": "localhost",
-                "filebeat_port": 5067
+                "filebeat_port": 5067,
+                "nx_is_infrastructural": "y"
             },
             "volatile": null,
             "zone": null
@@ -461,7 +463,8 @@
             "use_agent": null,
             "use_var_overrides": null,
             "vars": {
-                "logstash_hostname": "localhost"
+                "logstash_hostname": "localhost",
+                "nx_is_infrastructural": "y"
             },
             "volatile": null,
             "zone": null
