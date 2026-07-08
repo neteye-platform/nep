@@ -47,7 +47,8 @@
             "vars": {
                 "nx_applications_list": [
                     "neteye"
-                ]
+                ],
+              "nx_is_infrastructural": "y"
             },
             "volatile": null,
             "zone": null
