@@ -25,7 +25,7 @@ function restart_grafana_via_pcs() {
     echo "Restarting Grafana"
     if is_cluster && is_drbd_mounted "grafana" ; then
         echo " - Performing cluster-controlled restart of Grafana"
-        pcs resource restart grafana
+        pcs resource restart grafana --wait=300
     fi
 }
 
