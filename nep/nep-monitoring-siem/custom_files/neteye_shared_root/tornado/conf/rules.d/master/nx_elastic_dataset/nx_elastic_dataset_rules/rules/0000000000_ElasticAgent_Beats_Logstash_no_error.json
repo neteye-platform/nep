@@ -33,7 +33,8 @@
           "object_name": "${event.payload.data.hostname}",
           "vars": {
             "created_by": "tornado",
-            "rulename": "root/master/nx_elastic_dataset/nx_elastic_dataset_rules"
+            "rulename": "root/master/nx_elastic_dataset/nx_elastic_dataset_rules",
+            "nx_is_infrastructural": "y"
           }
         },
         "service": {
