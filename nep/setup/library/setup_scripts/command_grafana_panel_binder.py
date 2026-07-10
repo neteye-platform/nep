@@ -4,7 +4,15 @@ Feat: NEP-901 Link existing Grafana Panels to other Commands
 Script that generate an entry in graphs.ini for a new command using as base one command with an existing Grafana Panel.
 
 To test script locally
-uv run python apply_grafana_command_links.py  --copy-from ssh --command name_command --graphs ../test/data/graphs.ini -v
+# Single command (works exactly as before)
+uv run python command_grafana_panel_binder.py --copy-from ssh --command my_command --graphs test/data/graphs.ini
+
+# Multiple commands
+uv run python command_grafana_panel_binder.py --copy-from ssh --command cmd1 cmd2 cmd3 --graphs test/data/graphs.ini -v
+
+# Dry run with multiple targets
+uv run python command_grafana_panel_binder.py --copy-from hostalive --command check-disk check-memory check-cpu --graphs test/data/graphs.ini --dry-run
+
 """
 
 import argparse
@@ -111,7 +119,9 @@ def main():
     parser.add_argument(
         "--command",
         required=True,
-        help=f"Command to be linked to the existing Grafana Dashboard",
+        nargs="+",
+        metavar="COMMAND",
+        help="One or more commands to be linked to the existing Grafana Dashboard",
     )
     parser.add_argument(
         "--graphs",
@@ -157,18 +167,22 @@ def main():
     for item in config.items():
         logging.debug(item)
 
-    # === Apply bindings === #
-    new_config, errors = bind_target_to_source(
-        config,
-        args.copy_from.lower(),
-        args.command.lower(),
-        args.update,
-        args.dry_run,
-    )
+    # === Apply bindings for each target command === #
+    all_errors = []
+    for target_cmd in args.command:
+        logging.info(f"--- Binding [{args.copy_from.lower()}] → [{target_cmd.lower()}] ---")
+        config, errors = bind_target_to_source(
+            config,
+            args.copy_from.lower(),
+            target_cmd.lower(),
+            args.update,
+            args.dry_run,
+        )
+        all_errors.extend(errors)
 
     # === Save === #
     if not errors and not args.dry_run:
-        save_graphs_ini(new_config, args.graphs)
+        save_graphs_ini(config, args.graphs)
         logger.info(f"Saved to {args.graphs}")
     elif args.dry_run:
         logger.info(f"Dry run - no changes written.")
