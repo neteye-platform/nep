@@ -13,7 +13,7 @@ that are not yet marked with nx_is_infrastructural and sets:
 
 Usage:
   $0 [--help|-h]
-  
+
 EOF
 }
 
