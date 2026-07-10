@@ -17,6 +17,7 @@ The `nep-monitoring-siem` package is the NEP designed to monitor the NetEye Elas
 2. [Installation](#installation)
 3. [Packet Contents](#packet-contents)
 4. [Usage](#usage)
+5. [Data Migrations](#migrations)
 
 
 ## Prerequisites
@@ -384,3 +385,23 @@ No Host Template provided by this NEP
 Example of Service Template `nx-ss-neteye-siem-services-state`:
 
 ![Service Set Example](doc-images/service-set-example.png)
+
+## Migrations
+
+### Infrastructural Services
+
+From Version `0.9.0`, the concept of Infrastructural Services has been included in this Package. Services to monitor Ingest Status of Elasticsearch Datasource (that have been created previously by Tornado Rules) must be updated manually. To perform this update, you can run `/usr/share/icingaweb2/nep/support-scripts/infrastructural-objects/mark_elastic_ingest_services_as_infrastructural.sh` to mark existing Service Objects as Infrastructural.
+
+#### How Migration works
+
+The migration script will look for all Single Services from Host Objects in Director's DB whom name begins with `Elastic Ingest Status*` that have not been marked as Infrastructural. Then, it wull proceed in marking them as infrastructural. Therefore, migration will not apply to Single Services coming from Host Templates or from Services inside Service Apply Rules or Service Sets.
+
+#### How to migrate Services
+
+1. Log into NetEye as `root` using SSH; in case of a Cluster Deployment, make sure to log into the Operative Node that runs Icingaweb2
+2. Run ```sh /usr/share/icingaweb2/nep/support-scripts/infrastructural-objects/mark_elastic_ingest_services_as_infrastructural.sh```
+3. Wait until it completes, or relaunch in case of errors
+
+#### Considerations about performance
+
+Single Services are updated using `icingacli director`, therefore you can expect a migration speed of ~ 3 Single Services per second. Plan migration accordingly.
