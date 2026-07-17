@@ -27,6 +27,7 @@
 # 18/07/2024 VIJU: Added support for Alyvix Service v3 API
 # 04/10/2024 VIJU: Fixed getting JWT Token only over a Basic-Auth URL
 # 16/10/2024 VIJU: Added Report Hostname as hostname in monitoring and in Alyvix Frontend could be different
+# 10/07/2026 PERC: Use exact match to search for Testcases, to avoid problems with similar names
 #
 
 use strict;
@@ -46,7 +47,7 @@ use MIME::Base64;
 use URI::Encode qw( uri_encode );
 
 my $PROGNAME = "check_alyvix3_testcases.pl";
-my $VERSION  = "2.1.0";
+my $VERSION  = "2.1.1";
 sub print_help ();
 sub print_usage ();
 
@@ -215,7 +216,7 @@ sub get_testcase_status {
 		my $tname;
 		while (($n < $size) && !defined($id)) {
 			$tname = $arr[$n]->{name};
-			if ($tname =~ /$opt_testcase/) {
+			if ($tname =~ /^$opt_testcase$/) {
 				$id = $arr[$n]->{id};
 			}
 			$n++;
