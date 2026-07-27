@@ -26,6 +26,7 @@ EOF
 
 if [[ $neteye_deployment == 'single_node' ]]; then
     add_neteye_module_to_list
+    exit 0
 fi
 if [[ $neteye_deployment == 'cluster' ]]; then
     if [[ $neteye_node_type == 'node' ]]; then

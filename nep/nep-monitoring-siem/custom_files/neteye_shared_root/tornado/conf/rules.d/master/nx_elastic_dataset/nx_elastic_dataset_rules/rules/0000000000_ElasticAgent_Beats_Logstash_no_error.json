@@ -48,7 +48,8 @@
             "dummy_text": "No document ingested on Elasticsearch in the last $service.check_interval$ seconds",
             "nx_neteye_tenant": "${event.payload.data.tenant}",
             "nx_on_host_down": "disable_check_on_down_hard",
-            "rulename": "root/master/nx_elastic_dataset/nx_elastic_dataset_rules"
+            "rulename": "root/master/nx_elastic_dataset/nx_elastic_dataset_rules",
+            "nx_is_infrastructural": "y"
           }
         }
       }
