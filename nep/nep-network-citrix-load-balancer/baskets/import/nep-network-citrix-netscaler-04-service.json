@@ -67,11 +67,6 @@
                     "datafield_id": 1733,
                     "is_required": "n",
                     "var_filter": null
-                },
-                {
-                    "datafield_id": 1761,
-                    "is_required": "n",
-                    "var_filter": null
                 }
             ],
             "imports": [
@@ -167,17 +162,7 @@
                     "var_filter": null
                 },
                 {
-                    "datafield_id": 1587,
-                    "is_required": "n",
-                    "var_filter": null
-                },
-                {
                     "datafield_id": 1733,
-                    "is_required": "n",
-                    "var_filter": null
-                },
-                {
-                    "datafield_id": 1761,
                     "is_required": "n",
                     "var_filter": null
                 }
@@ -288,6 +273,30 @@
             "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
             "format": null,
             "originalId": "1791",
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": null
+        },
+        "1835": {
+            "varname": "nx_centreon_plugin_snmp_filter-name",
+            "caption": "[NX] Centreon Plugin Filter Name",
+            "description": "Filter by name (can be a regexp).",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "1835",
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": null
+        },
+        "2855": {
+            "varname": "nx_centreon_plugin_snmp_filter_type",
+            "caption": "[NX] Centreon Plugin Filter Type",
+            "description": "Filter by type (can be a regexp).",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "2855",
             "settings": {
                 "visibility": "visible"
             },

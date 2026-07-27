@@ -2,15 +2,19 @@ name: Validate NEP Scope
 
 on:
   pull_request:
-    types: [opened, synchronize, reopened]
+    branches:
+      - "**"
+  merge_group:
 
 permissions:
   contents: read
 
 jobs:
   validate-nep-scope:
+    name: Validate NEP Scope
+    # Conditionally run this job to report as succeeded in the merge_group event
+    if: github.event_name != 'merge_group'
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
