@@ -4,10 +4,11 @@ on:
   pull_request:
     branches:
       - "**"
+  merge_group:
 
 permissions: write-all
 
 jobs:
   common-pull-request-checks:
-    uses: neteye-platform/repo-commons/.github/workflows/common-pull-request-checks.yaml@740d307f524f37043030b6786c4d6a08897bd615 # main
+    uses: neteye-platform/repo-commons/.github/workflows/common-pull-request-checks.yaml@4bacad26466ee16305bc4efd8d0a841bf9e28ec8 # main
     secrets: inherit

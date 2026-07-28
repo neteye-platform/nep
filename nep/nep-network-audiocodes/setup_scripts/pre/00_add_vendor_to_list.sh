@@ -9,13 +9,13 @@ SETUP_LIBRARY=${NEP_STAGE_DIR}/setup/library
 ##########################################
 ## Script main code: add your code here ##
 ##########################################
-function add_neteye_module_to_list() {
-    key="neteye-asset"
-    name="NetEye Asset"
-    FILE="/neteye/shared/icingaweb2/data/modules/fileshipper/nx-file-data/nx-neteye-modules-list.csv"
+function add_vendor_to_list() {
+    key="audiocodes"
+    name="Audiocodes"
+    FILE="/neteye/shared/icingaweb2/data/modules/fileshipper/nx-file-data/nx-vendor-list.csv"
 
     if grep -q "^${key}," $FILE ; then
-        echo "NetEye Module '$key' already present... Nothing to do."
+        echo "Vendor '$key' already present... Nothing to do."
     else
     cat << EOF >> $FILE
 $key,$name,string,null
@@ -25,14 +25,14 @@ EOF
 }
 
 if [[ $neteye_deployment == 'single_node' ]]; then
-    add_neteye_module_to_list
+    add_vendor_to_list
     exit 0
 fi
 if [[ $neteye_deployment == 'cluster' ]]; then
     if [[ $neteye_node_type == 'node' ]]; then
         SERVICE="icingaweb2"
         if systemctl is-active "$SERVICE" > /dev/null ; then
-            add_neteye_module_to_list
+            add_vendor_to_list
         else
             echo "[i] Inactive Cluster Node. Skipping."
         fi
