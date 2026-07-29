@@ -3447,7 +3447,7 @@
             "varname": "disk_win_exclude",
             "caption": "Disk drives to exclude",
             "description": "Exclude these drives from check",
-            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeArray",
             "format": null,
             "originalId": "69",
             "settings": {}
