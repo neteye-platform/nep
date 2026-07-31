@@ -29,8 +29,8 @@ if [[ $neteye_deployment == 'single_node' ]]; then
 fi
 if [[ $neteye_deployment == 'cluster' ]]; then
     if [[ $neteye_node_type == 'node' ]]; then
-        SERVICE="tornado"
-        if systemctl is-active "$SERVICE" > /dev/null ; then
+        DRBD_MOUNTPOINT="tornado"
+        if is_drbd_mounted "$DRBD_MOUNTPOINT"; then
             check_tornado_drafts
         else
             echo "[i] Inactive Cluster Node. Skipping."
