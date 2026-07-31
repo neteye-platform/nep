@@ -51,16 +51,6 @@ function add_elastic_user() {
     fi
 
     echo "[i] User ${ES_USERNAME} created successfully"
-
-
-    ### Add user to fleet_scritp
-    FILE_SCRIPT="/neteye/shared/monitoring/plugins/fleet-agent-status.sh"
-    echo "[i] Add user ${ES_USERNAME} to script ${FILE_SCRIPT}"
-    sed -i "s/@@PASSWORD@@/${PASSWORD}/g" $FILE_SCRIPT
-
-    FILE_SCRIPT="/neteye/shared/monitoring/plugins/endpoint-agent-status.sh"
-    echo "[i] Add user ${ES_USERNAME} to script ${FILE_SCRIPT}"
-    sed -i "s/@@PASSWORD@@/${PASSWORD}/g" $FILE_SCRIPT
 }
 
 if [[ $neteye_deployment == 'single_node' ]]; then
