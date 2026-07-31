@@ -9,53 +9,48 @@ SETUP_LIBRARY=${NEP_STAGE_DIR}/setup/library
 ## Script main code: add your code here ##
 ##########################################
 function rename_old_objects() {
-    SERVICE="php-fpm"
-    if systemctl is-active "$SERVICE" > /dev/null ; then
-        declare -A command_objects
-        command_objects["nx-c-check_nwc_health"]="nx-c-check-nwc-health"
+    declare -A command_objects
+    command_objects["nx-c-check_nwc_health"]="nx-c-check-nwc-health"
 
-        declare -A host_objects
-        host_objects["nx-ht-snmp-network"]="nx-ht-network"
-        host_objects["nx-ht-snmp-network-load-balancer"]="nx-ht-network-load-balancer"
-        host_objects["nx-ht-snmp-network-wifi"]="nx-ht-network-wifi"
-        host_objects["nx-ht-snmp-network-voip"]="nx-ht-network-voip"
-        host_objects["nx-ht-snmp-network-firewall"]="nx-ht-network-firewall"
-        host_objects["nx-ht-snmp-network-router"]="nx-ht-network-router"
-        host_objects["nx-ht-snmp-network-switch"]="nx-ht-network-switch"
+    declare -A host_objects
+    host_objects["nx-ht-snmp-network"]="nx-ht-network"
+    host_objects["nx-ht-snmp-network-load-balancer"]="nx-ht-network-load-balancer"
+    host_objects["nx-ht-snmp-network-wifi"]="nx-ht-network-wifi"
+    host_objects["nx-ht-snmp-network-voip"]="nx-ht-network-voip"
+    host_objects["nx-ht-snmp-network-firewall"]="nx-ht-network-firewall"
+    host_objects["nx-ht-snmp-network-router"]="nx-ht-network-router"
+    host_objects["nx-ht-snmp-network-switch"]="nx-ht-network-switch"
 
-        declare -A serviceset_objects
-        serviceset_objects["nx-ss-network-basic"]="nx-ss-network-snmp-basic"
-        serviceset_objects["nx-ss-network-extra"]="nx-ss-network-snmp-extra"
-        serviceset_objects["nx-ss-network-uptime"]="nx-ss-snmp-uptime"
+    declare -A serviceset_objects
+    serviceset_objects["nx-ss-network-basic"]="nx-ss-network-snmp-basic"
+    serviceset_objects["nx-ss-network-extra"]="nx-ss-network-snmp-extra"
+    serviceset_objects["nx-ss-network-uptime"]="nx-ss-snmp-uptime"
 
-        echo "Removing legacy Director Objects"
+    echo "Removing legacy Director Objects"
 
-        ## Rename command objects
-        for c in "${!command_objects[@]}"; do
-            tmp=$(icingacli director command exist "$c")
-            if [[ $tmp != *"does not"* ]]; then
-                icingacli director command set "$c" --object_name "${command_objects[$c]}"
-            fi
-        done
+    ## Rename command objects
+    for c in "${!command_objects[@]}"; do
+        tmp=$(icingacli director command exist "$c")
+        if [[ $tmp != *"does not"* ]]; then
+            icingacli director command set "$c" --object_name "${command_objects[$c]}"
+        fi
+    done
 
-        ## Rename host objects
-        for h in "${!host_objects[@]}"; do
-            tmp=$(icingacli director host exist "$h")
-            if [[ $tmp != *"does not"* ]]; then
-                icingacli director host set "$h" --object_name "${host_objects[$h]}"
-            fi
-        done
+    ## Rename host objects
+    for h in "${!host_objects[@]}"; do
+        tmp=$(icingacli director host exist "$h")
+        if [[ $tmp != *"does not"* ]]; then
+            icingacli director host set "$h" --object_name "${host_objects[$h]}"
+        fi
+    done
 
-        ## Rename service set objects
-        for s in "${!serviceset_objects[@]}"; do
-            tmp=$(icingacli director serviceset exist "$s")
-            if [[ $tmp != *"does not"* ]]; then
-                icingacli director serviceset set "$s" --object_name "${serviceset_objects[$s]}"
-            fi
-        done
-    else
-        echo "[i] Icingaweb2 it no active. Skipping."
-    fi
+    ## Rename service set objects
+    for s in "${!serviceset_objects[@]}"; do
+        tmp=$(icingacli director serviceset exist "$s")
+        if [[ $tmp != *"does not"* ]]; then
+            icingacli director serviceset set "$s" --object_name "${serviceset_objects[$s]}"
+        fi
+    done
 }
 
 if [[ $neteye_deployment == 'single_node' ]]; then
@@ -64,7 +59,13 @@ if [[ $neteye_deployment == 'single_node' ]]; then
 fi
 if [[ $neteye_deployment == 'cluster' ]]; then
     if [[ $neteye_node_type == 'node' ]]; then
-        rename_old_objects
+        SERVICE="icingaweb2"
+        if is_active "$SERVICE" ; then
+            rename_old_objects
+        else
+            echo "[i] Inactive Cluster Node. Skipping."
+        fi
+
         exit 0
     fi
     if [[ $neteye_node_type == 'elastic_only' ]]; then

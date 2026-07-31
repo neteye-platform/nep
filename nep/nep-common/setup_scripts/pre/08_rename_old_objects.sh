@@ -12,28 +12,23 @@ SETUP_LIBRARY=${NEP_STAGE_DIR}/setup/library
 . /usr/share/neteye/scripts/rpm-functions.sh
 
 function rename_objects() {
-    SERVICE="php-fpm"
-    if systemctl is-active "$SERVICE" > /dev/null; then
-        declare -A service_objects
-        service_objects["nx-st-agent-linux-init-state"]="nx-st-agent-linux-initd-service-state"
-        service_objects["nx-st-agent-linux-unit-state"]="nx-st-agent-linux-systemd-unit-state"
-        service_objects["nx-st-agent-linux-disk-space-usage"]="nx-st-agent-linux-disk-free-space"
-        service_objects["nx-st-agent-linux-disk-freespace"]="nx-st-agent-linux-disk-free-space"
-        service_objects["nx-st-agent-windows-disk-space-usage"]="nx-st-agent-windows-disk-free-space"
+    declare -A service_objects
+    service_objects["nx-st-agent-linux-init-state"]="nx-st-agent-linux-initd-service-state"
+    service_objects["nx-st-agent-linux-unit-state"]="nx-st-agent-linux-systemd-unit-state"
+    service_objects["nx-st-agent-linux-disk-space-usage"]="nx-st-agent-linux-disk-free-space"
+    service_objects["nx-st-agent-linux-disk-freespace"]="nx-st-agent-linux-disk-free-space"
+    service_objects["nx-st-agent-windows-disk-space-usage"]="nx-st-agent-windows-disk-free-space"
 
-        echo "[i] Removing legacy Director Objects"
+    echo "[i] Removing legacy Director Objects"
 
-        ## Rename service set objects
-        for s in "${!service_objects[@]}"; do
-            tmp=$(icingacli director service exist "$s")
-            if [[ $tmp != *"does not"* ]]; then
-                echo " - Removing legacy object ${s}"
-                icingacli director service set "$s" --object_name "${service_objects[$s]}"
-            fi
-        done
-    else
-        echo "[i] Icingaweb2 is not active. Skipping."
-    fi
+    ## Rename service set objects
+    for s in "${!service_objects[@]}"; do
+        tmp=$(icingacli director service exist "$s")
+        if [[ $tmp != *"does not"* ]]; then
+            echo " - Removing legacy object ${s}"
+            icingacli director service set "$s" --object_name "${service_objects[$s]}"
+        fi
+    done
 }
 
 if [[ $neteye_deployment == 'single_node' ]]; then
@@ -42,7 +37,13 @@ if [[ $neteye_deployment == 'single_node' ]]; then
 fi
 if [[ $neteye_deployment == 'cluster' ]]; then
     if [[ $neteye_node_type == 'node' ]]; then
-        rename_objects
+        SERVICE="icingaweb2"
+        if is_active "$SERVICE" ; then
+            rename_objects
+        else
+            echo "[i] Inactive Cluster Node. Skipping."
+        fi
+        
         exit 0
     fi
     if [[ $neteye_node_type == 'elastic_only' ]]; then
