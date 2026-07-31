@@ -40,8 +40,8 @@ if [[ $neteye_deployment == 'single_node' ]]; then
 fi
 if [[ $neteye_deployment == 'cluster' ]]; then
     if [[ $neteye_node_type == 'node' ]]; then
-SERVICE="icingaweb2"
-        if systemctl is-active "$SERVICE" > /dev/null ; then
+        SERVICE="icingaweb2"
+        if is_active "$SERVICE" ; then
             remove_service_sets
         else
             echo "[i] Inactive Cluster Node. Skipping."
