@@ -26,14 +26,14 @@ function add_user_template() {
 }
 
 if [[ $neteye_deployment == 'single_node' ]]; then
-    neteye_deployment
+    add_user_template
     exit 0
 fi
 if [[ $neteye_deployment == 'cluster' ]]; then
     if [[ $neteye_node_type == 'node' ]]; then
         SERVICE="icingaweb2"
-        if systemctl is-active "$SERVICE" > /dev/null ; then
-            neteye_deployment
+        if is_active "$SERVICE" ; then
+            add_user_template
         else
             echo "[i] Inactive Cluster Node. Skipping."
         fi
