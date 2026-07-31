@@ -12,17 +12,15 @@ SETUP_LIBRARY=${NEP_STAGE_DIR}/setup/library
 . /usr/share/neteye/scripts/rpm-functions.sh
 
 function create_default_os_list() {
-    SERVICE="php-fpm"
-    if systemctl is-active "$SERVICE" > /dev/null; then
-        echo "[i] Check default OS list"
+    echo "[i] Check default OS list"
 
-        FILE="/neteye/shared/icingaweb2/data/modules/fileshipper/nx-file-data/nx-host_os-list.csv"
+    FILE="/neteye/shared/icingaweb2/data/modules/fileshipper/nx-file-data/nx-host_os-list.csv"
 
-        if [ -f $FILE ]; then
-            echo " - Default OS list already present... Nothing to do."
-        else
-            echo " - Creating Default OS list as FileShipper file source."
-        cat << EOF >> $FILE
+    if [ -f $FILE ]; then
+        echo " - Default OS list already present... Nothing to do."
+    else
+        echo " - Creating Default OS list as FileShipper file source."
+    cat << EOF >> $FILE
 "entry_name","entry_value","format","allowed_roles"
 linux_centos_6,"Linux CentOS 6",string,null
 linux_centos_7,"Linux CentOS 7",string,null
@@ -72,10 +70,7 @@ ibm_imm,"IBM IMM",string,null
 hp_oneview,"HP OneView",string,null
 hp_bladechassis,"HP Blade Chassis",string,null
 EOF
-        fi
-    else
-        echo "[i] Icingaweb2 is not active. Skipping."
-    fi
+
 }
 
 if [[ $neteye_deployment == 'single_node' ]]; then
@@ -84,7 +79,13 @@ if [[ $neteye_deployment == 'single_node' ]]; then
 fi
 if [[ $neteye_deployment == 'cluster' ]]; then
     if [[ $neteye_node_type == 'node' ]]; then
-        create_default_os_list
+        DRBD_MOUNTPOINT="icingaweb2"
+        if is_drbd_mounted "$DRBD_MOUNTPOINT"; then
+            create_default_os_list
+        else
+            echo "[i] Inactive Cluster Node. Skipping."
+        fi
+
         exit 0
     fi
     if [[ $neteye_node_type == 'elastic_only' ]]; then
