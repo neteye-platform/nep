@@ -24,7 +24,13 @@ if [[ $neteye_deployment == 'single_node' ]]; then
 fi
 if [[ $neteye_deployment == 'cluster' ]]; then
     if [[ $neteye_node_type == 'node' ]]; then
-        import_grafana_panels
+        SERVICE="icingaweb2"
+        if is_active "$SERVICE" ; then
+            import_grafana_panels
+        else
+            echo "[i] Inactive Cluster Node. Skipping."
+        fi
+
         exit 0
     fi
     if [[ $neteye_node_type == 'elastic_only' ]]; then
