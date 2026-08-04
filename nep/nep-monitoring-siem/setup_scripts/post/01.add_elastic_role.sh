@@ -9,6 +9,8 @@ SETUP_LIBRARY=${NEP_STAGE_DIR}/setup/library
 ##########################################
 ## Script main code: add your code here ##
 ##########################################
+. /usr/share/neteye/scripts/rpm-functions.sh
+
 function check_api_response {
   STATUS=$(echo $1 | jq 'select(.ErrorCode!=null).ErrorCode')
   RET=$2

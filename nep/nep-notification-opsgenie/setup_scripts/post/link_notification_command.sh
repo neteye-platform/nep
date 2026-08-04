@@ -9,6 +9,8 @@ SETUP_LIBRARY=${NEP_STAGE_DIR}/setup/library
 ##########################################
 ## Script main code: add your code here ##
 ##########################################
+. /usr/share/neteye/scripts/rpm-functions.sh
+
 ## Add Notification Plugin to Icinga2 Master Instance directories
 ## It is done by a symlink
 # This kind of configuration must be performed only where Icinga2 Master is running

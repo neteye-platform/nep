@@ -9,6 +9,8 @@ SETUP_LIBRARY=${NEP_STAGE_DIR}/setup/library
 ##########################################
 ## Script main code: add your code here ##
 ##########################################
+. /usr/share/neteye/scripts/rpm-functions.sh
+
 function create_alyvix_account_on_icingaweb() {
     echo '[i] Creating Icinga Web 2 user account "alyvix-check"'
     icingaweb_pwd_file="/root/.pwd_icingaweb2_alyvix_check"

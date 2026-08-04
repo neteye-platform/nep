@@ -9,6 +9,7 @@ SETUP_LIBRARY=${NEP_STAGE_DIR}/setup/library
 ##########################################
 ## Script main code: add your code here ##
 ##########################################
+. /usr/share/neteye/scripts/rpm-functions.sh
 
 function set_acl_for_nrpe_config_files() {
     echo 'Getting NetEye Corporate IPs'

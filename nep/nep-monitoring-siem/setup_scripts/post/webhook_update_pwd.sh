@@ -9,6 +9,8 @@ SETUP_LIBRARY=${NEP_STAGE_DIR}/setup/library
 ##########################################
 ## Script main code: add your code here ##
 ##########################################
+. /usr/share/neteye/scripts/rpm-functions.sh
+
 function webhook_update_pwd() {
     # For Elastic Dataset
     WEBHOOK_FILE="/neteye/shared/tornado_webhook_collector/conf/webhooks/nx-elastic-dataset.json"
