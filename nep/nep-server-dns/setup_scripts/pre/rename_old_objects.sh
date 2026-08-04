@@ -9,6 +9,8 @@ SETUP_LIBRARY=${NEP_STAGE_DIR}/setup/library
 ##########################################
 ## Script main code: add your code here ##
 ##########################################
+. /usr/share/neteye/scripts/rpm-functions.sh
+
 function rename_old_objects() {
     declare -A host_objects
     host_objects["nx-ht-windows-dns-server"]="nx-ht-server-windows-dns-server"

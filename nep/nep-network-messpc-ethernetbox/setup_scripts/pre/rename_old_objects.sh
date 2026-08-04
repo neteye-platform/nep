@@ -9,6 +9,8 @@ SETUP_LIBRARY=${NEP_STAGE_DIR}/setup/library
 ##########################################
 ## Script main code: add your code here ##
 ##########################################
+. /usr/share/neteye/scripts/rpm-functions.sh
+
 function remove_old_objects() {
     declare -A command_objects
     command_objects["nx-c-check_pcmeasure2"]="nx-c-check-pcmeasure2"

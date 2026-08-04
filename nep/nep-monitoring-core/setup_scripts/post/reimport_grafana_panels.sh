@@ -9,6 +9,7 @@ SETUP_LIBRARY=${NEP_STAGE_DIR}/setup/library
 ##########################################
 ## Script main code: add your code here ##
 ##########################################
+. /usr/share/neteye/scripts/rpm-functions.sh
 
 function import_grafana_panels() {
     SECURE_INSTALL_VARDIR=/neteye/shared/secure_install/

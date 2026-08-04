@@ -9,6 +9,8 @@ SETUP_LIBRARY=${NEP_STAGE_DIR}/setup/library
 ##########################################
 ## Script main code: add your code here ##
 ##########################################
+. /usr/share/neteye/scripts/rpm-functions.sh
+
 # To allow End User to manually update States and Transitions and keep changes
 # throughout all NEP Updates, an empty UT is created ONLY if NetEye hasn't it.
 # Then, using Baskets, default custom variable settings and inheritance are

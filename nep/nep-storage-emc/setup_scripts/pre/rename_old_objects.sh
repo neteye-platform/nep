@@ -9,6 +9,8 @@ SETUP_LIBRARY=${NEP_STAGE_DIR}/setup/library
 ##########################################
 ## Script main code: add your code here ##
 ##########################################
+. /usr/share/neteye/scripts/rpm-functions.sh
+
 function remove_old_objects() {
     declare -A command_objects
     command_objects["nx-c-centreon_emc_datadomain"]="nx-c-centreon-emc-datadomain"

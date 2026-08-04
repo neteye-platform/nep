@@ -9,6 +9,8 @@ SETUP_LIBRARY=${NEP_STAGE_DIR}/setup/library
 ##########################################
 ## Script main code: add your code here ##
 ##########################################
+. /usr/share/neteye/scripts/rpm-functions.sh
+
 function rename_old_objects() {
     declare -A command_objects
     command_objects["nx-c-centreon_dell_n4000"]="nx-c-centreon-dell-n4000"

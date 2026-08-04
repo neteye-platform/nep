@@ -9,6 +9,8 @@ SETUP_LIBRARY=${NEP_STAGE_DIR}/setup/library
 ##########################################
 ## Script main code: add your code here ##
 ##########################################
+. /usr/share/neteye/scripts/rpm-functions.sh
+
 function remove_automations() {
     ## Remove Sync Rules
     syncrule_objects=( "nx-sr-neteye-infrastructure-zones" "nx-sr-neteye-infrastructure-endpoints-update" "nx-sr-neteye-ip-duplicated-zones" "nx-sr-datalist-neteye-modules" )
