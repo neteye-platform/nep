@@ -13,7 +13,7 @@ SETUP_LIBRARY=${NEP_STAGE_DIR}/setup/library
 
 function remove_automations() {
     ## Remove Sync Rules
-    syncrule_objects=( "nx-sr-neteye-infrastructure-zones" "nx-sr-neteye-infrastructure-endpoints-update" "nx-sr-neteye-ip-duplicated-zones" "nx-sr-datalist-neteye-modules" )
+    syncrule_objects=( "nx-sr-neteye-infrastructure-zones" "nx-sr-neteye-infrastructure-endpoints" "nx-sr-neteye-ip-duplicated-zones" "nx-sr-datalist-neteye-modules" )
 
     for s in "${syncrule_objects[@]}"; do
         tmp=$(icingacli nep syncrule list | grep "$s")
