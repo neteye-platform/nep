@@ -9,6 +9,8 @@ SETUP_LIBRARY=${NEP_STAGE_DIR}/setup/library
 ##########################################
 ## Script main code: add your code here ##
 ##########################################
+. /usr/share/neteye/scripts/rpm-functions.sh
+
 function remove_automations() {
     ## Remove Sync Rules
     syncrule_objects=( "nx-sr-vmd-vcsa" "nx-sr-vmd-vcsa-create" "nx-sr-vmd-vcsa-update" "nx-sr-vmd-host-system" "nx-sr-vmd-host-system-create" "nx-sr-vmd-host-system-update" "nx-sr-vmd-virtual-machines" "nx-sr-vmd-virtual-machines-create" "nx-sr-vmd-virtual-machines-update" "nx-sr-vmd-datastore" )
