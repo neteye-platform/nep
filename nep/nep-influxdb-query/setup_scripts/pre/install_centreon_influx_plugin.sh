@@ -11,7 +11,7 @@ SETUP_LIBRARY=${NEP_STAGE_DIR}/setup/library
 ##########################################
 # Install RPM for InfluxDB Centreon Plugin
 function install_plugin() {
-    ddnf -y --enablerepo=centreon-*-stable*,epel install centreon-plugin-Applications-Databases-Influxdb
+    dnf -y --enablerepo=centreon-*-stable*,epel install centreon-plugin-Applications-Databases-Influxdb
     if [ $? -eq 0 ]; then
         echo ' Done'
     else
