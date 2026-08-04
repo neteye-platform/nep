@@ -71,6 +71,8 @@ hp_oneview,"HP OneView",string,null
 hp_bladechassis,"HP Blade Chassis",string,null
 EOF
 
+    fi
+
 }
 
 if [[ $neteye_deployment == 'single_node' ]]; then
