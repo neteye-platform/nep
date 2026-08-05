@@ -133,8 +133,11 @@ get_connection_time ()
   cat >>$INFILE <<@EOF
 select * from M_DATABASE;
 @EOF
-  ${HDBSQL} -n ${HANA_HOST}:${HANA_PORT} -u ${HANA_USER} -p ${HANA_PASS} -I $INFILE -o $TMPFILE
+  ${HDBSQL} -n ${HANA_HOST}:${HANA_PORT} -u ${HANA_USER} -p ${HANA_PASS} -I $INFILE -o $TMPFILE 2 >> $TMPFILE
   RET=$?
+  if grep -qE '^\* [0-9]+:' "$TMPFILE"; then
+      RET=1
+  fi
   rm -f $INFILE $TMPFILE
   return $RET
 }
@@ -147,8 +150,11 @@ check_log_backup ()
   cat >>$INFILE <<@EOF
 select backup_id, sys_start_time, state_name from m_backup_catalog where entry_type_name='log backup' and sys_end_time >= add_seconds (current_timestamp, -${HANA_LOOKBACK}*60) and not state_name in ('successful', 'running');
 @EOF
-  ${HDBSQL} -n ${HANA_HOST}:${HANA_PORT} -u ${HANA_USER} -p ${HANA_PASS} -I $INFILE -o $TMPFILE
+  ${HDBSQL} -n ${HANA_HOST}:${HANA_PORT} -u ${HANA_USER} -p ${HANA_PASS} -I $INFILE -o $TMPFILE 2 >> $TMPFILE
   RET=$?
+  if grep -qE '^\* [0-9]+:' "$TMPFILE"; then
+      RET=1
+  fi
   rm -f $INFILE
   return $RET
 }
@@ -161,8 +167,11 @@ check_failed_data_backup ()
   cat >>$INFILE <<@EOF
 select backup_id, sys_start_time, state_name from m_backup_catalog where entry_type_name='data backup' and sys_end_time >= add_seconds (current_timestamp, -${HANA_LOOKBACK}*60*60) and not state_name in ('successful', 'running');
 @EOF
-  ${HDBSQL} -n ${HANA_HOST}:${HANA_PORT} -u ${HANA_USER} -p ${HANA_PASS} -I $INFILE -o $TMPFILE
+  ${HDBSQL} -n ${HANA_HOST}:${HANA_PORT} -u ${HANA_USER} -p ${HANA_PASS} -I $INFILE -o $TMPFILE 2 >> $TMPFILE
   RET=$?
+  if grep -qE '^\* [0-9]+:' "$TMPFILE"; then
+      RET=1
+  fi
   rm -f $INFILE
   return $RET
 }
@@ -389,8 +398,11 @@ check_memory_used ()
   cat >>$INFILE <<@EOF
 select value from m_system_overview where section='Memory';
 @EOF
-  ${HDBSQL} -n ${HANA_HOST}:${HANA_PORT} -u ${HANA_USER} -p ${HANA_PASS} -I $INFILE -o $TMPFILE
+  ${HDBSQL} -n ${HANA_HOST}:${HANA_PORT} -u ${HANA_USER} -p ${HANA_PASS} -I $INFILE -o $TMPFILE 2 >> $TMPFILE
   RET=$?
+  if grep -qE '^\* [0-9]+:' "$TMPFILE"; then
+      RET=1
+  fi
   rm -f $INFILE
   return $RET
 }
