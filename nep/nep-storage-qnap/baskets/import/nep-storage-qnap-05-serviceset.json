@@ -5,464 +5,165 @@
             "description": "Service Set providing checks for QNAP storages",
             "object_name": "nx-ss-snmp-storage-qnap",
             "object_type": "template",
-            "services": {
-                "HW Health": {
-                    "action_url": null,
-                    "apply_for": null,
-                    "assign_filter": null,
-                    "check_command": null,
-                    "check_interval": null,
-                    "check_period": null,
-                    "check_timeout": null,
-                    "command_endpoint": null,
-                    "disabled": true,
-                    "display_name": null,
-                    "enable_active_checks": null,
-                    "enable_event_handler": null,
-                    "enable_flapping": null,
-                    "enable_notifications": null,
-                    "enable_passive_checks": null,
-                    "enable_perfdata": null,
-                    "event_command": null,
+            "services": [
+                {
                     "fields": [],
-                    "flapping_threshold_high": null,
-                    "flapping_threshold_low": null,
-                    "groups": [],
-                    "host": null,
-                    "icon_image": null,
-                    "icon_image_alt": null,
                     "imports": [
-                        "nx-st-agentless-snmp-centreon-qnap",
+                        "nx-st-agentless-snmp-centreon-qnap-cpu",
                         "nx-st-type-custom"
                     ],
-                    "max_check_attempts": null,
-                    "notes": null,
-                    "notes_url": null,
-                    "object_name": "HW Health",
-                    "object_type": "object",
-                    "retry_interval": null,
-                    "service_set": null,
-                    "template_choice": null,
-                    "use_agent": null,
-                    "use_var_overrides": null,
-                    "vars": {
-                        "nx_qnap_storage_mode": "hardware",
-                        "snmp_timeout": 15
-                    },
-                    "volatile": null,
-                    "zone": null
-                },
-                "Fan speed": {
-                    "action_url": null,
-                    "apply_for": null,
-                    "assign_filter": null,
-                    "check_command": null,
-                    "check_interval": null,
-                    "check_period": null,
-                    "check_timeout": null,
-                    "command_endpoint": null,
-                    "disabled": false,
-                    "display_name": null,
-                    "enable_active_checks": null,
-                    "enable_event_handler": null,
-                    "enable_flapping": null,
-                    "enable_notifications": null,
-                    "enable_passive_checks": null,
-                    "enable_perfdata": null,
-                    "event_command": null,
-                    "fields": [],
-                    "flapping_threshold_high": null,
-                    "flapping_threshold_low": null,
-                    "groups": [],
-                    "host": null,
-                    "icon_image": null,
-                    "icon_image_alt": null,
-                    "imports": [
-                        "nx-st-agentless-snmp-centreon-qnap",
-                        "nx-st-type-custom"
-                    ],
-                    "max_check_attempts": null,
-                    "notes": null,
-                    "notes_url": null,
-                    "object_name": "Fan speed",
-                    "object_type": "object",
-                    "retry_interval": null,
-                    "service_set": null,
-                    "template_choice": null,
-                    "use_agent": null,
-                    "use_var_overrides": null,
-                    "vars": {
-                        "nx_qnap_storage_mode": "hardware",
-                        "nx_centreon_qnap_storage_component_list": "fan"
-                    },
-                    "volatile": null,
-                    "zone": null
-                },
-                "CPU Load": {
-                    "action_url": null,
-                    "apply_for": null,
-                    "assign_filter": null,
-                    "check_command": null,
-                    "check_interval": null,
-                    "check_period": null,
-                    "check_timeout": null,
-                    "command_endpoint": null,
-                    "disabled": false,
-                    "display_name": null,
-                    "enable_active_checks": null,
-                    "enable_event_handler": null,
-                    "enable_flapping": null,
-                    "enable_notifications": null,
-                    "enable_passive_checks": null,
-                    "enable_perfdata": null,
-                    "event_command": null,
-                    "fields": [],
-                    "flapping_threshold_high": null,
-                    "flapping_threshold_low": null,
-                    "groups": [],
-                    "host": null,
-                    "icon_image": null,
-                    "icon_image_alt": null,
-                    "imports": [
-                        "nx-st-agentless-snmp-centreon-qnap",
-                        "nx-st-type-custom"
-                    ],
-                    "max_check_attempts": null,
-                    "notes": null,
-                    "notes_url": null,
                     "object_name": "CPU Load",
                     "object_type": "object",
-                    "retry_interval": null,
-                    "service_set": null,
-                    "template_choice": null,
-                    "use_agent": null,
-                    "use_var_overrides": null,
+                    "uuid": "32d34120-b7cb-4baa-a29d-2b218ddd754e",
                     "vars": {
-                        "nx_qnap_storage_mode": "cpu"
-                    },
-                    "volatile": null,
-                    "zone": null
+                        "nx_centreon_qnap_storage_mode": "cpu"
+                    }
                 },
-                "Memory Usage": {
-                    "action_url": null,
-                    "apply_for": null,
-                    "assign_filter": null,
-                    "check_command": null,
-                    "check_interval": null,
-                    "check_period": null,
-                    "check_timeout": null,
-                    "command_endpoint": null,
-                    "disabled": false,
-                    "display_name": null,
-                    "enable_active_checks": null,
-                    "enable_event_handler": null,
-                    "enable_flapping": null,
-                    "enable_notifications": null,
-                    "enable_passive_checks": null,
-                    "enable_perfdata": null,
-                    "event_command": null,
+                {
                     "fields": [],
-                    "flapping_threshold_high": null,
-                    "flapping_threshold_low": null,
-                    "groups": [],
-                    "host": null,
-                    "icon_image": null,
-                    "icon_image_alt": null,
                     "imports": [
-                        "nx-st-agentless-snmp-centreon-qnap",
+                        "nx-st-agentless-snmp-centreon-qnap-hardware",
                         "nx-st-type-custom"
                     ],
-                    "max_check_attempts": null,
-                    "notes": null,
-                    "notes_url": null,
-                    "object_name": "Memory Usage",
+                    "object_name": "Disk",
                     "object_type": "object",
-                    "retry_interval": null,
-                    "service_set": null,
-                    "template_choice": null,
-                    "use_agent": null,
-                    "use_var_overrides": null,
+                    "uuid": "6711e053-8fe4-431e-87c0-9f50e6f51722",
                     "vars": {
-                        "nx_qnap_storage_mode": "memory"
-                    },
-                    "volatile": null,
-                    "zone": null
+                        "nx_centreon_qnap_storage_component": "disk",
+                        "nx_centreon_qnap_storage_component_list": "disk",
+                        "nx_centreon_qnap_storage_mode": "hardware"
+                    }
                 },
-                "Storage status": {
-                    "action_url": null,
-                    "apply_for": null,
-                    "assign_filter": null,
-                    "check_command": null,
-                    "check_interval": null,
-                    "check_period": null,
-                    "check_timeout": null,
-                    "command_endpoint": null,
-                    "disabled": false,
-                    "display_name": null,
-                    "enable_active_checks": null,
-                    "enable_event_handler": null,
-                    "enable_flapping": null,
-                    "enable_notifications": null,
-                    "enable_passive_checks": null,
-                    "enable_perfdata": null,
-                    "event_command": null,
+                {
                     "fields": [],
-                    "flapping_threshold_high": null,
-                    "flapping_threshold_low": null,
-                    "groups": [],
-                    "host": null,
-                    "icon_image": null,
-                    "icon_image_alt": null,
                     "imports": [
-                        "nx-st-agentless-snmp-centreon-qnap",
+                        "nx-st-agentless-snmp-centreon-qnap-hardware",
                         "nx-st-type-custom"
                     ],
-                    "max_check_attempts": null,
-                    "notes": null,
-                    "notes_url": null,
-                    "object_name": "Storage status",
+                    "object_name": "Fan speed",
                     "object_type": "object",
-                    "retry_interval": null,
-                    "service_set": null,
-                    "template_choice": null,
-                    "use_agent": null,
-                    "use_var_overrides": null,
+                    "uuid": "58baea92-d23a-4f5b-9d15-b70bbdf54526",
                     "vars": {
-                        "nx_qnap_storage_mode": "storage",
-                        "nx_centreon_plugin_retention_statefile_dir": "\/neteye\/shared\/icinga2\/data\/lib\/centreon-plugins\/"
-                    },
-                    "volatile": null,
-                    "zone": null
+                        "nx_centreon_qnap_storage_component": "fan",
+                        "nx_centreon_qnap_storage_component_list": "fan",
+                        "nx_centreon_qnap_storage_mode": "hardware"
+                    }
                 },
-                "Volumes status": {
-                    "action_url": null,
-                    "apply_for": null,
-                    "assign_filter": null,
-                    "check_command": null,
-                    "check_interval": null,
-                    "check_period": null,
-                    "check_timeout": null,
-                    "command_endpoint": null,
-                    "disabled": false,
-                    "display_name": null,
-                    "enable_active_checks": null,
-                    "enable_event_handler": null,
-                    "enable_flapping": null,
-                    "enable_notifications": null,
-                    "enable_passive_checks": null,
-                    "enable_perfdata": null,
-                    "event_command": null,
+                {
                     "fields": [],
-                    "flapping_threshold_high": null,
-                    "flapping_threshold_low": null,
-                    "groups": [],
-                    "host": null,
-                    "icon_image": null,
-                    "icon_image_alt": null,
                     "imports": [
                         "nx-st-agentless-snmp-centreon-qnap",
-                        "nx-st-type-custom"
+                        "nx-st-type-custom",
+                        "nx-st-agentless-snmp-centreon-qnap-interfaces"
                     ],
-                    "max_check_attempts": null,
-                    "notes": null,
-                    "notes_url": null,
-                    "object_name": "Volume status",
-                    "object_type": "object",
-                    "retry_interval": null,
-                    "service_set": null,
-                    "template_choice": null,
-                    "use_agent": null,
-                    "use_var_overrides": null,
-                    "vars": {
-                        "nx_qnap_storage_mode": "volumes"
-                    },
-                    "volatile": null,
-                    "zone": null
-                },
-                "Upgrade status": {
-                    "action_url": null,
-                    "apply_for": null,
-                    "assign_filter": null,
-                    "check_command": null,
-                    "check_interval": null,
-                    "check_period": null,
-                    "check_timeout": null,
-                    "command_endpoint": null,
-                    "disabled": false,
-                    "display_name": null,
-                    "enable_active_checks": null,
-                    "enable_event_handler": null,
-                    "enable_flapping": null,
-                    "enable_notifications": null,
-                    "enable_passive_checks": null,
-                    "enable_perfdata": null,
-                    "event_command": null,
-                    "fields": [],
-                    "flapping_threshold_high": null,
-                    "flapping_threshold_low": null,
-                    "groups": [],
-                    "host": null,
-                    "icon_image": null,
-                    "icon_image_alt": null,
-                    "imports": [
-                        "nx-st-agentless-snmp-centreon-qnap",
-                        "nx-st-type-custom"
-                    ],
-                    "max_check_attempts": null,
-                    "notes": null,
-                    "notes_url": null,
-                    "object_name": "Upgrade status",
-                    "object_type": "object",
-                    "retry_interval": null,
-                    "service_set": null,
-                    "template_choice": null,
-                    "use_agent": null,
-                    "use_var_overrides": null,
-                    "vars": {
-                        "nx_qnap_storage_mode": "upgrade"
-                    },
-                    "volatile": null,
-                    "zone": null
-                },
-                "Interfaces status": {
-                    "action_url": null,
-                    "apply_for": null,
-                    "assign_filter": null,
-                    "check_command": null,
-                    "check_interval": null,
-                    "check_period": null,
-                    "check_timeout": null,
-                    "command_endpoint": null,
-                    "disabled": false,
-                    "display_name": null,
-                    "enable_active_checks": null,
-                    "enable_event_handler": null,
-                    "enable_flapping": null,
-                    "enable_notifications": null,
-                    "enable_passive_checks": null,
-                    "enable_perfdata": null,
-                    "event_command": null,
-                    "fields": [],
-                    "flapping_threshold_high": null,
-                    "flapping_threshold_low": null,
-                    "groups": [],
-                    "host": null,
-                    "icon_image": null,
-                    "icon_image_alt": null,
-                    "imports": [
-                        "nx-st-agentless-snmp-centreon-qnap",
-                        "nx-st-type-custom"
-                    ],
-                    "max_check_attempts": null,
-                    "notes": null,
-                    "notes_url": null,
                     "object_name": "Interfaces status",
                     "object_type": "object",
-                    "retry_interval": null,
-                    "service_set": null,
-                    "template_choice": null,
-                    "use_agent": null,
-                    "use_var_overrides": null,
+                    "uuid": "9b608505-5a05-456c-8ea7-d2f051e2eb97",
                     "vars": {
-                        "nx_qnap_storage_mode": "interfaces",
-                        "nx_centreon_plugin_retention_statefile_dir": "\/neteye\/shared\/icinga2\/data\/lib\/centreon-plugins\/"
-                    },
-                    "volatile": null,
-                    "zone": null
+                        "nx_centreon_plugin_retention_statefile_dir": "/neteye/shared/icinga2/data/lib/centreon-plugins/",
+                        "nx_centreon_qnap_storage_mode": "interfaces"
+                    }
                 },
-                "Raid status": {
-                    "action_url": null,
-                    "apply_for": null,
-                    "assign_filter": null,
-                    "check_command": null,
-                    "check_interval": null,
-                    "check_period": null,
-                    "check_timeout": null,
-                    "command_endpoint": null,
-                    "disabled": false,
-                    "display_name": null,
-                    "enable_active_checks": null,
-                    "enable_event_handler": null,
-                    "enable_flapping": null,
-                    "enable_notifications": null,
-                    "enable_passive_checks": null,
-                    "enable_perfdata": null,
-                    "event_command": null,
+                {
                     "fields": [],
-                    "flapping_threshold_high": null,
-                    "flapping_threshold_low": null,
-                    "groups": [],
-                    "host": null,
-                    "icon_image": null,
-                    "icon_image_alt": null,
                     "imports": [
-                        "nx-st-agentless-snmp-centreon-qnap",
+                        "nx-st-agentless-snmp-centreon-qnap-memory",
                         "nx-st-type-custom"
                     ],
-                    "max_check_attempts": null,
-                    "notes": null,
-                    "notes_url": null,
-                    "object_name": "Raid status",
+                    "object_name": "Memory Usage",
                     "object_type": "object",
-                    "retry_interval": null,
-                    "service_set": null,
-                    "template_choice": null,
-                    "use_agent": null,
-                    "use_var_overrides": null,
+                    "uuid": "f2b5cebb-a286-4066-8016-ea647ef1375d",
                     "vars": {
-                        "nx_qnap_storage_mode": "hardware",
-                        "nx_centreon_qnap_storage_component_list": "raid"
-                    },
-                    "volatile": null,
-                    "zone": null
+                        "nx_centreon_qnap_storage_mode": "memory"
+                    }
                 },
-                "Power status": {
-                    "action_url": null,
-                    "apply_for": null,
-                    "assign_filter": null,
-                    "check_command": null,
-                    "check_interval": null,
-                    "check_period": null,
-                    "check_timeout": null,
-                    "command_endpoint": null,
-                    "disabled": false,
-                    "display_name": null,
-                    "enable_active_checks": null,
-                    "enable_event_handler": null,
-                    "enable_flapping": null,
-                    "enable_notifications": null,
-                    "enable_passive_checks": null,
-                    "enable_perfdata": null,
-                    "event_command": null,
+                {
                     "fields": [],
-                    "flapping_threshold_high": null,
-                    "flapping_threshold_low": null,
-                    "groups": [],
-                    "host": null,
-                    "icon_image": null,
-                    "icon_image_alt": null,
                     "imports": [
-                        "nx-st-agentless-snmp-centreon-qnap",
+                        "nx-st-agentless-snmp-centreon-qnap-hardware",
                         "nx-st-type-custom"
                     ],
-                    "max_check_attempts": null,
-                    "notes": null,
-                    "notes_url": null,
                     "object_name": "Power status",
                     "object_type": "object",
-                    "retry_interval": null,
-                    "service_set": null,
-                    "template_choice": null,
-                    "use_agent": null,
-                    "use_var_overrides": null,
+                    "uuid": "2fa66c5e-741e-4d9a-8965-7a0111d50875",
                     "vars": {
-                        "nx_qnap_storage_mode": "hardware",
-                        "nx_centreon_qnap_storage_component_list": "psu"
-                    },
-                    "volatile": null,
-                    "zone": null
+                        "nx_centreon_qnap_storage_component": "psu",
+                        "nx_centreon_qnap_storage_component_list": "psu",
+                        "nx_centreon_qnap_storage_mode": "hardware"
+                    }
+                },
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-agentless-snmp-centreon-qnap-hardware",
+                        "nx-st-type-custom"
+                    ],
+                    "object_name": "Raid status",
+                    "object_type": "object",
+                    "uuid": "88fa4045-edd3-4047-a831-04e1defa39ee",
+                    "vars": {
+                        "nx_centreon_qnap_storage_component": "raid",
+                        "nx_centreon_qnap_storage_component_list": "raid",
+                        "nx_centreon_qnap_storage_mode": "hardware"
+                    }
+                },
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-agentless-snmp-centreon-qnap-storage",
+                        "nx-st-type-custom"
+                    ],
+                    "object_name": "Storage status",
+                    "object_type": "object",
+                    "uuid": "123fd429-0c6f-4abd-9348-3afe7724e86d",
+                    "vars": {
+                        "nx_centreon_plugin_retention_statefile_dir": "/neteye/shared/icinga2/data/lib/centreon-plugins/",
+                        "nx_centreon_qnap_storage_mode": "storage"
+                    }
+                },
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-agentless-snmp-centreon-qnap-hardware",
+                        "nx-st-type-custom"
+                    ],
+                    "object_name": "Temperature",
+                    "object_type": "object",
+                    "uuid": "825be300-189f-4454-a03d-0a71469f7d2a",
+                    "vars": {
+                        "nx_centreon_qnap_storage_component": "temperature",
+                        "nx_centreon_qnap_storage_component_list": "temperature",
+                        "nx_centreon_qnap_storage_mode": "hardware"
+                    }
+                },
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-agentless-snmp-centreon-qnap-upgrade",
+                        "nx-st-type-custom"
+                    ],
+                    "object_name": "Upgrade status",
+                    "object_type": "object",
+                    "uuid": "2ae17ef9-635a-4743-9412-15fca8db2c9b",
+                    "vars": {
+                        "nx_centreon_qnap_storage_mode": "upgrade"
+                    }
+                },
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-agentless-snmp-centreon-qnap-volumes",
+                        "nx-st-type-custom"
+                    ],
+                    "object_name": "Volume status",
+                    "object_type": "object",
+                    "uuid": "9ad5d6fe-4bcc-4103-b37a-49f6cb253522",
+                    "vars": {
+                        "nx_centreon_qnap_storage_mode": "volumes"
+                    }
                 }
-            }
+            ],
+            "uuid": "6dc3af4e-8bd5-4097-b045-745cf0ff89cd"
         }
     }
 }

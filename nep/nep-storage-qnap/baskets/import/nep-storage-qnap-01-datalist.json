@@ -1,25 +1,10 @@
 {
     "DataList": {
         "[NX] Centreon QNAP Storage Mode List": {
-            "list_name": "[NX] Centreon QNAP Storage Mode List",
-            "owner": "root",
-            "originalId": "27",
             "entries": [
                 {
-                    "entry_name": "list-processes",
-                    "entry_value": "list-processes",
-                    "format": "string",
-                    "allowed_roles": null
-                },
-                {
-                    "entry_name": "list-interfaces",
-                    "entry_value": "list-interfaces",
-                    "format": "string",
-                    "allowed_roles": null
-                },
-                {
-                    "entry_name": "list-storages",
-                    "entry_value": "list-storages",
+                    "entry_name": "cpu",
+                    "entry_value": "cpu",
                     "format": "string",
                     "allowed_roles": null
                 },
@@ -30,14 +15,26 @@
                     "allowed_roles": null
                 },
                 {
-                    "entry_name": "cpu",
-                    "entry_value": "cpu",
+                    "entry_name": "interfaces",
+                    "entry_value": "interfaces",
                     "format": "string",
                     "allowed_roles": null
                 },
                 {
-                    "entry_name": "interfaces",
-                    "entry_value": "interfaces",
+                    "entry_name": "list-interfaces",
+                    "entry_value": "list-interfaces",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "list-processes",
+                    "entry_value": "list-processes",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "list-storages",
+                    "entry_value": "list-storages",
                     "format": "string",
                     "allowed_roles": null
                 },
@@ -89,16 +86,22 @@
                     "format": "string",
                     "allowed_roles": null
                 }
-            ]
+            ],
+            "list_name": "[NX] Centreon QNAP Storage Mode List",
+            "owner": "root",
+            "uuid": "8d7d218b-ff3e-4979-b12a-7462000000d7"
         },
         "[NX] Centreon QNAP Storage Component List": {
-            "list_name": "[NX] Centreon QNAP Storage Component List",
-            "owner": "root",
-            "originalId": "148",
             "entries": [
                 {
                     "entry_name": "disk",
                     "entry_value": "disk",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "fan",
+                    "entry_value": "fan",
                     "format": "string",
                     "allowed_roles": null
                 },
@@ -121,18 +124,15 @@
                     "allowed_roles": null
                 },
                 {
-                    "entry_name": "fan",
-                    "entry_value": "fan",
-                    "format": "string",
-                    "allowed_roles": null
-                },
-                {
                     "entry_name": "temperature",
                     "entry_value": "temperature",
                     "format": "string",
                     "allowed_roles": null
                 }
-            ]
+            ],
+            "list_name": "[NX] Centreon QNAP Storage Component List",
+            "owner": "root",
+            "uuid": "8d7d218b-ff3e-4979-b12a-7462000000d8"
         }
     }
 }
