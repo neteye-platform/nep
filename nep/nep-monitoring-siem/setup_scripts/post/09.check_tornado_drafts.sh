@@ -9,6 +9,8 @@ SETUP_LIBRARY=${NEP_STAGE_DIR}/setup/library
 ##########################################
 ## Script main code: add your code here ##
 ##########################################
+. /usr/share/neteye/scripts/rpm-functions.sh
+
 function check_tornado_drafts() {
     DRAFT_PATH="/neteye/shared/tornado/conf/drafts/draft_001/config/master"
     RULES_PATH="/neteye/shared/tornado/conf/rules.d/master"
@@ -29,8 +31,8 @@ if [[ $neteye_deployment == 'single_node' ]]; then
 fi
 if [[ $neteye_deployment == 'cluster' ]]; then
     if [[ $neteye_node_type == 'node' ]]; then
-        SERVICE="tornado"
-        if systemctl is-active "$SERVICE" > /dev/null ; then
+        DRBD_MOUNTPOINT="tornado"
+        if is_drbd_mounted "$DRBD_MOUNTPOINT"; then
             check_tornado_drafts
         else
             echo "[i] Inactive Cluster Node. Skipping."

@@ -65,7 +65,7 @@ fi
 if [[ $neteye_deployment == 'cluster' ]]; then
     if [[ $neteye_node_type == 'node' ]]; then
         SERVICE="icingaweb2"
-        if systemctl is-active "$SERVICE" > /dev/null ; then
+        if is_active "$SERVICE" ; then
             create_mysql_user_and_conf
             sync_plugin_conf_on_cluster_nodes
         else

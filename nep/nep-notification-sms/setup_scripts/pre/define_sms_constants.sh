@@ -31,8 +31,8 @@ if [[ $neteye_deployment == 'single_node' ]]; then
 fi
 if [[ $neteye_deployment == 'cluster' ]]; then
     if [[ $neteye_node_type == 'node' ]]; then
-        SERVICE="icinga2-master.service"
-        if systemctl is-active "$SERVICE" > /dev/null ; then
+        DRBD_MOUNTPOINT="icinga2"
+        if is_drbd_mounted "$DRBD_MOUNTPOINT" ; then
             create_constants_file
         else
             echo "[i] Inactive Cluster Node. Skipping."

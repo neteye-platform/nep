@@ -9,6 +9,8 @@ SETUP_LIBRARY=${NEP_STAGE_DIR}/setup/library
 ##########################################
 ## Script main code: add your code here ##
 ##########################################
+. /usr/share/neteye/scripts/rpm-functions.sh
+
 function rename_old_objects() {
     declare -A command_objects
     command_objects["nx-c-centreon_kemp_loadbalancers"]="nx-c-centreon-kemp-loadbalancers"
@@ -31,7 +33,7 @@ fi
 if [[ $neteye_deployment == 'cluster' ]]; then
     if [[ $neteye_node_type == 'node' ]]; then
         SERVICE="icingaweb2"
-        if systemctl is-active "$SERVICE" > /dev/null ; then
+        if is_active "$SERVICE" ; then
             rename_old_objects
         else
             echo "[i] Inactive Cluster Node. Skipping."

@@ -9,6 +9,8 @@ SETUP_LIBRARY=${NEP_STAGE_DIR}/setup/library
 ##########################################
 ## Script main code: add your code here ##
 ##########################################
+. /usr/share/neteye/scripts/rpm-functions.sh
+
 ###############
 #### Add user for API monitoring
 ###############
@@ -75,8 +77,8 @@ if [[ $neteye_deployment == 'single_node' ]]; then
 fi
 if [[ $neteye_deployment == 'cluster' ]]; then
     if [[ $neteye_node_type == 'node' ]]; then
-        SERVICE="icinga2-master"
-        if systemctl is-active "$SERVICE" > /dev/null ; then
+        DRBD_MOUNTPOINT="icinga2"
+        if is_drbd_mounted "$DRBD_MOUNTPOINT"; then
             add_api_user
         else
             echo "[i] Inactive Cluster Node. Skipping."

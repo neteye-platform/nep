@@ -11,7 +11,7 @@ SETUP_LIBRARY=${NEP_STAGE_DIR}/setup/library
 ##########################################
 function install_python_holidays() {
     echo "Install library python holidays"
-    dnf --enablerepo epel install python3-holidays
+    dnf --enablerepo epel -y install python3-holidays
 }
 
 if [[ $neteye_deployment == 'single_node' ]]; then

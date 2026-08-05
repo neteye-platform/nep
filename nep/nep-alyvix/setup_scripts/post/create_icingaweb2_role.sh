@@ -16,14 +16,6 @@ SETUP_LIBRARY=${NEP_STAGE_DIR}/setup/library
 # If a user uses this role to log into NetEye, it will not see any test case, while the
 # Plugin is still able to get all the required data to work.
 
-ICINGAWEB2_DRBD_RESOURCE_NAME="icingaweb2_drbd_fs"
-
-if is_cluster && ! is_active "$ICINGAWEB2_DRBD_RESOURCE_NAME" ; then
-    echo "[i] Inactive Cluster Node, skipping"
-    return 0
-fi
-
-
 function create_alyvix_service_role() {
     ICINGAWEB2_ROLES_FILE="/neteye/shared/icingaweb2/conf/roles.ini"
     ROLE_NAME="alyvix-service-check"
@@ -51,7 +43,8 @@ if [[ $neteye_deployment == 'single_node' ]]; then
 fi
 if [[ $neteye_deployment == 'cluster' ]]; then
     if [[ $neteye_node_type == 'node' ]]; then
-        if is_active "$ICINGAWEB2_DRBD_RESOURCE_NAME" ; then
+        DRBD_MOUNTPOINT="icingaweb2"
+        if is_drbd_mounted "$DRBD_MOUNTPOINT"; then
             create_alyvix_service_role
         else
             echo "[i] Inactive Cluster Node, skipping"

@@ -9,6 +9,8 @@ SETUP_LIBRARY=${NEP_STAGE_DIR}/setup/library
 ##########################################
 ## Script main code: add your code here ##
 ##########################################
+. /usr/share/neteye/scripts/rpm-functions.sh
+
 function clean_tornado_rules() {
     ## Rename folder before 4.39
     if [ -d '/neteye/shared/tornado/conf/rules.d/master/elproxy_verification' ];then
@@ -20,7 +22,7 @@ function clean_tornado_rules() {
     fi
 
     # Clean all Tornado Rules NX before import
-    declare -a list_torando_rules=("nx_elastic_dataset" "nx_elastic_transforms" "nx_elastic_watchers" "nx_elproxy_verification")
+    declare -a list_tornado_rules=("nx_elastic_dataset" "nx_elastic_transforms" "nx_elastic_watchers" "nx_elproxy_verification")
     for rule in "${list_tornado_rules[@]}";do
         rm -rf /neteye/shared/tornado/conf/rules.d/master/${rule}
     done
@@ -33,8 +35,8 @@ if [[ $neteye_deployment == 'single_node' ]]; then
 fi
 if [[ $neteye_deployment == 'cluster' ]]; then
     if [[ $neteye_node_type == 'node' ]]; then
-        SERVICE="tornado"
-        if systemctl is-active "$SERVICE" > /dev/null ; then
+        DRBD_MOUNTPOINT="tornado"
+        if is_drbd_mounted "$DRBD_MOUNTPOINT"; then
             clean_tornado_rules
         else
             echo "[i] Inactive Cluster Node. Skipping."

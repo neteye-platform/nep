@@ -12,13 +12,7 @@ SETUP_LIBRARY=${NEP_STAGE_DIR}/setup/library
 . /usr/share/neteye/scripts/rpm-functions.sh
 
 function enable_business_process_module() {
-    SERVICE="php-fpm"
-    if systemctl is-active "$SERVICE" > /dev/null; then
-        echo "[i] Enabling Icingaweb2 Module BusinessProcess"
-        icingacli module enable businessprocess
-    else
-        echo "[i] Icingaweb2 is not active. Skipping."
-    fi
+    icingacli module enable businessprocess
 }
 
 if [[ $neteye_deployment == 'single_node' ]]; then
@@ -28,7 +22,13 @@ if [[ $neteye_deployment == 'single_node' ]]; then
 fi
 if [[ $neteye_deployment == 'cluster' ]]; then
     if [[ $neteye_node_type == 'node' ]]; then
-        enable_business_process_module
+        SERVICE="icingaweb2"
+        if is_active "$SERVICE" ; then
+            enable_business_process_module
+        else
+            echo "[i] Inactive Cluster Node. Skipping."
+        fi
+
         exit 0
     fi
     if [[ $neteye_node_type == 'elastic_only' ]]; then

@@ -9,6 +9,7 @@ SETUP_LIBRARY=${NEP_STAGE_DIR}/setup/library
 ##########################################
 ## Script main code: add your code here ##
 ##########################################
+. /usr/share/neteye/scripts/rpm-functions.sh
 
 function import_grafana_panels() {
     SECURE_INSTALL_VARDIR=/neteye/shared/secure_install/
@@ -24,7 +25,13 @@ if [[ $neteye_deployment == 'single_node' ]]; then
 fi
 if [[ $neteye_deployment == 'cluster' ]]; then
     if [[ $neteye_node_type == 'node' ]]; then
-        import_grafana_panels
+        SERVICE="icingaweb2"
+        if is_active "$SERVICE" ; then
+            import_grafana_panels
+        else
+            echo "[i] Inactive Cluster Node. Skipping."
+        fi
+
         exit 0
     fi
     if [[ $neteye_node_type == 'elastic_only' ]]; then

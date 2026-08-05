@@ -9,6 +9,8 @@ SETUP_LIBRARY=${NEP_STAGE_DIR}/setup/library
 ##########################################
 ## Script main code: add your code here ##
 ##########################################
+. /usr/share/neteye/scripts/rpm-functions.sh
+
 function create_alivyx_account_on_icinga2() {
     echo '[i] Creating Icinga2 API user account "alyvix-check"'
     icinga_pwd_file="/root/.pwd_icinga2_alyvix_check"
@@ -47,8 +49,8 @@ if [[ $neteye_deployment == 'single_node' ]]; then
 fi
 if [[ $neteye_deployment == 'cluster' ]]; then
     if [[ $neteye_node_type == 'node' ]]; then
-        SERVICE="icinga2-master"
-        if systemctl is-active "$SERVICE" > /dev/null ; then
+        DRBD_MOUNTPOINT="icinga2"
+        if is_drbd_mounted "$DRBD_MOUNTPOINT"; then
             create_alivyx_account_on_icinga2
         else
             echo "[i] Inactive Cluster Node. Skipping."

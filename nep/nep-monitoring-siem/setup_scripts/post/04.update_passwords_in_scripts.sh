@@ -10,34 +10,33 @@ SETUP_LIBRARY=${NEP_STAGE_DIR}/setup/library
 ## Script main code: add your code here ##
 ##########################################
 . /usr/share/neteye/scripts/rpm-functions.sh
+. /usr/share/neteye/elasticsearch/scripts/es_autosetup_functions.sh
 
-function add_vendor_to_list() {
-    key="qnap"
-    name="QNAP"
-    FILE="/neteye/shared/icingaweb2/data/modules/fileshipper/nx-file-data/nx-vendor-list.csv"
+function update_passwords() {
+    # Set username and get password from file
+    ES_USERNAME="kibana_monitoring"
+    echo "[i] Updating passwords in scripts for user ${ES_USERNAME}"
+    PASSWORD_FILE="/root/.pwd_${ES_USERNAME}"
+    PASSWORD=$(cat "${PASSWORD_FILE}")
 
-    if grep -q "^${key}," $FILE ; then
-        echo "Vendor '$key' already present... Nothing to do."
-    else
-    cat << EOF >> $FILE
-$key,$name,string,null
-EOF
+    ### Set user and password into fleet script
+    FILE_SCRIPT="/neteye/shared/monitoring/plugins/fleet-agent-status.sh"
+    echo "[i] Add user ${ES_USERNAME} to script ${FILE_SCRIPT}"
+    sed -i "s/@@PASSWORD@@/${PASSWORD}/g" $FILE_SCRIPT
 
-    fi
+    ### Set user and password into endpoint agent script
+    FILE_SCRIPT="/neteye/shared/monitoring/plugins/endpoint-agent-status.sh"
+    echo "[i] Add user ${ES_USERNAME} to script ${FILE_SCRIPT}"
+    sed -i "s/@@PASSWORD@@/${PASSWORD}/g" $FILE_SCRIPT
 }
 
 if [[ $neteye_deployment == 'single_node' ]]; then
-    add_vendor_to_list
+    update_passwords
     exit 0
 fi
 if [[ $neteye_deployment == 'cluster' ]]; then
     if [[ $neteye_node_type == 'node' ]]; then
-        DRBD_MOUNTPOINT="icingaweb2"
-        if is_drbd_mounted "$DRBD_MOUNTPOINT" ; then
-            add_vendor_to_list
-        else
-            echo "[i] Inactive Cluster Node. Skipping."
-        fi
+        update_passwords
 
         exit 0
     fi
