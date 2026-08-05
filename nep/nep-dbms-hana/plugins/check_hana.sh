@@ -599,8 +599,11 @@ GROUP BY
 ORDER BY
   SUM(C.COUNT) DESC;
 @EOF
-  ${HDBSQL} -n ${HANA_HOST}:${HANA_PORT} -u ${HANA_USER} -p ${HANA_PASS} -I $INFILE -o $TMPFILE -F ' ' -a
+  ${HDBSQL} -n ${HANA_HOST}:${HANA_PORT} -u ${HANA_USER} -p ${HANA_PASS} -I $INFILE -o $TMPFILE -F ' ' -a 2 >> $TMPFILE
   RET=$?
+  if grep -qE '^\* [0-9]+:' "$TMPFILE"; then
+      RET=1
+  fi
   rm -f $INFILE
   return $RET
 }
