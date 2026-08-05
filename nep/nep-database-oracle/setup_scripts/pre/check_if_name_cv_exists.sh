@@ -9,6 +9,8 @@ SETUP_LIBRARY=${NEP_STAGE_DIR}/setup/library
 ##########################################
 ## Script main code: add your code here ##
 ##########################################
+. /usr/share/neteye/scripts/rpm-functions.sh
+
 function check_if_cv_exists() {
     #Custom Variable name
     cv_name="name"
@@ -48,7 +50,7 @@ fi
 if [[ $neteye_deployment == 'cluster' ]]; then
     if [[ $neteye_node_type == 'node' ]]; then
         SERVICE="icingaweb2"
-        if systemctl is-active "$SERVICE" > /dev/null ; then
+        if is_active "$SERVICE" ; then
             check_if_cv_exists
         else
             echo "[i] Inactive Cluster Node. Skipping."

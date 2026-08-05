@@ -9,6 +9,8 @@ SETUP_LIBRARY=${NEP_STAGE_DIR}/setup/library
 ##########################################
 ## Script main code: add your code here ##
 ##########################################
+. /usr/share/neteye/scripts/rpm-functions.sh
+
 function clean_tornado_rules() {
     ## Rename folder before 4.39
     if [ -d '/neteye/shared/tornado/conf/rules.d/master/elproxy_verification' ];then

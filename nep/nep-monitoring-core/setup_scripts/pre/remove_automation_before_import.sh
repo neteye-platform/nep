@@ -9,9 +9,11 @@ SETUP_LIBRARY=${NEP_STAGE_DIR}/setup/library
 ##########################################
 ## Script main code: add your code here ##
 ##########################################
+. /usr/share/neteye/scripts/rpm-functions.sh
+
 function remove_automations() {
     ## Remove Sync Rules
-    syncrule_objects=( "nx-sr-neteye-infrastructure-zones" "nx-sr-neteye-infrastructure-endpoints-update" "nx-sr-neteye-ip-duplicated-zones" "nx-sr-datalist-neteye-modules" )
+    syncrule_objects=( "nx-sr-neteye-infrastructure-zones" "nx-sr-neteye-infrastructure-endpoints" "nx-sr-neteye-ip-duplicated-zones" "nx-sr-datalist-neteye-modules" )
 
     for s in "${syncrule_objects[@]}"; do
         tmp=$(icingacli nep syncrule list | grep "$s")
@@ -44,7 +46,7 @@ fi
 if [[ $neteye_deployment == 'cluster' ]]; then
     if [[ $neteye_node_type == 'node' ]]; then
         SERVICE="icingaweb2"
-        if systemctl is-active "$SERVICE" > /dev/null ; then
+        if is_active "$SERVICE" ; then
             remove_automations
         else
             echo "[i] Inactive Cluster Node. Skipping."

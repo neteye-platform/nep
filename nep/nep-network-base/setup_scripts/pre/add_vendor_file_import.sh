@@ -29,7 +29,8 @@ if [[ $neteye_deployment == 'single_node' ]]; then
 fi
 if [[ $neteye_deployment == 'cluster' ]]; then
     if [[ $neteye_node_type == 'node' ]]; then
-        if is_drbd_mounted "icingaweb2"; then
+        DRBD_MOUNTPOINT="icingaweb2"
+        if is_drbd_mounted "$DRBD_MOUNTPOINT"; then
             add_vendor_file_import
         fi
 

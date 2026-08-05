@@ -18,7 +18,7 @@ crontab_line="* 0 1 * * systemctl is-active icinga-director && sh /usr/share/ici
 		echo "Add line at crontab: $crontab_line"
 		(crontab -l 2>/dev/null; echo "$crontab_line") | crontab -
 	else
-		"cronjob found nothing to do"
+		echo "cronjob found nothing to do"
 	fi
 }
 

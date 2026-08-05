@@ -12,35 +12,29 @@ SETUP_LIBRARY=${NEP_STAGE_DIR}/setup/library
 . /usr/share/neteye/scripts/rpm-functions.sh
 
 function remove_service_sets() {
-    SERVICE="php-fpm"
-    if systemctl is-active "$SERVICE" > /dev/null; then
-        echo "[i] Prparing to update/rebuild Service Sets definitions"
+    echo "[i] Preparing to update/rebuild Service Sets definitions"
 
-        SQL="SELECT h.object_name AS 'Object Name', h.object_type AS 'Object Type' FROM icinga_service_set ssc INNER JOIN icinga_service_set_inheritance ssh ON ssh.service_set_id = ssc.id INNER JOIN icinga_service_set ssp ON ssh.parent_service_set_id = ssp.id INNER JOIN icinga_host h ON ssc.host_id = h.id WHERE ssc.object_name = "
-        serviceset_objects=( "nx-ss-client-agent-windows-basic" "nx-ss-server-agent-windows-basic" "nx-ss-server-agent-linux-init" "nx-ss-server-agent-linux-systemd" "nx-ss-server-agent-linux-basic" )
+    SQL="SELECT h.object_name AS 'Object Name', h.object_type AS 'Object Type' FROM icinga_service_set ssc INNER JOIN icinga_service_set_inheritance ssh ON ssh.service_set_id = ssc.id INNER JOIN icinga_service_set ssp ON ssh.parent_service_set_id = ssp.id INNER JOIN icinga_host h ON ssc.host_id = h.id WHERE ssc.object_name = "
+    serviceset_objects=( "nx-ss-client-agent-windows-basic" "nx-ss-server-agent-windows-basic" "nx-ss-server-agent-linux-init" "nx-ss-server-agent-linux-systemd" "nx-ss-server-agent-linux-basic" )
 
-        echo " - Checking direct assignment for Service Sets: ${serviceset_objects}"
+    echo " - Checking direct assignment for Service Sets: ${serviceset_objects}"
 
-        ## Delete service set objects
-        for s in "${serviceset_objects[@]}"; do
-            tmp=$(icingacli director serviceset exist "$s")
-            if [[ $tmp != *"does not"* ]]; then
-                ## Retrive manual usage of service set
-                response=$(mysql -D director -e "$SQL'$s'")
-                if [ -n "$response" ]; then
-                    echo "------------------------------------------------------------------------------------"
-                    echo "WARNING: Service Set '$s' assigned manually to these Director objects"
-                    mysql -D director -e "$SQL'$s'"
-                    echo "You have to add manually this Service Set and then deploy your configuration"
-                fi
-                ## Delete service set objects
-                icingacli director serviceset delete "$s"
+    ## Delete service set objects
+    for s in "${serviceset_objects[@]}"; do
+        tmp=$(icingacli director serviceset exist "$s")
+        if [[ $tmp != *"does not"* ]]; then
+            ## Retrive manual usage of service set
+            response=$(mysql -D director -e "$SQL'$s'")
+            if [ -n "$response" ]; then
+                echo "------------------------------------------------------------------------------------"
+                echo "WARNING: Service Set '$s' assigned manually to these Director objects"
+                mysql -D director -e "$SQL'$s'"
+                echo "You have to add manually this Service Set and then deploy your configuration"
             fi
-        done
-
-    else
-        echo "[i] Icingaweb2 is not active. Skipping."
-    fi
+            ## Delete service set objects
+            icingacli director serviceset delete "$s"
+        fi
+    done
 }
 
 if [[ $neteye_deployment == 'single_node' ]]; then
@@ -49,7 +43,13 @@ if [[ $neteye_deployment == 'single_node' ]]; then
 fi
 if [[ $neteye_deployment == 'cluster' ]]; then
     if [[ $neteye_node_type == 'node' ]]; then
-        remove_service_sets
+        SERVICE="icingaweb2"
+        if is_active "$SERVICE" ; then
+            remove_service_sets
+        else
+            echo "[i] Inactive Cluster Node. Skipping."
+        fi
+
         exit 0
     fi
     if [[ $neteye_node_type == 'elastic_only' ]]; then

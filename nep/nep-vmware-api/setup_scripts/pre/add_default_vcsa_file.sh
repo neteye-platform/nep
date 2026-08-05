@@ -9,14 +9,10 @@ SETUP_LIBRARY=${NEP_STAGE_DIR}/setup/library
 ##########################################
 ## Script main code: add your code here ##
 ##########################################
+. /usr/share/neteye/scripts/rpm-functions.sh
+
 function add_vcsa_authentication_file() {
     echo "Adding VCSA file on Icinga2 Master"
-
-    SERVICE="icingaweb2"
-    if is_cluster && ! is_active "$SERVICE" ; then
-        echo " Not a cluster node. Skipping."
-        exit 0
-    fi
 
     if [ -f "/neteye/shared/icinga2/conf/vmware-auth-files/generic-vcsa" ]; then
         echo "VCSA file already exist."
@@ -41,8 +37,8 @@ if [[ $neteye_deployment == 'single_node' ]]; then
 fi
 if [[ $neteye_deployment == 'cluster' ]]; then
     if [[ $neteye_node_type == 'node' ]]; then
-        SERVICE="icinga2-master"
-        if systemctl is-active "$SERVICE" > /dev/null ; then
+        DRBD_MOUNTPOINT="icinga2"
+        if is_drbd_mounted "$DRBD_MOUNTPOINT" ; then
             add_vcsa_authentication_file
         else
             echo "[i] Inactive Cluster Node. Skipping."

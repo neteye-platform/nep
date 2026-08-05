@@ -12,15 +12,8 @@ SETUP_LIBRARY=${NEP_STAGE_DIR}/setup/library
 . /usr/share/neteye/scripts/rpm-functions.sh
 
 function enable_fileshipper_module() {
-    SERVICE="php-fpm"
-    if systemctl is-active "$SERVICE" > /dev/null; then
-        echo "[i] Enabling Icingaweb2 Module Fileshipper"
-        icingacli module enable fileshipper
-
-        create_fileshipper_config_files
-    else
-        echo "[i] Icingaweb2 is not active. Skipping."
-    fi
+    icingacli module enable fileshipper
+    create_fileshipper_config_files
 }
 
 function create_fileshipper_config_files() {
@@ -55,7 +48,13 @@ if [[ $neteye_deployment == 'single_node' ]]; then
 fi
 if [[ $neteye_deployment == 'cluster' ]]; then
     if [[ $neteye_node_type == 'node' ]]; then
-        enable_fileshipper_module
+        SERVICE="icingaweb2"
+        if is_active "$SERVICE" ; then
+            enable_fileshipper_module
+        else
+            echo "[i] Inactive Cluster Node. Skipping."
+        fi
+
         exit 0
     fi
     if [[ $neteye_node_type == 'elastic_only' ]]; then

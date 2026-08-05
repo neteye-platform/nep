@@ -9,6 +9,8 @@ SETUP_LIBRARY=${NEP_STAGE_DIR}/setup/library
 ##########################################
 ## Script main code: add your code here ##
 ##########################################
+. /usr/share/neteye/scripts/rpm-functions.sh
+
 # To allow End User to manually update States and Transitions and keep changes
 # throughout all NEP Updates, an empty UT is created ONLY if NetEye hasn't it.
 # Then, using Baskets, default custom variable settings and inheritance are
@@ -36,7 +38,7 @@ fi
 if [[ $neteye_deployment == 'cluster' ]]; then
     if [[ $neteye_node_type == 'node' ]]; then
         SERVICE="icingaweb2"
-        if systemctl is-active "$SERVICE" > /dev/null ; then
+        if is_active "$SERVICE" ; then
             add_uset_template
         else
             echo "[i] Inactive Cluster Node. Skipping."

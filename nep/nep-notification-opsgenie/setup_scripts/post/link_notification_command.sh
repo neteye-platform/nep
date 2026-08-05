@@ -9,6 +9,8 @@ SETUP_LIBRARY=${NEP_STAGE_DIR}/setup/library
 ##########################################
 ## Script main code: add your code here ##
 ##########################################
+. /usr/share/neteye/scripts/rpm-functions.sh
+
 ## Add Notification Plugin to Icinga2 Master Instance directories
 ## It is done by a symlink
 # This kind of configuration must be performed only where Icinga2 Master is running
@@ -42,8 +44,8 @@ if [[ $neteye_deployment == 'single_node' ]]; then
 fi
 if [[ $neteye_deployment == 'cluster' ]]; then
     if [[ $neteye_node_type == 'node' ]]; then
-        SERVICE="icinga2-master"
-        if systemctl is-active "$SERVICE" > /dev/null ; then
+        DRBD_MOUNTPOINT="icinga2"
+        if is_drbd_mounted "$DRBD_MOUNTPOINT" ; then
             link_notification_command
         else
             echo "[i] Inactive Cluster Node. Skipping."

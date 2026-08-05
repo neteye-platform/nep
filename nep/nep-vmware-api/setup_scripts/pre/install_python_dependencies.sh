@@ -12,7 +12,7 @@ SETUP_LIBRARY=${NEP_STAGE_DIR}/setup/library
 function install_requirements() {
     # needed for check_esxi_hardware.py
     dnf install -y python3-pywbem.noarch
-    dnf intall -y perl-Net-INET6Glue --enablerepo=epel
+    dnf install -y perl-Net-INET6Glue --enablerepo=epel
 }
 
 if [[ $neteye_deployment == 'single_node' ]]; then
