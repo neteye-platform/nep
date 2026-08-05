@@ -633,7 +633,7 @@ connection_time)
         [ $ret_state -eq $STATE_OK ]       && result_string="OK - $result_string"
         PERF_OUT="|'connection-time'=$conn_time;$HANA_WARN;$HANA_CRIT;0;0"
     else
-        ret_state = $STATE_CRITICAL
+        ret_state=$STATE_CRITICAL
         result_string="sql-statement failed"
     fi
     echo "${result_string}${PERF_OUT}"
@@ -666,7 +666,7 @@ last_backup)
         [ $ret_state -eq $STATE_WARNING ]  && result_string="WARNING - $result_string"
         [ $ret_state -eq $STATE_OK ]       && result_string="OK - $result_string"
     else
-        ret_state = $STATE_CRITICAL
+        ret_state=$STATE_CRITICAL
         result_string="sql-statement failed"
     fi
     rm -f $TMPFILE
@@ -691,7 +691,7 @@ failed_log_backups)
         [ $num_errors -gt 0 ] && cat $TMPFILE |grep -v -i backup_id
         PERF_OUT="|'log_backups_failed'=$num_errors;$HANA_WARN;$HANA_CRIT;0;0"
     else
-        ret_state = $STATE_CRITICAL
+        ret_state=$STATE_CRITICAL
         result_string="sql-statement failed"
     fi
     rm -f $TMPFILE
@@ -716,7 +716,7 @@ failed_data_backups)
         [ $num_errors -gt 0 ] && cat $TMPFILE |grep -v -i backup_id
         PERF_OUT="|'data_backups_failed'=$num_errors;$HANA_WARN;$HANA_CRIT;0;0"
     else
-        ret_state = $STATE_CRITICAL
+        ret_state=$STATE_CRITICAL
         result_string="sql-statement failed"
     fi
     #rm -f $TMPFILE
@@ -748,7 +748,7 @@ memory_usage)
         [ $ret_state -eq $STATE_OK ]       && result_string="OK - $result_string"
         PERF_OUT="|'memory_usage'=$mem_used$mem_unit;$warn;$crit;0;$mem_physical"
     else
-        ret_state = $STATE_CRITICAL
+        ret_state=$STATE_CRITICAL
         result_string="sql-statement failed"
     fi
     rm -f $TMPFILE
@@ -800,7 +800,7 @@ replication_status)
         fi
         PERF_OUT="|$perf_string"
     else
-        ret_state = $STATE_CRITICAL
+        ret_state=$STATE_CRITICAL
         result_string="sql-statement failed"
     fi
     rm -f $TMPFILE
@@ -845,7 +845,7 @@ used_space)
         fi
         PERF_OUT="|$perf_string"
     else
-        ret_state = $STATE_CRITICAL
+        ret_state=$STATE_CRITICAL
         result_string="sql-statement failed"
     fi
     rm -f $TMPFILE
@@ -890,7 +890,7 @@ missing_index)
         fi
         PERF_OUT="|$perf_string"
     else
-        ret_state = $STATE_CRITICAL
+        ret_state=$STATE_CRITICAL
         result_string="sql-statement failed"
     fi
     rm -f $TMPFILE
