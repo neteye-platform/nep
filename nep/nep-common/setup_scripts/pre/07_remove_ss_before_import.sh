@@ -48,7 +48,7 @@ if [[ $neteye_deployment == 'cluster' ]]; then
             remove_service_sets
         else
             echo "[i] Inactive Cluster Node. Skipping."
-        fi  
+        fi
 
         exit 0
     fi

@@ -54,7 +54,7 @@ if [[ $neteye_deployment == 'cluster' ]]; then
         else
             echo "[i] Inactive Cluster Node. Skipping."
         fi
-        
+
         exit 0
     fi
     if [[ $neteye_node_type == 'elastic_only' ]]; then
