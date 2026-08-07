@@ -182,7 +182,7 @@ def main():
         all_errors.extend(errors)
 
     # === Save === #
-    if not errors and not args.dry_run:
+    if not all_errors and not args.dry_run:
         save_graphs_ini(config, args.graphs)
         logger.info(f"Saved to {args.graphs}")
     elif args.dry_run:
