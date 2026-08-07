@@ -29,6 +29,7 @@ def load_graphs_ini(graphs_path):
     logging.debug('load graphs.ini')
 
     config = configparser.ConfigParser()
+    config.optionxform = str # Do not normalize keys to lowercase
 
     if os.path.isfile(graphs_path):
         config.read(graphs_path)
@@ -170,18 +171,18 @@ def main():
     # === Apply bindings for each target command === #
     all_errors = []
     for target_cmd in args.command:
-        logging.info(f"--- Binding [{args.copy_from.lower()}] → [{target_cmd.lower()}] ---")
+        logging.info(f"--- Binding [{args.copy_from}] to [{target_cmd}] ---")
         config, errors = bind_target_to_source(
             config,
-            args.copy_from.lower(),
-            target_cmd.lower(),
+            args.copy_from,
+            target_cmd,
             args.update,
             args.dry_run,
         )
         all_errors.extend(errors)
 
     # === Save === #
-    if not errors and not args.dry_run:
+    if not all_errors and not args.dry_run:
         save_graphs_ini(config, args.graphs)
         logger.info(f"Saved to {args.graphs}")
     elif args.dry_run:
