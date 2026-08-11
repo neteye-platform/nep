@@ -365,6 +365,7 @@
                     "use_var_overrides": null,
                     "vars": {
                         "nx_qnap_storage_mode": "interfaces",
+                        "nx_centreon_qnap_storage_interface_name": true,
                         "nx_centreon_plugin_retention_statefile_dir": "\/neteye\/shared\/icinga2\/data\/lib\/centreon-plugins\/"
                     },
                     "volatile": null,
