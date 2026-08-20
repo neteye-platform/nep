@@ -1,0 +1,12 @@
+name: Backport
+
+on:
+  issue_comment:
+    types: [created]
+
+permissions: write-all
+
+jobs:
+  backport:
+    uses: neteye-platform/repo-commons/.github/workflows/backport.yaml@ad37f4c48a90763aa6e7e2d4e7fe39b529b984f3 # main
+    secrets: inherit
