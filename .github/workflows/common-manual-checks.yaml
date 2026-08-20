@@ -15,7 +15,7 @@ permissions: write-all
 
 jobs:
   common-manual-checks:
-    uses: neteye-platform/repo-commons/.github/workflows/common-manual-checks.yaml@4bacad26466ee16305bc4efd8d0a841bf9e28ec8 # main
+    uses: neteye-platform/repo-commons/.github/workflows/common-manual-checks.yaml@ad37f4c48a90763aa6e7e2d4e7fe39b529b984f3 # main
     secrets: inherit
     with:
       jobs_to_run: ${{ inputs.jobs_to_run }}
