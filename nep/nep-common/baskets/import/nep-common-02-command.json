@@ -441,6 +441,59 @@
             "object_name": "nx-c-dummy-service",
             "object_type": "object",
             "uuid": "a8ef1df3-46fe-462f-991e-a0fc0ce89c07"
+        },
+        "nx-c-windows-mem-usage": {
+            "arguments": {
+                "-U": {
+                    "description": "Show used memory instead of the free memory if TRUE"
+                },
+                "-c": {
+                    "description": "Memory Critical Threshold",
+                    "value": "$nx_memory_win_crit$"
+                },
+                "-u": {
+                    "description": "Use this unit to display memory (default: mb)",
+                    "value": "$nx_memory_win_unit$"
+                },
+                "-w": {
+                    "description": "Memory Warning threshold",
+                    "value": "$nx_memory_win_warn$"
+                }
+            },
+            "command": "PluginDir + /check_memory.exe",
+            "fields": [],
+            "imports": [
+                "memory-windows"
+            ],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-windows-mem-usage",
+            "object_type": "object",
+            "uuid": "09881951-3f94-4afa-89db-254a8b21bdc2"
+        },
+        "nx-c-windows-mem-free": {
+            "arguments": {
+                "-c": {
+                    "description": "Memory Critical Threshold",
+                    "value": "$nx_memory_win_crit$"
+                },
+                "-u": {
+                    "description": "Use this unit to display memory (default: mb)",
+                    "value": "$nx_memory_win_unit$"
+                },
+                "-w": {
+                    "description": "Memory Warning threshold",
+                    "value": "$nx_memory_win_warn$"
+                }
+            },
+            "command": "PluginDir + /check_memory.exe",
+            "fields": [],
+            "imports": [
+                "memory-windows"
+            ],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-windows-mem-free",
+            "object_type": "object",
+            "uuid": "4df644a6-8e30-4bc8-b529-7f80463355be"
         }
     },
     "CommandTemplate": {
