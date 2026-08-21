@@ -1176,7 +1176,7 @@
             "action_url": null,
             "apply_for": null,
             "assign_filter": null,
-            "check_command": "memory-windows",
+            "check_command": "nx-c-windows-mem-usage",
             "check_interval": null,
             "check_period": null,
             "check_timeout": null,
@@ -1192,22 +1192,17 @@
             "event_command": null,
             "fields": [
                 {
-                    "datafield_id": 74,
+                    "datafield_id": 2741,
                     "is_required": "n",
                     "var_filter": null
                 },
                 {
-                    "datafield_id": 75,
+                    "datafield_id": 2744,
                     "is_required": "n",
                     "var_filter": null
                 },
                 {
-                    "datafield_id": 76,
-                    "is_required": "n",
-                    "var_filter": null
-                },
-                {
-                    "datafield_id": 77,
+                    "datafield_id": 2747,
                     "is_required": "n",
                     "var_filter": null
                 }
@@ -1232,7 +1227,10 @@
             "use_agent": null,
             "use_var_overrides": null,
             "vars": {
-                "memory_win_show_used": false
+                "memory_win_show_used": false,
+                "nx_memory_win_crit": "95%",
+                "nx_memory_win_unit": "mb",
+                "nx_memory_win_warn": "90%"
             },
             "volatile": null,
             "zone": null
