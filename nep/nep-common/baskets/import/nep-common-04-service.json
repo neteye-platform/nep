@@ -1139,6 +1139,39 @@
             "volatile": null,
             "zone": null
         },
+        "nx-st-agent-windows-memory-free": {
+            "check_command": "nx-c-windows-mem-free",
+            "fields": [
+                {
+                    "datafield_id": 2741,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 2744,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 2747,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "icon_image": "img/nep/service/ram.png",
+            "imports": [
+                "nx-st-agent-windows"
+            ],
+            "object_name": "nx-st-agent-windows-memory-free",
+            "object_type": "template",
+            "uuid": "ce5fa636-f21c-49b0-aa07-539292cb2fa8",
+            "vars": {
+                "memory_win_show_used": false,
+                "nx_memory_win_crit": "5%",
+                "nx_memory_win_unit": "mb",
+                "nx_memory_win_warn": "10%"
+            }
+        },
         "nx-st-agent-windows-memory-usage": {
             "action_url": null,
             "apply_for": null,
@@ -4466,6 +4499,44 @@
                 "datalist": "[NX] Infrastructural Object List"
             },
             "category": "Common Settings (Advanced)"
+        },
+        "2741": {
+            "uuid": "fa64d7bf-4ecc-4c52-a84f-d87120054ceb",
+            "varname": "nx_memory_win_crit",
+            "caption": "[NX] Memory Win Crit",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": null
+        },
+        "2744": {
+            "uuid": "a9a33487-39cf-475b-92e3-2a1acecc7971",
+            "varname": "nx_memory_win_unit",
+            "caption": "[NX] Memory Win Unit Display",
+            "description": "Use this unit to display value and interpret thresholds",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeDatalist",
+            "format": null,
+            "settings": {
+                "behavior": "strict",
+                "data_type": "string",
+                "datalist": "[NX] Byte Unit Lowercase List"
+            },
+            "category": null
+        },
+        "2747": {
+            "uuid": "82620edc-20a4-4f47-9b36-66e735fe8dd5",
+            "varname": "nx_memory_win_warn",
+            "caption": "[NX] Memory Win Warn",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": null
         }
     },
     "DatafieldCategory": {
