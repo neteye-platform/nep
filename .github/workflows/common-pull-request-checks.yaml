@@ -10,5 +10,9 @@ permissions: write-all
 
 jobs:
   common-pull-request-checks:
+<<<<<<< HEAD
     uses: neteye-platform/repo-commons/.github/workflows/common-pull-request-checks.yaml@4bacad26466ee16305bc4efd8d0a841bf9e28ec8 # main
+=======
+    uses: neteye-platform/repo-commons/.github/workflows/common-pull-request-checks.yaml@b3cd2d3efb63b0cc8fbd58391625e82f7822fa20 # main
+>>>>>>> 162b7c0 (chore(deps): update neteye-platform/repo-commons digest to b3cd2d3 (#64))
     secrets: inherit
