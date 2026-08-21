@@ -1,0 +1,43 @@
+{
+    "ServiceSet": {
+        "nx-ss-network-centreon-h3c": {
+            "assign_filter": "\"nx-ht-network-switch-snmp\"=host.templates&host.vars.nx_hardware_vendor=%22h3c%22",
+            "description": "Service Set providing monitoring for HP 3COM switch\r\n - CPU Load\r\n - Hardware Health\r\n - Memory Usage",
+            "object_name": "nx-ss-network-centreon-h3c",
+            "object_type": "template",
+            "services": [
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-agentless-snmp-centreon-h3c-cpu",
+                        "nx-st-type-custom"
+                    ],
+                    "object_name": "CPU Load",
+                    "object_type": "object",
+                    "uuid": "b1a2491a-f734-454a-a2f3-db4adf229acb"
+                },
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-agentless-snmp-centreon-h3c-hardware",
+                        "nx-st-type-custom"
+                    ],
+                    "object_name": "HW Health",
+                    "object_type": "object",
+                    "uuid": "b041c1d1-4612-498f-b795-704fc3a83fa2"
+                },
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-agentless-snmp-centreon-h3c-memory",
+                        "nx-st-type-custom"
+                    ],
+                    "object_name": "Memory Usage",
+                    "object_type": "object",
+                    "uuid": "ce5bf626-5d70-4d00-b640-c1e744bd727b"
+                }
+            ],
+            "uuid": "aa15d8f1-f8bb-4122-8ddb-8224854f1145"
+        }
+    }
+}
