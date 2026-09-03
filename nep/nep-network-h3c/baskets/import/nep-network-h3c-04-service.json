@@ -1,0 +1,189 @@
+{
+    "ServiceTemplate": {
+        "nx-st-agentless-snmp-centreon-h3c-cpu": {
+            "check_command": "nx-c-centreon-h3c-cpu",
+            "fields": [
+                {
+                    "datafield_id": 1731,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1733,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-st-agentless-snmp-centreon"
+            ],
+            "object_name": "nx-st-agentless-snmp-centreon-h3c-cpu",
+            "object_type": "template",
+            "uuid": "92c5a95e-679b-43b7-bc36-1bbdaa8b02be",
+            "vars": {
+                "nx_centreon_plugin_snmp_crit": "90",
+                "nx_centreon_plugin_snmp_warn": "70"
+            }
+        },
+        "nx-st-agentless-snmp-centreon-h3c-hardware": {
+            "check_command": "nx-c-centreon-h3c-hardware",
+            "fields": [
+                {
+                    "datafield_id": 2153,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1731,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1733,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-st-agentless-snmp-centreon"
+            ],
+            "object_name": "nx-st-agentless-snmp-centreon-h3c-hardware",
+            "object_type": "template",
+            "uuid": "a47749cf-0f5e-4a3c-804f-16b3cdc735a1",
+            "vars": {
+                "nx_centreon_plugin_filter_sensor": "psu"
+            }
+        },
+        "nx-st-agentless-snmp-centreon-h3c-interfaces": {
+            "check_command": "nx-c-centreon-h3c-interfaces",
+            "fields": [
+                {
+                    "datafield_id": 1731,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 2152,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1790,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1791,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1733,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-st-agentless-snmp-centreon"
+            ],
+            "object_name": "nx-st-agentless-snmp-centreon-h3c-interfaces",
+            "object_type": "template",
+            "uuid": "5ce79169-b105-42c3-aed1-247497dd4c6b"
+        },
+        "nx-st-agentless-snmp-centreon-h3c-memory": {
+            "check_command": "nx-c-centreon-h3c-memory",
+            "fields": [
+                {
+                    "datafield_id": 1731,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1733,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-st-agentless-snmp-centreon"
+            ],
+            "object_name": "nx-st-agentless-snmp-centreon-h3c-memory",
+            "object_type": "template",
+            "uuid": "9fe837af-80f0-49a1-a7a0-06cd0b521b60"
+        }
+    },
+    "Datafield": {
+        "1731": {
+            "uuid": "87246f58-974b-4a66-9708-c38b000006c3",
+            "varname": "nx_centreon_plugin_snmp_crit",
+            "caption": "[NX] Centreon Plugin Critical",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": null
+        },
+        "1733": {
+            "uuid": "87246f58-974b-4a66-9708-c38b000006c5",
+            "varname": "nx_centreon_plugin_snmp_warn",
+            "caption": "[NX] Centreon Plugin Warning",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": null
+        },
+        "2153": {
+            "uuid": "f3e25e99-b3a8-4937-8e84-f4eb201bf9b0",
+            "varname": "nx_centreon_plugin_component",
+            "caption": "[NX] Centreon Plugin Component",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": null
+        },
+        "2152": {
+            "uuid": "f54faff6-4ccd-4271-9e22-1b36ed3a1aca",
+            "varname": "nx_centreon_plugin_snmp_interface",
+            "caption": "[NX] Centreon Plugin Interface",
+            "description": "Set the ID interface (number expected) ex: 1,2,... (empty means 'check all interface')",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": null
+        },
+        "1790": {
+            "uuid": "87246f58-974b-4a66-9708-c38b000006fe",
+            "varname": "nx_centreon_plugin_snmp_speed",
+            "caption": "[NX] Centreon Speed",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": null
+        },
+        "1791": {
+            "uuid": "87246f58-974b-4a66-9708-c38b000006ff",
+            "varname": "nx_centreon_plugin_snmp_unit",
+            "caption": "[NX] Centreon Unit Traffic",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": null
+        }
+    }
+}
