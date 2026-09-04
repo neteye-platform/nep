@@ -8,5 +8,5 @@ permissions: write-all
 
 jobs:
   backport:
-    uses: neteye-platform/repo-commons/.github/workflows/backport.yaml@b3cd2d3efb63b0cc8fbd58391625e82f7822fa20 # main
+    uses: neteye-platform/repo-commons/.github/workflows/backport.yaml@7742c5e2a5092511fef6e00e2872f278f5f2bf36 # main
     secrets: inherit
