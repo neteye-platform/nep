@@ -142,6 +142,22 @@ while IFS=$'\t' read -r HOST_KEY AGENT_B64; do
     printf '\n' >> "$TMP_CACHE_DIR/$HOST_KEY"
 done < "$TMP_CACHE_MAP"
 
+# Preserve the permissions expected by monitoring consumers.
+if ! chmod 0644 "$TMP_JSON"; then
+    echo "[!] Unable to set aggregated JSON permissions"
+    exit 2
+fi
+
+if ! chmod 0755 "$TMP_CACHE_DIR"; then
+    echo "[!] Unable to set cache directory permissions"
+    exit 2
+fi
+
+if ! find "$TMP_CACHE_DIR" -type f -exec chmod 0644 {} +; then
+    echo "[!] Unable to set cache file permissions"
+    exit 2
+fi
+
 if ! mv "$TMP_JSON" "$JSON_FILE"; then
     echo "[!] Unable to publish aggregated Fleet JSON"
     exit 2
