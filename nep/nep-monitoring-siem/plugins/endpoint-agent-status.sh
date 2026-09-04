@@ -34,6 +34,11 @@ if [ -z $JSON_FILE ]; then
     JSON_FILE=$DEFAULT_FILE
 fi
 
+CACHE_DIR="${JSON_FILE%.json}.d"
+TMP_CACHE_DIR=$(mktemp -d "${CACHE_DIR}.tmp.XXXXXX")
+CACHE_OLD="${CACHE_DIR}.old"
+trap 'rm -rf "$TMP_CACHE_DIR"' EXIT
+
 ####### MAIN #############
 ES_CURL_DIR="/usr/share/neteye/elasticsearch/scripts/"
 TOTAL_HOSTS=0
@@ -74,7 +79,38 @@ else
     TOTAL_HOSTS=$(echo "$AGENTS" | wc -l)
 fi
 
-# Write the aggregated result to the file
-echo "$AGENTS" | jq '.' > $JSON_FILE
+# Write the aggregated result to the file.
+echo "$AGENTS" | jq '.' > "$JSON_FILE"
+
+# Materialize one cache file per normalized hostname.
+echo "$AGENTS" | jq -r '
+    select((.host.hostname // "") != "")
+    | [(.host.hostname | ascii_downcase), (@base64)]
+    | @tsv
+' |
+while IFS=$'\t' read -r HOST_KEY ENDPOINT_B64; do
+    printf '%s' "$ENDPOINT_B64" | base64 -d >> "$TMP_CACHE_DIR/$HOST_KEY"
+    printf '\n' >> "$TMP_CACHE_DIR/$HOST_KEY"
+done
+
+# Publish the new cache only after it has been completely generated.
+rm -rf "$CACHE_OLD"
+if [ -d "$CACHE_DIR" ]; then
+    if ! mv "$CACHE_DIR" "$CACHE_OLD"; then
+        echo "[!] Unable to preserve previous Endpoint cache"
+        exit 2
+    fi
+fi
+
+if ! mv "$TMP_CACHE_DIR" "$CACHE_DIR"; then
+    echo "[!] Unable to publish new Endpoint cache"
+    if [ -d "$CACHE_OLD" ]; then
+        mv "$CACHE_OLD" "$CACHE_DIR"
+    fi
+    exit 2
+fi
+
+rm -rf "$CACHE_OLD"
+
 echo "Exported $TOTAL_HOSTS Elastic Agent Endpoint(s) from Elasticsearch.|hosts=$TOTAL_HOSTS;;;0;"
 

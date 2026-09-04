@@ -38,12 +38,17 @@ if [ -z $JSON_FILE ]; then
     JSON_FILE=$DEFAULT_FILE
 fi
 
+CACHE_DIR="${JSON_FILE%.json}.d"
+TMP_AGENTS=$(mktemp)
+TMP_CACHE_DIR=$(mktemp -d "${CACHE_DIR}.tmp.XXXXXX")
+CACHE_OLD="${CACHE_DIR}.old"
+trap 'rm -f "$TMP_AGENTS"; rm -rf "$TMP_CACHE_DIR"' EXIT
+
 ####### MAIN #############
 KBN_USER="kibana_monitoring"
 KBN_PASSWORD="@@PASSWORD@@"
 PER_PAGE=200
 TOTAL_HOSTS=0
-ALL_AGENTS="[]"
 
 # Get spaces
 if [[ $ssl_enabled -eq 1 ]]; then
@@ -92,8 +97,7 @@ for SPACE_ID in $SPACE_IDS; do
             echo "$KBN_RESPONSE"
             exit 2
         else
-            AGENTS=$(echo "$KBN_RESPONSE" | jq '.items')
-            ALL_AGENTS=$(echo "$ALL_AGENTS $AGENTS" | jq -s 'add')
+            echo "$KBN_RESPONSE" | jq -c 'select(.items != null) | .items[]' >> "$TMP_AGENTS"
 
             if [[ $PAGE -eq 1 ]]; then
                 # --- FIX: compute this space's own total/pages, and SUM into the global counter
@@ -111,10 +115,37 @@ for SPACE_ID in $SPACE_IDS; do
     done
 done
 
-# FIX: guard against an agent appearing under multiple spaces
-# (e.g. a policy whose space_ids lists more than one space)
-ALL_AGENTS=$(echo "$ALL_AGENTS" | jq 'unique_by(.id)')
-# Write the aggregated result to the file
-echo "$ALL_AGENTS" | jq '.' >$JSON_FILE
-#echo "$ALL_AGENTS" | jq
+# Deduplicate agents that can appear in multiple spaces.
+jq -s 'unique_by(.id)' "$TMP_AGENTS" > "$JSON_FILE"
+
+# Materialize one cache file per normalized hostname.
+jq -r '
+    .[]
+    | select((.local_metadata.host.hostname // "") != "")
+    | [(.local_metadata.host.hostname | ascii_downcase), (@base64)]
+    | @tsv
+' "$JSON_FILE" |
+while IFS=$'\t' read -r HOST_KEY AGENT_B64; do
+    printf '%s' "$AGENT_B64" | base64 -d >> "$TMP_CACHE_DIR/$HOST_KEY"
+    printf '\n' >> "$TMP_CACHE_DIR/$HOST_KEY"
+done
+
+# Publish the new cache only after it has been completely generated.
+rm -rf "$CACHE_OLD"
+if [ -d "$CACHE_DIR" ]; then
+    if ! mv "$CACHE_DIR" "$CACHE_OLD"; then
+        echo "[!] Unable to preserve previous Fleet cache"
+        exit 2
+    fi
+fi
+
+if ! mv "$TMP_CACHE_DIR" "$CACHE_DIR"; then
+    echo "[!] Unable to publish new Fleet cache"
+    if [ -d "$CACHE_OLD" ]; then
+        mv "$CACHE_OLD" "$CACHE_DIR"
+    fi
+    exit 2
+fi
+
+rm -rf "$CACHE_OLD"
 echo "Exported $TOTAL_HOSTS host(s) from Kibana Fleet Management.|hosts=$TOTAL_HOSTS;;;0;"
