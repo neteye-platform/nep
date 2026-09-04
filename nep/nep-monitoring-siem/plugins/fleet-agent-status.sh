@@ -40,9 +40,11 @@ fi
 
 CACHE_DIR="${JSON_FILE%.json}.d"
 TMP_AGENTS=$(mktemp)
+TMP_JSON=$(mktemp "${JSON_FILE}.tmp.XXXXXX")
+TMP_CACHE_MAP=$(mktemp)
 TMP_CACHE_DIR=$(mktemp -d "${CACHE_DIR}.tmp.XXXXXX")
 CACHE_OLD="${CACHE_DIR}.old"
-trap 'rm -f "$TMP_AGENTS"; rm -rf "$TMP_CACHE_DIR"' EXIT
+trap 'rm -f "$TMP_AGENTS" "$TMP_JSON" "$TMP_CACHE_MAP"; rm -rf "$TMP_CACHE_DIR"' EXIT
 
 ####### MAIN #############
 KBN_USER="kibana_monitoring"
@@ -116,19 +118,34 @@ for SPACE_ID in $SPACE_IDS; do
 done
 
 # Deduplicate agents that can appear in multiple spaces.
-jq -s 'unique_by(.id)' "$TMP_AGENTS" > "$JSON_FILE"
+if ! jq -s 'unique_by(.id)' "$TMP_AGENTS" > "$TMP_JSON"; then
+    echo "[!] Failed to build aggregated Fleet JSON; keeping previous data"
+    exit 2
+fi
 
-# Materialize one cache file per normalized hostname.
-jq -r '
+# Build the hostname/cache mapping before publishing anything.
+if ! jq -r '
     .[]
     | select((.local_metadata.host.hostname // "") != "")
     | [(.local_metadata.host.hostname | ascii_downcase), (@base64)]
     | @tsv
-' "$JSON_FILE" |
+' "$TMP_JSON" > "$TMP_CACHE_MAP"; then
+    echo "[!] Failed to build Fleet cache mapping; keeping previous data"
+    exit 2
+fi
+
 while IFS=$'\t' read -r HOST_KEY AGENT_B64; do
+    if [[ ! "$HOST_KEY" =~ ^[a-z0-9][a-z0-9._-]*$ ]]; then
+        continue
+    fi
     printf '%s' "$AGENT_B64" | base64 -d >> "$TMP_CACHE_DIR/$HOST_KEY"
     printf '\n' >> "$TMP_CACHE_DIR/$HOST_KEY"
-done
+done < "$TMP_CACHE_MAP"
+
+if ! mv "$TMP_JSON" "$JSON_FILE"; then
+    echo "[!] Unable to publish aggregated Fleet JSON"
+    exit 2
+fi
 
 # Publish the new cache only after it has been completely generated.
 rm -rf "$CACHE_OLD"

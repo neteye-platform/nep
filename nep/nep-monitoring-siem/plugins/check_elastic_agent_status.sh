@@ -43,6 +43,10 @@ if [ -z $JSON_FILE ]; then
 fi
 
 HOST_KEY=$(echo "$HOST_FQDN" | tr '[:upper:]' '[:lower:]')
+if [[ ! "$HOST_KEY" =~ ^[a-z0-9][a-z0-9._-]*$ ]]; then
+    echo "CHECK UNKNOWN - Invalid hostname for status cache lookup."
+    exit 3
+fi
 CACHE_DIR="${JSON_FILE%.json}.d"
 CACHE_FILE="$CACHE_DIR/$HOST_KEY"
 
