@@ -1,5 +1,40 @@
 {
     "ServiceSet": {
+        "nx-ss-neteye-endpoint-elastic-agent-container-state": {
+            "assign_filter": "!\"nx-ss-neteye-endpoint-elastic-agent-state\"=host.vars.nx_nep_ss_to_exclude&host.vars.nx_enable_nep_ss=true&(\"elastic-agent-container\"=host.vars.neteye_local_services)",
+            "description": "Service Set providing monitoring for the Elastic Agent Containers",
+            "object_name": "nx-ss-neteye-endpoint-elastic-agent-container-state",
+            "object_type": "template",
+            "services": [
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-agentless-elastic-agent-check",
+                        "nx-st-type-custom"
+                    ],
+                    "object_name": "Elastic Agent Container Status",
+                    "object_type": "object",
+                    "vars": {
+                        "es_hostname": "elastic-agent-container.$host.name$"
+                    }
+                },
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-agent-linux-systemd-unit-state",
+                        "nx-st-type-custom"
+                    ],
+                    "object_name": "Unit Elastic Agent Container State",
+                    "object_type": "object",
+                    "vars": {
+                        "systemd_enable_restart": true,
+                        "systemd_restart_if_failed": true,
+                        "systemd_skip_enabled_check": false,
+                        "systemd_unit_name": "container-elastic-agent-container.service"
+                    }
+                }
+            ]
+        },
         "nx-ss-agent-linux-elastic-agent-state": {
             "assign_filter": "host.vars.nx_enable_nep_ss=true&(host.vars.logmanager_log_source_type=%22elastic-agent%22&host.vars.nx_host_os_type=%22linux%22&\"nx-ht-computer-agent\"=host.templates)&!host.vars.nx_nep_ss_to_exclude=%22nx-ss-agent-linux-elastic-agent-state%22&host.vars.logmanager_forwarder_enable=false",
             "description": "Service Set providing common monitoring for Elastic Agent Service on NetEye",
