@@ -1824,7 +1824,7 @@
                         ],
                         "nx_enable_eps": true,
                         "nx_is_infrastructural": "y",
-                        "nx_neteye_tenant": "$host.vars.nx_neteye_tenant$"
+                        "nx_neteye_tenant": "$host.vars.nx_neteye_tenant$*"
                     }
                 }
             }
