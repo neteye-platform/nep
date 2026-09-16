@@ -255,6 +255,12 @@
                     "allowed_roles": null
                 },
                 {
+                    "entry_name": "elastic-agent-container",
+                    "entry_value": "Elastic Agent Container Service",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
                     "entry_name": "filebeat",
                     "entry_value": "Filebeat Service",
                     "format": "string",

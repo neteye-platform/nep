@@ -1,7 +1,7 @@
 {
-    "name": "Elastic_Transforms_OK",
+    "name": "Elastic_Transforms_Unknown",
     "description": "",
-    "continue": true,
+    "continue": false,
     "active": true,
     "constraint": {
         "WHERE": {
@@ -10,7 +10,7 @@
                 {
                     "type": "equals",
                     "first": "${event.payload.data.health.status}",
-                    "second": "green"
+                    "second": "unknown"
                 }
             ]
         },
@@ -21,9 +21,9 @@
             "id": "smart_monitoring_check_result",
             "payload": {
                 "check_result": {
-                    "exit_status": "0",
+                    "exit_status": "3",
                     "performance_data": "'search_time_in_ms'=${event.payload.data.stats.search_time_in_ms};;;0; 'documents_processed'=${event.payload.data.stats.documents_processed};;;0; 'trigger_count'=${event.payload.data.stats.trigger_count};;;0; 'index_total'=${event.payload.data.stats.index_total};;;0; 'index_time_in_ms'=${event.payload.data.stats.index_time_in_ms};;;0;",
-                    "plugin_output": "OK - Transform ${event.payload.data.id} is in ${event.payload.data.health.status} state"
+                    "plugin_output": "UNKNOWN - ${event.payload.data.health.issues[0].issue}.<br>${event.payload.data.health.issues[0].details}"
                 },
                 "host": {
                     "address": "127.0.0.1",
@@ -49,7 +49,7 @@
                         "dummy_state": "2",
                         "dummy_text": "No data from webhook in the last $service.check_interval$ seconds",
                         "nx_on_host_down": "disable_check_on_down_hard",
-                        "rulename": "root/master/nx_elastic_dataset/nx_elastic_transforms_rules"
+                        "rulename": "root/master/nx_elastic_transforms/nx_elastic_transforms_rules"
                     }
                 }
             }
