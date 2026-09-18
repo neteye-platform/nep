@@ -48,8 +48,6 @@ if [ -z $JSON_POLICY ]; then
 fi
 
 
-# Extract value for current host
-STATUS_JSON=$(jq ".[] | select(.local_metadata.host.hostname | ascii_downcase  == \"$HOST_FQDN\")" $JSON_FILE)
 HOST_KEY=$(echo "$HOST_FQDN" | tr '[:upper:]' '[:lower:]')
 if [[ ! "$HOST_KEY" =~ ^[a-z0-9][a-z0-9._-]*$ ]]; then
     echo "CHECK UNKNOWN - Invalid hostname for status cache lookup."
