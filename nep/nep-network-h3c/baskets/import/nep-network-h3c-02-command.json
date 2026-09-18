@@ -1,10 +1,35 @@
 {
+    "CommandTemplate": {
+        "nx-ct-centreon-h3c": {
+            "command": "/usr/lib/centreon/plugins/centreon_h3c.pl",
+            "fields": [],
+            "imports": [
+                "nx-ct-centreon-plugin-base"
+            ],
+            "object_name": "nx-ct-centreon-h3c",
+            "object_type": "template",
+            "uuid": "058488ec-06c4-4f7f-9ff4-62b7d1842799"
+        },
+        "nx-ct-centreon-h3c-hw": {
+            "arguments": {
+                "--mode": "hardware"
+            },
+            "fields": [],
+            "imports": [
+                "nx-ct-centreon-h3c",
+                "nx-ct-centreon-plugin-retention"
+            ],
+            "object_name": "nx-ct-centreon-h3c-hw",
+            "object_type": "template",
+            "uuid": "a3143593-25b8-42a9-9231-790c96164a9a"
+        }
+    },
     "Command": {
         "nx-c-centreon-h3c-cpu": {
             "arguments": {
                 "--critical-usage": {
                     "description": "Critical threshold.",
-                    "value": "$nx_centreon_plugin_snmp_crit$"
+                    "value": "$nx_centreon_h3c_critical$"
                 },
                 "--mode": {
                     "description": "Check cpu usage.",
@@ -12,13 +37,14 @@
                 },
                 "--warning-usage": {
                     "description": "Warning threshold.",
-                    "value": "$nx_centreon_plugin_snmp_warn$"
+                    "value": "$nx_centreon_h3c_warning$"
                 }
             },
-            "command": "/usr/lib/centreon/plugins/centreon_h3c.pl",
             "fields": [],
             "imports": [
-                "nx-ct-centreon-plugin-snmp"
+                "nx-ct-centreon-h3c",
+                "nx-ct-centreon-plugin-snmp",
+                "nx-ct-centreon-plugin-retention"
             ],
             "methods_execute": "PluginCheck",
             "object_name": "nx-c-centreon-h3c-cpu",
@@ -29,25 +55,25 @@
             "arguments": {
                 "--component": {
                     "description": "Which component to check (default: '.*'). Can be: 'fan', 'psu','other', 'unknown', 'sensor', 'chassis', 'backplane', 'container', 'module', 'port', 'stack', 'cpu'.",
-                    "value": "$nx_centreon_plugin_component$"
+                    "value": "$nx_centreon_h3c_component$"
                 },
                 "--critical": {
                     "description": "Set critical threshold for 'temperature' (syntax: type,regexp,threshold) Example: --critical='temperature,.*,45'",
-                    "value": "$nx_centreon_plugin_snmp_crit$"
+                    "value": "$nx_centreon_h3c_critical$"
                 },
                 "--filter": {
                     "description": "Exclude the items given as a comma-separated list (example: --filter=fan --filter=psu). You can also exclude items from specific instances: --filter=fan,101",
-                    "value": "$nx_centreon_plugin_filter_sensor$"
+                    "value": "$nx_centreon_h3c_filter$"
                 },
                 "--mode": "hardware",
                 "--warning": {
                     "description": "Set warning threshold for 'temperature' (syntax: type,regexp,threshold) Example: --warning='temperature,.*,40'",
-                    "value": "$nx_centreon_plugin_snmp_warn$"
+                    "value": "$nx_centreon_h3c_warning$"
                 }
             },
-            "command": "/usr/lib/centreon/plugins/centreon_h3c.pl",
             "fields": [],
             "imports": [
+                "nx-ct-centreon-h3c-hw",
                 "nx-ct-centreon-plugin-snmp",
                 "nx-ct-centreon-plugin-retention"
             ],
@@ -74,7 +100,7 @@
                 },
                 "--interface": {
                     "description": "Set the interface (number expected) example: 1,2,... (empty means 'check all interfaces')",
-                    "value": "$nx_centreon_plugin_snmp_interface$"
+                    "value": "$nx_centreon_h3c_interface$"
                 },
                 "--mode": {
                     "description": "Check interfaces.",
@@ -96,10 +122,9 @@
                     "value": "$nx_centreon_plugin_snmp_warn$"
                 }
             },
-            "command": "/usr/lib/centreon/plugins/centreon_h3c.pl",
             "fields": [],
             "imports": [
-                "nx-ct-centreon-plugin-snmp",
+                "nx-ct-centreon-h3c",
                 "nx-ct-centreon-plugin-retention"
             ],
             "methods_execute": "PluginCheck",
@@ -111,7 +136,7 @@
             "arguments": {
                 "--critical-usage": {
                     "description": "Critical threshold (in percent).",
-                    "value": "$nx_centreon_plugin_snmp_crit$"
+                    "value": "$nx_centreon_h3c_critical$"
                 },
                 "--mode": {
                     "description": "Check memory usage.",
@@ -119,20 +144,46 @@
                 },
                 "--warning-usage": {
                     "description": "Warning threshold (in percent).",
-                    "value": "$nx_centreon_plugin_snmp_warn$"
+                    "value": "$nx_centreon_h3c_warning$"
                 }
             },
-            "command": "/usr/lib/centreon/plugins/centreon_h3c.pl",
             "fields": [],
             "imports": [
-                "nx-ct-centreon-plugin-snmp"
+                "nx-ct-centreon-h3c",
+                "nx-ct-centreon-plugin-snmp",
+                "nx-ct-centreon-plugin-retention"
             ],
             "methods_execute": "PluginCheck",
             "object_name": "nx-c-centreon-h3c-memory",
             "object_type": "object",
             "uuid": "b19344b3-c6fa-4bb7-a6cf-9f3038ce6373"
+        },
+        "nx-c-centreon-h3c": {
+            "arguments": {
+                "--critical-usage": {
+                    "description": "Critical threshold.",
+                    "value": "$nx_centreon_h3c_critical$"
+                },
+                "--mode": {
+                    "description": "Check cpu usage.",
+                    "value": "$nx_centreon_h3c_mode$"
+                },
+                "--verbose": {},
+                "--warning-usage": {
+                    "description": "Warning threshold.",
+                    "value": "$nx_centreon_h3c_warning$"
+                }
+            },
+            "fields": [],
+            "imports": [
+                "nx-ct-centreon-h3c",
+                "nx-ct-centreon-plugin-snmp",
+                "nx-ct-centreon-plugin-retention"
+            ],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-centreon-h3c",
+            "object_type": "object",
+            "uuid": "4920c9fc-e257-4a41-bd75-7aedd311235f"
         }
     }
-
-
 }

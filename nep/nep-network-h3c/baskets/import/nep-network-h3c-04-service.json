@@ -4,48 +4,44 @@
             "check_command": "nx-c-centreon-h3c-cpu",
             "fields": [
                 {
-                    "datafield_id": 1731,
+                    "datafield_id": 3821,
                     "is_required": "n",
                     "var_filter": null
                 },
                 {
-                    "datafield_id": 1733,
+                    "datafield_id": 3824,
                     "is_required": "n",
                     "var_filter": null
                 }
             ],
             "imports": [
-                "nx-st-agentless-snmp-centreon"
+                "nx-st-agentless-snmp-centreon-h3c-base"
             ],
             "object_name": "nx-st-agentless-snmp-centreon-h3c-cpu",
             "object_type": "template",
-            "uuid": "92c5a95e-679b-43b7-bc36-1bbdaa8b02be",
-            "vars": {
-                "nx_centreon_plugin_snmp_crit": "90",
-                "nx_centreon_plugin_snmp_warn": "70"
-            }
+            "uuid": "e363d773-642a-4dcc-9802-a58d299ce809"
         },
         "nx-st-agentless-snmp-centreon-h3c-hardware": {
             "check_command": "nx-c-centreon-h3c-hardware",
             "fields": [
                 {
-                    "datafield_id": 2153,
+                    "datafield_id": 3815,
                     "is_required": "n",
                     "var_filter": null
                 },
                 {
-                    "datafield_id": 1731,
+                    "datafield_id": 3821,
                     "is_required": "n",
                     "var_filter": null
                 },
                 {
-                    "datafield_id": 1733,
+                    "datafield_id": 3824,
                     "is_required": "n",
                     "var_filter": null
                 }
             ],
             "imports": [
-                "nx-st-agentless-snmp-centreon"
+                "nx-st-agentless-snmp-centreon-h3c-base"
             ],
             "object_name": "nx-st-agentless-snmp-centreon-h3c-hardware",
             "object_type": "template",
@@ -84,7 +80,7 @@
                 }
             ],
             "imports": [
-                "nx-st-agentless-snmp-centreon"
+                "nx-st-agentless-snmp-centreon-h3c-base"
             ],
             "object_name": "nx-st-agentless-snmp-centreon-h3c-interfaces",
             "object_type": "template",
@@ -94,53 +90,76 @@
             "check_command": "nx-c-centreon-h3c-memory",
             "fields": [
                 {
-                    "datafield_id": 1731,
+                    "datafield_id": 3821,
                     "is_required": "n",
                     "var_filter": null
                 },
                 {
-                    "datafield_id": 1733,
+                    "datafield_id": 3824,
                     "is_required": "n",
                     "var_filter": null
                 }
             ],
             "imports": [
-                "nx-st-agentless-snmp-centreon"
+                "nx-st-agentless-snmp-centreon-h3c-base"
             ],
             "object_name": "nx-st-agentless-snmp-centreon-h3c-memory",
             "object_type": "template",
             "uuid": "9fe837af-80f0-49a1-a7a0-06cd0b521b60"
+        },
+        "nx-st-agentless-snmp-centreon-h3c-base": {
+            "fields": [],
+            "imports": [
+                "nx-st-agentless-snmp-centreon"
+            ],
+            "object_name": "nx-st-agentless-snmp-centreon-h3c-base",
+            "object_type": "template",
+            "uuid": "7c62e426-9d58-4b5c-90e0-711ed47c9127"
         }
     },
     "Datafield": {
+        "3821": {
+            "uuid": "062ff9b5-5f86-4efa-ab5d-9c512fbe8ef0",
+            "varname": "nx_centreon_h3c_critical",
+            "caption": "[NX] Switch H3C Critical",
+            "description": "Set critical threshold for hardware components (syntax:type,regexp,threshold) Example: --critical='temperature,system,40' --critical='disk,.*,40'.",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] Centreon plugin H3C Switch"
+        },
+        "3824": {
+            "uuid": "be6d61fe-5aa8-47f4-872c-b63cfbec1577",
+            "varname": "nx_centreon_h3c_warning",
+            "caption": "[NX] Switch H3C Warning",
+            "description": "Set warning threshold for hardware (syntax: type,regexp,threshold) Example: --warning='temperature,cpu,30' --warning='fan,.*,1500'",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] Centreon plugin H3C Switch"
+        },
+        "3815": {
+            "uuid": "d42a1fa5-0204-4008-986c-451c79b9844f",
+            "varname": "nx_centreon_h3c_component",
+            "caption": "[NX] Switch H3C Component",
+            "description": "Which component to check (default: '.*'). Can be: 'fan', 'psu', 'other', 'unknown', 'sensor', 'chassis', 'backplane',  'container', 'module', 'port', 'stack', 'cpu'.\r\n",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeDatalist",
+            "format": null,
+            "settings": {
+                "behavior": "strict",
+                "data_type": "string",
+                "datalist": "[NX] Centreon H3C Switch Component List"
+            },
+            "category": "[NX] Centreon plugin H3C Switch"
+        },
         "1731": {
             "uuid": "87246f58-974b-4a66-9708-c38b000006c3",
             "varname": "nx_centreon_plugin_snmp_crit",
             "caption": "[NX] Centreon Plugin Critical",
-            "description": null,
-            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
-            "format": null,
-            "settings": {
-                "visibility": "visible"
-            },
-            "category": null
-        },
-        "1733": {
-            "uuid": "87246f58-974b-4a66-9708-c38b000006c5",
-            "varname": "nx_centreon_plugin_snmp_warn",
-            "caption": "[NX] Centreon Plugin Warning",
-            "description": null,
-            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
-            "format": null,
-            "settings": {
-                "visibility": "visible"
-            },
-            "category": null
-        },
-        "2153": {
-            "uuid": "f3e25e99-b3a8-4937-8e84-f4eb201bf9b0",
-            "varname": "nx_centreon_plugin_component",
-            "caption": "[NX] Centreon Plugin Component",
             "description": null,
             "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
             "format": null,
@@ -184,6 +203,25 @@
                 "visibility": "visible"
             },
             "category": null
+        },
+        "1733": {
+            "uuid": "87246f58-974b-4a66-9708-c38b000006c5",
+            "varname": "nx_centreon_plugin_snmp_warn",
+            "caption": "[NX] Centreon Plugin Warning",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": null
+        }
+    },
+    "DatafieldCategory": {
+        "[NX] Centreon plugin H3C Switch": {
+            "category_name": "[NX] Centreon plugin H3C Switch",
+            "description": "Centreon plugin H3C Switch",
+            "originalId": "119"
         }
     }
 }
