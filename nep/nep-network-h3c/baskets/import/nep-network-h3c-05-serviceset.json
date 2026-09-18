@@ -1,8 +1,8 @@
 {
     "ServiceSet": {
-        "nx-ss-network-centreon-h3c": {
-            "assign_filter": "\"nx-ht-network-switch-snmp\"=host.templates&host.vars.nx_hardware_vendor=%22h3c%22",
-            "description": "Service Set providing monitoring for HP 3COM switch\r\n - CPU Load\r\n - Hardware Health\r\n - Memory Usage",
+         "nx-ss-network-centreon-h3c": {
+            "assign_filter": "(\"nx-ht-network-switch-snmp\"=host.templates|\"nx-ht-network-router-snmp\"=host.templates)&host.vars.nx_hardware_vendor=%22h3c%22",
+            "description": "Service Set providing monitoring for switch HP 3COM switch\r\n - CPU Load\r\n - Hardware Health\r\n - Memory Usage",
             "object_name": "nx-ss-network-centreon-h3c",
             "object_type": "template",
             "services": [
