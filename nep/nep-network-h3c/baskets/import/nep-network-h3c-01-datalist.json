@@ -1,0 +1,182 @@
+{
+    "DataList": {
+        "[NX] Centreon H3C Interfaces Oid Display": {
+            "entries": [
+                {
+                    "entry_name": "IpAddr",
+                    "entry_value": "IpAddr",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "ifAlias",
+                    "entry_value": "ifAlias",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "ifDesc",
+                    "entry_value": "ifDesc",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "ifName",
+                    "entry_value": "ifName",
+                    "format": "string",
+                    "allowed_roles": null
+                }
+            ],
+            "list_name": "[NX] Centreon H3C Interfaces Oid Display",
+            "owner": "ca00239360@wgs.wuerth.com",
+            "uuid": "6c656866-a5df-4a89-a3d6-d92ec3e9415a"
+        },
+        "[NX] Centreon H3C Interfaces Oid Filter": {
+            "entries": [
+                {
+                    "entry_name": "IpAddr",
+                    "entry_value": "IpAddr",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "ifAlias",
+                    "entry_value": "ifAlias",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "ifDesc",
+                    "entry_value": "ifDesc",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "ifName",
+                    "entry_value": "ifName",
+                    "format": "string",
+                    "allowed_roles": null
+                }
+            ],
+            "list_name": "[NX] Centreon H3C Interfaces Oid Filter",
+            "owner": "ca00239360@wgs.wuerth.com",
+            "uuid": "fe1648f2-3734-4550-8f7b-472edf5735b2"
+        },
+        "[NX] Centreon H3C Switch Component List": {
+            "entries": [
+                {
+                    "entry_name": "backplane",
+                    "entry_value": "backplane",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "chassis",
+                    "entry_value": "chassis",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "container",
+                    "entry_value": "container",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "cpu",
+                    "entry_value": "cpu",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "fan",
+                    "entry_value": "fan",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "module",
+                    "entry_value": "module",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "other",
+                    "entry_value": "other",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "port",
+                    "entry_value": "port",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "psu",
+                    "entry_value": "psu",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "sensor",
+                    "entry_value": "sensor",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "stack",
+                    "entry_value": "stack",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "unknown",
+                    "entry_value": "unknown",
+                    "format": "string",
+                    "allowed_roles": null
+                }
+            ],
+            "list_name": "[NX] Centreon H3C Switch Component List",
+            "owner": "ca00239360@wgs.wuerth.com",
+            "uuid": "caf7aa61-a96f-4368-b5ff-320981e18ff4"
+        },
+        "[NX] Centreon H3C Switch Mode List": {
+            "entries": [
+                {
+                    "entry_name": "cpu",
+                    "entry_value": "cpu",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "hardware",
+                    "entry_value": "hardware",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "interfaces",
+                    "entry_value": "interfaces",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "list-interfaces",
+                    "entry_value": "list-interfaces",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "memory",
+                    "entry_value": "memory",
+                    "format": "string",
+                    "allowed_roles": null
+                }
+            ],
+            "list_name": "[NX] Centreon H3C Switch Mode List",
+            "owner": "ca00239360@wgs.wuerth.com",
+            "uuid": "d56372a8-c210-46e4-9c6b-d5605448dc11"
+        }
+    }
+}
