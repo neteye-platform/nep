@@ -113,6 +113,11 @@
           "var_filter": null
         },
         {
+          "datafield_id": 158,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
           "datafield_id": 163,
           "is_required": "n",
           "var_filter": null
@@ -138,9 +143,9 @@
       "use_agent": null,
       "use_var_overrides": null,
       "vars": {
-        "http_critical_time": 30,
-        "http_timeout": 60,
-        "http_warn_time": 20
+        "nx_http_critical_time": 30,
+        "nx_http_timeout": 60,
+        "nx_http_warn_time": 20
       },
       "volatile": null,
       "zone": null
@@ -387,6 +392,16 @@
         "visibility": "visible"
       },
       "category": "Website Settings"
+    },
+    "158": {
+      "varname": "nx_http_timeout",
+      "caption": "[NX] Connection timeout",
+      "description": "Seconds before connection times out (default: 10)",
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeNumber",
+      "format": null,
+      "originalId": "158",
+      "settings": {},
+      "category": "Website Settings (Advanced)"
     },
     "146": {
       "varname": "nx_http_port_http",
