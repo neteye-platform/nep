@@ -1,0 +1,21 @@
+name: NEP-912 HANA backup type tests
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "nep/nep-dbms-hana/**"
+      - ".github/workflows/nep-912-hana-backup-type.yaml"
+
+jobs:
+  test-hana-backup-type:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+
+      - name: Install test dependencies
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq bash
+
+      - name: Run HANA last backup tests
+        run: sudo bash nep/nep-dbms-hana/tests/test_check_hana_last_backup.sh

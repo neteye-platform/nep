@@ -42,6 +42,43 @@
             "list_name": "[NX] SAP Sapcontrol Protocol List",
             "owner": "FA98",
             "uuid": "d65c7a7d-e15d-4f74-80d6-b0f10000272e"
+        },
+        "[NX] SAP HANA Backup Type List": {
+            "entries": [
+                {
+                    "entry_name": "Complete data backup",
+                    "entry_value": "complete data backup",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "Incremental data backup",
+                    "entry_value": "incremental data backup",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "Differential data backup",
+                    "entry_value": "differential data backup",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "Data snapshot",
+                    "entry_value": "data snapshot",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "All data backups and snapshots",
+                    "entry_value": "DATA_BACKUP",
+                    "format": "string",
+                    "allowed_roles": null
+                }
+            ],
+            "list_name": "[NX] SAP HANA Backup Type List",
+            "owner": "FA98",
+            "uuid": "b9b8a6c7-1d4e-4f5e-9a7c-3e8c2d1f64b2"
         }
     }
 }

@@ -70,6 +70,22 @@ There is nothing to do to finalize the installation of this NEP
 
 ### Director/Icinga Objects
 
+#### Data Lists
+
+| Datalist Name | Description |
+| ------------- | ----------- |
+| [NX] SAP HANA Backup Type List | Backup type used by the HANA Last Backup check |
+
+Available values:
+
+* Complete data backup (`complete data backup`)
+* Incremental data backup (`incremental data backup`)
+* Differential data backup (`differential data backup`)
+* Data snapshot (`data snapshot`)
+* All data backups and snapshots (`DATA_BACKUP`)
+
+`DATA_BACKUP` is a special value that includes complete, incremental, differential data backups and data snapshots.
+
 
 #### Host Templates
 Host Template:
@@ -156,5 +172,7 @@ In order to use this NEP, add the HT nx-ht-hana-tenant to the Host. Configure th
 * HANA Instance ID (SID)
 * HANA Instance Number
 * SAP sapcontrol Protocol
+
+For the HANA Last Backup service, configure the backup type according to the backup strategy. The default value is `complete data backup` to preserve the existing behavior.
 
 Services are then attached to this device and monitored.

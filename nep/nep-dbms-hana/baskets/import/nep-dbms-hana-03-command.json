@@ -162,6 +162,10 @@
                     "set_if_format": "string",
                     "value": "$nx_sap_hana_lookback$"
                 },
+                "--backup-type": {
+                    "description": "backup type to be used by last_backup",
+                    "value": "$nx_sap_hana_backup_type$"
+                },
                 "--pass": {
                     "description": "Password for SQL-connect",
                     "skip_key": false,

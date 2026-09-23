@@ -79,7 +79,10 @@
                     ],
                     "object_name": "HANA Last Backup",
                     "object_type": "object",
-                    "uuid": "246247d5-9ace-4f6a-a9b6-2a16b766e060"
+                    "uuid": "246247d5-9ace-4f6a-a9b6-2a16b766e060",
+                    "vars": {
+                        "nx_sap_hana_backup_type": "complete data backup"
+                    }
                 },
                 {
                     "fields": [],
