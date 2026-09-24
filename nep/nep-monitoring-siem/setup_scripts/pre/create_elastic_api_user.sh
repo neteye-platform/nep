@@ -29,8 +29,8 @@ function add_api_user() {
   "metadata": {
     "application": "icinga",
     "environment": {
-       "level": 1,
-       "trusted": true
+        "level": 1,
+        "trusted": true
     }
   }
 }
@@ -54,16 +54,14 @@ function add_api_user() {
       CURL_RAW_RESPONSE="$(/usr/share/neteye/elasticsearch/scripts/es_curl.sh -sS -w '{"ErrorCode": %{http_code}}' -XPOST 'https://elasticsearch.neteyelocal:9200/_security/api_key' -H 'Content-Type: application/json' -d "$JSON_INPUT" )"
 
 
-      if [[ $status -ne 200 ]]
-      then
-      echo $CURL_RAW_RESPONSE | jq 'select(.error!=null).error'
-      exit 1
+      if [[ $status -ne 200 ]]; then
+        echo $CURL_RAW_RESPONSE | jq 'select(.error!=null).error'
+        exit 1
       else
-      ##{"id":"W3pCo4MByA8i2Wf0oW2D","name":"${API_NAME}","api_key":"F2wZTsIYQbKRxc5BZ9YUWA","encoded":"VzNwQ280TUJ5QThpMldmMG9XMkQ6RjJ3WlRzSVlRYktSeGM1Qlo5WVVXQQ=="}{"ErrorCode": 200}
-      echo "API keys with name '${API_NAME}' created successfull!"
-      ## Write API on auth_file
-      echo $CURL_RAW_RESPONSE | jq 'select(.encoded!=null)' > $FILE
-      exit 0
+        echo "API keys with name '${API_NAME}' created successfull!"
+        ## Write API on auth_file
+        echo $CURL_RAW_RESPONSE | jq 'select(.encoded!=null)' > $FILE
+        exit 0
       fi
 
   else
