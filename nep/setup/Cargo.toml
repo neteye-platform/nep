@@ -10,24 +10,24 @@ clap = { version = "3.2.20", features = ["derive", "cargo"] }
 serde = { version = "1.0.144", features = ["derive"] }
 serde_json = "1.0"
 glob = "0.3.0"
-toml = "0.5.9"
+toml = "0.9.0"
 regex = "1"
 lazy_static = "1.4.0"
 anyhow = { version = "1.0.64", features = ["backtrace"] }
-nix = "0.26.1"
+nix = "0.31.0"
 semver = "1.0.13"
 ctrlc = "3.2.4"
-strsim = "0.10.0"
-reqwest = { version = "0.11.14", features = [
+strsim = "0.11.0"
+reqwest = { version = "0.13.0", features = [
     "gzip", "blocking", "deflate", "json", "serde_json",
     "mime_guess", "brotli", "rustls-tls"
 ], default-features = false}
-pretty_env_logger = "0.4.0"
+pretty_env_logger = "0.5.0"
 colored = "2.0.0"
-rand = "0.8.5"
+rand = "0.10.0"
 
 [build-dependencies]
-built = { version = "0.7", features = ["git2"] }
+built = { version = "0.8", features = ["git2"] }
 chrono = "0.4.39"
 
 [lib]
