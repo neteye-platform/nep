@@ -445,7 +445,7 @@
         "nx-c-windows-mem-usage": {
             "arguments": {
                 "-U": {
-                    "description": "Show used memory instead of the free memory if TRUE"
+                    "description": "Show used free instead of the used memory if TRUE"
                 },
                 "-c": {
                     "description": "Memory Critical Threshold",
