@@ -69,6 +69,27 @@
                         "systemd_timer_timer_name": "ocs-glpi-full-sync",
                         "systemd_timer_warning": "1020"
                     }
+                },
+                "GLPI notification queue": {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-agent-linux-glpi-notification-queue",
+                        "nx-st-type-custom"
+                    ],
+                    "notes": "Checks GLPI queued notifications and the queuednotification automatic action",
+                    "object_name": "GLPI notification queue",
+                    "object_type": "object",
+                    "vars": {
+                        "nx_is_infrastructural": "y",
+                        "glpi_notification_task": "queuednotification",
+                        "glpi_notification_mode": "mailing",
+                        "glpi_notification_warn_running": "1800",
+                        "glpi_notification_crit_running": "3600",
+                        "glpi_notification_warn_idle": "600",
+                        "glpi_notification_crit_idle": "1800",
+                        "glpi_notification_warn_overdue": "900",
+                        "glpi_notification_crit_overdue": "3600"
+                    }
                 }
             }
         },
