@@ -67,7 +67,7 @@ print_usage() {
   echo "  $PROGNAME --function connection_time  --sid <SID> --host <HOST> --port <PORT> --user <USER> --pass <PASSWORD> --crit <CRITICAL seconds> --warn <WARNING seconds>"
   echo "  $PROGNAME --function failed_log_backups --sid <SID> --host <HOST> --port <PORT> --user <USER> --pass <PASSWORD> --crit <failed backups CRITICAL> --warn <failed backups WARNING> --lookback <minutes>"
   echo "  $PROGNAME --function failed_data_backups --sid <SID> --host <HOST> --port <PORT> --user <USER> --pass <PASSWORD> --crit <failed backups CRITICAL> --warn <failed backups WARNING> --lookback <hours>"
-  echo "  $PROGNAME --function last_backup --sid <SID> --host <HOST> --port <PORT> --user <USER> --pass <PASSWORD> --crit <duration in minutes CRITICAL> --warn <duration in minutes WARNING> --lookback <days>"
+  echo "  $PROGNAME --function last_backup --sid <SID> --host <HOST> --port <PORT> --user <USER> --pass <PASSWORD> --crit <duration in minutes CRITICAL> --warn <duration in minutes WARNING> --lookback <days> --backup-type <backup type>"
   echo "  $PROGNAME --function memory_usage --sid <SID> --host <HOST> --port <PORT> --user <USER> --pass <PASSWORD> --crit <memory free % CRITICAL> --warn <memory free % WARNING>"
   echo "  $PROGNAME --function replication_status --sid <SID> --host <HOST> --port <PORT> --user <USER> --pass <PASSWORD>"
   echo "  $PROGNAME --function used_space --sid <SID> --host <HOST> --port <PORT> --user <USER> --pass <PASSWORD>"
@@ -103,6 +103,7 @@ while [[ "$#" -gt 0 ]]; do
     --version)   HANA_FUNCTION="version";;
     --function)  HANA_FUNCTION="$2"; shift;;
     --lookback)  HANA_LOOKBACK="$2"; shift;;
+    --backup-type) HANA_BACKUP_TYPE="$2"; shift;;
     --sid)       HANA_SID="$2";      shift;;
     --host)      HANA_HOST="$2";     shift;;
     --port)      HANA_PORT="$2";     shift;;
@@ -184,6 +185,14 @@ select backup_id, sys_start_time, state_name from m_backup_catalog where entry_t
 #
 check_backup ()
 {
+  [ -z "$HANA_BACKUP_TYPE" ] && HANA_BACKUP_TYPE="complete data backup"
+  case "$HANA_BACKUP_TYPE" in
+    "complete data backup"|"incremental data backup"|"differential data backup"|"data snapshot"|"DATA_BACKUP") ;;
+    *)
+      echo "UNKNOWN: Invalid backup type: $HANA_BACKUP_TYPE"
+      return $STATE_UNKNOWN
+      ;;
+  esac
   cat >>$INFILE <<@EOF
 SELECT
   START_TIME,
@@ -313,7 +322,7 @@ FROM
           'SERVER' TIMEZONE,                              /* SERVER, UTC */
           '%' HOST,
           '%' SERVICE_NAME,
-          'complete data backup' BACKUP_TYPE,                             /* e.g. 'log backup', 'complete data backup', 'incremental data backup', 'differential data backup', 'data snapshot',
+          '${HANA_BACKUP_TYPE}' BACKUP_TYPE,                             /* e.g. 'log backup', 'complete data backup', 'incremental data backup', 'differential data backup', 'data snapshot',
                                                                   'DATA_BACKUP' for all data backup and snapshot types */
           '%' BACKUP_DATA_TYPE,                            /* VOLUME -> log or data, CATALOG -> catalog, TOPOLOGY -> topology */
           'successful' BACKUP_STATUS,                                    /* e.g. 'successful', 'failed' */
@@ -669,8 +678,10 @@ connection_time)
 
 last_backup)
     [ -z $HANA_LOOKBACK ] && HANA_LOOKBACK=3
+    [ -z "$HANA_BACKUP_TYPE" ] && HANA_BACKUP_TYPE="complete data backup"
     check_backup
     sqlret=$?
+    [ $sqlret -eq $STATE_UNKNOWN ] && exit $STATE_UNKNOWN
     if [ $sqlret -eq 0 ]; then
         last_backup=$(cat $TMPFILE | grep -v START_TIME | head -1)
         if [ -z "$last_backup" ]; then
