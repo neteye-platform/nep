@@ -1425,16 +1425,16 @@
             "category": "Common Settings (Advanced)"
         },
         "169": {
-            "uuid": "87246f58-974b-4a66-9708-c38b0000055f",
-            "varname": "nx_neteye_tenant",
-            "caption": "[NX] NetEye Tenant",
-            "description": "Tenant name where search data (like namespace for ElasticAgent)",
+            "uuid": "4da875aa-e0f3-441a-ac06-a9e0d8d74a3c",
+            "varname": "neteye_tenant",
+            "caption": "Tenant",
+            "description": null,
             "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
             "format": null,
             "settings": {
                 "visibility": "visible"
             },
-            "category": "Common Settings (Advanced)"
+            "category": null
         },
         "170": {
             "uuid": "87246f58-974b-4a66-9708-c38b00000440",
