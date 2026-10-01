@@ -850,7 +850,7 @@
                             "elastic_agent.elastic_agent"
                         ],
                         "nx_is_infrastructural": "y",
-                        "nx_neteye_tenant": "master",
+                        "neteye_tenant": "master",
                         "nx_tornado_webhook_name": "nx_elastic_dataset",
                         "nx_tornado_webhook_secret": "@@PASSWORD@@"
 
@@ -1824,7 +1824,7 @@
                         ],
                         "nx_enable_eps": true,
                         "nx_is_infrastructural": "y",
-                        "nx_neteye_tenant": "$host.vars.nx_neteye_tenant$*"
+                        "neteye_tenant": "$host.vars.neteye_tenant$*"
                     }
                 }
             }
@@ -1929,7 +1929,7 @@
                     "uuid": "11fe1523-6946-417a-9c35-c9244b68aa79",
                     "vars": {
                         "nx_is_infrastructural": "y",
-                        "nx_neteye_tenant": "$host.vars.nx_neteye_tenant$"
+                        "neteye_tenant": "$host.vars.neteye_tenant$"
                     }
                 }
             }
@@ -1964,7 +1964,7 @@
                             "elastic_agent.apm_server"
                         ],
                         "nx_is_infrastructural": "y",
-                        "nx_neteye_tenant": "neteye_system_internal",
+                        "neteye_tenant": "neteye_system_internal",
                         "nx_tornado_webhook_name": "nx_elastic_dataset",
                         "nx_tornado_webhook_secret": "@@PASSWORD@@"
 

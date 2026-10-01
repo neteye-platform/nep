@@ -25,7 +25,7 @@
                 "-t": {
                     "description": "Teanant ID",
                     "required": true,
-                    "value": "$nx_neteye_tenant$"
+                    "value": "$neteye_tenant$"
                 },
                 "-H": {
                     "description": "Hostaname",
@@ -390,7 +390,7 @@
                 "--tenant": {
                     "description": "Tenand ID where search data (like namespace for ElasticAgent)",
                     "required": true,
-                    "value": "$nx_neteye_tenant$"
+                    "value": "$neteye_tenant$"
                 }
             },
             "command": "PluginContribDir + \/check_elastic_ingest_status.py",
@@ -513,7 +513,7 @@
                 },
                 "--tenant": {
                     "description": "Tenand ID where search data (like namespace for ElasticAgent)",
-                    "value": "$nx_neteye_tenant$"
+                    "value": "$neteye_tenant$"
                 },
                 "--webhook": {
                     "description": "Webhook endpoint enabled in Tornado",

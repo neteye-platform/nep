@@ -1413,9 +1413,9 @@
             "category": null
         },
         "10643": {
-            "varname": "nx_neteye_tenant",
-            "caption": "[NX] NetEye Tenant",
-            "description": "Tenant name where search data (like namespace for ElasticAgent)",
+            "varname": "neteye_tenant",
+            "caption": "Tenant",
+            "description": null,
             "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
             "format": null,
             "originalId": "10643",
