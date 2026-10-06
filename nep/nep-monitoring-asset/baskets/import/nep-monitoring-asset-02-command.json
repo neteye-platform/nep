@@ -29,7 +29,7 @@
                     "order": "5"
                 }
             },
-            "command": "PluginContribDir + \/check_assetmanagement.pl",
+            "command": "PluginContribDir + /check_assetmanagement.pl",
             "disabled": false,
             "fields": [],
             "imports": [],
@@ -68,7 +68,7 @@
                     "order": "4"
                 }
             },
-            "command": "PluginContribDir + \/check_systemd_timer",
+            "command": "PluginContribDir + /check_systemd_timer",
             "disabled": false,
             "fields": [],
             "imports": [],
@@ -77,6 +77,61 @@
             "object_name": "nx-c-check-systemd-timer",
             "object_type": "object",
             "timeout": null,
+            "vars": {},
+            "zone": null
+        },
+        "nx-c-check-glpi-notification-queue": {
+            "arguments": {
+                "--task": {
+                    "description": "GLPI automatic action name",
+                    "value": "$glpi_notification_task$",
+                    "order": "1"
+                },
+                "--mode": {
+                    "description": "GLPI notification delivery mode",
+                    "value": "$glpi_notification_mode$",
+                    "order": "2"
+                },
+                "--warn-running": {
+                    "description": "WARNING threshold in seconds for a RUNNING automatic action",
+                    "value": "$glpi_notification_warn_running$",
+                    "order": "3"
+                },
+                "--crit-running": {
+                    "description": "CRITICAL threshold in seconds for a RUNNING automatic action",
+                    "value": "$glpi_notification_crit_running$",
+                    "order": "4"
+                },
+                "--warn-idle": {
+                    "description": "WARNING threshold in seconds beyond the configured automatic action frequency",
+                    "value": "$glpi_notification_warn_idle$",
+                    "order": "5"
+                },
+                "--crit-idle": {
+                    "description": "CRITICAL threshold in seconds beyond the configured automatic action frequency",
+                    "value": "$glpi_notification_crit_idle$",
+                    "order": "6"
+                },
+                "--warn-overdue": {
+                    "description": "WARNING threshold in seconds for overdue queued notifications",
+                    "value": "$glpi_notification_warn_overdue$",
+                    "order": "7"
+                },
+                "--crit-overdue": {
+                    "description": "CRITICAL threshold in seconds for overdue queued notifications",
+                    "value": "$glpi_notification_crit_overdue$",
+                    "order": "8"
+                }
+            },
+            "command": "PluginContribDir + /check_glpi_notification_queue",
+            "disabled": false,
+            "fields": [],
+            "imports": [],
+            "is_string": null,
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-check-glpi-notification-queue",
+            "object_type": "object",
+            "timeout": "60",
             "vars": {},
             "zone": null
         }

@@ -2884,11 +2884,6 @@
                     "datafield_id": 166,
                     "is_required": "n",
                     "var_filter": null
-                },
-                {
-                    "datafield_id": 167,
-                    "is_required": "n",
-                    "var_filter": null
                 }
             ],
             "flapping_threshold_high": null,
@@ -4337,18 +4332,6 @@
                 "datalist": "[NX] Notification Channels List"
             },
             "category": "[NX] Basic notifications Settings (Advanced)"
-        },
-        "167": {
-            "varname": "nx_neteye_tenant",
-            "caption": "[NX] NetEye Tenant",
-            "description": "Tenant name where search data (like namespace for ElasticAgent)",
-            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
-            "format": null,
-            "originalId": "167",
-            "settings": {
-                "visibility": "visible"
-            },
-            "category": "Common Settings (Advanced)"
         },
         "10559": {
             "category_id": null,

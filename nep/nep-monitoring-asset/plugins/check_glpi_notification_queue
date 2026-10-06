@@ -1,0 +1,162 @@
+#!/usr/bin/env perl
+# NEP-911: GLPI notification queue and automatic action health check
+use strict;
+use warnings;
+use DBI;
+use Getopt::Long qw(GetOptions);
+
+our ($mariadb_host, $glpi_db, $glpi_user, $glpi_pass);
+my $config = '/neteye/shared/monitoring/plugins/check_assetmanagement.conf';
+my $task = 'queuednotification';
+my $mode = 'mailing';
+my ($warn_running, $crit_running) = (1800, 3600);
+my ($warn_idle, $crit_idle) = (600, 1800);
+my ($warn_overdue, $crit_overdue) = (900, 3600);
+my $help;
+
+sub unknown {
+    my ($message) = @_;
+    $message =~ s/\s+/ /g;
+    print "UNKNOWN - $message\n";
+    exit 3;
+}
+sub usage {
+    return <<'USAGE';
+Usage: check_glpi_notification_queue [options]
+  --config-file PATH     Existing Asset Monitoring GLPI DB config
+  --task NAME            GLPI automatic action (default: queuednotification)
+  --mode NAME            Notification delivery mode (default: mailing)
+  --warn-running SEC     WARNING if RUNNING longer than SEC (default: 1800)
+  --crit-running SEC     CRITICAL if RUNNING longer than SEC (default: 3600)
+  --warn-idle SEC        WARNING if last run exceeds frequency + SEC (default: 600)
+  --crit-idle SEC        CRITICAL if last run exceeds frequency + SEC (default: 1800)
+  --warn-overdue SEC     WARNING if oldest due notification exceeds SEC (default: 900)
+  --crit-overdue SEC     CRITICAL if oldest due notification exceeds SEC (default: 3600)
+  --help                 Show this help
+USAGE
+}
+
+GetOptions(
+    'config-file=s'   => \$config,
+    'task=s'          => \$task,
+    'mode=s'          => \$mode,
+    'warn-running=s'  => \$warn_running,
+    'crit-running=s'  => \$crit_running,
+    'warn-idle=s'     => \$warn_idle,
+    'crit-idle=s'     => \$crit_idle,
+    'warn-overdue=s'  => \$warn_overdue,
+    'crit-overdue=s'  => \$crit_overdue,
+    'help'            => \$help,
+) or unknown('Invalid command-line arguments');
+if ($help) {
+    print usage();
+    exit 0;
+}
+for my $pair (
+    [$warn_running, $crit_running],
+    [$warn_idle, $crit_idle],
+    [$warn_overdue, $crit_overdue],
+) {
+    my ($warn, $crit) = @$pair;
+    unknown('Expected integer thresholds satisfying 0 <= WARNING < CRITICAL')
+        unless $warn =~ /\A\d+\z/ && $crit =~ /\A\d+\z/
+            && $warn < $crit;
+}
+unknown('Invalid task name') unless $task =~ /\A[A-Za-z0-9_-]+\z/;
+unknown('Invalid delivery mode') unless $mode =~ /\A[A-Za-z0-9_-]+\z/;
+unknown('Database config is not readable') unless -f $config && -r $config;
+my $loaded = do $config;
+unknown("Cannot load database config: $@ $!") unless defined $loaded;
+unknown('Incomplete GLPI DB config')
+    unless defined $mariadb_host && length $mariadb_host
+        && defined $glpi_db && length $glpi_db
+        && defined $glpi_user && length $glpi_user
+        && defined $glpi_pass;
+
+my ($action, $queue);
+my $db_error;
+eval {
+    my $dbh = DBI->connect(
+        "DBI:mysql:database=$glpi_db;host=$mariadb_host",
+        $glpi_user, $glpi_pass,
+        { RaiseError => 1, PrintError => 0, AutoCommit => 1 },
+    ) or die 'Unable to connect to GLPI database';
+    $action = $dbh->selectrow_arrayref(
+        q{SELECT state, frequency, TIMESTAMPDIFF(SECOND, lastrun, NOW()), lastrun
+            FROM glpi_crontasks WHERE name = ? LIMIT 1},
+        undef, $task,
+    );
+    $queue = $dbh->selectrow_arrayref(
+        q{SELECT COUNT(*),
+                 COALESCE(MAX(TIMESTAMPDIFF(SECOND, send_time, NOW())), 0)
+            FROM glpi_queuednotifications
+           WHERE is_deleted = 0 AND sent_time IS NULL
+             AND send_time <= NOW() AND mode = ?},
+        undef, $mode,
+    );
+    $dbh->disconnect;
+    1;
+} or $db_error = $@ || 'Database query failed';
+unknown("Cannot query GLPI: $db_error") if defined $db_error;
+if (!defined $action) {
+    print "CRITICAL - GLPI automatic action '$task' not found\n";
+    exit 2;
+}
+
+my ($state, $frequency, $age, $last_run) = @$action;
+my ($pending, $oldest) = @$queue;
+unknown('Unexpected automatic action data')
+    unless defined $state && $state =~ /\A[012]\z/
+        && defined $frequency && $frequency =~ /\A\d+\z/;
+unknown('Unexpected notification queue data')
+    unless defined $pending && $pending =~ /\A\d+\z/
+        && defined $oldest && $oldest =~ /\A\d+\z/;
+
+my $status = 0;
+my @messages;
+if ($state == 0) {
+    $status = 2;
+    push @messages, "automatic action '$task' is disabled";
+} elsif (!defined $age) {
+    $status = 2;
+    push @messages, "automatic action '$task' has never run";
+} elsif ($state == 2) {
+    if ($age >= $crit_running) {
+        $status = 2;
+        push @messages, "automatic action '$task' stuck RUNNING for " . $age . "s";
+    } elsif ($age >= $warn_running) {
+        $status = 1;
+        push @messages, "automatic action '$task' RUNNING for " . $age . "s";
+    }
+} elsif ($frequency == 0) {
+    unknown("Automatic action '$task' has invalid frequency 0");
+} elsif ($age >= $frequency + $crit_idle) {
+    $status = 2;
+    push @messages, "automatic action '$task' last ran " . $age . "s ago (frequency " . $frequency . "s)";
+} elsif ($age >= $frequency + $warn_idle) {
+    $status = 1;
+    push @messages, "automatic action '$task' last ran " . $age . "s ago (frequency " . $frequency . "s)";
+}
+if ($pending > 0) {
+    if ($oldest >= $crit_overdue) {
+        $status = 2;
+        push @messages, "$pending due $mode notifications; oldest overdue by " . $oldest . "s";
+    } elsif ($oldest >= $warn_overdue) {
+        $status = 1 if $status < 1;
+        push @messages, "$pending due $mode notifications; oldest overdue by " . $oldest . "s";
+    }
+}
+my @states = ('DISABLED', 'WAITING', 'RUNNING');
+my @statuses = ('OK', 'WARNING', 'CRITICAL');
+push @messages, "action=$task state=$states[$state] last_run="
+    . (defined $last_run ? $last_run : 'NULL')
+    . " frequency=" . $frequency . "s due_" . $mode . "_notifications=$pending"
+    unless @messages;
+my $perf_age = defined $age ? $age : -1;
+print "$statuses[$status] - " . join('; ', @messages)
+    . " | pending_notifications=$pending"
+    . " oldest_overdue_seconds=$oldest;$warn_overdue;$crit_overdue;0"
+    . " last_run_age_seconds=$perf_age"
+    . " frequency_seconds=$frequency"
+    . " task_state=$state\n";
+exit $status;

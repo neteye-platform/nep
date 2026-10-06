@@ -648,11 +648,6 @@
                     "var_filter": null
                 },
                 {
-                    "datafield_id": 10643,
-                    "is_required": "y",
-                    "var_filter": null
-                },
-                {
                     "datafield_id": 10632,
                     "is_required": "n",
                     "var_filter": null
@@ -713,11 +708,6 @@
                 {
                     "datafield_id": 10646,
                     "is_required": "n",
-                    "var_filter": null
-                },
-                {
-                    "datafield_id": 10643,
-                    "is_required": "y",
                     "var_filter": null
                 },
                 {
@@ -898,11 +888,6 @@
                 },
                 {
                     "datafield_id": 10642,
-                    "is_required": "n",
-                    "var_filter": null
-                },
-                {
-                    "datafield_id": 10643,
                     "is_required": "n",
                     "var_filter": null
                 },
@@ -1409,16 +1394,6 @@
             "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeBoolean",
             "format": null,
             "originalId": "10648",
-            "settings": {},
-            "category": null
-        },
-        "10643": {
-            "varname": "nx_neteye_tenant",
-            "caption": "[NX] NetEye Tenant",
-            "description": "Tenant name where search data (like namespace for ElasticAgent)",
-            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
-            "format": null,
-            "originalId": "10643",
             "settings": {},
             "category": null
         },
