@@ -58,12 +58,12 @@
             "check_command": "nx-c-centreon_vectra_memory",
             "fields": [
                 {
-                    "datafield_id": 10528,
+                    "datafield_id": 10527,
                     "is_required": "n",
                     "var_filter": null
                 },
                 {
-                    "datafield_id": 10527,
+                    "datafield_id": 10528,
                     "is_required": "n",
                     "var_filter": null
                 }
@@ -82,6 +82,80 @@
             ],
             "object_name": "nx-st-agentless-restapi-centreon-vectra-sensors",
             "object_type": "template"
+        }
+    },
+    "Datafield": {
+        "10521": {
+            "varname": "api_insecure",
+            "caption": "[NX] API Insecure",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeBoolean",
+            "format": null,
+            "originalId": "10521",
+            "settings": {},
+            "category": null
+        },
+        "10523": {
+            "varname": "vectra_critical_cpu_utilization_percentage",
+            "caption": "[NX] Critical CPU Usage",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "10523",
+            "settings": {},
+            "category": null
+        },
+        "10524": {
+            "varname": "vectra_warning_cpu_utilization_percentage",
+            "caption": "[NX] Warning CPU Usage",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "10524",
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": null
+        },
+        "10525": {
+            "varname": "vectra_critical_disk_utilization_percentage",
+            "caption": "[NX] Critical Disk Usage",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "10525",
+            "settings": {},
+            "category": null
+        },
+        "10526": {
+            "varname": "vectra_warning_disk_utilization_percentage",
+            "caption": "[NX] Warning Disk Usage",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "10526",
+            "settings": {},
+            "category": null
+        },
+        "10528": {
+            "varname": "vectra_critical_memory_utilization_percentage",
+            "caption": "[NX] Critical Memory Usage",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "10528",
+            "settings": {},
+            "category": null
+        },
+        "10527": {
+            "varname": "vectra_warning_memory_utilization_percentage",
+            "caption": "[NX] Warning Memory Usage",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "10527",
+            "settings": {},
+            "category": null
         }
     }
 }
