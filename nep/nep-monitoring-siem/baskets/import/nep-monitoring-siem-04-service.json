@@ -656,6 +656,11 @@
                     "datafield_id": 10633,
                     "is_required": "n",
                     "var_filter": null
+                },
+                {
+                    "datafield_id": 10653,
+                    "is_required": "n",
+                    "var_filter": null
                 }
             ],
             "flapping_threshold_high": null,
@@ -677,7 +682,9 @@
             "template_choice": null,
             "use_agent": null,
             "use_var_overrides": null,
-            "vars": {},
+            "vars": {
+                "nx_elastic_namespace": "$host.vars.neteye_tenant$*"
+            },
             "volatile": null,
             "zone": "master"
         },
@@ -905,13 +912,21 @@
                     "datafield_id": 10648,
                     "is_required": "n",
                     "var_filter": null
+                },
+                {
+                    "datafield_id": 10653,
+                    "is_required": "n",
+                    "var_filter": null
                 }
             ],
             "imports": [
                 "nx-st-agentless"
             ],
             "object_name": "nx-st-agentless-elastic-dataset-status",
-            "object_type": "template"
+            "object_type": "template",
+            "vars": {
+                "nx_elastic_namespace": "$host.vars.neteye_tenant$"
+            }
         },
         "nx-st-agentless-elastic-transforms-status": {
             "check_command": "nx-c-check_elastic_transforms_status",
@@ -1455,6 +1470,16 @@
             "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
             "format": null,
             "originalId": "10652",
+            "settings": {},
+            "category": null
+        },
+        "10653":{
+            "varname": "nx_elastic_namespace",
+            "caption": "[NX] Elastic Namespace",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "10653",
             "settings": {},
             "category": null
         }
