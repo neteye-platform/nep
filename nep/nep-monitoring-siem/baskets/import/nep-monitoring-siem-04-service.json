@@ -656,6 +656,11 @@
                     "datafield_id": 10633,
                     "is_required": "n",
                     "var_filter": null
+                },
+                {
+                    "datafield_id": 10653,
+                    "is_required": "n",
+                    "var_filter": null
                 }
             ],
             "flapping_threshold_high": null,
@@ -905,6 +910,11 @@
                 },
                 {
                     "datafield_id": 10648,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 10653,
                     "is_required": "n",
                     "var_filter": null
                 }
@@ -1460,6 +1470,16 @@
             "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
             "format": null,
             "originalId": "10652",
+            "settings": {},
+            "category": null
+        },
+        "10653":{
+            "varname": "nx_elastic_namespace",
+            "caption": "[NX] Elastic Namespace",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "originalId": "10653",
             "settings": {},
             "category": null
         }
