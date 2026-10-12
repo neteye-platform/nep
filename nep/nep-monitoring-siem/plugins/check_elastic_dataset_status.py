@@ -174,7 +174,7 @@ if agent == 'elastic_agent':
     else:
         URL = "https://elasticsearch.neteyelocal:9200/logs-*,-logs-endpoint*,-logs-apm*/_search?filter_path=aggregations.results.buckets.key_as_string,aggregations.results.buckets.doc_count"
     TERMS='{ "field": "data_stream.namespace" }, { "field": "NETEYE.hostname" }, { "field": "agent.type", "missing": "none" },{ "field": "data_stream.dataset" },{ "field": "input.type", "missing": "none" }'
-    TENANT_FILTER = ', { "term": { "data_stream.namespace": "' + tenant + '" } }'
+    TENANT_FILTER = ', { "term": { "data_stream.namespace": "' + tenant + '" } }' if args.TenantId else ""
 
 elif agent == 'beats':
     if args.Metrics:
@@ -182,12 +182,12 @@ elif agent == 'beats':
     else:
         URL = "https://elasticsearch.neteyelocal:9200/auditbeat-*,winlogbeat-*,packetbeat-*,filebeat-*/_search?filter_path=aggregations.results.buckets.key_as_string,aggregations.results.buckets.doc_count"
     TERMS='{ "field": "NETEYE.customer" }, { "field": "NETEYE.hostname" }, { "field": "agent.type" },{ "field": "event.dataset" }'
-    TENANT_FILTER = ', { "term": { "NETEYE.customer": "' + tenant + '" } }'
+    TENANT_FILTER = ', { "term": { "NETEYE.customer": "' + tenant + '" } }' if args.TenantId else ""
 
 elif agent == 'logstash':
     URL = "https://elasticsearch.neteyelocal:9200/logstash-*/_search?filter_path=aggregations.results.buckets.key_as_string,aggregations.results.buckets.doc_count"
     TERMS='{ "field": "NETEYE.customer" }, { "field": "NETEYE.hostname" }, { "field": "agent.type" },{ "field": "event.dataset" }'
-    TENANT_FILTER = ', { "term": { "NETEYE.customer": "' + tenant + '" } }'
+    TENANT_FILTER = ', { "term": { "NETEYE.customer": "' + tenant + '" } }' if args.TenantId else ""
 
 result, raw_events = SearchOnElastic()
 logging.info("Search on Elastic returns: " + str(result))
@@ -323,7 +323,7 @@ message += "| 'TotalEvents'=" + str(TOTAL_EVENTS) + ";;;0; 'TotalWebhooks'=" + s
 
 ## UNKNOW (error on api)
 if EXIT_CODE == UNKNOWN_CODE:
-    message = "UNKNOWN - Elasticsearch API error.<br>Status Code: " + r.status_code + "<br>Reason: " + r.content
+    message = "UNKNOWN - Elasticsearch API error or connection failure.<br>"
 
 # Return message and exit code
 print(message)
