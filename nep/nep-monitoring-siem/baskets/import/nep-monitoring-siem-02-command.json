@@ -388,9 +388,9 @@
                     "value": "$nx_elastic_critical$"
                 },
                 "--tenant": {
-                    "description": "Tenand ID where search data (like namespace for ElasticAgent)",
+                    "description": "Tenant ID where search data (like namespace for ElasticAgent)",
                     "required": true,
-                    "value": "$neteye_tenant$"
+                    "value": "$nx_elastic_namespace$"
                 }
             },
             "command": "PluginContribDir + \/check_elastic_ingest_status.py",
@@ -512,8 +512,8 @@
                     "value": "$nx_tornado_webhook_secret$"
                 },
                 "--tenant": {
-                    "description": "Tenand ID where search data (like namespace for ElasticAgent)",
-                    "value": "$neteye_tenant$"
+                    "description": "Tenant ID where search data (like namespace for ElasticAgent)",
+                    "value": "$nx_elastic_namespace$"
                 },
                 "--webhook": {
                     "description": "Webhook endpoint enabled in Tornado",
