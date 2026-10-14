@@ -40,9 +40,14 @@ PYTHON_SCRIPT="${SETUP_LIBRARY}/setup_scripts/command_grafana_panel_binder.py"
 SOURCE_COMMAND="nx-c-dummy-service"
 
 # Target command configuration
-# The Icinga command that will receive the cloned dashboard configuration
-# This command's section will be created/updated in graphs.ini
-TARGET_COMMAND="nx-c-check-uptime"
+# The Icinga commands that will receive the cloned dashboard configuration
+# These commands' sections will be created/updated in graphs.ini
+TARGET_COMMANDS=(
+    "nx-c-businessprocess-process-check"
+    "nx-c-check-icinga-startup-log-linux"
+    "nx-c-check-icinga-startup-log-windows"
+    "nx-c-check-uptime"
+)
 
 # Path to the Grafana graphs.ini configuration file
 # Location where Icinga commands are linked to Grafana dashboards
@@ -55,40 +60,39 @@ GRAPHS_INI="/neteye/shared/icingaweb2/conf/modules/grafana/graphs.ini"
 ################################################################################
 
 ##
-# Clone Grafana dashboard configuration from source to target command.
+# Clone Grafana dashboard configuration from source to each target command.
 #
 # DESCRIPTION:
 #   Invokes the Python dashboard binder script with predefined arguments to
-#   copy the Grafana dashboard configuration from SOURCE_COMMAND to TARGET_COMMAND.
+#   copy the Grafana dashboard configuration from SOURCE_COMMAND to each target.
 #   The configuration is read from and written to the graphs.ini file.
 #
 #
 # BEHAVIOR:
-#   - Copies all dashboard configuration from SOURCE_COMMAND section to TARGET_COMMAND
-#   - Uses --update flag to overwrite existing TARGET_COMMAND configuration if present
+#   - Copies all dashboard configuration from SOURCE_COMMAND to every target
+#   - Uses --update flag to overwrite existing target configuration if present
 #   - All output from Python script is passed through to caller
-#   - Function exits with same code as Python script
+#   - Passes all target commands in one invocation to the Python script
+#   - Returns the Python script's exit code
 #
 # EXAMPLE:
 #   # Simple usage with predefined globals
 #   SOURCE_COMMAND="check-memory"
-#   TARGET_COMMAND="my-memory-check"
+#   TARGET_COMMANDS=("my-memory-check")
 #   bind_grafana_panels
 #
 #   # Multiple dashboard linking (link different templates)
-#   SOURCE_COMMAND="check-memory" && TARGET_COMMAND="cmd1" && bind_grafana_panels
-#   SOURCE_COMMAND="check-disk" && TARGET_COMMAND="cmd2" && bind_grafana_panels
+#   SOURCE_COMMAND="check-memory" && TARGET_COMMANDS=("cmd1" "cmd2") && bind_grafana_panels
 #
 
 function bind_grafana_panels() {
-    # Execute Python script with arguments
     # --copy-from     : Source command to clone from
-    # --command       : Target command to create/update
+    # --command       : One or more target commands to create/update
     # --graphs        : Path to graphs.ini file
-    # --update        : Allow overwriting existing target section
+    # --update        : Allow overwriting existing target sections
     "python3" "$PYTHON_SCRIPT" \
     --copy-from "$SOURCE_COMMAND" \
-    --command "$TARGET_COMMAND" \
+    --command "${TARGET_COMMANDS[@]}" \
     --graphs "$GRAPHS_INI" \
     --update
 }
