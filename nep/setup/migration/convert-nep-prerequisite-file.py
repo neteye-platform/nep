@@ -1,13 +1,13 @@
 #! /usr/bin/python3.9
 
-# Trova tutti i prerequisites.ini nel path indicato
-# Per ogni prerequisite file:
-# - Che sia un config file valido
-# - Verifica che sia da migrare (esistono proprietà specifiche)
-# - Verifica che NON SIA in formato TOML
-# - Rinomina il file esistente in .old
-# - Legge il file rinominato
-# - Converte il file rinominato in TOML e lo salva con il nome originale
+# Find all prerequisites.ini files in the specified path
+# For each prerequisite file:
+# - Verify that it is a valid configuration file
+# - Check whether it needs to be migrated (specific properties exist)
+# - Verify that it is NOT already in TOML format
+# - Rename the existing file with a .old extension
+# - Read the renamed file
+# - Convert the renamed file to TOML and save it using the original filename
 
 import argparse
 import configparser
@@ -60,9 +60,9 @@ def get_prerequisite_files_list(nep_path, recursive):
 # Tests if a file is a valid TOML file
 def is_toml_file(file_path):
     try:
-        config_toml = toml.load(file_path)
+        toml.load(file_path)
 
-    except:
+    except Exception:
         logging.info('File "' + file_path + '" is not a valid TOML file.')
         return False
 
@@ -83,28 +83,28 @@ def is_ini_prerequisite_file(file_path):
         config_ini.read(file_path)
 
         # Second: At minimum, sections NEP, NetEye and NetEyeExtensionPacks must be present
-        if config_ini.has_section("NEP") == False:
+        if not config_ini.has_section("NEP"):
             raise "Missing section [NEP]"
-        if config_ini.has_section("NetEye") == False:
+        if not config_ini.has_section("NetEye"):
             raise "Missing section [NetEye]"
-        if config_ini.has_section("NetEye") == False:
+        if not config_ini.has_section("NetEyeExtensionPacks"):
             raise "Missing section [NetEyeExtensionPacks]"
 
         # Third: checking the existence of some minimum options from both sections
         # NEP must have a name and a version
         # NetEye must have a minversion and a modules list
         # NeytEyeExtensionPacks can be empty
-        if config_ini.has_option("NEP", "name") == False:
+        if not config_ini.has_option("NEP", "name"):
             raise 'Missing option "name" from section [NEP]'
-        if config_ini.has_option("NEP", "version") == False:
+        if not config_ini.has_option("NEP", "version"):
             raise 'Missing option "version" from section [NEP]'
 
-        if config_ini.has_option("NetEye", "minversion") == False:
+        if not config_ini.has_option("NetEye", "minversion"):
             raise 'Missing option "minversion" from section [NetEye]'
-        if config_ini.has_option("NetEye", "modules") == False:
+        if not config_ini.has_option("NetEye", "modules"):
             raise 'Missing option "modules" from section [NetEye]'
 
-    except:
+    except Exception:
         logging.info('File "' + file_path + '" is not a valid INI Prerequisite file.')
         return False
 
@@ -202,12 +202,12 @@ def test_and_convert_to_toml(ini_file_path, backup_file_suffix, dry_run):
     # Rename the original file, to have a backup
     backup_file_path = ini_file_path + backup_file_suffix
     logging.info("Renaming original INI file to " + backup_file_path)
-    if dry_run == False:
+    if not dry_run:
         os.rename(ini_file_path, backup_file_path)
 
     # Stores the converted configuration in TOML format
     logging.info("Dumping TOML configuration to " + ini_file_path)
-    if dry_run == False:
+    if not dry_run:
         with open(ini_file_path, "w") as config_toml:
             toml_config_string = toml.dump(converted_config, config_toml)
     else:
@@ -246,7 +246,7 @@ def parse_arguments():
         required=False,
         action="store_true",
         dest="recursive",
-        help="Look for prerequsite files into all subdirectories",
+        help="Look for prerequisite files into all subdirectories",
     )
     parser.add_argument(
         "-d",

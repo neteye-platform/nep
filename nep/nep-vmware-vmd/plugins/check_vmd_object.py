@@ -10,9 +10,9 @@ import os
 
 from enum import Enum
 
-# This order of instruction is required to have pymysql working like MySQLdb
+# This order of instruction is required to have pymysql working like MySQLdb. Adding exclusion for pre-commit checks.
 pymysql.install_as_MySQLdb()
-import MySQLdb
+import MySQLdb  # noqa: E402
 
 config = configparser.ConfigParser()
 config.read(os.path.abspath(os.path.dirname(__file__)) + "/check_vmd_object.conf")
@@ -76,7 +76,7 @@ class Threshold:
         If called, a NotImplementedError exception will be raised.
         """
         raise NotImplementedError(
-            "Mot implemented on a generic (abstract) threshold definition"
+            "Not implemented on a generic (abstract) threshold definition"
         )
 
     def GetThresholdString(self):
@@ -86,7 +86,7 @@ class Threshold:
         If called, a NotImplementedError exception will be raised.
         """
         raise NotImplementedError(
-            "Mot implemented on a generic (abstract) threshold definition"
+            "Not implemented on a generic (abstract) threshold definition"
         )
 
     def GetThresholdStringAdapted(self, minimum_value=None, maximum_value=None):
@@ -98,7 +98,7 @@ class Threshold:
         If called, a NotImplementedError exception will be raised.
         """
         raise NotImplementedError(
-            "Mot implemented on a generic (abstract) threshold definition"
+            "Not implemented on a generic (abstract) threshold definition"
         )
 
     def __str__(self):
@@ -177,7 +177,7 @@ class AbsoluteRangeThreshold(Threshold):
                 try:
                     self.__lower_bound = float(lower_bound)
                     logging.debug("Lower bound set to " + str(self.__lower_bound) + ".")
-                except:
+                except Exception:
                     logging.error("Unable to understand lower bound value.")
                     raise ArgumentValueError(
                         "range", range, 'Lower bound is not "~" or a number.'
@@ -195,7 +195,7 @@ class AbsoluteRangeThreshold(Threshold):
                 try:
                     self.__upper_bound = float(upper_bound)
                     logging.debug("Upper bound set to " + str(self.__upper_bound) + ".")
-                except:
+                except Exception:
                     logging.error("Unable to understand upper bound value.")
                     raise ArgumentValueError(
                         "range", range, 'Upper bound is not "~" or a number.'
@@ -204,7 +204,7 @@ class AbsoluteRangeThreshold(Threshold):
         if (self.__lower_bound is not None) and (self.__upper_bound is not None):
             if self.__lower_bound > self.__upper_bound:
                 logging.error(
-                    "Lower bound value is greatrer than uppe boudn value. Range is invalid."
+                    "Lower bound value is greater than upper bound value. Range is invalid."
                 )
                 raise ArgumentValueError(
                     "range",
@@ -265,15 +265,15 @@ class AbsoluteRangeThreshold(Threshold):
 
         try:
             parsed_value = float(value)
-        except:
+        except Exception:
             raise ArgumentValueError("value", value, "Value is not a number.")
 
         # Check if value is in range
         # It consider the range as Excluseve
         value_in_range = self.__ValueInExternalRange(parsed_value)
 
-        # An Inclusive range is complementary to the Esclusive range.
-        # Therefore, if in case of exclusive range is True, in case of inclusice range is false, and viceversa.
+        # An Inclusive range is complementary to the Exclusive range.
+        # Therefore, if in case of exclusive range is True, in case of inclusive range is false, and vice-versa.
         if self.__use_inclusive_range:
             value_in_range = not (value_in_range)
 
@@ -307,7 +307,7 @@ class AbsoluteRangeThreshold(Threshold):
 
     _pattern = re.compile(
         r"""^    # Only one match is allowed for this pattern on a line => Starts at the beginning on the line
-    (?P<is_inclusive>               # OPTIONAL ELEMENT: '@' means the inteval must be intended as INCLUSIVE; if @ is absent the interval must be intended as EXCLUSIVE
+    (?P<is_inclusive>               # OPTIONAL ELEMENT: '@' means the interval must be intended as INCLUSIVE; if @ is absent the interval must be intended as EXCLUSIVE
         @?                          #   Only '@' is allowed for this group
     )
     (?:                             # OPTIONAL ELEMENT: This is intended to be the lower bound of the interval. If it is specified, it MUST BE FOLLOWED BY ':'
@@ -404,7 +404,7 @@ class RelativeRangeThreshold(Threshold):
                 try:
                     self.__lower_bound = float(lower_bound)
                     logging.debug("Lower bound set to " + str(self.__lower_bound) + ".")
-                except:
+                except Exception:
                     logging.error("Unable to understand lower bound value.")
                     raise ArgumentValueError(
                         "range", range, 'Lower bound is not "~" or a number.'
@@ -422,7 +422,7 @@ class RelativeRangeThreshold(Threshold):
                 try:
                     self.__upper_bound = float(upper_bound)
                     logging.debug("Upper bound set to " + str(self.__upper_bound) + ".")
-                except:
+                except Exception:
                     logging.error("Unable to understand upper bound value.")
                     raise ArgumentValueError(
                         "range", range, 'Upper bound is not "~" or a number.'
@@ -431,7 +431,7 @@ class RelativeRangeThreshold(Threshold):
         if (self.__lower_bound is not None) and (self.__upper_bound is not None):
             if self.__lower_bound > self.__upper_bound:
                 logging.error(
-                    "Lower bound value is greatrer than uppe boudn value. Range is invalid."
+                    "Lower bound value is greater than upper bound value. Range is invalid."
                 )
                 raise ArgumentValueError(
                     "range",
@@ -535,17 +535,17 @@ class RelativeRangeThreshold(Threshold):
 
         try:
             parsed_value = float(value)
-        except:
+        except Exception:
             raise ArgumentValueError("value", value, "Value is not a number.")
         try:
             parsed_min = float(minimum_value)
-        except:
+        except Exception:
             raise ArgumentValueError(
                 "minimum_value", minimum_value, "Minimum value is not a number."
             )
         try:
             parsed_max = float(maximum_value)
-        except:
+        except Exception:
             raise ArgumentValueError(
                 "maximum_value", maximum_value, "Maximum value is not a number."
             )
@@ -565,8 +565,8 @@ class RelativeRangeThreshold(Threshold):
             parsed_value, parsed_min, parsed_max
         )
 
-        # An Inclusive range is complementary to the Esclusive range.
-        # Therefore, if in case of exclusive range is True, in case of inclusice range is false, and viceversa.
+        # An Inclusive range is complementary to the Exclusive range.
+        # Therefore, if in case of exclusive range is True, in case of inclusive range is false, and vice-versa.
         if self.__use_inclusive_range:
             value_in_range = not (value_in_range)
 
@@ -600,7 +600,7 @@ class RelativeRangeThreshold(Threshold):
 
     _pattern = re.compile(
         r"""^    # Only one match is allowed for this pattern on a line => Starts at the beginning on the line
-    (?P<is_inclusive>               # OPTIONAL ELEMENT: '@' means the inteval must be intended as INCLUSIVE; if @ is absent the interval must be intended as EXCLUSIVE
+    (?P<is_inclusive>               # OPTIONAL ELEMENT: '@' means the interval must be intended as INCLUSIVE; if @ is absent the interval must be intended as EXCLUSIVE
         @?                          #   Only '@' is allowed for this group
     )
     (?:                             # OPTIONAL ELEMENT: This is intended to be the lower bound of the interval. If it is specified, it MUST BE FOLLOWED BY ':'
@@ -687,7 +687,7 @@ class Metric:
     def __str__(self):
         output = self.__name + " " + str(self.__value)
         if (
-            (self.__hide_uom == False)
+            (not self.__hide_uom)
             and (self.__unit is not None)
             and (len(self.__unit) > 0)
         ):
@@ -1127,7 +1127,7 @@ class MetricFactory:
 
 class VMDConnector:
     """
-    Helper class fro managing a connection with VMD Database.
+    Helper class to manage a connection with VMD Database.
     """
 
     def __init__(self, username, password):
@@ -2757,9 +2757,9 @@ def convert_array_to_dictionary(array, separator="="):
     if array:
         dictionary = {}
         for element in array:
-            splitted = element.split("=", 1)
-            if len(splitted) > 1:
-                dictionary[splitted[0]] = splitted[1]
+            split = element.split("=", 1)
+            if len(split) > 1:
+                dictionary[split[0]] = split[1]
 
     return dictionary
 
@@ -2853,7 +2853,7 @@ def parse_command_line(command_line_overwrite=None):
         action="append",
         dest="metrics_to_include",
         metavar="MetricName",
-        help="Name of a metric you want to include . This script will load only the specifiec metric. This parameter can be specified multiple times, each time for a different metric.",
+        help="Name of a metric you want to include . This script will load only the specified metric. This parameter can be specified multiple times, each time for a different metric.",
     )
     parser.add_argument(
         "-x",
@@ -3105,7 +3105,7 @@ except Exception as e:
     return_value = NagiosMetricStatus.unknown
 except SystemExit:
     pass
-except:
+except Exception:
     print("Unhandled exception: Unable to catch the raised exception")
     return_value = NagiosMetricStatus.unknown
 finally:
@@ -3114,7 +3114,7 @@ finally:
         # Any kind of error (including undefined connection object) will be ignored.
         if connection:
             connection.close()
-    except:
+    except Exception:
         pass
 
     sys.exit(return_value.value)
