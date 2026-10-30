@@ -26,7 +26,7 @@
 # v0.5 29/09/2011 - Add standby warn/crit suggested by Sönke Martens & removal
 #                   of 'our' to 'my' to completely avoid problems with ePN
 # v0.6 14/03/2013 - Change from \w+ to \S+ in stopped check to cope with
-#                   Servers that have non word charachters in.  Suggested by
+#                   Servers that have non word characters in.  Suggested by
 #                   Igal Baevsky.
 # v0.7 01/09/2013 - In testing as still not fully tested.  Adds optional
 #		    constraints check (Boris Wesslowski). Adds fail count
@@ -36,7 +36,7 @@
 # v0.9.1 06/09/2024 - Modify regex for node in standby
 #
 # NOTES: Requires Perl 5.8 or higher & the Perl Module Nagios::Plugin
-#        Nagios user will need sudo acces - suggest adding line below to
+#        Nagios user will need sudo access - suggest adding line below to
 #        sudoers
 #	     nagios  ALL=(ALL) NOPASSWD: /usr/sbin/crm_mon -1 -r -f
 #

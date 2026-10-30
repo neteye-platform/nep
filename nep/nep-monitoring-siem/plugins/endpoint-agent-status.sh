@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 ############################################################
-## Retrive all Elastic Endpoint status from Elasticsearch ##
+# Retrieve all Elastic Endpoint status from Elasticsearch  #
 ############################################################
 
 DEFAULT_FILE="/neteye/shared/icinga2/data/lib/icinga2/elastic-endpoint_status.json"
 
 print_help() {
     echo ""
-    echo "This script retrive Elastic Endpoint status from Elasticsearch and writes to Json File"
+    echo "This script retrieves Elastic Endpoint status from Elasticsearch and writes to Json File"
     echo ""
     echo "Usage:"
     echo "-h"

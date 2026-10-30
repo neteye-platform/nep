@@ -392,7 +392,7 @@
                     "order": "6"
                 },
                 "-p": {
-                    "description": "Comma separated. Which tcp ports (attributes) to check. The value here can be either numeric or name that would be come from /etc/services. The value should be prefixed with: > : check outgoing TCP connections, < : check incoming TCP connections (default). Special value of '>@' or just '>' allow to specify that you want to check on total number of TCP connections (this is reported in perfomance data as 'all_out').",
+                    "description": "Comma separated. Which tcp ports (attributes) to check. The value here can be either numeric or name that would be come from /etc/services. The value should be prefixed with: > : check outgoing TCP connections, < : check incoming TCP connections (default). Special value of '>@' or just '>' allow to specify that you want to check on total number of TCP connections (this is reported in performance data as 'all_out').",
                     "required": true,
                     "value": "$nx_netstat_port$",
                     "order": "1"

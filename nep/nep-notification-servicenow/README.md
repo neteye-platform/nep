@@ -1,19 +1,17 @@
 # nep-notification-servicenow (ALPHA)
 
-# !WARNING: this NEP is provied by a PoC and it is not fully supported!
+# !WARNING: this NEP is provided by a PoC and it is not fully supported!
 
-_As described before this template has been used during a PoC and in order to be reused some custimizations are needed. Use this as starting point of your ServiceNow Integration._
+_As described before this template has been used during a PoC and in order to be reused some customizations are needed. Use this as starting point of your ServiceNow Integration._
 
-If you install this NEP have a look to the script  `nx-notification-servicenow.py` and the conf file `nx-notification-servicenow.json` in order to adapt to you ServiceNow installation.
+If you install this NEP have a look to the script  `nx-notification-servicenow.py` and the conf file `nx-notification-servicenow.json` in order to adapt to your ServiceNow installation.
 
-_These sections will be populated_
+## Table of Contents
 
-# Table of Contents
 1. [Prerequisites](#prerequisites)
 2. [Installation](#installation)
 3. [Packet Contents](#packet-contents)
 4. [Usage](#usage)
-
 
 ## Prerequisites
 
@@ -22,13 +20,11 @@ _These sections will be populated_
 | NetEye | 4.32 |
 | nep-common | 0.1 |
 
-
-##### Required NetEye Modules
+### Required NetEye Modules
 
 | NetEye Module |
 | --- |
 | SIEM |
-
 
 ### External dependencies
 
@@ -37,22 +33,18 @@ This NEP doesn't need any external dependecies other that the ones used by the N
 * Prerequisite 1
 * Prerequisite 2
 
-
 ## Installation
 
-_Lorem ipsum dolor sit amet, consectetur adipiscing_
-
-
-#### Before Installation
+### Before Installation
 
 There is no need to perform any action before installing this NEP
-
 
 ### NEP Installation
 
 To install the NEP, run this command using SSH on NetEye Master Node:
-```
-nep-setup install foobar
+
+``` bash
+nep-setup install nep-notification-servicenow
 ```
 
 

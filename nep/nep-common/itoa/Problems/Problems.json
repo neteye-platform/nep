@@ -969,7 +969,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Acknownledged"
+                "value": "Acknowledged"
               },
               {
                 "id": "custom.align",
@@ -1218,7 +1218,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "Acknownledged"
+              "options": "Acknowledged"
             },
             "properties": [
               {
