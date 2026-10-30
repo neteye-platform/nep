@@ -1,6 +1,6 @@
 # Overview
 
-This dashboard helps you to show the perfomance and probles of the switch interfaces.
+This dashboard helps you to show the performance and problems of the switch interfaces.
 
 ## Dashboard Output
 

@@ -23,7 +23,7 @@ function set_acl_for_nrpe_config_files() {
         neteye_ips=$(awk '{for (i=1; i<=NF; i++) if ($i == "'$(hostname)'") print $0}' /etc/hosts | awk '{ print $1 }')
     fi
 
-    # In a cluster environment, loop into /etc/neteye-cluster to find the extenal name of each cluster node,
+    # In a cluster environment, loop into /etc/neteye-cluster to find the external name of each cluster node,
     # then resolves all names into IPs using /etc/hosts file
     if [ -f /etc/neteye-cluster ]; then
         for node in $(cat /etc/neteye-cluster | jq '.Nodes[].hostname_ext')

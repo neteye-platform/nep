@@ -1,6 +1,6 @@
 # NEP Database Oracle
 
-The NEP is based on the check_oracle_health script (for more information have look to this [Page](https://labs.consol.de/nagios/check_oracle_health/)).
+The NEP is based on the check_oracle_health script (for more information have look to this [Page](https://labs.consol.de/nagios/check_oracle_health/)). <!-- codespell:ignore consol -->
 This NEP provides an Host Template  `nx-ht-status-oracle-conn-time` that can be added to the Host. This template is linked to a Service Set: `nx-ss-database-oracle-basic` that monitors these elements on Oracle Database:
 
 * Connected Users Count
@@ -34,7 +34,7 @@ This NEP provides an Host Template  `nx-ht-status-oracle-conn-time` that can be 
 
 This NEP doesn't require external references, if you want to manually download a new version via WGET see:
 
-* [https://labs.consol.de/nagios/check_oracle_health/index.html#download](https://labs.consol.de/nagios/check_oracle_health/index.html#download)
+* [https://labs.consol.de/nagios/check_oracle_health/index.html#download](https://labs.consol.de/nagios/check_oracle_health/index.html#download) <!-- codespell:ignore consol -->
 
 ## Installation
 
@@ -100,7 +100,7 @@ Commands:
 * `nx-c-oracle-health-tablespace-free`
 * `nx-c-oracle-health-tablespace-usage`
 
-Command objects uses plugins from Consol Labs library. To see more details about the included plugin, see the following links:
+Command objects uses plugins from Consol Labs library. To see more details about the included plugin, see the following links: <!-- codespell:ignore consol -->
 
 * [Oracle Health Plugin](https://github.com/lausser/check_oracle_health)
 

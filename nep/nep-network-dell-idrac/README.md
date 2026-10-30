@@ -54,7 +54,7 @@ This Package does not provide any Host Template. It is suggested to use Host Tem
 
 | Service Template name | Description |
 | --- | --- |
-| `nx-st-agentless-snmp-centreon-network-dell-idrac-snmp` | Provides mointoring of Dell iDRAC |
+| `nx-st-agentless-snmp-centreon-network-dell-idrac-snmp` | Provides monitoring of Dell iDRAC |
 
 #### Services Sets
 

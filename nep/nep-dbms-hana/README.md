@@ -139,7 +139,7 @@ This NEP produce this performance data:
 
 ## Usage
 
-In order to use this NEP, add the HT `nx-ht-hana-tenant` to the Host. Configure these fileds:
+In order to use this NEP, add the HT `nx-ht-hana-tenant` to the Host. Configure these fields:
 
 * `HANA Database Tenant ID`
 * `HANA Database Tenant Password`

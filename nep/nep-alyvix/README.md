@@ -29,7 +29,7 @@ This package can monitor Alyvix Testcases and servers based on Alyvix Service. O
 
 ### External dependencies
 
-This NEP doesn't need any external dependecies other that the ones used by the NEPs reported in [Prerequisites](#prerequisites)
+This NEP doesn't need any external dependencies other that the ones used by the NEPs reported in [Prerequisites](#prerequisites)
 
 ## Installation
 
@@ -118,7 +118,7 @@ Create a new Host in the Icinga Director as mentioned in [Monitor an example env
 * Use Host Templates `nx-ht-status-ping`, `nx-ht-server-windows-alyvix`, `nx-ht-type-custom` in that same order
 * Store and deploy
 
-As a result, a newly created Host will appear in the NetEye Overview, with all the available checks being already preconfigured, including the specific check provided by the `nep-alyvix`: Service Alyvix service status. This is a basic check and is used to ensure the Alyvix Service is running. If you don’t need to take care of specific access policies (like multi-tenancy or roles), you can configure this Host Object as a Shared poller (see p.4.Configure a Test Case Poller) by adding the requierd Host Template and Service Objects
+As a result, a newly created Host will appear in the NetEye Overview, with all the available checks being already preconfigured, including the specific check provided by the `nep-alyvix`: Service Alyvix service status. This is a basic check and is used to ensure the Alyvix Service is running. If you don’t need to take care of specific access policies (like multi-tenancy or roles), you can configure this Host Object as a Shared poller (see p.4.Configure a Test Case Poller) by adding the required Host Template and Service Objects
 
 ### Configure a Test Case Poller
 

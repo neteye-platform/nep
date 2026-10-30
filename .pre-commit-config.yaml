@@ -40,14 +40,23 @@ repos:
   - repo: https://github.com/codespell-project/codespell
     rev: 2ccb47ff45ad361a21071a7eedda4c37e6ae8c5a # frozen: v2.4.2
     hooks:
-      - id: codespell
+      - id: codespell # Ignore attribute names in Dashboard JSON files
+        name: codespell-itoa-dashboards
+        files: ^nep/[^/]+/itoa/[^/]+/.*\.json$
+        args:
+        - --ignore-words-list=showIn
+
+      - id: codespell # Skip files that do not directly belong to NEP Project
         exclude: |
           (?x)^(
-            nep/nep-common/plugins/check_mem\.pl
+            nep/[^/]+/itoa/[^/]+/.*\.json
+            |nep/[^/]+/custom_files/system_root/usr/share/snmp/mibs/.+
+            |nep/nep-common/plugins/check_mem\.pl
             |nep/nep-common/plugins/check_netstat\.pl
             |nep/nep-database-mssql/plugins/check_mssql_health
             |nep/nep-database-oracle/plugins/check_oracle_health
             |nep/nep-monitoring-asset/plugins/check_systemd_timer
+            |nep/nep-monitoring-core/plugins/check_modem_smst.pl
             |nep/nep-monitoring-core/plugins/check_mysql_health
             |nep/nep-monitoring-siem/plugins/check_es_system\.sh
             |nep/nep-network-base/plugins/check_nwc_health

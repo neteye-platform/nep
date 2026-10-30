@@ -139,7 +139,7 @@ def main():
         "--update",
         action="store_true",
         default=True,
-        help="Allow update of existing commmand in graphs.ini",
+        help="Allow update of existing command in graphs.ini",
     )
     parser.add_argument(
         "-v",

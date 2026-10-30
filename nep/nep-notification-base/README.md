@@ -112,4 +112,4 @@ As a last notice, these options are just tags, meaning nep-notification-base is 
 
 ### Troubleshoot Notification instances
 
-After Notifications have been deployed, there is no way to easily undertand what State Changes will be notified and who are the recipients. To have a better grasp of the situation, please apply what described at [Troubleshoot Icinga Notifications](https://www.neteye-blog.com/2023/12/troubleshooting-icinga-notifications/).
+After Notifications have been deployed, there is no way to easily understand what State Changes will be notified and who are the recipients. To have a better grasp of the situation, please apply what described at [Troubleshoot Icinga Notifications](https://www.neteye-blog.com/2023/12/troubleshooting-icinga-notifications/).

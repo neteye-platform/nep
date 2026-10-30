@@ -22,7 +22,7 @@ This dashboard used the standard Icinga2 datasource of NetEye
 
 ## Variable definition
 
-From Dashboard - Settings - Variables (Host and Testcase) verify that are correcly populated.
+From Dashboard - Settings - Variables (Host and Testcase) verify that are correctly populated.
 
 ## How to import dashboard
 

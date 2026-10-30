@@ -32,7 +32,7 @@ Using the provided objects, is possible to:
 
 ### External dependencies
 
-This NEP doesn't need any external dependecies other that the ones used by the NEPs reported in [Prerequisites](#prerequisites)
+This NEP doesn't need any external dependencies other that the ones used by the NEPs reported in [Prerequisites](#prerequisites)
 
 ## Installation
 

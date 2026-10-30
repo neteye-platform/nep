@@ -35,7 +35,7 @@ pub enum SetupStep {
     /// Run grafana integration
     ITOA,
 
-    /// Define a rollback backup copy and unistall
+    /// Define a rollback backup copy and uninstall
     /// ```
     /// dnf history info 4
     /// dnf history undo

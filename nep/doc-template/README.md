@@ -24,7 +24,7 @@ Insert basic description about the NEP
 
 ### External dependencies
 
-This NEP doesn't need any external dependecies other that the ones used by the NEPs reported in [Prerequisites](#prerequisites)
+This NEP doesn't need any external dependencies other that the ones used by the NEPs reported in [Prerequisites](#prerequisites)
 
 * Prerequisite 1
 * Prerequisite 2

@@ -8,7 +8,7 @@ This NEP calls API at [https://portal.office.com/api/servicestatus/index](https:
 
 * [python3-xmltodict](https://pypi.org/project/xmltodict/)
 
-*This NEP can be also as example in order to develp advanced XML tests by customizing the logic inside the python script.*
+*This NEP can be also as example in order to develop advanced XML tests by customizing the logic inside the python script.*
 
 ## Table of Contents
 
@@ -93,7 +93,7 @@ This NEP provides a Service Template definition that can be used to obtain one o
 
 #### Services Sets
 
-This NEP provides 2 Service Set definition, one that provides a single service with all servicese status. An advanced Service Set where all Office Services are splitted in Icinga Services
+This NEP provides 2 Service Set definition, one that provides a single service with all servicese status. An advanced Service Set where all Office Services are split in Icinga Services
 
 * nx-ss-microsoft-365-portal-service-basic
 * nx-ss-microsoft-365-portal-service-advanced (this one can be manually added)
@@ -139,6 +139,6 @@ And the final result is:
 
 ### Examples
 
-In addtion yuo can chose to monitor only one services of the Office Portal, i.e. OneDrive:
+In addition you can chose to monitor only one services of the Office Portal, i.e. OneDrive:
 
 ![Single View](doc-images/director_advanced_view.png "Single View")

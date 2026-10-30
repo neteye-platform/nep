@@ -90,7 +90,7 @@ This section contains a description of all the Objects from this package that ca
 | Service Template name | Run on Agent | Description |
 | --- | --- | ------------- |
 | `nx-st-agentless-vmware` | NO | Checks all aspects of monitoring a VMWare environment directly |
-| `nx-st-agentless-vmware-datacenter` | NO | Checks all aspects of monitoring a VMWare ESXi montioring |
+| `nx-st-agentless-vmware-datacenter` | NO | Checks all aspects of monitoring a VMWare ESXi monitoring |
 | `nx-st-agentless-vmware-snapshot` | NO | Checks all aspects of monitoring VMWare Snapshots |
 | `nx-st-agentless-vmware-direct` | NO | Checks all aspects of monitoring VMWare directly |
 | `nx-st-agentless-vmware-cluster` | NO | Checks all aspects of monitoring VMWare cluster |

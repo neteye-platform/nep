@@ -1,6 +1,6 @@
 # NEP Network Printer
 
-The NEP is based on the check_printer_health script (for more information have look to this [Page](https://labs.consol.de/nagios/check_printer_health/)). In order to use it, SNMP must be enabled on the target devices. This NEP provides an Host Template `nx-ht-network-printer-snmp` that can be added to the Host. This template is linked to a Service Set: `nx-ss-network-printer` that monitors these elements on the printer:
+The NEP is based on the check_printer_health script (for more information have look to this [Page](https://labs.consol.de/nagios/check_printer_health/)). In order to use it, SNMP must be enabled on the target devices. This NEP provides an Host Template `nx-ht-network-printer-snmp` that can be added to the Host. This template is linked to a Service Set: `nx-ss-network-printer` that monitors these elements on the printer: <!-- codespell:ignore consol -->
 
 * Printer Hardware Status
 * Printer Supplies Status
@@ -32,7 +32,7 @@ The NEP is based on the check_printer_health script (for more information have l
 
 This NEP doesn't require external references, if you want to manually download a new version via WGET see:
 
-* [https://labs.consol.de/nagios/check_printer_health/index.html#download](https://labs.consol.de/nagios/check_printer_health/index.html#download)
+* [https://labs.consol.de/nagios/check_printer_health/index.html#download](https://labs.consol.de/nagios/check_printer_health/index.html#download) <!-- codespell:ignore consol -->
 
 ## Installation
 

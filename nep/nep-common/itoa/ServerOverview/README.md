@@ -1,6 +1,6 @@
 # Overview
 
-This dashboard helps you to show better basic performance and probles of agent-based monitored objects.
+This dashboard helps you to show better basic performance and problems of agent-based monitored objects.
 
 ## Dashboard Output
 

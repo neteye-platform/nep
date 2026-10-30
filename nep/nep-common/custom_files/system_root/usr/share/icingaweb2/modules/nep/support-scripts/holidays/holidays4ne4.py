@@ -30,7 +30,7 @@ for section in config.sections():
         ranges = {}
 
         try:
-            for data, nome in getattr(holidays, nazione)(years=year).items():
+            for data, _nome in getattr(holidays, nazione)(years=year).items():
                 data_formattata = data.strftime("%B %d %Y").lower()
                 ranges[data_formattata] = "00:00-24:00"
 

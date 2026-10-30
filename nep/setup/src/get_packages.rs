@@ -15,7 +15,7 @@ pub fn get_packages_in_path<P: AsRef<Path>>(root_dir: &P) -> Vec<(String, Result
     // use glob to expand this path
     glob::glob(stage_pattern.to_str().unwrap())
         .unwrap()
-        // a nep repo shouldn't have wierd chars in the paths
+        // a nep repo shouldn't have weird chars in the paths
         .map(|path| path.unwrap())
         .map(|path| {
             // get the folder path, this will never panic because the glob ensures that there is at least a folder
@@ -25,7 +25,7 @@ pub fn get_packages_in_path<P: AsRef<Path>>(root_dir: &P) -> Vec<(String, Result
                 // the path can't be empty, this panics only if the package is in / but that would be a really bad idea
                 .file_name()
                 .unwrap()
-                // convert it to a &str, nep sound't have wierd chars in the package names
+                // convert it to a &str, nep sound't have weird chars in the package names
                 .to_str()
                 .unwrap()
                 // convert it to an owned String

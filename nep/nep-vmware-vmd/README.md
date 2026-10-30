@@ -74,7 +74,7 @@ This section contains a description of all the Objects from this package that ca
 
 | Host Template name | Description |
 | --- | ----------- |
-| `nx-ht-status-vmd` | Determine the status of a Host Object using the Power Status from VMD. It applyes only to VMs |
+| `nx-ht-status-vmd` | Determine the status of a Host Object using the Power Status from VMD. It applies only to VMs |
 | `nx-ht-vmd-host-system` | Describe a Host System that should be monitored using VMD |
 | `nx-ht-vmd-vcsa` | Describe a VCSA that VMD uses as a gateway to get monitoring data. Only reachability is monitored |
 | `nx-ht-vmd-virtual-machine` | Describe a Virtual Machine that should be monitored using VMD |
@@ -105,7 +105,7 @@ This section contains a description of all the Objects from this package that ca
 | Import Source | `nx-is-vmd-host-system` | Gets all available Host Systems from VMD |
 | Import Source | `nx-is-vmd-vcsa` | Gets all available VCSA from VMD |
 | Import Source | `nx-is-vmd-virtual-machines` | Gets all available Virtual Machines from VMD |
-| Sync Rule | `nx-sr-vmd-datastore` | Creates SO to monitor all avilable Datastores |
+| Sync Rule | `nx-sr-vmd-datastore` | Creates SO to monitor all available Datastores |
 | Sync Rule | `nx-sr-vmd-host-system` | Creates HO to monitor all available Host Systems |
 | Sync Rule | `nx-sr-vmd-vcsa` | Creates HO to monitor availability of all available VCSA |
 | Sync Rule | `nx-sr-vmd-virtual-machines` | Creates HO to monitor all available Virtual Machines |
