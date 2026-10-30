@@ -127,4 +127,3 @@ No Host Template provided by this NEP.
 #### Using a service template provided by the NEP
 
 No Service Template provided by this NEP.
-

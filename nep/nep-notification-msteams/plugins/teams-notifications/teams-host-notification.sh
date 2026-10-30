@@ -336,4 +336,3 @@ case "$NOTIFICATION_METHOD" in
     exit 1
     ;;
 esac
-

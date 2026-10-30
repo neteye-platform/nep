@@ -71,4 +71,3 @@ The Package contains the following Director Objects.
 | ---------------- | ----------- |
 | nx-nt-channel-sms-for-host | Notification Template managed by apply rules for Hosts |
 | nx-nt-channel-sms-for-service | Notification Template managed by apply rules for Services |
-

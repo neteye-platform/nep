@@ -176,4 +176,3 @@ _Lorem ipsum dolor sit amet, consectetur adipiscing_
 
 #### Using a service template provided by the NEP
 _Lorem ipsum dolor sit amet, consectetur adipiscing_
-

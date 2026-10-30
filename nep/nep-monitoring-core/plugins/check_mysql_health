@@ -3928,5 +3928,3 @@ exit $nagios_level;
 
 
 __END__
-
-

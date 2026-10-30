@@ -81,4 +81,3 @@ _Usage examples_
 '/usr/lib/centreon/plugins/centreon_dell_idrac.pl' '--hostname' '192.168.1.1' '--mode' 'hardware' '--snmp-community' 'my_community' '--snmp-timeout' '30' '--snmp-version' '2c'
 CRITICAL: Enclosure 'BP12G+ 0:1' status is 'critical' - physical disk 'Disk.Bay.1:Enclosure.Internal.0-1:RAID.Integrated.1-1' state is 'failed' | 'hardware.enclosure.count'=1;;;; 'hardware.fru.count'=6;;;; 'hardware.health.count'=1;;;; 'hardware.memory.count'=2;;;; 'hardware.network.count'=4;;;; 'hardware.pci.count'=23;;;; 'hardware.pdisk.count'=4;;;; 'hardware.processor.count'=2;;;; 'hardware.slot.count'=1;;;; 'hardware.storagebattery.count'=1;;;; 'hardware.storagectrl.count'=1;;;; 'hardware.vdisk.count'=1;;;;
 ```
-

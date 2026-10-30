@@ -154,4 +154,3 @@ _Example of Host Object creation_
 
 #### Using a service template provided by the NEP
 _Example of Service Object creation_
-

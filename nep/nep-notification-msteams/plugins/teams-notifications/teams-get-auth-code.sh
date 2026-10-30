@@ -14,4 +14,3 @@ get_authorization_code() {
 }
 
 get_authorization_code
-

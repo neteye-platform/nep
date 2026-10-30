@@ -93,4 +93,3 @@ Configure these fileds:
 * SNMP Version (if needed)
 
 Services are then attached to this device and monitored.
-

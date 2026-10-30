@@ -146,4 +146,3 @@ fi
 rm -rf "$CACHE_OLD"
 
 echo "Exported $TOTAL_HOSTS Elastic Agent Endpoint(s) from Elasticsearch.|hosts=$TOTAL_HOSTS;;;0;"
-

@@ -69,4 +69,3 @@ for TEAM_ID in $(echo "$TEAMS_RESPONSE" | jq -r '.value[].id'); do
     echo "========================================"
   fi
 done
-

@@ -62,4 +62,3 @@ The Package contains the following Director Objects.
 | Template Name | Description |
 | ---------------- | ----------- |
 | nx-ut-telegram | Notification Template managed by apply rules for Hosts and Service |
-

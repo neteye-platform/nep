@@ -65,4 +65,3 @@ The Package contains the following Director Objects.
 | ---------------- | ----------- |
 | nx-nt-teams-host-notification | Notification Template managed by apply rules for Hosts |
 | nx-nt-teams-service-notification | Notification Template managed by apply rules for Services |
-
