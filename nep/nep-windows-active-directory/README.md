@@ -91,7 +91,6 @@ The following Service Templates can be used to freely create Service Objects, Se
 
 * `nx-st-agentless-ldap-query`: Checks all aspects of monitoring of Windows AD Controller Server
 
-
 #### Services Sets
 
 The following Service Sets can be used to freely monitor Host Objects.
