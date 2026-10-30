@@ -301,7 +301,7 @@
     },
     "149": {
       "varname": "nx_http_auth_pair",
-      "caption": "[NX] Authenticaton credential",
+      "caption": "[NX] Authentication credential",
       "description": "Username:password on sites with basic authentication",
       "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
       "format": null,
@@ -416,7 +416,7 @@
     "162": {
       "varname": "nx_http_min_certificate_validity",
       "caption": "[NX] Minimum Certificate validity",
-      "description": "Minimum number of days a certificate has to be valid. This parameter explicitely sets the port to 443 and ignores the URL if passed.",
+      "description": "Minimum number of days a certificate has to be valid. This parameter explicitly sets the port to 443 and ignores the URL if passed.",
       "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
       "format": null,
       "originalId": "162",
