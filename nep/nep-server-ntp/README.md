@@ -16,7 +16,7 @@ Perform ntp service checks on Linux Server
 
 ## Prerequisites
 
-| Sofware Version | Version |
+| Software Version | Version |
 | --- | ----------- |
 | NetEye | 4.23 |
 | nep-common | 0..0.4 |

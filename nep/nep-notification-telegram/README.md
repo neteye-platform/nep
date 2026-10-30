@@ -2,24 +2,23 @@
 
 The `nep-notification-telegram` adds to the Notification Facility provided with `nep-notification-base` the ability to send Notifications using Telegram.
 
-# Table of Contents
+## Table of Contents
 
 1. [Prerequisites](#prerequisites)
 2. [Installation](#installation)
 3. [Packet Contents](#packet-contents)
-4. [Usage](#usage)
 
 ## Prerequisites
 
 This package can be installed on systems running the software described below. Systems with equivalent components are also suitable for installation.
 
-| Sofware Version | Version |
+| Software Version | Version |
 | --- | ----------- |
 | NetEye | 4.22+ |
 | nep-common | 0.1.0+ |
 | nep-notification-base | 0.0.3+ |
 
-##### Required NetEye Modules
+### Required NetEye Modules
 
 | NetEye Module |
 | --- |
@@ -31,10 +30,9 @@ This package can be installed on systems running the software described below. S
 
 To setup Package `nep-notification-telegram`, just use the Setup Utility:
 
-```
+``` bash
 nep-setup install nep-notification-telegram
 ```
-
 
 ## Packet Contents
 

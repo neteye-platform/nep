@@ -1,12 +1,13 @@
 # NEP Monitoring VMD
+
 The `nep-monitoring-vmd` package is the NEP designed to monitor the state of VMD service.
 
-# Table of Contents
+## Table of Contents
+
 1. [Prerequisites](#prerequisites)
 2. [Installation](#installation)
 3. [Packet Contents](#packet-contents)
 4. [Usage](#usage)
-
 
 ## Prerequisites
 
@@ -16,39 +17,34 @@ The `nep-monitoring-vmd` package is the NEP designed to monitor the state of VMD
 | nep-common          | 0.0.4   |
 | nep-monitoring-core | 0.0.6   |
 
-
-##### Required NetEye Modules
+## Required NetEye Modules
 
 | NetEye Module |
 | ------------  |
 | Core          |
 | VMD           |
 
-
 ### External dependencies
 
 This NEP doesn't need any external dependencies other that the ones used by the NEPs reported in [Prerequisites](#prerequisites)
 
-
 ## Installation
 
-#### Before Installation
+### Before Installation
 
 There is no need to perform any action before installing this NEP
-
 
 ### NEP Installation
 
 To install the `nep-monitoring-vmd`, use `nep-setup` via SSH on NetEye Master Node:
+
 ```bash
 nep-setup install nep-monitoring-vmd
 ```
 
-
-#### Finalizing Installation
+### Finalizing Installation
 
 There is no need to perform any action to complete the installation of this NEP
-
 
 ## Packet Contents
 
@@ -56,23 +52,19 @@ There is no need to perform any action to complete the installation of this NEP
 
 This NEP provide the following Director objects.
 
-
-#### Host Templates
+### Host Templates
 
 This NEP doesn't provide any Host Template definition
 
-
-#### Data Lists
+### Data Lists
 
 This NEP doesn't provide any Data List.
 
-
-#### Service Templates
+### Service Templates
 
 This NEP doesn't provide any Service Template definition.
 
-
-#### Services Sets
+### Services Sets
 
 The following Service Sets can be used to freely monitor Host Objects.
 
@@ -81,38 +73,31 @@ _Remember to not edit these Service Sets because they will be restored/updated a
 * `nx-ss-neteye-vmd-state`: Service Set providing common monitoring for VMD Module
   * Unit Icinga-VsphereDB State
 
-#### Command
+### Commands
 
 This NEP doesn't provide any Command definition.
 
-
-#### Notification
+### Notification
 
 This NEP doesn't provide any Notification definition.
-
 
 ### Automation
 
 This NEP doesn't provide any Automation.
 
-
 ### Tornado Rules
 
 This NEP doesn't provide any Tornado rules.
-
 
 ### Dashboard ITOA
 
 This NEP doesn't provide any ITOA Dashboards.
 
-
 ### Metrics
 
 This NEP doesn't generate any Performance Data from its commands.
 
-
 ## Usage
-
 
 ### Examples
 
@@ -122,7 +107,6 @@ Service Set Definition:
 #### Using a host template provided by the NEP
 
 No Host Template provided by this NEP.
-
 
 #### Using a service template provided by the NEP
 

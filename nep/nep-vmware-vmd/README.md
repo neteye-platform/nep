@@ -15,7 +15,7 @@ It has also the ability to automatically create Monitoring Objects, including pa
 
 ## Prerequisites
 
-| Sofware Version | Version |
+| Software Version | Version |
 | --- | ----------- |
 | NetEye | 4.25 |
 | nep-common | |

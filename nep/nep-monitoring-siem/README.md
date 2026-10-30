@@ -24,7 +24,7 @@ The `nep-monitoring-siem` package is the NEP designed to monitor the NetEye Elas
 
 This package can be installed on systems running the software described below. Systems with equivalent components are also suitable for installation.
 
-| Sofware Version | Version |
+| Software Version | Version |
 | --- | ----------- |
 | NetEye | 4.44+ |
 | nep-common | 0.1.0+ |

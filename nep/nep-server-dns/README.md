@@ -19,7 +19,7 @@ Using the provided objects, is possible to:
 
 ## Prerequisites
 
-| Sofware Version | Version |
+| Software Version | Version |
 | --- | ----------- |
 | NetEye | 4.20 |
 | nep-common | 0..0.4 |
