@@ -19,7 +19,7 @@ function remove_ss_before_import() {
     echo "Removing direct Service Set assignment (if present) for these Service Sets: ${serviceset_objects}"
 
     ## Delete service set objects
-    for s in "${serviceset_objects}"; do
+    for s in "${serviceset_objects[@]}"; do
         tmp=$(icingacli director serviceset exist "$s")
         if [[ $tmp != *"does not"* ]]; then
             ## Retrive manual usage of service set

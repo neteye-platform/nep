@@ -67,11 +67,11 @@ repos:
     hooks:
       - id: actionlint
 
-  # NOTE: Keeping this section commented out for now, as shellcheck is not working properly on Windows machines.
-  # - repo: https://github.com/shellcheck-py/shellcheck-py
-  #   rev: 745eface02aef23e168a8afb6b5737818efbea95 # frozen: v0.11.0.1
-  #   hooks:
-  #     - id: shellcheck
+  - repo: https://github.com/shellcheck-py/shellcheck-py
+    rev: 745eface02aef23e168a8afb6b5737818efbea95 # frozen: v0.11.0.1
+    hooks:
+      - id: shellcheck
+        args: [--severity=error]
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: 0671d8ab202c4ac093b78433ae5baf74f3fc7246 # frozen: v0.15.15

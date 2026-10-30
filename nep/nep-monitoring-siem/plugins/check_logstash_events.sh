@@ -149,7 +149,7 @@ function getPipelineDeatils() {
             ######################################################
             # Create or update file with current statistics
             ######################################################
-            $(echo "$ITEM" >"$FILE_NAME")
+            printf '%s\n' "$ITEM" > "$FILE_NAME"
 
             ########################
             # Evaluate results
@@ -291,7 +291,7 @@ function getGlobalDeatils() {
         ######################################################
         # Create or update file with current statistics
         ######################################################
-        $(echo "$PARSED_RESP" > "$FILE_NAME")
+        printf '%s\n' "$PARSED_RESP" > "$FILE_NAME"
 
         ########################
         # Evaluate results
