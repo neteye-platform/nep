@@ -210,7 +210,7 @@ parser.add_argument(
     "--metrics",
     dest="Metrics",
     action="store_true",
-    help="Enable also Elasticserach Metrics indices for serach",
+    help="Enable also Elasticserach Metrics indices for search",
 )
 parser.add_argument("--logging", help="enable logging mode", action="store_true")
 
@@ -452,7 +452,7 @@ message += (
 )
 
 
-## UNKNOW (error on api)
+## UNKNOWN (error on api)
 if EXIT_CODE == UNKNOWN_CODE:
     message = (
         "UNKNOWN - Elasticsearch API error.<br>Status Code: "

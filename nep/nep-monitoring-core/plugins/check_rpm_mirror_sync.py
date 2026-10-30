@@ -90,7 +90,7 @@ def compare_primary_repodata(repo1, repo2):
 
     if pkgs_diff:
         logging.error(
-            f"[-] Cannot find the following packags in primary files: {str(pkgs_diff)}"
+            f"[-] Cannot find the following packages in primary files: {str(pkgs_diff)}"
         )
         return False
     return True
@@ -107,7 +107,7 @@ def compare_filelists_repodata(repo1, repo2):
 
     if pkgs_diff:
         logging.error(
-            f"[-] Cannot find the following packags in primary files: {str(pkgs_diff)}"
+            f"[-] Cannot find the following packages in primary files: {str(pkgs_diff)}"
         )
         return False
     return True

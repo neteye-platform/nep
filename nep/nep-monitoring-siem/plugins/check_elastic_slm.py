@@ -88,7 +88,7 @@ parser.add_argument(
     dest="WarningThresold",
     type=str,
     default="24h",
-    help="Warning threshold time from last succesfull policy execution",
+    help="Warning threshold time from last successful policy execution",
 )
 parser.add_argument(
     "-c",
@@ -96,7 +96,7 @@ parser.add_argument(
     dest="CriticalThresold",
     type=str,
     default="48h",
-    help="Critical threshold time from last succesfull policy execution",
+    help="Critical threshold time from last successful policy execution",
 )
 
 # Read arguments from command line
@@ -109,7 +109,7 @@ if args.verbose:
 else:
     logging.basicConfig(level=logging.INFO)
 
-# convert thresolds
+# convert thresholds
 if args.WarningThresold[-1] == "d":
     warn_seconds = int(args.WarningThresold[:-1]) * 86400
 elif args.WarningThresold[-1] == "h":
@@ -144,7 +144,7 @@ if warn_seconds < 0 or crit_seconds < 0:
     print(message)
     sys.exit(3)
 if warn_seconds > crit_seconds:
-    message = "UNKNOWN - Warning threshold cannot be higher then Critial threshold."
+    message = "UNKNOWN - Warning threshold cannot be higher then Critical threshold."
     print(message)
     sys.exit(3)
 
@@ -282,7 +282,7 @@ if args.Filters:
 # Perf data
 # message += "| 'TotalEvents'=" + str(TOTAL_EVENTS) + ";;;0; 'TotalEps'=" + str(total_result) + ";" + str(args.WarningThresold) + ";" + str(args.CriticalThresold) + ";0;"
 
-## UNKNOW (error on api)
+## UNKNOWN (error on api)
 if EXIT_CODE == UNKNOWN_CODE:
     message = (
         "UNKNOWN - Elasticsearch API error.\nStatus Code: "

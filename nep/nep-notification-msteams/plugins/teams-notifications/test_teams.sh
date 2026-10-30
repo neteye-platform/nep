@@ -1,30 +1,30 @@
 #!/bin/bash
 
-# Variabili di configurazione
-CLIENT_ID="AAA1"                          # ID cliente della tua applicazione registrata
-CLIENT_SECRET="AAA2"                  # Segreto cliente generato per la tua applicazione
-TENANT_ID="AAA3"                          # ID del tenant Azure AD
-REDIRECT_URI="http://localhost:8080"                                      # Redirect URI configurata lato Office 365
-TEAM_ID="AAA4"                            # ID del team di Microsoft Teams
-CHANNEL_ID="AAA5" # ID del canale di Microsoft Teams
-MESSAGE="Messaggio inviato con app autentication"
+# Configuration variables
+CLIENT_ID="AAA1"                          # Client ID of your registered application
+CLIENT_SECRET="AAA2"                      # Client secret generated for your application
+TENANT_ID="AAA3"                          # Azure AD tenant ID
+REDIRECT_URI="http://localhost:8080"      # Redirect URI configured on the Office 365 side
+TEAM_ID="AAA4"                            # Microsoft Teams team ID
+CHANNEL_ID="AAA5"                         # Microsoft Teams channel ID
+MESSAGE="Message sent with authentication app"
 AUTHORIZATION_CODE="AAA6"
 
 # Endpoint Microsoft Graph
 TOKEN_ENDPOINT="https://login.microsoftonline.com/$TENANT_ID/oauth2/v2.0/token"
 GRAPH_ENDPOINT="https://graph.microsoft.com/v1.0/teams/$TEAM_ID/channels/$CHANNEL_ID/messages"
 
-# Funzione per ottenere l'Authorization Code
+# Function to obtain the Authorization Code
 get_authorization_code() {
-  echo "Apri il seguente URL nel browser per autorizzare l'app e ottenere l'Authorization Code:"
+  echo "Open the following URL in the browser to authorize the app and obtain the Authorization Code:"
   AUTH_URL="https://login.microsoftonline.com/$TENANT_ID/oauth2/v2.0/authorize?client_id=$CLIENT_ID&response_type=code&redirect_uri=$REDIRECT_URI&scope=https://graph.microsoft.com/.default offline_access&state=12345"
   echo "$AUTH_URL"
-  echo "Dopo aver autorizzato l'app, copia il codice di autorizzazione dalla barra degli indirizzi del browser."
+  echo "After authorizing the app, copy the authorization code from the browser's address bar."
 }
 
-# Funzione per ottenere l'Access Token iniziale
+# Function to obtain the initial Access Token
 get_initial_access_token() {
-  echo "Richiesta dell'Access Token iniziale..."
+  echo "Requesting the initial Access Token..."
   RESPONSE=$(curl -s -X POST -H "Content-Type: application/x-www-form-urlencoded" \
   -d "client_id=$CLIENT_ID" \
   -d "client_secret=$CLIENT_SECRET" \
@@ -38,18 +38,18 @@ get_initial_access_token() {
   REFRESH_TOKEN=$(echo $RESPONSE | jq -r '.refresh_token')
 
   if [ "$ACCESS_TOKEN" != "null" ] && [ "$REFRESH_TOKEN" != "null" ]; then
-    echo "Access Token e Refresh Token ottenuti con successo!"
+    echo "Access Token and Refresh Token obtained successfully!"
     echo $ACCESS_TOKEN > access_token.txt
     echo $REFRESH_TOKEN > refresh_token.txt
   else
-    echo "Errore durante l'ottenimento dell'Access Token: $RESPONSE"
+    echo "Error obtaining the Access Token: $RESPONSE"
     exit 1
   fi
 }
 
-# Funzione per ottenere un nuovo Access Token usando il Refresh Token
+# Function to obtain a new Access Token using the Refresh Token
 refresh_access_token() {
-  echo "Richiesta di un nuovo Access Token tramite Refresh Token..."
+  echo "Requesting a new Access Token using the Refresh Token..."
   REFRESH_TOKEN=$(cat refresh_token.txt)
   RESPONSE=$(curl -s -X POST -H "Content-Type: application/x-www-form-urlencoded" \
   -d "client_id=$CLIENT_ID" \
@@ -63,18 +63,18 @@ refresh_access_token() {
   NEW_REFRESH_TOKEN=$(echo $RESPONSE | jq -r '.refresh_token')
 
   if [ "$ACCESS_TOKEN" != "null" ]; then
-    echo "Nuovo Access Token ottenuto con successo!"
+    echo "New Access Token obtained successfully!"
     echo $ACCESS_TOKEN > access_token.txt
     echo $NEW_REFRESH_TOKEN > refresh_token.txt
   else
-    echo "Errore durante l'ottenimento del nuovo Access Token: $RESPONSE"
+    echo "Error obtaining the new Access Token: $RESPONSE"
     exit 1
   fi
 }
 
-# Funzione per inviare un messaggio al canale Teams
+# Function to send a message to the Teams channel
 send_message() {
-  echo "Invio del messaggio al canale di Teams..."
+  echo "Sending message to the Teams channel..."
   ACCESS_TOKEN=$(cat access_token.txt)
   JSON_PAYLOAD=$(cat <<EOF
 {
@@ -91,16 +91,16 @@ EOF
   $GRAPH_ENDPOINT)
 
   if echo "$RESPONSE" | grep -q '"id"'; then
-    echo "Messaggio inviato con successo!"
+    echo "Message sent successfully!"
   else
-    echo "Errore durante l'invio del messaggio: $RESPONSE"
+    echo "Error sending the message: $RESPONSE"
   fi
 }
 
-# Flusso principale
+# Main flow
 if [ -z "$AUTHORIZATION_CODE" ]; then
   get_authorization_code
-  echo "Inserisci l'Authorization Code nella variabile AUTHORIZATION_CODE e riesegui lo script."
+  echo "Enter the Authorization Code in the AUTHORIZATION_CODE variable and rerun the script."
   exit 0
 fi
 

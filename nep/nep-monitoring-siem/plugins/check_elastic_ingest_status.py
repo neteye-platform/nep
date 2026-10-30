@@ -105,7 +105,7 @@ parser.add_argument(
     "-e",
     "--eps",
     dest="EnableEPS",
-    help="Calculate theshold and result with EPS",
+    help="Calculate threshold and result with EPS",
     default=False,
     action="store_true",
 )
@@ -382,7 +382,7 @@ else:
     )
 
 
-## UNKNOW (error on api)
+## UNKNOWN (error on api)
 if EXIT_CODE == UNKNOWN_CODE:
     message = (
         "UNKNOWN - Elasticsearch API error.\nStatus Code: "

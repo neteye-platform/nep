@@ -26,7 +26,7 @@ def get_service_status(URL, mode, debug):
 
     URL_H = "https://portal.office.com/servicestatus"
 
-    # Define variables fro logic
+    # Define variables for logic
     service_counter = 0
     service_ok_counter = 0
     service_list = ""
@@ -46,7 +46,7 @@ def get_service_status(URL, mode, debug):
     # print(response.content)
     data = xmltodict.parse(response.text)
 
-    # Loop over discoverd elements
+    # Loop over discovered elements
     if data is not None:
         for d in data["IndexModel"]["Services"]["Service"]:
             exit_label = CRITICAL_LABEL
@@ -127,7 +127,7 @@ def main():
         type=str,
     )
     parser.add_argument(
-        "-m", "--mode", help="Serice Mode: all, Oulook.com, OneDrive", type=str
+        "-m", "--mode", help="Service Mode: all, Outlook.com, OneDrive", type=str
     )
     parser.add_argument("-v", "--verbose", help="Enable verbose", action="store_true")
 

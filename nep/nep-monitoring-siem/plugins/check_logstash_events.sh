@@ -75,7 +75,7 @@ function getPipelineDeatils() {
     LAST_RELOAD_ERROR=$(echo $PIPELINES_JSON_RES | jq -r '.pipelines.'$k'.reloads.last_error.message')
 
     if [[ -z "${PIPELINES_JSON_RES// /}" ]] || [[ -z $LAST_RELOAD_ERROR ]]; then
-        echo "CHECK UNKNOWN - an error occured. Check that pipeline name is correct"
+        echo "CHECK UNKNOWN - an error occurred. Check that pipeline name is correct"
         echo "$LAST_RELOAD_ERROR"
         exit "${UNKNOWN_RET}"
     else
@@ -109,7 +109,7 @@ function getPipelineDeatils() {
                     TIME_INTEVAL_SECS=$(echo "scale=4; $TIME_INTEVAL_MS / 1000" | bc | awk '{printf "%.4f", $0}')
 
                     if [[ $TIME_INTEVAL_SECS == "0.0000" ]]; then
-                        echo "UNKNOWN - Check run too quicly."
+                        echo "UNKNOWN - Check run too quickly."
                         exit $UNKNOWN_RET
                     fi
                     #########################
@@ -141,7 +141,7 @@ function getPipelineDeatils() {
                 fi
 
             else
-                # A file with previous statistics does't exist! (First run or someone has delete it!)
+                # A file with previous statistics doesn't exist! (First run or someone has deleted it!)
                 IN_EVENT_PER_SECOND=0
                 OUT_EVENT_PER_SECOND=0
             fi
@@ -215,7 +215,7 @@ function getGlobalDeatils() {
     EVENTS_JSON_RES=$("$LS_COMMAND_PATH" --fail -XGET "$URL/$LS_PATH_EVENTS_STATS" --silent 2>/dev/null)
 
     if [[ -z "${EVENTS_JSON_RES// /}" ]]; then
-        echo "CHECK UNKNOWN - an error occured. Check that logstash is reachable"
+        echo "CHECK UNKNOWN - an error occurred. Check that Logstash is reachable"
         exit "${UNKNOWN_RET}"
     else
         PARSED_RESP=$(echo "$EVENTS_JSON_RES" | jq '. | {host: .host , workers: .pipeline.workers , events: {in: .events.in, out: .events.out , duration_in_millis: .events.duration_in_millis }}')
@@ -252,7 +252,7 @@ function getGlobalDeatils() {
                 TIME_INTEVAL_SECS=$(echo "scale=4; $TIME_INTEVAL_MS / 1000" | bc | awk '{printf "%.4f", $0}')
 
                 if [[ $TIME_INTEVAL_SECS == "0.0000" ]]; then
-                    echo "UNKNOWN - Check run too quicly."
+                    echo "UNKNOWN - Check run too quickly."
                     exit $UNKNOWN_RET
                 fi
                 #########################
@@ -283,7 +283,7 @@ function getGlobalDeatils() {
             fi
 
         else
-            # A file with previous statistics does't exist! (First run or someone has delete it!)
+            # A file with previous statistics doesn't exist! (First run or someone has deleted it!)
             IN_EVENT_PER_SECOND=0
             OUT_EVENT_PER_SECOND=0
         fi

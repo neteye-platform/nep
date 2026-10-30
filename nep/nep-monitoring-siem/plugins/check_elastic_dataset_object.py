@@ -62,7 +62,7 @@ match = re.search(r'password\s*=\s*"([^"]+)"', file_content)
 if match:
     password = match.group(1)
 else:
-    print("Not able to retrive Icinga password.")
+    print("Not able to retrieve Icinga password.")
     sys.exit(UNKNOWN_CODE)
 
 URL = "https://icinga2-master.neteyelocal:5665/v1/"
@@ -78,7 +78,7 @@ http_response = requests.get(
     URL + "/objects/hosts/" + host, headers=headers, auth=AUTH, verify=False
 )
 if http_response.status_code == 200:
-    logging.info("Retrive hosts datasets...")
+    logging.info("retrieve hosts datasets...")
     logging.debug(http_response.json())
 else:
     message = "UNKNOWN - error on Icinga API"
@@ -99,7 +99,7 @@ http_response = requests.get(
 )
 
 if http_response.status_code == 200:
-    logging.info("Retrive services datasets...")
+    logging.info("retrieve services datasets...")
     logging.debug(http_response.json())
 else:
     message = "UNKNOWN - error on Icinga API"

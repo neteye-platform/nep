@@ -57,7 +57,7 @@ def mock_endpoint():
         with conn:
             print(f"Connected by {addr}")
 
-            # Recieve header of the HTTP request
+            # Receive header of the HTTP request
             header = b""
             while b"\r\n\r\n" not in header:
                 data = conn.recv(1024)
@@ -67,7 +67,7 @@ def mock_endpoint():
 
             header, _, packet = header.partition(b"\r\n\r\n")
 
-            # Check tht the url is right
+            # Check that the url is right
             lines_iter = iter(header.split(b"\r\n"))
             assert b"POST /api/now/table/u_monitoring_services HTTP/1.1" == next(
                 lines_iter
@@ -105,7 +105,7 @@ def mock_endpoint():
             # Assert that the payload is correct
             assert packet == TRUTH_ENCODED_PAYLOAD
 
-            # Tell the client that everything is file
+            # Tell the client that everything is fine
             conn.sendall(OK_RESPONSE)
 
 

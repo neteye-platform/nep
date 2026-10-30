@@ -188,7 +188,7 @@ if r.status_code == 200:
         # no event found
         EXIT_CODE = CRITICAL_CODE
     else:
-        # retrive date
+        # retrieve date
         DATE_EVENT = JSON_RES["hits"]["hits"][0]["fields"][time_field][0]
         logging.debug(DATE_EVENT)
         today = datetime.now(timezone.utc)
@@ -226,7 +226,7 @@ if EXIT_CODE == WARNING_CODE:
         + host
         + "' saved into Blockchain is of: "
         + DATE_EVENT
-        + ". This is more than thresold of "
+        + ". This is more than threshold of "
         + str(args.WarningThresold)
         + "d.\n"
     )
@@ -245,7 +245,7 @@ if EXIT_CODE == CRITICAL_CODE:
 message += "Tenant: " + tenant + "<br>"
 message += "Ingest Time: " + time_field + "<br>"
 
-## UNKNOW (error on api)
+## UNKNOWN (error on api)
 if EXIT_CODE == UNKNOWN_CODE:
     message = (
         "UNKNOWN - Elasticsearch API error.\nStatus Code: "
