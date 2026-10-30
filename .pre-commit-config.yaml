@@ -41,6 +41,26 @@ repos:
     rev: 2ccb47ff45ad361a21071a7eedda4c37e6ae8c5a # frozen: v2.4.2
     hooks:
       - id: codespell
+        exclude: |
+          (?x)^(
+            nep/nep-common/plugins/check_mem\.pl
+            |nep/nep-common/plugins/check_netstat\.pl
+            |nep/nep-database-mssql/plugins/check_mssql_health
+            |nep/nep-database-oracle/plugins/check_oracle_health
+            |nep/nep-monitoring-asset/plugins/check_systemd_timer
+            |nep/nep-monitoring-core/plugins/check_mysql_health
+            |nep/nep-monitoring-siem/plugins/check_es_system\.sh
+            |nep/nep-network-base/plugins/check_nwc_health
+            |nep/nep-network-messpc-ethernetbox/plugins/check_pcmeasure2\.pl
+            |nep/nep-network-printer/plugins/check_printer_health
+            |nep/nep-network-ups/plugins/check_ups_health
+            |nep/nep-server-email/plugins/check_smtp_send
+            |nep/nep-server-sap/plugins/check_sap_health
+            |nep/nep-vmware-api/plugins/check_vmware_api
+            |nep/nep-vmware-api/plugins/check_vmware_snapshots\.pl
+            |nep/nep-windows-server-exchange/plugins/Exchange_FullBackupMonitoring\.ps1
+            |nep/nep-windows-server-exchange/plugins/Exchange_IncrementalBackupMonitoring\.ps1
+          )$
 
   - repo: https://github.com/rhysd/actionlint
     rev: 914e7df21a07ef503a81201c76d2b11c789d3fca # frozen: v1.7.12
