@@ -84,25 +84,25 @@ def is_ini_prerequisite_file(file_path):
 
         # Second: At minimum, sections NEP, NetEye and NetEyeExtensionPacks must be present
         if not config_ini.has_section("NEP"):
-            raise "Missing section [NEP]"
+            raise ValueError("Missing section [NEP]")
         if not config_ini.has_section("NetEye"):
-            raise "Missing section [NetEye]"
+            raise ValueError("Missing section [NetEye]")
         if not config_ini.has_section("NetEyeExtensionPacks"):
-            raise "Missing section [NetEyeExtensionPacks]"
+            raise ValueError("Missing section [NetEyeExtensionPacks]")
 
         # Third: checking the existence of some minimum options from both sections
         # NEP must have a name and a version
         # NetEye must have a minversion and a modules list
         # NeytEyeExtensionPacks can be empty
         if not config_ini.has_option("NEP", "name"):
-            raise 'Missing option "name" from section [NEP]'
+            raise ValueError('Missing option "name" from section [NEP]')
         if not config_ini.has_option("NEP", "version"):
-            raise 'Missing option "version" from section [NEP]'
+            raise ValueError('Missing option "version" from section [NEP]')
 
         if not config_ini.has_option("NetEye", "minversion"):
-            raise 'Missing option "minversion" from section [NetEye]'
+            raise ValueError('Missing option "minversion" from section [NetEye]')
         if not config_ini.has_option("NetEye", "modules"):
-            raise 'Missing option "modules" from section [NetEye]'
+            raise ValueError('Missing option "modules" from section [NetEye]')
 
     except Exception:
         logging.info('File "' + file_path + '" is not a valid INI Prerequisite file.')
