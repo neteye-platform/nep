@@ -7,16 +7,18 @@ import tempfile
 import subprocess
 
 # Percorso assoluto al file di configurazione
-config_path = '/neteye/shared/icingaweb2/conf/modules/nep/holidays.ini'
+config_path = "/neteye/shared/icingaweb2/conf/modules/nep/holidays.ini"
 
 config = configparser.ConfigParser()
 config.read(config_path)
 
-parser = argparse.ArgumentParser(description="Generate and apply holidays timeperiod in Icinga Director")
+parser = argparse.ArgumentParser(
+    description="Generate and apply holidays timeperiod in Icinga Director"
+)
 args = parser.parse_args()
 
 for section in config.sections():
-    nazione = config[section]['nation'].upper()
+    nazione = config[section]["nation"].upper()
     print(f"Generate holidays for: {nazione}")
 
     current_year = datetime.datetime.now().year
@@ -45,7 +47,7 @@ for section in config.sections():
                 "object_name": f"nx-t-holidays-{nazione.lower()}",
                 "object_type": "object",
                 "ranges": all_ranges,
-                "update_method": "LegacyTimePeriod"
+                "update_method": "LegacyTimePeriod",
             }
         }
     }
@@ -53,7 +55,9 @@ for section in config.sections():
     json_output = json.dumps(output_dict, indent=4)
 
     try:
-        with tempfile.NamedTemporaryFile(mode='w+', suffix='.json', delete=True, encoding='utf-8') as tmp:
+        with tempfile.NamedTemporaryFile(
+            mode="w+", suffix=".json", delete=True, encoding="utf-8"
+        ) as tmp:
             tmp.write(json_output)
             tmp.flush()
             tmp.seek(0)

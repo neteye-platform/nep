@@ -45,7 +45,14 @@ parser.add_argument(
 )
 parser.add_argument(
     "neteye_node_type",
-    choices=["master", "node", "satellite", "elastic_only", "voting_only", "single_node"],
+    choices=[
+        "master",
+        "node",
+        "satellite",
+        "elastic_only",
+        "voting_only",
+        "single_node",
+    ],
     help="Type of the current NetEye node (neteye or neteye-agent).",
 )
 parser.add_argument(

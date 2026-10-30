@@ -5,46 +5,58 @@ import fnmatch
 import logging
 import pymysql
 import re
-import sys, os
+import sys
+import os
 
 from enum import Enum
-from pprint import pprint
-from queue import Empty
 
 # This order of instruction is required to have pymysql working like MySQLdb
 pymysql.install_as_MySQLdb()
 import MySQLdb
 
 config = configparser.ConfigParser()
-config.read(os.path.abspath(os.path.dirname(__file__))+'/check_vmd_object.conf')
+config.read(os.path.abspath(os.path.dirname(__file__)) + "/check_vmd_object.conf")
 
-vmddb_username = config['VMDDB']['username']
-vmddb_password = config['VMDDB']['password']
+vmddb_username = config["VMDDB"]["username"]
+vmddb_password = config["VMDDB"]["password"]
+
 
 class NagiosMetricStatus(Enum):
     """
     Enumeration that defines all the supported states and their return values.
     Refers to enum documentation for its correct use.
     """
-    ok       = 0
-    warning  = 1
+
+    ok = 0
+    warning = 1
     critical = 2
-    unknown  = 3
+    unknown = 3
+
 
 class ArgumentValueError(ValueError):
     """
     Used for reporting more detailed error regarding input parameters
     """
+
     def __init__(self, argument_name, argument_value, argument_error):
         self.argument_name = argument_name
         self.argument_value = argument_value
         self.argument_error = argument_error
-        self.message = "Invalid value for argument '" + argument_name + "': " + argument_error + "\nActual argument value: '" + str(argument_value) + "'"
+        self.message = (
+            "Invalid value for argument '"
+            + argument_name
+            + "': "
+            + argument_error
+            + "\nActual argument value: '"
+            + str(argument_value)
+            + "'"
+        )
 
         ValueError(self, self.message)
 
     def __str__(self):
         return self.message
+
 
 class Threshold:
     """
@@ -55,14 +67,17 @@ class Threshold:
 
      Both these methods should be overwritten and never called, otherwise an exception will be raised.
     """
-    def ValueInRange(self, value, minimum_value = None, maximum_value = None):
+
+    def ValueInRange(self, value, minimum_value=None, maximum_value=None):
         """
         Abstract function for checking if a value is inside the Threshold range.
         For some kind of Threshold, knowing the range of values the metric support can be useful.
         Actually, this function must be overwritten and never called.
         If called, a NotImplementedError exception will be raised.
         """
-        raise NotImplementedError('Mot implemented on a generic (abstract) threshold definition')
+        raise NotImplementedError(
+            "Mot implemented on a generic (abstract) threshold definition"
+        )
 
     def GetThresholdString(self):
         """
@@ -70,9 +85,11 @@ class Threshold:
         Actually, this function must be overwritten and never called.
         If called, a NotImplementedError exception will be raised.
         """
-        raise NotImplementedError('Mot implemented on a generic (abstract) threshold definition')
+        raise NotImplementedError(
+            "Mot implemented on a generic (abstract) threshold definition"
+        )
 
-    def GetThresholdStringAdapted(self, minimum_value = None, maximum_value = None):
+    def GetThresholdStringAdapted(self, minimum_value=None, maximum_value=None):
         """
         Abstract function for converting Threshold definition to string.
         If the threshold uses relative data, this function adapts the relative values using
@@ -80,7 +97,9 @@ class Threshold:
         Actually, this function must be overwritten and never called.
         If called, a NotImplementedError exception will be raised.
         """
-        raise NotImplementedError('Mot implemented on a generic (abstract) threshold definition')
+        raise NotImplementedError(
+            "Mot implemented on a generic (abstract) threshold definition"
+        )
 
     def __str__(self):
         """
@@ -89,109 +108,127 @@ class Threshold:
         """
         return self.GetThresholdString()
 
+
 class AbsoluteRangeThreshold(Threshold):
     """
     Numeric absolute range threshold. This should be the default Threshold type.
     """
+
     def __init__(self, range, default_lower_bound=0, default_upper_bound=None):
         """
         Initialize a AbsoluteRangeThreshold object basing on a range value.
         """
-        logging.debug("Initializing new Absolute Range Threshold. Range: '" + str(range) + "'.")
+        logging.debug(
+            "Initializing new Absolute Range Threshold. Range: '" + str(range) + "'."
+        )
 
         # range must have a value
         if range is None:
-            logging.error('No range provided. Unable to create Threshold.')
-            raise ArgumentValueError('range', range, 'Value is None.')
+            logging.error("No range provided. Unable to create Threshold.")
+            raise ArgumentValueError("range", range, "Value is None.")
 
         # Empty strings are not allowed.
         # Also, ranges composed only by whitespaces are not allowed.
         range_string = range.strip()
         if len(range_string) == 0:
-            logging.error('No range provided. Unable to create Threshold.')
-            raise ArgumentValueError('range', range, 'Empty value.')
+            logging.error("No range provided. Unable to create Threshold.")
+            raise ArgumentValueError("range", range, "Empty value.")
 
         # Try parsing the range with regex and extract values from it
-        logging.debug('Parsing range string...')
+        logging.debug("Parsing range string...")
         match = self._pattern.match(range_string)
         if match is None:
-            logging.error('Unable to understand range pattern: range format is invalid or not supported.')
-            raise ArgumentValueError('range', range, 'Invalid format. Format should be [@]start:end.')
+            logging.error(
+                "Unable to understand range pattern: range format is invalid or not supported."
+            )
+            raise ArgumentValueError(
+                "range", range, "Invalid format. Format should be [@]start:end."
+            )
 
-        is_inclusive = match.group('is_inclusive')
-        lower_bound  = match.group('lower_bound')
-        upper_bound  = match.group('upper_bound')
+        is_inclusive = match.group("is_inclusive")
+        lower_bound = match.group("lower_bound")
+        upper_bound = match.group("upper_bound")
 
-        logging.debug('Range parsed. Extracted values:')
+        logging.debug("Range parsed. Extracted values:")
         logging.debug(" - Is inclusive: '" + str(is_inclusive) + "'")
         logging.debug(" - Lower bound : '" + str(lower_bound) + "'")
         logging.debug(" - Upper bound : '" + str(upper_bound) + "'")
 
         # Set the Range Object as inclusive or exclusive
         if is_inclusive:
-            self.__use_inclusive_range = (is_inclusive == '@')
+            self.__use_inclusive_range = is_inclusive == "@"
         else:
             self.__use_inclusive_range = False
 
-        if (self.__use_inclusive_range):
-            logging.debug('Inclusive range specified.')
+        if self.__use_inclusive_range:
+            logging.debug("Inclusive range specified.")
         else:
-            logging.debug('Exclusive range specified.')
+            logging.debug("Exclusive range specified.")
 
         # Try to convert lower bound value to the expected number.
         # If lower bound is missing, value from an argument is used.
         # Default value for the argument is 0.
         self.__lower_bound = default_lower_bound
         if lower_bound is not None:
-            if lower_bound == '~':
-                logging.debug('Lower bound set to -INFINITE.')
+            if lower_bound == "~":
+                logging.debug("Lower bound set to -INFINITE.")
                 self.__lower_bound = None
             else:
                 try:
                     self.__lower_bound = float(lower_bound)
-                    logging.debug('Lower bound set to ' + str(self.__lower_bound) + '.')
+                    logging.debug("Lower bound set to " + str(self.__lower_bound) + ".")
                 except:
-                    logging.error('Unable to understand lower bound value.')
-                    raise ArgumentValueError('range', range, 'Lower bound is not "~" or a number.')
+                    logging.error("Unable to understand lower bound value.")
+                    raise ArgumentValueError(
+                        "range", range, 'Lower bound is not "~" or a number.'
+                    )
 
         # Try to convert upper bound value to the expected number.
         # If upper bound is missing, value from an argument is used.
         # Default value for the argument is None (+INFINITE).
         self.__upper_bound = default_upper_bound
         if upper_bound is not None:
-            if upper_bound == '~':
-                logging.debug('Upper bound set to +INFINITE.')
+            if upper_bound == "~":
+                logging.debug("Upper bound set to +INFINITE.")
                 self.__upper_bound = None
             else:
                 try:
                     self.__upper_bound = float(upper_bound)
-                    logging.debug('Upper bound set to ' + str(self.__upper_bound) + '.')
+                    logging.debug("Upper bound set to " + str(self.__upper_bound) + ".")
                 except:
-                    logging.error('Unable to understand upper bound value.')
-                    raise ArgumentValueError('range', range, 'Upper bound is not "~" or a number.')
+                    logging.error("Unable to understand upper bound value.")
+                    raise ArgumentValueError(
+                        "range", range, 'Upper bound is not "~" or a number.'
+                    )
 
         if (self.__lower_bound is not None) and (self.__upper_bound is not None):
-            if (self.__lower_bound > self.__upper_bound):
-                logging.error('Lower bound value is greatrer than uppe boudn value. Range is invalid.')
-                raise ArgumentValueError('range', range, 'Lower bound value is greater than upper bound value.')
+            if self.__lower_bound > self.__upper_bound:
+                logging.error(
+                    "Lower bound value is greatrer than uppe boudn value. Range is invalid."
+                )
+                raise ArgumentValueError(
+                    "range",
+                    range,
+                    "Lower bound value is greater than upper bound value.",
+                )
 
     def GetThresholdString(self):
         """
         Return a string representation of the current range.
         The string representation is expanded (default values are not omitted)
         """
-        range_string = ''
+        range_string = ""
 
         if self.__use_inclusive_range:
-            range_string = '@'
+            range_string = "@"
 
         if self.__lower_bound is None:
-            range_string += '~:'
+            range_string += "~:"
         else:
-            range_string += str(self.__lower_bound) + ':'
+            range_string += str(self.__lower_bound) + ":"
 
         if self.__upper_bound is None:
-            range_string += '~'
+            range_string += "~"
         else:
             range_string += str(self.__upper_bound)
 
@@ -207,29 +244,29 @@ class AbsoluteRangeThreshold(Threshold):
             return False
 
         # At this point, at least one bound is not None. But: which is the one that is None?
-        if (self.__lower_bound is None):
+        if self.__lower_bound is None:
             # In case lower bound is -infinite, value is in range only if it is great than the upper bound
             return value > self.__upper_bound
-        if (self.__upper_bound is None):
+        if self.__upper_bound is None:
             # In case upper bound is +infinite, value is in range only if it is less than the lower bound
             return value < self.__lower_bound
 
         # Both of the bounds have a value. Use the standard formula
         return (value < self.__lower_bound) or (value > self.__upper_bound)
 
-    def ValueInRange(self, value, minimum_value = None, maximum_value = None):
+    def ValueInRange(self, value, minimum_value=None, maximum_value=None):
         """
         Check if the provided value is inside or outside the current Threshold Range.
         Parameters minimum_value and maximum_value are not used.
         """
         # Argument check: value must be a number (or can converted into it)
         if value is None:
-            raise ArgumentValueError('value', value, 'Value must not be None.')
+            raise ArgumentValueError("value", value, "Value must not be None.")
 
         try:
             parsed_value = float(value)
         except:
-            raise ArgumentValueError('value', value, 'Value is not a number.')
+            raise ArgumentValueError("value", value, "Value is not a number.")
 
         # Check if value is in range
         # It consider the range as Excluseve
@@ -238,7 +275,7 @@ class AbsoluteRangeThreshold(Threshold):
         # An Inclusive range is complementary to the Esclusive range.
         # Therefore, if in case of exclusive range is True, in case of inclusice range is false, and viceversa.
         if self.__use_inclusive_range:
-            value_in_range = not(value_in_range)
+            value_in_range = not (value_in_range)
 
         return value_in_range
 
@@ -268,7 +305,8 @@ class AbsoluteRangeThreshold(Threshold):
         """
         return self.__upper_bound
 
-    _pattern = re.compile(r"""^    # Only one match is allowed for this pattern on a line => Starts at the beginning on the line
+    _pattern = re.compile(
+        r"""^    # Only one match is allowed for this pattern on a line => Starts at the beginning on the line
     (?P<is_inclusive>               # OPTIONAL ELEMENT: '@' means the inteval must be intended as INCLUSIVE; if @ is absent the interval must be intended as EXCLUSIVE
         @?                          #   Only '@' is allowed for this group
     )
@@ -293,115 +331,135 @@ class AbsoluteRangeThreshold(Threshold):
         |(?:~)                      #   Nagios notation: ~means the lower bound is +INFINITE
     )?
     $                               # Only one match is allowed for this pattern on a line => Ends and the end of the line
-    """, re.VERBOSE)
+    """,
+        re.VERBOSE,
+    )
+
 
 class RelativeRangeThreshold(Threshold):
     """
-   Relative range threshold. It is used to calculate percentage-based ranges.
+    Relative range threshold. It is used to calculate percentage-based ranges.
     """
+
     def __init__(self, range, default_lower_bound=0, default_upper_bound=None):
         """
         Initialize a RelativeRangeThreshold object basing on a range value.
         """
-        logging.debug("Initializing new Relative Range Threshold. Range: '" + str(range) + "'.")
+        logging.debug(
+            "Initializing new Relative Range Threshold. Range: '" + str(range) + "'."
+        )
 
         # range must have a value
         if range is None:
-            logging.error('No range provided. Unable to create Threshold.')
-            raise ArgumentValueError('range', range, 'Value is None.')
+            logging.error("No range provided. Unable to create Threshold.")
+            raise ArgumentValueError("range", range, "Value is None.")
 
         # Empty strings are not allowed.
         # Also, ranges composed only by whitespaces are not allowed.
         range_string = range.strip()
         if len(range_string) == 0:
-            logging.error('No range provided. Unable to create Threshold.')
-            raise ArgumentValueError('range', range, 'Empty value.')
+            logging.error("No range provided. Unable to create Threshold.")
+            raise ArgumentValueError("range", range, "Empty value.")
 
         # Try parsing the range with regex and extract values from it
-        logging.debug('Parsing range string...')
+        logging.debug("Parsing range string...")
         match = self._pattern.match(range_string)
         if match is None:
-            logging.error('Unable to understand range pattern: range format is invalid or not supported.')
-            raise ArgumentValueError('range', range, 'Invalid format. Format should be [@]start:end%.')
+            logging.error(
+                "Unable to understand range pattern: range format is invalid or not supported."
+            )
+            raise ArgumentValueError(
+                "range", range, "Invalid format. Format should be [@]start:end%."
+            )
 
-        is_inclusive = match.group('is_inclusive')
-        lower_bound  = match.group('lower_bound')
-        upper_bound  = match.group('upper_bound')
+        is_inclusive = match.group("is_inclusive")
+        lower_bound = match.group("lower_bound")
+        upper_bound = match.group("upper_bound")
 
-        logging.debug('Range parsed. Extracted values:')
+        logging.debug("Range parsed. Extracted values:")
         logging.debug(" - Is inclusive: '" + str(is_inclusive) + "'")
         logging.debug(" - Lower bound : '" + str(lower_bound) + "'")
         logging.debug(" - Upper bound : '" + str(upper_bound) + "'")
 
         # Set the Range Object as inclusive or exclusive
         if is_inclusive:
-            self.__use_inclusive_range = (is_inclusive == '@')
+            self.__use_inclusive_range = is_inclusive == "@"
         else:
             self.__use_inclusive_range = False
 
-        if (self.__use_inclusive_range):
-            logging.debug('Inclusive range specified.')
+        if self.__use_inclusive_range:
+            logging.debug("Inclusive range specified.")
         else:
-            logging.debug('Exclusive range specified.')
+            logging.debug("Exclusive range specified.")
 
         # Try to convert lower bound value to the expected number.
         # If lower bound is missing, value from an argument is used.
         # Default value for the argument is 0.
         self.__lower_bound = default_lower_bound
         if lower_bound is not None:
-            if lower_bound == '~':
-                logging.debug('Lower bound set to -INFINITE.')
+            if lower_bound == "~":
+                logging.debug("Lower bound set to -INFINITE.")
                 self.__lower_bound = None
             else:
                 try:
                     self.__lower_bound = float(lower_bound)
-                    logging.debug('Lower bound set to ' + str(self.__lower_bound) + '.')
+                    logging.debug("Lower bound set to " + str(self.__lower_bound) + ".")
                 except:
-                    logging.error('Unable to understand lower bound value.')
-                    raise ArgumentValueError('range', range, 'Lower bound is not "~" or a number.')
+                    logging.error("Unable to understand lower bound value.")
+                    raise ArgumentValueError(
+                        "range", range, 'Lower bound is not "~" or a number.'
+                    )
 
         # Try to convert upper bound value to the expected number.
         # If upper bound is missing, value from an argument is used.
         # Default value for the argument is None (+INFINITE).
         self.__upper_bound = default_upper_bound
         if upper_bound is not None:
-            if upper_bound == '~':
-                logging.debug('Upper bound set to +INFINITE.')
+            if upper_bound == "~":
+                logging.debug("Upper bound set to +INFINITE.")
                 self.__upper_bound = None
             else:
                 try:
                     self.__upper_bound = float(upper_bound)
-                    logging.debug('Upper bound set to ' + str(self.__upper_bound) + '.')
+                    logging.debug("Upper bound set to " + str(self.__upper_bound) + ".")
                 except:
-                    logging.error('Unable to understand upper bound value.')
-                    raise ArgumentValueError('range', range, 'Upper bound is not "~" or a number.')
+                    logging.error("Unable to understand upper bound value.")
+                    raise ArgumentValueError(
+                        "range", range, 'Upper bound is not "~" or a number.'
+                    )
 
         if (self.__lower_bound is not None) and (self.__upper_bound is not None):
-            if (self.__lower_bound > self.__upper_bound):
-                logging.error('Lower bound value is greatrer than uppe boudn value. Range is invalid.')
-                raise ArgumentValueError('range', range, 'Lower bound value is greater than upper bound value.')
+            if self.__lower_bound > self.__upper_bound:
+                logging.error(
+                    "Lower bound value is greatrer than uppe boudn value. Range is invalid."
+                )
+                raise ArgumentValueError(
+                    "range",
+                    range,
+                    "Lower bound value is greater than upper bound value.",
+                )
 
     def GetThresholdString(self):
         """
         Return a string representation of the current range.
         The string representation is expanded (default values are not omitted)
         """
-        range_string = ''
+        range_string = ""
 
         if self.__use_inclusive_range:
-            range_string = '@'
+            range_string = "@"
 
         if self.__lower_bound is None:
-            range_string += '~:'
+            range_string += "~:"
         else:
-            range_string += str(self.__lower_bound) + ':'
+            range_string += str(self.__lower_bound) + ":"
 
         if self.__upper_bound is None:
-            range_string += '~'
+            range_string += "~"
         else:
             range_string += str(self.__upper_bound)
 
-        range_string += '%'
+        range_string += "%"
 
         return range_string
 
@@ -411,21 +469,25 @@ class RelativeRangeThreshold(Threshold):
         The string representation is expanded (default values are not omitted).
         Percentage values are replaced with adapted (absolute) values.
         """
-        range_string = ''
+        range_string = ""
 
         if self.__use_inclusive_range:
-            range_string = '@'
+            range_string = "@"
 
         if self.__lower_bound is None:
-            range_string += '~:'
+            range_string += "~:"
         else:
-            value = minimum_value + ((maximum_value - minimum_value) * (self.__lower_bound / 100.0))
-            range_string += str(value) + ':'
+            value = minimum_value + (
+                (maximum_value - minimum_value) * (self.__lower_bound / 100.0)
+            )
+            range_string += str(value) + ":"
 
         if self.__upper_bound is None:
-            range_string += '~'
+            range_string += "~"
         else:
-            value = minimum_value + ((maximum_value - minimum_value) * (self.__upper_bound / 100.0))
+            value = minimum_value + (
+                (maximum_value - minimum_value) * (self.__upper_bound / 100.0)
+            )
             range_string += str(value)
 
         return range_string
@@ -437,58 +499,76 @@ class RelativeRangeThreshold(Threshold):
             return False
 
         # Now, we can make come math and convert value to a percentage
-        value_percentage = 100.0 * (value - minimum_value) / (maximum_value - minimum_value)
+        value_percentage = (
+            100.0 * (value - minimum_value) / (maximum_value - minimum_value)
+        )
 
         # At this point, at least one bound is not None. But: which is the one that is None?
-        if (self.__lower_bound is None):
+        if self.__lower_bound is None:
             # In case lower bound is -infinite, value is in range only if it is great than the upper bound
             return value_percentage > self.__upper_bound
-        if (self.__upper_bound is None):
+        if self.__upper_bound is None:
             # In case upper bound is +infinite, value is in range only if it is less than the lower bound
             return value_percentage < self.__lower_bound
 
         # Both of the bounds have a value. Use the standard formula
-        return (value_percentage < self.__lower_bound) or (value_percentage > self.__upper_bound)
+        return (value_percentage < self.__lower_bound) or (
+            value_percentage > self.__upper_bound
+        )
 
-    def ValueInRange(self, value, minimum_value = None, maximum_value = None):
+    def ValueInRange(self, value, minimum_value=None, maximum_value=None):
         """
         Check if the provided value is inside or outside the current Threshold Range.
         Parameters minimum_value and maximum_value are necessary to understand what 0% and 100% actually means.
         """
         # Argument check: all values must be a number (or can converted into it)
         if value is None:
-            raise ArgumentValueError('value', value, 'Value must not be None.')
+            raise ArgumentValueError("value", value, "Value must not be None.")
         if minimum_value is None:
-            raise ArgumentValueError('minimum_value', minimum_value, 'Value must not be None.')
+            raise ArgumentValueError(
+                "minimum_value", minimum_value, "Value must not be None."
+            )
         if maximum_value is None:
-            raise ArgumentValueError('maximum_value', maximum_value, 'Value must not be None.')
+            raise ArgumentValueError(
+                "maximum_value", maximum_value, "Value must not be None."
+            )
 
         try:
             parsed_value = float(value)
         except:
-            raise ArgumentValueError('value', value, 'Value is not a number.')
+            raise ArgumentValueError("value", value, "Value is not a number.")
         try:
             parsed_min = float(minimum_value)
         except:
-            raise ArgumentValueError('minimum_value', minimum_value, 'Minimum value is not a number.')
+            raise ArgumentValueError(
+                "minimum_value", minimum_value, "Minimum value is not a number."
+            )
         try:
             parsed_max = float(maximum_value)
         except:
-            raise ArgumentValueError('maximum_value', maximum_value, 'Maximum value is not a number.')
+            raise ArgumentValueError(
+                "maximum_value", maximum_value, "Maximum value is not a number."
+            )
 
         # Argument consistency checks
         # Check if the value range is proper (range is greater than 0 and maximum value is actually greater than minimum value)
-        if (minimum_value >= maximum_value):
-            raise ArgumentValueError('minimum_value', minimum_value, 'Minimum value is greater then Maximum value.')
+        if minimum_value >= maximum_value:
+            raise ArgumentValueError(
+                "minimum_value",
+                minimum_value,
+                "Minimum value is greater then Maximum value.",
+            )
 
         # Check if value is in range
         # It consider the range as Excluseve
-        value_in_range = self.__ValueInExternalRange(parsed_value, parsed_min, parsed_max)
+        value_in_range = self.__ValueInExternalRange(
+            parsed_value, parsed_min, parsed_max
+        )
 
         # An Inclusive range is complementary to the Esclusive range.
         # Therefore, if in case of exclusive range is True, in case of inclusice range is false, and viceversa.
         if self.__use_inclusive_range:
-            value_in_range = not(value_in_range)
+            value_in_range = not (value_in_range)
 
         return value_in_range
 
@@ -518,7 +598,8 @@ class RelativeRangeThreshold(Threshold):
         """
         return self.__upper_bound
 
-    _pattern = re.compile(r"""^    # Only one match is allowed for this pattern on a line => Starts at the beginning on the line
+    _pattern = re.compile(
+        r"""^    # Only one match is allowed for this pattern on a line => Starts at the beginning on the line
     (?P<is_inclusive>               # OPTIONAL ELEMENT: '@' means the inteval must be intended as INCLUSIVE; if @ is absent the interval must be intended as EXCLUSIVE
         @?                          #   Only '@' is allowed for this group
     )
@@ -544,13 +625,25 @@ class RelativeRangeThreshold(Threshold):
     )?
     %                               # MANDATORY ELEMENT: This identifies a Relative Threshold (a threshold expressed using percentages)
     $                               # Only one match is allowed for this pattern on a line => Ends and the end of the line
-    """, re.VERBOSE)
+    """,
+        re.VERBOSE,
+    )
+
 
 class Metric:
     """
     Represent a standard (non-typed) metric with its thresholds
     """
-    def __init__(self, name, value, unit = None, minimum_value = None, maximum_value = None, hide_uom = False):
+
+    def __init__(
+        self,
+        name,
+        value,
+        unit=None,
+        minimum_value=None,
+        maximum_value=None,
+        hide_uom=False,
+    ):
         """
         Initialize a generic metric without value type check. You should provide a metric unit for the value it will represents.
         """
@@ -563,13 +656,13 @@ class Metric:
 
         # Parameter checking: Name must not be None and not an empty string
         if name is None:
-            logging.error('No name provided for current metric.')
-            raise ArgumentValueError('name', name, 'Metric must have a name.')
+            logging.error("No name provided for current metric.")
+            raise ArgumentValueError("name", name, "Metric must have a name.")
 
         self.__name = name.strip()
         if len(self.__name) < 1:
-            logging.error('Empty string provided as name for current metric.')
-            raise ArgumentValueError('name', name, 'Metric must have a name.')
+            logging.error("Empty string provided as name for current metric.")
+            raise ArgumentValueError("name", name, "Metric must have a name.")
 
         self.__value = value
 
@@ -577,9 +670,9 @@ class Metric:
         if unit is not None:
             self.__unit = unit.strip()
         else:
-            self.__unit = ''
+            self.__unit = ""
 
-        self.__warning_threshold  = None
+        self.__warning_threshold = None
         self.__critical_threshold = None
 
         self.__minimum_value = None
@@ -592,9 +685,13 @@ class Metric:
         self.__hide_uom = hide_uom
 
     def __str__(self):
-        output = self.__name + ' ' + str(self.__value)
-        if (self.__hide_uom == False) and (self.__unit is not None) and (len(self.__unit) > 0):
-            output += '' + self.__unit
+        output = self.__name + " " + str(self.__value)
+        if (
+            (self.__hide_uom == False)
+            and (self.__unit is not None)
+            and (len(self.__unit) > 0)
+        ):
+            output += "" + self.__unit
 
         return output
 
@@ -621,12 +718,20 @@ class Metric:
         Check the value against the actual thresholds and returns the resulting state accordingly.
         If no thresholds have been provided, the actual state is always OK.
         """
-        #First check if the current value is inside the critical range
-        if (self.__critical_threshold is not None) and (self.__critical_threshold.ValueInRange(self.__value, self.__minimum_value, self.__maximum_value)):
+        # First check if the current value is inside the critical range
+        if (self.__critical_threshold is not None) and (
+            self.__critical_threshold.ValueInRange(
+                self.__value, self.__minimum_value, self.__maximum_value
+            )
+        ):
             return NagiosMetricStatus.critical
 
-        #If the value is not inside the critical range, maybe it is inside the warning range
-        if (self.__warning_threshold is not None) and (self.__warning_threshold.ValueInRange(self.__value, self.__minimum_value, self.__maximum_value)):
+        # If the value is not inside the critical range, maybe it is inside the warning range
+        if (self.__warning_threshold is not None) and (
+            self.__warning_threshold.ValueInRange(
+                self.__value, self.__minimum_value, self.__maximum_value
+            )
+        ):
             return NagiosMetricStatus.warning
 
         # The value is outside both warning and critical range, so it must be OK
@@ -642,10 +747,18 @@ class Metric:
         """
         Sets the range for the warning threshold of this metric
         """
-        logging.debug("Setting warning threshold for metric " + self.__name + "': " + str(threshold) + ".")
+        logging.debug(
+            "Setting warning threshold for metric "
+            + self.__name
+            + "': "
+            + str(threshold)
+            + "."
+        )
         if threshold is None:
-            logging.error('No warning threshold specified.')
-            raise ArgumentValueError('threshold', threshold, 'No warning threshold specified.')
+            logging.error("No warning threshold specified.")
+            raise ArgumentValueError(
+                "threshold", threshold, "No warning threshold specified."
+            )
 
         self.__warning_threshold = threshold
 
@@ -653,10 +766,18 @@ class Metric:
         """
         Sets the range for the critical threshold of this metric
         """
-        logging.debug("Setting critical threshold for metric " + self.__name + "': " + str(threshold) + ".")
+        logging.debug(
+            "Setting critical threshold for metric "
+            + self.__name
+            + "': "
+            + str(threshold)
+            + "."
+        )
         if threshold is None:
-            logging.error('No critical threshold specified.')
-            raise ArgumentValueError('threshold', threshold, 'No critical threshold specified.')
+            logging.error("No critical threshold specified.")
+            raise ArgumentValueError(
+                "threshold", threshold, "No critical threshold specified."
+            )
 
         self.__critical_threshold = threshold
 
@@ -681,23 +802,31 @@ class Metric:
         perfdata = "'" + self.__name + "'="
 
         # 2: metric current value and its metric unit
-        if (self.__hide_uom):
-            perfdata += str(self.__value) + ';'
+        if self.__hide_uom:
+            perfdata += str(self.__value) + ";"
         else:
-            perfdata += str(self.__value) + self.__unit + ';'
+            perfdata += str(self.__value) + self.__unit + ";"
 
         # 3: thresholds
         if self.__warning_threshold is not None:
-            perfdata += str(self.__warning_threshold.GetThresholdStringAdapted(self.__minimum_value, self.__maximum_value))
-        perfdata += ';'
+            perfdata += str(
+                self.__warning_threshold.GetThresholdStringAdapted(
+                    self.__minimum_value, self.__maximum_value
+                )
+            )
+        perfdata += ";"
         if self.__critical_threshold is not None:
-            perfdata += str(self.__critical_threshold.GetThresholdStringAdapted(self.__minimum_value, self.__maximum_value))
-        perfdata += ';'
+            perfdata += str(
+                self.__critical_threshold.GetThresholdStringAdapted(
+                    self.__minimum_value, self.__maximum_value
+                )
+            )
+        perfdata += ";"
 
         # 4: minimum and maximum values
         if self.__minimum_value is not None:
             perfdata += str(self.__minimum_value)
-        perfdata += ';'
+        perfdata += ";"
         if self.__maximum_value is not None:
             perfdata += str(self.__maximum_value)
 
@@ -705,6 +834,7 @@ class Metric:
 
     def GetServiceOutput(self):
         return str(self)
+
 
 class MetricFactory:
     """
@@ -716,40 +846,64 @@ class MetricFactory:
      All metrics created by MetricFactory are collected inside a static collection during the whole lifetime of the program.
     """
 
-    def __init__(self, metrics_to_include, metrics_to_exclude, warning_thresholds, critical_thresholds, max_values_override, min_values_override):
+    def __init__(
+        self,
+        metrics_to_include,
+        metrics_to_exclude,
+        warning_thresholds,
+        critical_thresholds,
+        max_values_override,
+        min_values_override,
+    ):
         """
         Creates a instance of MetricFactory. This is mandatory only if you need to use the CreateMetrics method.
         You can set a list of wanted (to be included) metrics and a list of unwanted (to be excluded) metrics.
         You can provide a dictionary of warning and critical thresholds.
         These lists and dictionaries will be used by the CreateMetrics method.
         """
-        logging.debug('Creating new Metric Factory')
-        self.__metrics_to_include  = metrics_to_include
-        self.__metrics_to_exclude  = metrics_to_exclude
-        self.__warning_thresholds  = warning_thresholds
+        logging.debug("Creating new Metric Factory")
+        self.__metrics_to_include = metrics_to_include
+        self.__metrics_to_exclude = metrics_to_exclude
+        self.__warning_thresholds = warning_thresholds
         self.__critical_thresholds = critical_thresholds
         self.__max_values_override = max_values_override
         self.__min_values_override = min_values_override
 
         if max_values_override:
-            logging.info('Metrics Maximum values Override list provided. Specified metrics will have the maximum value provided by this list.')
+            logging.info(
+                "Metrics Maximum values Override list provided. Specified metrics will have the maximum value provided by this list."
+            )
         else:
-            logging.info('Metrics Maximum values Override list not provided. Default maximum value will be used.')
+            logging.info(
+                "Metrics Maximum values Override list not provided. Default maximum value will be used."
+            )
         if min_values_override:
-            logging.info('Metrics Minimum values Override list provided. Specified metrics will have the minimum value provided by this list.')
+            logging.info(
+                "Metrics Minimum values Override list provided. Specified metrics will have the minimum value provided by this list."
+            )
         else:
-            logging.info('Metrics Minimum values Override list not provided. Default minimum value will be used.')
+            logging.info(
+                "Metrics Minimum values Override list not provided. Default minimum value will be used."
+            )
         if metrics_to_exclude:
-            logging.info('Metrics exclusion list provided. Selected metrics will not be loaded.')
+            logging.info(
+                "Metrics exclusion list provided. Selected metrics will not be loaded."
+            )
         else:
-            logging.info('Metrics exclusion list not provided. No metric will be explicitly excluded while loading (if present).')
+            logging.info(
+                "Metrics exclusion list not provided. No metric will be explicitly excluded while loading (if present)."
+            )
         if metrics_to_include:
-            logging.info('Metrics inclusion list provided. Only requested metrics will be loaded (if available).')
+            logging.info(
+                "Metrics inclusion list provided. Only requested metrics will be loaded (if available)."
+            )
         else:
-            logging.info('Metrics inclusion list not provided. All available metrics will be loaded.')
+            logging.info(
+                "Metrics inclusion list not provided. All available metrics will be loaded."
+            )
 
     def CreateThresholdWithProperType(self, threshold, metric_min, metric_max):
-        if (threshold[-1] == '%'):
+        if threshold[-1] == "%":
             return RelativeRangeThreshold(threshold, metric_min, metric_max)
         else:
             return AbsoluteRangeThreshold(threshold, metric_min, metric_max)
@@ -766,64 +920,90 @@ class MetricFactory:
         Name and value are mandatory. Other properties might be None.
         The list will be checked against the two lists provided with the construction method (metrics_to_include, metrics_to_exclude).
         """
-        logging.info('Parsing metric values')
+        logging.info("Parsing metric values")
         metrics_created = {}
 
         for entry in metrics_list:
-            metric_name  = entry['name']
-            metric_value = entry['value']
-            metric_unit  = entry['unit']
-            metric_max   = entry['max']
-            metric_min   = entry['min']
+            metric_name = entry["name"]
+            metric_value = entry["value"]
+            metric_unit = entry["unit"]
+            metric_max = entry["max"]
+            metric_min = entry["min"]
 
-            if (self.__max_values_override is not None) and (metric_name in self.__max_values_override):
+            if (self.__max_values_override is not None) and (
+                metric_name in self.__max_values_override
+            ):
                 metric_max = self.__max_values_override[metric_name]
-            if (self.__min_values_override is not None) and (metric_name in self.__min_values_override):
+            if (self.__min_values_override is not None) and (
+                metric_name in self.__min_values_override
+            ):
                 metric_min = self.__min_values_override[metric_name]
 
-            warning_threshold  = None
+            warning_threshold = None
             critical_threshold = None
 
-            #Uses fnmatch to allow wildcards for metric names
-            if (self.__warning_thresholds is not None):
+            # Uses fnmatch to allow wildcards for metric names
+            if self.__warning_thresholds is not None:
                 for threshold in self.__warning_thresholds:
                     if fnmatch.fnmatch(metric_name, threshold):
-                        warning_threshold = self.CreateThresholdWithProperType(self.__warning_thresholds[threshold], metric_min, metric_max)
-            if (self.__critical_thresholds is not None):
+                        warning_threshold = self.CreateThresholdWithProperType(
+                            self.__warning_thresholds[threshold], metric_min, metric_max
+                        )
+            if self.__critical_thresholds is not None:
                 for threshold in self.__critical_thresholds:
                     if fnmatch.fnmatch(metric_name, threshold):
-                        critical_threshold = self.CreateThresholdWithProperType(self.__critical_thresholds[threshold], metric_min, metric_max)
+                        critical_threshold = self.CreateThresholdWithProperType(
+                            self.__critical_thresholds[threshold],
+                            metric_min,
+                            metric_max,
+                        )
 
-            logging.debug('Processing metric ' + metric_name)
-            if (self.__metrics_to_exclude is not None):
-                should_skip=False
+            logging.debug("Processing metric " + metric_name)
+            if self.__metrics_to_exclude is not None:
+                should_skip = False
                 for metric in self.__metrics_to_exclude:
                     if fnmatch.fnmatch(metric_name, metric):
-                        logging.info('Metric ' + metric_name + ' has been marked for exclusion. Skipping.')
-                        should_skip=True
+                        logging.info(
+                            "Metric "
+                            + metric_name
+                            + " has been marked for exclusion. Skipping."
+                        )
+                        should_skip = True
                         break
                 if should_skip:
                     continue
 
             metric_must_be_included = True
-            if (self.__metrics_to_include is not None):
+            if self.__metrics_to_include is not None:
                 metric_must_be_included = False
                 for metric in self.__metrics_to_include:
                     if fnmatch.fnmatch(metric_name, metric):
                         metric_must_be_included = True
 
             if metric_must_be_included:
-                logging.debug('Metric value      : ' + str(metric_value))
-                logging.debug('Metric unit       : ' + str(metric_unit))
-                logging.debug('Metric max value  : ' + str(metric_max))
-                logging.debug('Metric min value  : ' + str(metric_min))
-                logging.debug('Warning threshold:  ' + str(warning_threshold))
-                logging.debug('Critical threshold: ' + str(critical_threshold))
+                logging.debug("Metric value      : " + str(metric_value))
+                logging.debug("Metric unit       : " + str(metric_unit))
+                logging.debug("Metric max value  : " + str(metric_max))
+                logging.debug("Metric min value  : " + str(metric_min))
+                logging.debug("Warning threshold:  " + str(warning_threshold))
+                logging.debug("Critical threshold: " + str(critical_threshold))
 
-                metric = MetricFactory.CreateMetric(metric_name, metric_value, metric_unit, metric_max, metric_min, warning_threshold, critical_threshold)
+                metric = MetricFactory.CreateMetric(
+                    metric_name,
+                    metric_value,
+                    metric_unit,
+                    metric_max,
+                    metric_min,
+                    warning_threshold,
+                    critical_threshold,
+                )
                 metrics_created[metric_name] = metric
             else:
-                logging.info('Metric ' + metric_name + ' has not been marked for inclusion. Skipping.')
+                logging.info(
+                    "Metric "
+                    + metric_name
+                    + " has not been marked for inclusion. Skipping."
+                )
                 continue
 
         return metrics_created
@@ -832,32 +1012,42 @@ class MetricFactory:
     metrics_per_state = {}
 
     @staticmethod
-    def CreateMetric(metric_name, metric_value, metric_unit = None, maximum_value = None, minimum_value = None, warning_threshold = None, critical_threshold = None):
+    def CreateMetric(
+        metric_name,
+        metric_value,
+        metric_unit=None,
+        maximum_value=None,
+        minimum_value=None,
+        warning_threshold=None,
+        critical_threshold=None,
+    ):
         """
         Creates and register a new metric object.
         """
 
-        logging.info("Preparing for building a new Metric object with '" + metric_name + "'")
+        logging.info(
+            "Preparing for building a new Metric object with '" + metric_name + "'"
+        )
         logging.debug("Metric value             : '" + str(metric_value) + "'")
         logging.debug("Metric unit              : '" + str(metric_unit) + "'")
         logging.debug("Metric warning threshold : '" + str(warning_threshold) + "'")
         logging.debug("Metric critical threshold: '" + str(critical_threshold) + "'")
 
-        name  = metric_name
+        name = metric_name
         value = metric_value
-        unit  = metric_unit
-        max   = maximum_value
-        min   = minimum_value
+        unit = metric_unit
+        max = maximum_value
+        min = minimum_value
 
-        logging.debug('Creating Metric object.')
+        logging.debug("Creating Metric object.")
         metric = Metric(name, value, unit, min, max)
-        logging.debug('Setting Metric object thresholds.')
+        logging.debug("Setting Metric object thresholds.")
         if warning_threshold is not None:
             metric.SetWarningThreshold(warning_threshold)
         if critical_threshold is not None:
             metric.SetCriticalThreshold(critical_threshold)
 
-        logging.debug('Registering Metric object.')
+        logging.debug("Registering Metric object.")
         MetricFactory.metrics.append(metric)
 
         return metric
@@ -868,10 +1058,10 @@ class MetricFactory:
         Check all the available metrics and returns the worst state it can be found.
         """
 
-        MetricFactory.metrics_per_state[NagiosMetricStatus.ok.value]       = []
-        MetricFactory.metrics_per_state[NagiosMetricStatus.warning.value]  = []
+        MetricFactory.metrics_per_state[NagiosMetricStatus.ok.value] = []
+        MetricFactory.metrics_per_state[NagiosMetricStatus.warning.value] = []
         MetricFactory.metrics_per_state[NagiosMetricStatus.critical.value] = []
-        MetricFactory.metrics_per_state[NagiosMetricStatus.unknown.value]  = []
+        MetricFactory.metrics_per_state[NagiosMetricStatus.unknown.value] = []
 
         for metric in MetricFactory.metrics:
             state = metric.GetState()
@@ -891,26 +1081,34 @@ class MetricFactory:
         Remember: this is only the Performance Output. It does not contains Performance Data nor Service State.
         """
 
-        output = ''
+        output = ""
 
         if len(MetricFactory.metrics_per_state[NagiosMetricStatus.unknown.value]):
             output += "UNKNOWN "
-            for metric in MetricFactory.metrics_per_state[NagiosMetricStatus.unknown.value]:
-                output += str(metric) + ' '
+            for metric in MetricFactory.metrics_per_state[
+                NagiosMetricStatus.unknown.value
+            ]:
+                output += str(metric) + " "
         if len(MetricFactory.metrics_per_state[NagiosMetricStatus.critical.value]):
             output += "CRITICAL "
-            for metric in MetricFactory.metrics_per_state[NagiosMetricStatus.critical.value]:
-                output += str(metric) + ' '
+            for metric in MetricFactory.metrics_per_state[
+                NagiosMetricStatus.critical.value
+            ]:
+                output += str(metric) + " "
         if len(MetricFactory.metrics_per_state[NagiosMetricStatus.warning.value]):
             output += "WARNING "
-            for metric in MetricFactory.metrics_per_state[NagiosMetricStatus.warning.value]:
-                output += str(metric) + ' '
+            for metric in MetricFactory.metrics_per_state[
+                NagiosMetricStatus.warning.value
+            ]:
+                output += str(metric) + " "
 
-        if(output_all_metrics):
-                if len(MetricFactory.metrics_per_state[NagiosMetricStatus.warning.value]):
-                    output += "OK "
-                    for metric in MetricFactory.metrics_per_state[NagiosMetricStatus.ok.value]:
-                        output += str(metric) + ' '
+        if output_all_metrics:
+            if len(MetricFactory.metrics_per_state[NagiosMetricStatus.warning.value]):
+                output += "OK "
+                for metric in MetricFactory.metrics_per_state[
+                    NagiosMetricStatus.ok.value
+                ]:
+                    output += str(metric) + " "
 
         return output
 
@@ -920,44 +1118,45 @@ class MetricFactory:
         Produces a string containing all the metrics built until now in the Nagios Performance Data format.
         Remember: this is only the Performance Data. It does not contains Performance Output nor Service State.
         """
-        perfdata = ''
+        perfdata = ""
         for metric in MetricFactory.metrics:
-            perfdata += metric.GetPerformanceData() + ' '
+            perfdata += metric.GetPerformanceData() + " "
 
         return perfdata
-
 
 
 class VMDConnector:
     """
     Helper class fro managing a connection with VMD Database.
     """
+
     def __init__(self, username, password):
         """
         Initializes a new connection to VMD Database.
         """
-        logging.info('Initializing VMD Database connector.')
+        logging.info("Initializing VMD Database connector.")
 
-        self.__servername =  'mariadb.neteyelocal'
-        self.__serverport = '3306'
-        self.__databasename = 'vspheredb'
+        self.__servername = "mariadb.neteyelocal"
+        self.__serverport = "3306"
+        self.__databasename = "vspheredb"
         self.__username = username
         self.__password = password
 
-        logging.debug('VMD Server name   : ' + self.__servername + '.')
-        logging.debug('VMD Server port   : ' + self.__serverport + '.')
-        logging.debug('VMD Database name : ' + self.__databasename + '.')
-        logging.debug('Username for login: ' + self.__username + '.')
-        logging.debug('Password          : ***')
+        logging.debug("VMD Server name   : " + self.__servername + ".")
+        logging.debug("VMD Server port   : " + self.__serverport + ".")
+        logging.debug("VMD Database name : " + self.__databasename + ".")
+        logging.debug("Username for login: " + self.__username + ".")
+        logging.debug("Password          : ***")
 
-        logging.info('Connecting to VMD Database.')
+        logging.info("Connecting to VMD Database.")
         self.__vmd_connection = MySQLdb.connect(
-            host  =self.__servername,
-            db    =self.__databasename,
-            user  =self.__username,
-            passwd=self.__password)
+            host=self.__servername,
+            db=self.__databasename,
+            user=self.__username,
+            passwd=self.__password,
+        )
 
-        logging.info('Connection with VMD Database established.')
+        logging.info("Connection with VMD Database established.")
 
     def GetServerName(self):
         return self.__servername
@@ -980,54 +1179,80 @@ class VMDConnector:
         else:
             return False
 
+
 class VCenterServer:
     """
     Represents one of the VCenter Servers from which the VMD is gathering data.
     It will allow to look for objects managed by the same VCenter Server.
     """
+
     def __init__(self, vmd_connection, vcenterserver_name):
-        logging.info('Loading data for VCenter Server ' + vcenterserver_name + '.')
+        logging.info("Loading data for VCenter Server " + vcenterserver_name + ".")
         logging.debug("VCenter Server Name: '" + vcenterserver_name + "'")
 
-        query = """
+        query = (
+            """
             SELECT
             s.id AS id,
             s.vcenter_id AS vcenter_id,
             s.HOST AS hostname,
             HEX(v.instance_uuid) AS uuid
             FROM vcenter_server s INNER JOIN vcenter v ON v.id = s.vcenter_id
-            WHERE s.host = '""" + vcenterserver_name + """'
+            WHERE s.host = '"""
+            + vcenterserver_name
+            + """'
             ;
         """
+        )
 
         if vmd_connection is None:
-            raise ArgumentValueError('vmd_connection', vmd_connection, 'No VMD Connection provided.')
+            raise ArgumentValueError(
+                "vmd_connection", vmd_connection, "No VMD Connection provided."
+            )
         if vcenterserver_name is None:
-            raise ArgumentValueError('vcenterserver_name', vcenterserver_name, 'No VCenter Server name provided.')
+            raise ArgumentValueError(
+                "vcenterserver_name",
+                vcenterserver_name,
+                "No VCenter Server name provided.",
+            )
         if len(vcenterserver_name) < 1:
-            raise ArgumentValueError('vcenterserver_name', vcenterserver_name, 'VCenter Server name must not be an empty string.')
+            raise ArgumentValueError(
+                "vcenterserver_name",
+                vcenterserver_name,
+                "VCenter Server name must not be an empty string.",
+            )
 
         cursor = vmd_connection.cursor()
         cursor.execute(query)
         data = cursor.fetchall()
 
         if len(data) < 1:
-            logging.error('No VCenter Server data found.')
-            raise ValueError('No VCenter Server with name ' + vcenterserver_name + ' has been found. The name is invalid, wrong, with different upper or lower cases?')
+            logging.error("No VCenter Server data found.")
+            raise ValueError(
+                "No VCenter Server with name "
+                + vcenterserver_name
+                + " has been found. The name is invalid, wrong, with different upper or lower cases?"
+            )
         if len(data) > 1:
-            logging.error('Found 2 or more VCenter Server with the same name. Unable to understand which one should use.')
-            raise ValueError('Found more than one VCenter Server with the same name ' + vcenterserver_name + '.')
+            logging.error(
+                "Found 2 or more VCenter Server with the same name. Unable to understand which one should use."
+            )
+            raise ValueError(
+                "Found more than one VCenter Server with the same name "
+                + vcenterserver_name
+                + "."
+            )
 
         self.__name = vcenterserver_name
         for row in data:
-            self.__id       = row[1]
+            self.__id = row[1]
             self.__hostname = row[2]
-            self.__uuid     = row[3]
+            self.__uuid = row[3]
 
-        logging.debug('VCenter data collected from VMD:')
-        logging.debug("ID      : '" + str(self.__id) + "'" )
-        logging.debug("UUID    : '" + self.__uuid + "'" )
-        logging.debug("Hostname: '" + self.__hostname + "'" )
+        logging.debug("VCenter data collected from VMD:")
+        logging.debug("ID      : '" + str(self.__id) + "'")
+        logging.debug("UUID    : '" + self.__uuid + "'")
+        logging.debug("Hostname: '" + self.__hostname + "'")
 
     def GetId(self):
         return self.__id
@@ -1041,25 +1266,43 @@ class VCenterServer:
     def GetHostname(self):
         return self.__hostname
 
+
 class VMDObject:
     """
     Represents a generic VMD Object. This object only has name, uuid and the state as it is provided by the VCenter Server that manages it.
     It can be used as a base class for specific VMD Object types, allowing the reading of more detailed configuration data and metrics.
     """
-    def __init__(self, vmd_connection, vcenter_server, object_type, object_name, object_uuid):
+
+    def __init__(
+        self, vmd_connection, vcenter_server, object_type, object_name, object_uuid
+    ):
         if vmd_connection is None:
-            raise ArgumentValueError('vmd_connection', vmd_connection, 'No VMD Connection provided.')
+            raise ArgumentValueError(
+                "vmd_connection", vmd_connection, "No VMD Connection provided."
+            )
         if vcenter_server is None:
-            raise ArgumentValueError('vcenter_server', vcenter_server, 'No VCenter Server provided.')
+            raise ArgumentValueError(
+                "vcenter_server", vcenter_server, "No VCenter Server provided."
+            )
 
         query = ""
 
-        if (object_uuid is None):
+        if object_uuid is None:
             if len(object_name.strip()) < 1:
-                raise ArgumentValueError('object_name', object_name, 'Object name must not be an empty string.')
+                raise ArgumentValueError(
+                    "object_name",
+                    object_name,
+                    "Object name must not be an empty string.",
+                )
 
-            logging.info('Loading data for object ' + object_name + ' of type ' + object_type + '.')
-            logging.debug('VCenter server name: ' + vcenter_server.GetName() + '.')
+            logging.info(
+                "Loading data for object "
+                + object_name
+                + " of type "
+                + object_type
+                + "."
+            )
+            logging.debug("VCenter server name: " + vcenter_server.GetName() + ".")
 
             query = f"""
 SELECT
@@ -1074,51 +1317,99 @@ AND object_name = '{object_name}'
 """
         else:
             if len(object_uuid.strip()) < 1:
-                raise ArgumentValueError('object_uuid', object_uuid, 'Object UUID must not be an empty string.')
+                raise ArgumentValueError(
+                    "object_uuid",
+                    object_uuid,
+                    "Object UUID must not be an empty string.",
+                )
 
-            logging.info('Loading data for object ' + object_uuid + ' of type ' + object_type + '.')
-            logging.debug('VCenter server name: ' + vcenter_server.GetName() + '.')
-            query = """
+            logging.info(
+                "Loading data for object "
+                + object_uuid
+                + " of type "
+                + object_type
+                + "."
+            )
+            logging.debug("VCenter server name: " + vcenter_server.GetName() + ".")
+            query = (
+                """
 SELECT
 HEX(uuid) AS uuid,
 object_name AS name,
 overall_status AS status
 FROM object
-WHERE vcenter_uuid = UNHEX('""" + vcenter_server.GetUUId() + """')
-AND object_type = '""" + object_type + """'
-AND uuid = UNHEX('""" + object_uuid + """')
+WHERE vcenter_uuid = UNHEX('"""
+                + vcenter_server.GetUUId()
+                + """')
+AND object_type = '"""
+                + object_type
+                + """'
+AND uuid = UNHEX('"""
+                + object_uuid
+                + """')
 ;
 """
+            )
         cursor = vmd_connection.cursor()
         cursor.execute(query)
         data = cursor.fetchall()
 
-        if (object_uuid is None):
+        if object_uuid is None:
             if len(data) < 1:
-                logging.error('No VMD Object data found.')
-                raise ValueError('No VMD Object with name ' + object_name + ' and type ' + object_type + ' has been found. The name is invalid, wrong, with different upper or lower cases?')
+                logging.error("No VMD Object data found.")
+                raise ValueError(
+                    "No VMD Object with name "
+                    + object_name
+                    + " and type "
+                    + object_type
+                    + " has been found. The name is invalid, wrong, with different upper or lower cases?"
+                )
             if len(data) > 1:
-                logging.error('Found 2 or more VMD Objects  with the same name and type. Unable to understand which one should use.')
-                raise ValueError('Found more than one VMD Object with the same name ' + object_name + ' and the same type ' + object_type + '.')
+                logging.error(
+                    "Found 2 or more VMD Objects  with the same name and type. Unable to understand which one should use."
+                )
+                raise ValueError(
+                    "Found more than one VMD Object with the same name "
+                    + object_name
+                    + " and the same type "
+                    + object_type
+                    + "."
+                )
         else:
             if len(data) < 1:
-                logging.error('No VMD Object data found.')
-                raise ValueError('No VMD Object with UUID ' + object_uuid + ' and type ' + object_type + ' has been found. Wrong UUID?')
+                logging.error("No VMD Object data found.")
+                raise ValueError(
+                    "No VMD Object with UUID "
+                    + object_uuid
+                    + " and type "
+                    + object_type
+                    + " has been found. Wrong UUID?"
+                )
             if len(data) > 1:
-                logging.error('Found 2 or more VMD Objects  with the same UUID and type. Unable to understand which one should use.')
-                raise ValueError('Found more than one VMD Object with the same UUID ' + object_uuid + ' and the same type ' + object_type + '.')
+                logging.error(
+                    "Found 2 or more VMD Objects  with the same UUID and type. Unable to understand which one should use."
+                )
+                raise ValueError(
+                    "Found more than one VMD Object with the same UUID "
+                    + object_uuid
+                    + " and the same type "
+                    + object_type
+                    + "."
+                )
 
         self.__type = object_type
         for row in data:
-            self.__uuid   = row[0]
-            self.__name   = row[1]
+            self.__uuid = row[0]
+            self.__name = row[1]
             self.__status = row[2]
 
-        logging.debug('Object data collected from VMD:')
-        logging.debug("Name  : '" + self.__name + "'" )
-        logging.debug("UUID  : '" + self.__uuid + "'" )
-        logging.debug("Status: '" + self.__status + "'" )
-        logging.info('Loaded data for object ' + self.__name + ' (UUID: '+ self.__uuid + ')')
+        logging.debug("Object data collected from VMD:")
+        logging.debug("Name  : '" + self.__name + "'")
+        logging.debug("UUID  : '" + self.__uuid + "'")
+        logging.debug("Status: '" + self.__status + "'")
+        logging.info(
+            "Loaded data for object " + self.__name + " (UUID: " + self.__uuid + ")"
+        )
 
     def GetUUId(self):
         return self.__uuid
@@ -1130,24 +1421,38 @@ AND uuid = UNHEX('""" + object_uuid + """')
         return self.__type
 
     def GetStatus(self):
-        if (self.__status == 'green'):
+        if self.__status == "green":
             return NagiosMetricStatus.ok
-        if (self.__status == 'yellow'):
+        if self.__status == "yellow":
             return NagiosMetricStatus.warning
-        if (self.__status == 'red'):
+        if self.__status == "red":
             return NagiosMetricStatus.critical
         return NagiosMetricStatus.unknown
 
     def GetRawStatus(self):
         return self.__status
 
+
 class VirtualMachineObject(VMDObject):
-    def __init__(self, vmd_connection, vcenter_server, object_name, object_uuid, metric_factory = None):
-        logging.debug('Building Virtual Machine VMD Object.')
-        VMDObject.__init__(self, vmd_connection, vcenter_server, 'VirtualMachine', object_name, object_uuid)
+    def __init__(
+        self,
+        vmd_connection,
+        vcenter_server,
+        object_name,
+        object_uuid,
+        metric_factory=None,
+    ):
+        logging.debug("Building Virtual Machine VMD Object.")
+        VMDObject.__init__(
+            self,
+            vmd_connection,
+            vcenter_server,
+            "VirtualMachine",
+            object_name,
+            object_uuid,
+        )
 
-        logging.debug('Loading Virtual Machine data from VMD Database.')
-
+        logging.debug("Loading Virtual Machine data from VMD Database.")
 
         data_query = f"""
 SELECT
@@ -1195,80 +1500,279 @@ AND vm.uuid = UNHEX('{self.GetUUId()}')
         data = cursor.fetchall()
 
         if len(data) < 1:
-            logging.error('Unable to get Virtual Machine data from VMD.')
-            raise ValueError('No Virtual Machine data for VMD Object with name ' + object_name + '.')
+            logging.error("Unable to get Virtual Machine data from VMD.")
+            raise ValueError(
+                "No Virtual Machine data for VMD Object with name " + object_name + "."
+            )
         if len(data) > 1:
-            logging.error('Found 2 or more Virtual Machines data sets with the same name and type. Unable to understand which one should use.')
-            raise ValueError('Found more than one Virtual Machines data sets for VMD Object with name ' + object_name + '.')
+            logging.error(
+                "Found 2 or more Virtual Machines data sets with the same name and type. Unable to understand which one should use."
+            )
+            raise ValueError(
+                "Found more than one Virtual Machines data sets for VMD Object with name "
+                + object_name
+                + "."
+            )
 
         for row in data:
-            self.__virtual_memory          = row[0]
-            self.__cpu_core_per_socket     = row[2]
-            self.__cpu_sockets             = row[3]
-            self.__cpu_total               = row[1]
-            self.__hostsystem_uuid         = row[4]
+            self.__virtual_memory = row[0]
+            self.__cpu_core_per_socket = row[2]
+            self.__cpu_sockets = row[3]
+            self.__cpu_total = row[1]
+            self.__hostsystem_uuid = row[4]
             self.__hostsystem_max_cpu_freq = row[5]
-            self.__max_cpu_frequency       = row[1] * row[5]
-            self.__is_running              = row[6]
-            self.__vmtools_status          = row[7]
+            self.__max_cpu_frequency = row[1] * row[5]
+            self.__is_running = row[6]
+            self.__vmtools_status = row[7]
 
-            logging.debug('Virtual memory        : ' + str(self.__virtual_memory))
-            logging.debug('Cores per socket      : ' + str(self.__cpu_core_per_socket))
-            logging.debug('Sockets               : ' + str(self.__cpu_sockets))
-            logging.debug('Total cores           : ' + str(self.__cpu_total))
-            logging.debug('Host System UUID      : ' + str(self.__hostsystem_uuid))
-            logging.debug('Max CPU Core frequency: ' + str(self.__hostsystem_max_cpu_freq))
-            logging.debug('Max CPU Frequency     : ' + str(self.__max_cpu_frequency))
-            logging.debug('Is running            : ' + str(self.__is_running))
+            logging.debug("Virtual memory        : " + str(self.__virtual_memory))
+            logging.debug("Cores per socket      : " + str(self.__cpu_core_per_socket))
+            logging.debug("Sockets               : " + str(self.__cpu_sockets))
+            logging.debug("Total cores           : " + str(self.__cpu_total))
+            logging.debug("Host System UUID      : " + str(self.__hostsystem_uuid))
+            logging.debug(
+                "Max CPU Core frequency: " + str(self.__hostsystem_max_cpu_freq)
+            )
+            logging.debug("Max CPU Frequency     : " + str(self.__max_cpu_frequency))
+            logging.debug("Is running            : " + str(self.__is_running))
 
             if metric_factory:
                 raw_metrics = []
 
                 vmtools_status = 4
-                if self.__vmtools_status == 'toolsOk':
+                if self.__vmtools_status == "toolsOk":
                     vmtools_status = 0
-                elif self.__vmtools_status == 'toolsOld':
+                elif self.__vmtools_status == "toolsOld":
                     vmtools_status = 1
-                elif self.__vmtools_status == 'toolsNotRunning':
+                elif self.__vmtools_status == "toolsNotRunning":
                     vmtools_status = 2
-                elif self.__vmtools_status == 'toolsNotInstalled':
+                elif self.__vmtools_status == "toolsNotInstalled":
                     vmtools_status = 3
 
                 self.__total_ds_usage = row[19] + row[20]
 
-                cpu_usage_percengate              = round((float(row[ 9])           / float(self.__max_cpu_frequency) * 100.0), 2)
-                cpu_starvation_percentage         = round((float(row[ 8] - row[ 9]) / float(self.__max_cpu_frequency) * 100.0), 2)
-                memory_usage_percentage           = round((float(row[10])           / float(self.__virtual_memory)    * 100.0), 2)
-                guest_memory_usage_percentage     = round((float(row[13])           / float(self.__virtual_memory)    * 100.0), 2)
-                guest_memory_ballooned_percentage = round((float(row[14])           / float(self.__virtual_memory)    * 100.0), 2)
-                ds_usage_percentage               = round((float(row[19])           / float(self.__total_ds_usage)    * 100.0), 2)
+                cpu_usage_percengate = round(
+                    (float(row[9]) / float(self.__max_cpu_frequency) * 100.0), 2
+                )
+                cpu_starvation_percentage = round(
+                    (float(row[8] - row[9]) / float(self.__max_cpu_frequency) * 100.0),
+                    2,
+                )
+                memory_usage_percentage = round(
+                    (float(row[10]) / float(self.__virtual_memory) * 100.0), 2
+                )
+                guest_memory_usage_percentage = round(
+                    (float(row[13]) / float(self.__virtual_memory) * 100.0), 2
+                )
+                guest_memory_ballooned_percentage = round(
+                    (float(row[14]) / float(self.__virtual_memory) * 100.0), 2
+                )
+                ds_usage_percentage = round(
+                    (float(row[19]) / float(self.__total_ds_usage) * 100.0), 2
+                )
 
-                number_of_snapshots               = row[21]
+                number_of_snapshots = row[21]
 
-                raw_metrics.append({'name':'cpu_demanded',                      'value':row[ 8],                           'unit':'hz', 'max':self.__max_cpu_frequency, 'min':0})
-                raw_metrics.append({'name':'cpu_used',                          'value':row[ 9],                           'unit':'hz', 'max':self.__max_cpu_frequency, 'min':0})
-                raw_metrics.append({'name':'cpu_used_percentage',               'value':cpu_usage_percengate,              'unit':'%',  'max':100.0,                    'min':0})
-                raw_metrics.append({'name':'cpu_starvation',                    'value':row[ 8] - row[9],                  'unit':'hz', 'max':self.__max_cpu_frequency, 'min':0})
-                raw_metrics.append({'name':'cpu_starvation_percentage',         'value':cpu_starvation_percentage,         'unit':'%',  'max':100.0,                    'min':0})
-                raw_metrics.append({'name':'memory_usage',                      'value':row[10],                           'unit':'KB', 'max':self.__virtual_memory,    'min':0})
-                raw_metrics.append({'name':'memory_usage_percentage',           'value':memory_usage_percentage,           'unit':'%',  'max':100.0                ,    'min':0})
-                raw_metrics.append({'name':'memory_overhead_consumed',          'value':row[11],                           'unit':'KB', 'max':self.__virtual_memory,    'min':0})
-                raw_metrics.append({'name':'uptime',                            'value':row[12],                           'unit':'s',  'max':None,                     'min':0})
-                raw_metrics.append({'name':'guest_memory_usage',                'value':row[13],                           'unit':'KB', 'max':self.__virtual_memory,    'min':0})
-                raw_metrics.append({'name':'guest_memory_usage_percentage',     'value':guest_memory_usage_percentage,     'unit':'%',  'max':100.0,                    'min':0})
-                raw_metrics.append({'name':'guest_memory_ballooned',            'value':row[14],                           'unit':'KB', 'max':self.__virtual_memory,    'min':0})
-                raw_metrics.append({'name':'guest_memory_ballooned_percentage', 'value':guest_memory_ballooned_percentage, 'unit':'%',  'max':100.0,                    'min':0})
-                raw_metrics.append({'name':'guest_memory_compressed',           'value':row[15],                           'unit':'KB', 'max':self.__virtual_memory,    'min':0})
-                raw_metrics.append({'name':'guest_memory_private',              'value':row[16],                           'unit':'KB', 'max':self.__virtual_memory,    'min':0})
-                raw_metrics.append({'name':'guest_memory_shared',               'value':row[17],                           'unit':'KB', 'max':self.__virtual_memory,    'min':0})
-                raw_metrics.append({'name':'guest_memory_swapped',              'value':row[18],                           'unit':'KB', 'max':self.__virtual_memory,    'min':0})
-                raw_metrics.append({'name':'ds_usage',                          'value':row[19],                           'unit':'B',  'max':self.__total_ds_usage,    'min':0})
-                raw_metrics.append({'name':'ds_usage_percentage',               'value':ds_usage_percentage,               'unit':'%',  'max':100.0,                    'min':0})
-                raw_metrics.append({'name':'vm_running',                        'value':self.__is_running,                 'unit':None, 'max':1,                        'min':0})
-                raw_metrics.append({'name':'vmtools_status',                    'value':vmtools_status,                    'unit':None, 'max':3,                        'min':0})
-                raw_metrics.append({'name':'active_snapshots',                  'value':number_of_snapshots,               'unit':'',   'max':None,                     'min':0})
+                raw_metrics.append(
+                    {
+                        "name": "cpu_demanded",
+                        "value": row[8],
+                        "unit": "hz",
+                        "max": self.__max_cpu_frequency,
+                        "min": 0,
+                    }
+                )
+                raw_metrics.append(
+                    {
+                        "name": "cpu_used",
+                        "value": row[9],
+                        "unit": "hz",
+                        "max": self.__max_cpu_frequency,
+                        "min": 0,
+                    }
+                )
+                raw_metrics.append(
+                    {
+                        "name": "cpu_used_percentage",
+                        "value": cpu_usage_percengate,
+                        "unit": "%",
+                        "max": 100.0,
+                        "min": 0,
+                    }
+                )
+                raw_metrics.append(
+                    {
+                        "name": "cpu_starvation",
+                        "value": row[8] - row[9],
+                        "unit": "hz",
+                        "max": self.__max_cpu_frequency,
+                        "min": 0,
+                    }
+                )
+                raw_metrics.append(
+                    {
+                        "name": "cpu_starvation_percentage",
+                        "value": cpu_starvation_percentage,
+                        "unit": "%",
+                        "max": 100.0,
+                        "min": 0,
+                    }
+                )
+                raw_metrics.append(
+                    {
+                        "name": "memory_usage",
+                        "value": row[10],
+                        "unit": "KB",
+                        "max": self.__virtual_memory,
+                        "min": 0,
+                    }
+                )
+                raw_metrics.append(
+                    {
+                        "name": "memory_usage_percentage",
+                        "value": memory_usage_percentage,
+                        "unit": "%",
+                        "max": 100.0,
+                        "min": 0,
+                    }
+                )
+                raw_metrics.append(
+                    {
+                        "name": "memory_overhead_consumed",
+                        "value": row[11],
+                        "unit": "KB",
+                        "max": self.__virtual_memory,
+                        "min": 0,
+                    }
+                )
+                raw_metrics.append(
+                    {
+                        "name": "uptime",
+                        "value": row[12],
+                        "unit": "s",
+                        "max": None,
+                        "min": 0,
+                    }
+                )
+                raw_metrics.append(
+                    {
+                        "name": "guest_memory_usage",
+                        "value": row[13],
+                        "unit": "KB",
+                        "max": self.__virtual_memory,
+                        "min": 0,
+                    }
+                )
+                raw_metrics.append(
+                    {
+                        "name": "guest_memory_usage_percentage",
+                        "value": guest_memory_usage_percentage,
+                        "unit": "%",
+                        "max": 100.0,
+                        "min": 0,
+                    }
+                )
+                raw_metrics.append(
+                    {
+                        "name": "guest_memory_ballooned",
+                        "value": row[14],
+                        "unit": "KB",
+                        "max": self.__virtual_memory,
+                        "min": 0,
+                    }
+                )
+                raw_metrics.append(
+                    {
+                        "name": "guest_memory_ballooned_percentage",
+                        "value": guest_memory_ballooned_percentage,
+                        "unit": "%",
+                        "max": 100.0,
+                        "min": 0,
+                    }
+                )
+                raw_metrics.append(
+                    {
+                        "name": "guest_memory_compressed",
+                        "value": row[15],
+                        "unit": "KB",
+                        "max": self.__virtual_memory,
+                        "min": 0,
+                    }
+                )
+                raw_metrics.append(
+                    {
+                        "name": "guest_memory_private",
+                        "value": row[16],
+                        "unit": "KB",
+                        "max": self.__virtual_memory,
+                        "min": 0,
+                    }
+                )
+                raw_metrics.append(
+                    {
+                        "name": "guest_memory_shared",
+                        "value": row[17],
+                        "unit": "KB",
+                        "max": self.__virtual_memory,
+                        "min": 0,
+                    }
+                )
+                raw_metrics.append(
+                    {
+                        "name": "guest_memory_swapped",
+                        "value": row[18],
+                        "unit": "KB",
+                        "max": self.__virtual_memory,
+                        "min": 0,
+                    }
+                )
+                raw_metrics.append(
+                    {
+                        "name": "ds_usage",
+                        "value": row[19],
+                        "unit": "B",
+                        "max": self.__total_ds_usage,
+                        "min": 0,
+                    }
+                )
+                raw_metrics.append(
+                    {
+                        "name": "ds_usage_percentage",
+                        "value": ds_usage_percentage,
+                        "unit": "%",
+                        "max": 100.0,
+                        "min": 0,
+                    }
+                )
+                raw_metrics.append(
+                    {
+                        "name": "vm_running",
+                        "value": self.__is_running,
+                        "unit": None,
+                        "max": 1,
+                        "min": 0,
+                    }
+                )
+                raw_metrics.append(
+                    {
+                        "name": "vmtools_status",
+                        "value": vmtools_status,
+                        "unit": None,
+                        "max": 3,
+                        "min": 0,
+                    }
+                )
+                raw_metrics.append(
+                    {
+                        "name": "active_snapshots",
+                        "value": number_of_snapshots,
+                        "unit": "",
+                        "max": None,
+                        "min": 0,
+                    }
+                )
 
-        logging.debug('Loading Guest Disk metrics from VMD Database.')
+        logging.debug("Loading Guest Disk metrics from VMD Database.")
         guest_disks_query = f"""
 SELECT
 disk_path AS disk_name,
@@ -1285,17 +1789,35 @@ AND vm_uuid = UNHEX('{self.GetUUId()}')
         data = cursor.fetchall()
 
         if len(data) < 1:
-            logging.info('No Guest Disks data for this VM. Maybe VMware Tools are not running?')
+            logging.info(
+                "No Guest Disks data for this VM. Maybe VMware Tools are not running?"
+            )
 
         for row in data:
-            metric_name   = 'disk_' + str(row[0]).replace(' ', '_') + '_used'
+            metric_name = "disk_" + str(row[0]).replace(" ", "_") + "_used"
             disk_capacity = row[1]
-            disk_free     = row[2]
-            disk_used     = disk_capacity - disk_free
-            metric_name   = 'disk_' + str(row[0]).replace(' ', '_') + '_free'
-            raw_metrics.append({'name':metric_name, 'value':disk_free, 'unit':'B', 'max':disk_capacity, 'min':0})
-            metric_name   = 'disk_' + str(row[0]).replace(' ', '_') + '_used'
-            raw_metrics.append({'name':metric_name, 'value':disk_used, 'unit':'B', 'max':disk_capacity, 'min':0})
+            disk_free = row[2]
+            disk_used = disk_capacity - disk_free
+            metric_name = "disk_" + str(row[0]).replace(" ", "_") + "_free"
+            raw_metrics.append(
+                {
+                    "name": metric_name,
+                    "value": disk_free,
+                    "unit": "B",
+                    "max": disk_capacity,
+                    "min": 0,
+                }
+            )
+            metric_name = "disk_" + str(row[0]).replace(" ", "_") + "_used"
+            raw_metrics.append(
+                {
+                    "name": metric_name,
+                    "value": disk_used,
+                    "unit": "B",
+                    "max": disk_capacity,
+                    "min": 0,
+                }
+            )
 
         self.__metrics = metric_factory.CreateMetrics(raw_metrics)
 
@@ -1305,7 +1827,7 @@ AND vm_uuid = UNHEX('{self.GetUUId()}')
         """
         Check all the available metrics and returns the worst state it can be found.
         """
-        warning_count  = 0
+        warning_count = 0
         critical_count = 0
 
         for metric in self.__metrics.values():
@@ -1334,13 +1856,24 @@ AND vm_uuid = UNHEX('{self.GetUUId()}')
     def GetTotalCoresCount(self):
         return self.__cpu_total
 
-class HostSystemObject(VMDObject):
-    def __init__(self, vmd_connection, vcenter_server, object_name, object_uuid, metric_factory = None):
-        logging.debug('Building Host System VMD Object.')
-        VMDObject.__init__(self, vmd_connection, vcenter_server, 'HostSystem', object_name, object_uuid)
 
-        logging.debug('Loading Host System data from VMD Database.')
-        data_query = """
+class HostSystemObject(VMDObject):
+    def __init__(
+        self,
+        vmd_connection,
+        vcenter_server,
+        object_name,
+        object_uuid,
+        metric_factory=None,
+    ):
+        logging.debug("Building Host System VMD Object.")
+        VMDObject.__init__(
+            self, vmd_connection, vcenter_server, "HostSystem", object_name, object_uuid
+        )
+
+        logging.debug("Loading Host System data from VMD Database.")
+        data_query = (
+            """
 SELECT
 hardware_cpu_mhz                      * 1000000 AS cpu_core_frequency,
 hardware_cpu_packages                           AS cpu_sockets_total,
@@ -1349,114 +1882,235 @@ hardware_cpu_threads                            AS cpu_thread_total,
 hardware_cpu_mhz * hardware_cpu_cores * 1000000 AS cpu_capacity_total,
 hardware_memory_size_mb * 1024                  AS memory_total
 FROM host_system
-WHERE vcenter_uuid = UNHEX('""" + vcenter_server.GetUUId() + """')
-AND uuid = UNHEX('""" + self.GetUUId() + """')
+WHERE vcenter_uuid = UNHEX('"""
+            + vcenter_server.GetUUId()
+            + """')
+AND uuid = UNHEX('"""
+            + self.GetUUId()
+            + """')
 ;
 """
+        )
 
         cursor = vmd_connection.cursor()
         cursor.execute(data_query)
         data = cursor.fetchall()
 
         if len(data) < 1:
-            logging.error('Unable to get Host System data from VMD.')
-            raise ValueError('No Host System data for VMD Object with name ' + object_name + '.')
+            logging.error("Unable to get Host System data from VMD.")
+            raise ValueError(
+                "No Host System data for VMD Object with name " + object_name + "."
+            )
         if len(data) > 1:
-            logging.error('Found 2 or more Host Systems data sets with the same name and type. Unable to understand which one should use.')
-            raise ValueError('Found more than one Host Systems data sets for VMD Object with name ' + object_name + '.')
+            logging.error(
+                "Found 2 or more Host Systems data sets with the same name and type. Unable to understand which one should use."
+            )
+            raise ValueError(
+                "Found more than one Host Systems data sets for VMD Object with name "
+                + object_name
+                + "."
+            )
 
         for row in data:
             self.__core_frequency = row[0]
-            self.__core_total     = row[2]
-            self.__cpu_sockets    = row[1]
-            self.__cpu_threads    = row[3]
-            self.__cpu_capacity   = row[4]
-            self.__memory_total   = row[5]
+            self.__core_total = row[2]
+            self.__cpu_sockets = row[1]
+            self.__cpu_threads = row[3]
+            self.__cpu_capacity = row[4]
+            self.__memory_total = row[5]
 
-        logging.debug('Core frequency     : ' + str(self.__core_frequency))
-        logging.debug('Total cores        : ' + str(self.__core_total))
-        logging.debug('Sockets            : ' + str(self.__cpu_sockets))
-        logging.debug('Total threads      : ' + str(self.__cpu_threads))
-        logging.debug('Total CPU Capacity : ' + str(self.__cpu_capacity))
-        logging.debug('System memory      : ' + str(self.__memory_total))
+        logging.debug("Core frequency     : " + str(self.__core_frequency))
+        logging.debug("Total cores        : " + str(self.__core_total))
+        logging.debug("Sockets            : " + str(self.__cpu_sockets))
+        logging.debug("Total threads      : " + str(self.__cpu_threads))
+        logging.debug("Total CPU Capacity : " + str(self.__cpu_capacity))
+        logging.debug("System memory      : " + str(self.__memory_total))
 
         # Gathering object metrics
         if metric_factory:
-            logging.debug('Loading Host System metrics from VMD Database.')
-            metrics_query = """
+            logging.debug("Loading Host System metrics from VMD Database.")
+            metrics_query = (
+                """
 SELECT
 overall_cpu_usage    * 1000000 AS cpu_usage,
 overall_memory_usage_mb * 1024 AS memory_usage,
 uptime
 FROM
 host_quick_stats
-WHERE vcenter_uuid = UNHEX('""" + vcenter_server.GetUUId() + """')
-AND uuid = UNHEX('""" + self.GetUUId() + """')
+WHERE vcenter_uuid = UNHEX('"""
+                + vcenter_server.GetUUId()
+                + """')
+AND uuid = UNHEX('"""
+                + self.GetUUId()
+                + """')
 ;
 """
+            )
 
             cursor = vmd_connection.cursor()
             cursor.execute(metrics_query)
             data = cursor.fetchall()
 
             if len(data) < 1:
-                logging.error('Unable to get Host System statistics from VMD.')
-                raise ValueError('No Virtual Host Systems for VMD Object with name ' + object_name + '.')
+                logging.error("Unable to get Host System statistics from VMD.")
+                raise ValueError(
+                    "No Virtual Host Systems for VMD Object with name "
+                    + object_name
+                    + "."
+                )
             if len(data) > 1:
-                logging.error('Found 2 or more Host System statistic sets with the same name and type. Unable to understand which one should use.')
-                raise ValueError('Found more than one Host System statistic sets for VMD Object with name ' + object_name + '.')
+                logging.error(
+                    "Found 2 or more Host System statistic sets with the same name and type. Unable to understand which one should use."
+                )
+                raise ValueError(
+                    "Found more than one Host System statistic sets for VMD Object with name "
+                    + object_name
+                    + "."
+                )
 
             raw_metrics = []
             for row in data:
-                cpu_usage_percentage    = round((float(row[0]) / float(self.__cpu_capacity) * 100.0), 2)
-                memory_usage_percentage = round((float(row[1]) / float(self.__memory_total) * 100.0), 2)
-                raw_metrics.append({'name':'cpu_usage',               'value':row[ 0],                 'unit':'hz', 'max':self.__cpu_capacity, 'min':0})
-                raw_metrics.append({'name':'cpu_usage_percentage',    'value':cpu_usage_percentage,    'unit':'%',  'max':100.0,               'min':0})
-                raw_metrics.append({'name':'memory_usage',            'value':row[ 1],                 'unit':'KB', 'max':self.__memory_total, 'min':0})
-                raw_metrics.append({'name':'memory_usage_percentage', 'value':memory_usage_percentage, 'unit':'%',  'max':100.0,               'min':0})
-                raw_metrics.append({'name':'uptime',                  'value':row[ 2],                 'unit':'s',  'max':None,                'min':0})
+                cpu_usage_percentage = round(
+                    (float(row[0]) / float(self.__cpu_capacity) * 100.0), 2
+                )
+                memory_usage_percentage = round(
+                    (float(row[1]) / float(self.__memory_total) * 100.0), 2
+                )
+                raw_metrics.append(
+                    {
+                        "name": "cpu_usage",
+                        "value": row[0],
+                        "unit": "hz",
+                        "max": self.__cpu_capacity,
+                        "min": 0,
+                    }
+                )
+                raw_metrics.append(
+                    {
+                        "name": "cpu_usage_percentage",
+                        "value": cpu_usage_percentage,
+                        "unit": "%",
+                        "max": 100.0,
+                        "min": 0,
+                    }
+                )
+                raw_metrics.append(
+                    {
+                        "name": "memory_usage",
+                        "value": row[1],
+                        "unit": "KB",
+                        "max": self.__memory_total,
+                        "min": 0,
+                    }
+                )
+                raw_metrics.append(
+                    {
+                        "name": "memory_usage_percentage",
+                        "value": memory_usage_percentage,
+                        "unit": "%",
+                        "max": 100.0,
+                        "min": 0,
+                    }
+                )
+                raw_metrics.append(
+                    {
+                        "name": "uptime",
+                        "value": row[2],
+                        "unit": "s",
+                        "max": None,
+                        "min": 0,
+                    }
+                )
 
-            sensors_query = """
+            sensors_query = (
+                """
 SELECT
 health_state AS state,
 COUNT(*) AS sensors_count
 FROM host_sensor
-WHERE vcenter_uuid = UNHEX('""" + vcenter_server.GetUUId() + """')
-AND host_uuid = UNHEX('""" + self.GetUUId() + """')
+WHERE vcenter_uuid = UNHEX('"""
+                + vcenter_server.GetUUId()
+                + """')
+AND host_uuid = UNHEX('"""
+                + self.GetUUId()
+                + """')
 GROUP BY health_state
 ;
 """
+            )
 
             cursor = vmd_connection.cursor()
             cursor.execute(sensors_query)
             data = cursor.fetchall()
 
-            sensors_green   = 0
-            sensors_yellow  = 0
-            sensors_red     = 0
+            sensors_green = 0
+            sensors_yellow = 0
+            sensors_red = 0
             sensors_unknown = 0
             for row in data:
                 state = row[0].lower()
                 count = int(row[1])
 
-                if state == 'green':
+                if state == "green":
                     sensors_green += count
-                elif state == 'yellow':
+                elif state == "yellow":
                     sensors_yellow += count
-                elif state == 'red':
+                elif state == "red":
                     sensors_red += count
-                elif state == 'unknown':
+                elif state == "unknown":
                     sensors_unknown += count
                 else:
-                    logging.warning('While reading sensors status for Host System ' + self.GetName() + ' the unrecognized state ' + str(state) + ' has been found for ' + str(count) + ' sensor(s). Sensor with this state will be considered UNKNOWN.')
+                    logging.warning(
+                        "While reading sensors status for Host System "
+                        + self.GetName()
+                        + " the unrecognized state "
+                        + str(state)
+                        + " has been found for "
+                        + str(count)
+                        + " sensor(s). Sensor with this state will be considered UNKNOWN."
+                    )
                     sensors_unknown += count
 
-            sensors_total    = sensors_green + sensors_yellow + sensors_red + sensors_unknown
+            sensors_total = (
+                sensors_green + sensors_yellow + sensors_red + sensors_unknown
+            )
 
-            raw_metrics.append({'name':'sensors_green',   'value':sensors_green,   'unit':'', 'max':sensors_total, 'min':0})
-            raw_metrics.append({'name':'sensors_yellow',  'value':sensors_yellow,  'unit':'', 'max':sensors_total, 'min':0})
-            raw_metrics.append({'name':'sensors_red',     'value':sensors_red,     'unit':'', 'max':sensors_total, 'min':0})
-            raw_metrics.append({'name':'sensors_unknown', 'value':sensors_unknown, 'unit':'', 'max':sensors_total, 'min':0})
+            raw_metrics.append(
+                {
+                    "name": "sensors_green",
+                    "value": sensors_green,
+                    "unit": "",
+                    "max": sensors_total,
+                    "min": 0,
+                }
+            )
+            raw_metrics.append(
+                {
+                    "name": "sensors_yellow",
+                    "value": sensors_yellow,
+                    "unit": "",
+                    "max": sensors_total,
+                    "min": 0,
+                }
+            )
+            raw_metrics.append(
+                {
+                    "name": "sensors_red",
+                    "value": sensors_red,
+                    "unit": "",
+                    "max": sensors_total,
+                    "min": 0,
+                }
+            )
+            raw_metrics.append(
+                {
+                    "name": "sensors_unknown",
+                    "value": sensors_unknown,
+                    "unit": "",
+                    "max": sensors_total,
+                    "min": 0,
+                }
+            )
 
             self.__metrics = metric_factory.CreateMetrics(raw_metrics)
 
@@ -1464,7 +2118,7 @@ GROUP BY health_state
         """
         Check all the available metrics and returns the worst state it can be found.
         """
-        warning_count  = 0
+        warning_count = 0
         critical_count = 0
 
         for metric in self.__metrics.values():
@@ -1499,72 +2153,155 @@ GROUP BY health_state
     def GetTotalMemory(self):
         return self.__memory_total
 
-class DatastoreObject(VMDObject):
-    def __init__(self, vmd_connection, vcenter_server, object_name, object_uuid, metric_factory = None):
-        logging.debug('Building Datastore VMD Object.')
-        VMDObject.__init__(self, vmd_connection, vcenter_server, 'Datastore', object_name, object_uuid)
 
-        logging.debug('Loading Datastore data from VMD Database.')
-        data_query = """
+class DatastoreObject(VMDObject):
+    def __init__(
+        self,
+        vmd_connection,
+        vcenter_server,
+        object_name,
+        object_uuid,
+        metric_factory=None,
+    ):
+        logging.debug("Building Datastore VMD Object.")
+        VMDObject.__init__(
+            self, vmd_connection, vcenter_server, "Datastore", object_name, object_uuid
+        )
+
+        logging.debug("Loading Datastore data from VMD Database.")
+        data_query = (
+            """
 SELECT
 capacity AS diskspace_total,
 (IFNULL(multiple_host_access, 'n') = 'n') AS local_access
 FROM datastore
-WHERE vcenter_uuid = UNHEX('""" + vcenter_server.GetUUId() + """')
-AND uuid = UNHEX('""" + self.GetUUId() + """')
+WHERE vcenter_uuid = UNHEX('"""
+            + vcenter_server.GetUUId()
+            + """')
+AND uuid = UNHEX('"""
+            + self.GetUUId()
+            + """')
 ;
 """
+        )
 
         cursor = vmd_connection.cursor()
         cursor.execute(data_query)
         data = cursor.fetchall()
 
         if len(data) < 1:
-            logging.error('Unable to get Datastore data from VMD.')
-            raise ValueError('No Datastore data for VMD Object with name ' + object_name + '.')
+            logging.error("Unable to get Datastore data from VMD.")
+            raise ValueError(
+                "No Datastore data for VMD Object with name " + object_name + "."
+            )
         if len(data) > 1:
-            logging.error('Found 2 or more Datastores data sets with the same name and type. Unable to understand which one should use.')
-            raise ValueError('Found more than one Datastore data sets for VMD Object with name ' + object_name + '.')
+            logging.error(
+                "Found 2 or more Datastores data sets with the same name and type. Unable to understand which one should use."
+            )
+            raise ValueError(
+                "Found more than one Datastore data sets for VMD Object with name "
+                + object_name
+                + "."
+            )
 
         for row in data:
-            self.__diskspace_total       = row[0]
-            self.__is_local              = row[1]
+            self.__diskspace_total = row[0]
+            self.__is_local = row[1]
 
-        logging.debug('Total Disk space       : ' + str(self.__diskspace_total))
-        logging.debug('Local Access only      : ' + str(self.__is_local))
+        logging.debug("Total Disk space       : " + str(self.__diskspace_total))
+        logging.debug("Local Access only      : " + str(self.__is_local))
 
         # Gathering object metrics
         if metric_factory:
-            logging.debug('Loading Datastore metrics from VMD Database.')
-            metrics_query = """
+            logging.debug("Loading Datastore metrics from VMD Database.")
+            metrics_query = (
+                """
 SELECT
 free_space  AS diskspace_available,
 uncommitted AS diskspace_uncommitted
 FROM datastore
-WHERE vcenter_uuid = UNHEX('""" + vcenter_server.GetUUId() + """')
-AND uuid = UNHEX('""" + self.GetUUId() + """')
+WHERE vcenter_uuid = UNHEX('"""
+                + vcenter_server.GetUUId()
+                + """')
+AND uuid = UNHEX('"""
+                + self.GetUUId()
+                + """')
 ;
 """
+            )
 
             cursor = vmd_connection.cursor()
             cursor.execute(metrics_query)
             data = cursor.fetchall()
 
             if len(data) < 1:
-                logging.error('Unable to get Datastore statistics from VMD.')
-                raise ValueError('No Datastore for VMD Object with name ' + object_name + '.')
+                logging.error("Unable to get Datastore statistics from VMD.")
+                raise ValueError(
+                    "No Datastore for VMD Object with name " + object_name + "."
+                )
             if len(data) > 1:
-                logging.error('Found 2 or more Datastore statistic sets with the same name and type. Unable to understand which one should use.')
-                raise ValueError('Found more than one Datastore statistic sets for VMD Object with name ' + object_name + '.')
+                logging.error(
+                    "Found 2 or more Datastore statistic sets with the same name and type. Unable to understand which one should use."
+                )
+                raise ValueError(
+                    "Found more than one Datastore statistic sets for VMD Object with name "
+                    + object_name
+                    + "."
+                )
 
             raw_metrics = []
             for row in data:
-                raw_metrics.append({'name':'diskspace_free',        'value':row[ 0],                          'unit':'b', 'max':self.__diskspace_total, 'min':0})
-                raw_metrics.append({'name':'diskspace_used',        'value':self.__diskspace_total - row[ 0], 'unit':'b', 'max':self.__diskspace_total, 'min':0})
-                raw_metrics.append({'name':'diskspace_uncommitted', 'value':row[ 1],                          'unit':'b', 'max':self.__diskspace_total, 'min':0})
-                #20240919-Added percent for diskspace free and used
-                raw_metrics.append({'name':'diskspace_free_percent', 'value':round(row[ 0]/self.__diskspace_total*100,2),                             'unit':'%', 'max':100, 'min':0})
-                raw_metrics.append({'name':'diskspace_used_percent', 'value':round((self.__diskspace_total - row[ 0])/self.__diskspace_total*100,2),  'unit':'%', 'max':100, 'min':0})
+                raw_metrics.append(
+                    {
+                        "name": "diskspace_free",
+                        "value": row[0],
+                        "unit": "b",
+                        "max": self.__diskspace_total,
+                        "min": 0,
+                    }
+                )
+                raw_metrics.append(
+                    {
+                        "name": "diskspace_used",
+                        "value": self.__diskspace_total - row[0],
+                        "unit": "b",
+                        "max": self.__diskspace_total,
+                        "min": 0,
+                    }
+                )
+                raw_metrics.append(
+                    {
+                        "name": "diskspace_uncommitted",
+                        "value": row[1],
+                        "unit": "b",
+                        "max": self.__diskspace_total,
+                        "min": 0,
+                    }
+                )
+                # 20240919-Added percent for diskspace free and used
+                raw_metrics.append(
+                    {
+                        "name": "diskspace_free_percent",
+                        "value": round(row[0] / self.__diskspace_total * 100, 2),
+                        "unit": "%",
+                        "max": 100,
+                        "min": 0,
+                    }
+                )
+                raw_metrics.append(
+                    {
+                        "name": "diskspace_used_percent",
+                        "value": round(
+                            (self.__diskspace_total - row[0])
+                            / self.__diskspace_total
+                            * 100,
+                            2,
+                        ),
+                        "unit": "%",
+                        "max": 100,
+                        "min": 0,
+                    }
+                )
 
             self.__metrics = metric_factory.CreateMetrics(raw_metrics)
 
@@ -1572,7 +2309,7 @@ AND uuid = UNHEX('""" + self.GetUUId() + """')
         """
         Check all the available metrics and returns the worst state it can be found.
         """
-        warning_count  = 0
+        warning_count = 0
         critical_count = 0
 
         for metric in self.__metrics.values():
@@ -1595,44 +2332,76 @@ AND uuid = UNHEX('""" + self.GetUUId() + """')
     def IsLocalDatastore(self):
         return self.__is_local
 
-class ResourcePoolObject(VMDObject):
-    def __init__(self, vmd_connection, vcenter_server, object_name, object_uuid, metric_factory = None):
-        logging.debug('Building Resource Pool VMD Object.')
-        VMDObject.__init__(self, vmd_connection, vcenter_server, 'ResourcePool', object_name, object_uuid)
 
-        logging.debug('Loading Resource Pool data from VMD Database.')
-        data_query = """
+class ResourcePoolObject(VMDObject):
+    def __init__(
+        self,
+        vmd_connection,
+        vcenter_server,
+        object_name,
+        object_uuid,
+        metric_factory=None,
+    ):
+        logging.debug("Building Resource Pool VMD Object.")
+        VMDObject.__init__(
+            self,
+            vmd_connection,
+            vcenter_server,
+            "ResourcePool",
+            object_name,
+            object_uuid,
+        )
+
+        logging.debug("Loading Resource Pool data from VMD Database.")
+        data_query = (
+            """
 SELECT
 COUNT(*) AS vm_number,
 SUM(hardware_memorymb) * 1024 AS virtual_memory_allocated
 FROM virtual_machine
-WHERE vcenter_uuid = UNHEX('""" + vcenter_server.GetUUId() + """')
-AND uuid = UNHEX('""" + self.GetUUId() + """')
+WHERE vcenter_uuid = UNHEX('"""
+            + vcenter_server.GetUUId()
+            + """')
+AND uuid = UNHEX('"""
+            + self.GetUUId()
+            + """')
 ;
 """
+        )
 
         cursor = vmd_connection.cursor()
         cursor.execute(data_query)
         data = cursor.fetchall()
 
         if len(data) < 1:
-            logging.error('Unable to get Resource Pool data from VMD.')
-            raise ValueError('No Resource Pool data for VMD Object with name ' + object_name + '.')
+            logging.error("Unable to get Resource Pool data from VMD.")
+            raise ValueError(
+                "No Resource Pool data for VMD Object with name " + object_name + "."
+            )
         if len(data) > 1:
-            logging.error('Found 2 or more Resource Pool data sets with the same name and type. Unable to understand which one should use.')
-            raise ValueError('Found more than one Resource Pool data sets for VMD Object with name ' + object_name + '.')
+            logging.error(
+                "Found 2 or more Resource Pool data sets with the same name and type. Unable to understand which one should use."
+            )
+            raise ValueError(
+                "Found more than one Resource Pool data sets for VMD Object with name "
+                + object_name
+                + "."
+            )
 
         for row in data:
-            self.__vm_number                = row[0]
+            self.__vm_number = row[0]
             self.__virtual_memory_allocated = row[1]
 
-        logging.debug('VM Inside this Resource Pool: ' + str(self.__vm_number))
-        logging.debug('Total memory allocated      : ' + str(self.__virtual_memory_allocated))
+        logging.debug("VM Inside this Resource Pool: " + str(self.__vm_number))
+        logging.debug(
+            "Total memory allocated      : " + str(self.__virtual_memory_allocated)
+        )
 
         # Gathering object metrics
         if metric_factory:
-            logging.debug('Loading Resource Pool metrics from VMD Database.')
-            metrics_query = """
+            logging.debug("Loading Resource Pool metrics from VMD Database.")
+            metrics_query = (
+                """
 SELECT
 SUM(q.overall_cpu_demand          * 1000000) AS total_cpu_demanded,
 SUM(q.overall_cpu_usage           * 1000000) AS total_cpu_used,
@@ -1647,46 +2416,171 @@ SUM(q.swapped_memory_mb           * 1024)    AS total_guest_memory_swapped,
 SUM(v.hardware_numcpu)                       AS total_vcpu
 FROM vm_quick_stats q
 INNER JOIN virtual_machine v ON q.uuid = v.uuid
-WHERE v.vcenter_uuid = UNHEX('""" + vcenter_server.GetUUId() + """')
-AND v.resource_pool_uuid = UNHEX('""" + self.GetUUId() + """')
+WHERE v.vcenter_uuid = UNHEX('"""
+                + vcenter_server.GetUUId()
+                + """')
+AND v.resource_pool_uuid = UNHEX('"""
+                + self.GetUUId()
+                + """')
 ;
 """
+            )
 
             cursor = vmd_connection.cursor()
             cursor.execute(metrics_query)
             data = cursor.fetchall()
 
             if len(data) < 1:
-                logging.error('Unable to get Resource Pool statistics from VMD.')
-                raise ValueError('No Resource Pool for VMD Object with name ' + object_name + '.')
+                logging.error("Unable to get Resource Pool statistics from VMD.")
+                raise ValueError(
+                    "No Resource Pool for VMD Object with name " + object_name + "."
+                )
             if len(data) > 1:
-                logging.error('Found 2 or more Resource Pool statistic sets with the same name and type. Unable to understand which one should use.')
-                raise ValueError('Found more than one Resource Pool statistic sets for VMD Object with name ' + object_name + '.')
+                logging.error(
+                    "Found 2 or more Resource Pool statistic sets with the same name and type. Unable to understand which one should use."
+                )
+                raise ValueError(
+                    "Found more than one Resource Pool statistic sets for VMD Object with name "
+                    + object_name
+                    + "."
+                )
 
             raw_metrics = []
             for row in data:
-                raw_metrics.append({'name':'total_cpu_demanded',             'value':row[ 0],          'unit':'hz', 'max':None,                            'min':0})
-                raw_metrics.append({'name':'total_cpu_used',                 'value':row[ 1],          'unit':'hz', 'max':None,                            'min':0})
-                raw_metrics.append({'name':'total_cpu_starvation',           'value':row[ 0] - row[1], 'unit':'hz', 'max':None,                            'min':0})
-                raw_metrics.append({'name':'total_memory_usage',             'value':row[ 2],          'unit':'KB', 'max':self.__virtual_memory_allocated, 'min':0})
-                raw_metrics.append({'name':'total_memory_overhead_consumed', 'value':row[ 3],          'unit':'KB', 'max':self.__virtual_memory_allocated, 'min':0})
-                raw_metrics.append({'name':'total_guest_memory_usage',       'value':row[ 4],          'unit':'KB', 'max':self.__virtual_memory_allocated, 'min':0})
-                raw_metrics.append({'name':'total_guest_memory_ballooned',   'value':row[ 5],          'unit':'KB', 'max':self.__virtual_memory_allocated, 'min':0})
-                raw_metrics.append({'name':'total_guest_memory_compressed',  'value':row[ 6],          'unit':'KB', 'max':self.__virtual_memory_allocated, 'min':0})
-                raw_metrics.append({'name':'total_guest_memory_private',     'value':row[ 7],          'unit':'KB', 'max':self.__virtual_memory_allocated, 'min':0})
-                raw_metrics.append({'name':'total_guest_memory_shared',      'value':row[ 8],          'unit':'KB', 'max':self.__virtual_memory_allocated, 'min':0})
-                raw_metrics.append({'name':'total_guest_memory_swapped',     'value':row[ 9],          'unit':'KB', 'max':self.__virtual_memory_allocated, 'min':0})
-                raw_metrics.append({'name':'total_vcpu',                     'value':row[10],          'unit':'',   'max':None,                            'min':0})
+                raw_metrics.append(
+                    {
+                        "name": "total_cpu_demanded",
+                        "value": row[0],
+                        "unit": "hz",
+                        "max": None,
+                        "min": 0,
+                    }
+                )
+                raw_metrics.append(
+                    {
+                        "name": "total_cpu_used",
+                        "value": row[1],
+                        "unit": "hz",
+                        "max": None,
+                        "min": 0,
+                    }
+                )
+                raw_metrics.append(
+                    {
+                        "name": "total_cpu_starvation",
+                        "value": row[0] - row[1],
+                        "unit": "hz",
+                        "max": None,
+                        "min": 0,
+                    }
+                )
+                raw_metrics.append(
+                    {
+                        "name": "total_memory_usage",
+                        "value": row[2],
+                        "unit": "KB",
+                        "max": self.__virtual_memory_allocated,
+                        "min": 0,
+                    }
+                )
+                raw_metrics.append(
+                    {
+                        "name": "total_memory_overhead_consumed",
+                        "value": row[3],
+                        "unit": "KB",
+                        "max": self.__virtual_memory_allocated,
+                        "min": 0,
+                    }
+                )
+                raw_metrics.append(
+                    {
+                        "name": "total_guest_memory_usage",
+                        "value": row[4],
+                        "unit": "KB",
+                        "max": self.__virtual_memory_allocated,
+                        "min": 0,
+                    }
+                )
+                raw_metrics.append(
+                    {
+                        "name": "total_guest_memory_ballooned",
+                        "value": row[5],
+                        "unit": "KB",
+                        "max": self.__virtual_memory_allocated,
+                        "min": 0,
+                    }
+                )
+                raw_metrics.append(
+                    {
+                        "name": "total_guest_memory_compressed",
+                        "value": row[6],
+                        "unit": "KB",
+                        "max": self.__virtual_memory_allocated,
+                        "min": 0,
+                    }
+                )
+                raw_metrics.append(
+                    {
+                        "name": "total_guest_memory_private",
+                        "value": row[7],
+                        "unit": "KB",
+                        "max": self.__virtual_memory_allocated,
+                        "min": 0,
+                    }
+                )
+                raw_metrics.append(
+                    {
+                        "name": "total_guest_memory_shared",
+                        "value": row[8],
+                        "unit": "KB",
+                        "max": self.__virtual_memory_allocated,
+                        "min": 0,
+                    }
+                )
+                raw_metrics.append(
+                    {
+                        "name": "total_guest_memory_swapped",
+                        "value": row[9],
+                        "unit": "KB",
+                        "max": self.__virtual_memory_allocated,
+                        "min": 0,
+                    }
+                )
+                raw_metrics.append(
+                    {
+                        "name": "total_vcpu",
+                        "value": row[10],
+                        "unit": "",
+                        "max": None,
+                        "min": 0,
+                    }
+                )
 
             self.__metrics = metric_factory.CreateMetrics(raw_metrics)
 
-class ClusterComputeResourceObject(VMDObject):
-    def __init__(self, vmd_connection, vcenter_server, object_name, object_uuid, metric_factory = None):
-        logging.debug('Building Cluster Compute Resource VMD Object.')
-        VMDObject.__init__(self, vmd_connection, vcenter_server, 'ClusterComputeResource', object_name, object_uuid)
 
-        logging.debug('Loading Cluster Compute Resource data from VMD Database.')
-        data_query = """
+class ClusterComputeResourceObject(VMDObject):
+    def __init__(
+        self,
+        vmd_connection,
+        vcenter_server,
+        object_name,
+        object_uuid,
+        metric_factory=None,
+    ):
+        logging.debug("Building Cluster Compute Resource VMD Object.")
+        VMDObject.__init__(
+            self,
+            vmd_connection,
+            vcenter_server,
+            "ClusterComputeResource",
+            object_name,
+            object_uuid,
+        )
+
+        logging.debug("Loading Cluster Compute Resource data from VMD Database.")
+        data_query = (
+            """
 SELECT
 count(*)                                                 AS hostsystems_number,
 SUM(h.hardware_cpu_mhz * h.hardware_cpu_cores) * 1000000 AS cpu_capacity_total,
@@ -1695,35 +2589,60 @@ FROM
 object o
 INNER JOIN object p ON (o.parent_uuid = p.uuid)
 INNER JOIN host_system h ON (o.uuid = h.uuid)
-WHERE o.vcenter_uuid = UNHEX('""" + vcenter_server.GetUUId() + """')
-AND p.uuid = UNHEX('""" + self.GetUUId() + """')
+WHERE o.vcenter_uuid = UNHEX('"""
+            + vcenter_server.GetUUId()
+            + """')
+AND p.uuid = UNHEX('"""
+            + self.GetUUId()
+            + """')
 ;
 """
+        )
 
         cursor = vmd_connection.cursor()
         cursor.execute(data_query)
         data = cursor.fetchall()
 
         if len(data) < 1:
-            logging.error('Unable to get Cluster Compute Resource data from VMD.')
-            raise ValueError('No Cluster Compute Resource data for VMD Object with name ' + object_name + '.')
+            logging.error("Unable to get Cluster Compute Resource data from VMD.")
+            raise ValueError(
+                "No Cluster Compute Resource data for VMD Object with name "
+                + object_name
+                + "."
+            )
         if len(data) > 1:
-            logging.error('Found 2 or more Cluster Compute Resource data sets with the same name and type. Unable to understand which one should use.')
-            raise ValueError('Found more than one Cluster Compute Resource data sets for VMD Object with name ' + object_name + '.')
+            logging.error(
+                "Found 2 or more Cluster Compute Resource data sets with the same name and type. Unable to understand which one should use."
+            )
+            raise ValueError(
+                "Found more than one Cluster Compute Resource data sets for VMD Object with name "
+                + object_name
+                + "."
+            )
 
         for row in data:
-            self.__host_number           = row[0]
-            self.__host_cpu_capacity     = row[1]
+            self.__host_number = row[0]
+            self.__host_cpu_capacity = row[1]
             self.__host_memory_available = row[2]
 
-        logging.debug('Host systems Inside this Cluster Compute Resource: ' + str(self.__host_number))
-        logging.debug('Total CPU clock available                        : ' + str(self.__host_cpu_capacity))
-        logging.debug('Total memory available                           : ' + str(self.__host_memory_available))
+        logging.debug(
+            "Host systems Inside this Cluster Compute Resource: "
+            + str(self.__host_number)
+        )
+        logging.debug(
+            "Total CPU clock available                        : "
+            + str(self.__host_cpu_capacity)
+        )
+        logging.debug(
+            "Total memory available                           : "
+            + str(self.__host_memory_available)
+        )
 
         # Gathering object metrics
         if metric_factory:
-            logging.debug('Loading Cluster Compute Resource metrics from VMD Database.')
-            metrics_query = """
+            logging.debug("Loading Cluster Compute Resource metrics from VMD Database.")
+            metrics_query = (
+                """
 SELECT
 SUM(q.overall_cpu_usage       * 1000000) AS total_cpu_used,
 SUM(q.overall_memory_usage_mb * 1024)    AS total_memory_usage
@@ -1731,26 +2650,59 @@ FROM
 object o
 INNER JOIN object p ON (o.parent_uuid = p.uuid)
 INNER JOIN host_quick_stats q ON (o.uuid = q.uuid)
-WHERE o.vcenter_uuid = UNHEX('""" + vcenter_server.GetUUId() + """')
-AND p.uuid = UNHEX('""" + self.GetUUId() + """')
+WHERE o.vcenter_uuid = UNHEX('"""
+                + vcenter_server.GetUUId()
+                + """')
+AND p.uuid = UNHEX('"""
+                + self.GetUUId()
+                + """')
 ;
 """
+            )
 
             cursor = vmd_connection.cursor()
             cursor.execute(metrics_query)
             data = cursor.fetchall()
 
             if len(data) < 1:
-                logging.error('Unable to get Cluster Compute Resource statistics from VMD.')
-                raise ValueError('No Cluster Compute Resource for VMD Object with name ' + object_name + '.')
+                logging.error(
+                    "Unable to get Cluster Compute Resource statistics from VMD."
+                )
+                raise ValueError(
+                    "No Cluster Compute Resource for VMD Object with name "
+                    + object_name
+                    + "."
+                )
             if len(data) > 1:
-                logging.error('Found 2 or more Cluster Compute Resource statistic sets with the same name and type. Unable to understand which one should use.')
-                raise ValueError('Found more than one Cluster Compute Resource statistic sets for VMD Object with name ' + object_name + '.')
+                logging.error(
+                    "Found 2 or more Cluster Compute Resource statistic sets with the same name and type. Unable to understand which one should use."
+                )
+                raise ValueError(
+                    "Found more than one Cluster Compute Resource statistic sets for VMD Object with name "
+                    + object_name
+                    + "."
+                )
 
             raw_metrics = []
             for row in data:
-                raw_metrics.append({'name':'total_cpu_used',     'value':row[ 0], 'unit':'hz', 'max':self.__host_cpu_capacity,     'min':0})
-                raw_metrics.append({'name':'total_memory_usage', 'value':row[ 1], 'unit':'KB', 'max':self.__host_memory_available, 'min':0})
+                raw_metrics.append(
+                    {
+                        "name": "total_cpu_used",
+                        "value": row[0],
+                        "unit": "hz",
+                        "max": self.__host_cpu_capacity,
+                        "min": 0,
+                    }
+                )
+                raw_metrics.append(
+                    {
+                        "name": "total_memory_usage",
+                        "value": row[1],
+                        "unit": "KB",
+                        "max": self.__host_memory_available,
+                        "min": 0,
+                    }
+                )
 
             self.__metrics = metric_factory.CreateMetrics(raw_metrics)
 
@@ -1758,7 +2710,7 @@ AND p.uuid = UNHEX('""" + self.GetUUId() + """')
         """
         Check all the available metrics and returns the worst state it can be found.
         """
-        warning_count  = 0
+        warning_count = 0
         critical_count = 0
 
         for metric in self.__metrics.values():
@@ -1781,7 +2733,8 @@ AND p.uuid = UNHEX('""" + self.GetUUId() + """')
     def IsLocalDatastore(self):
         return self.__is_local
 
-def concatenate_array(array, value_on_none = '', separator = ', '):
+
+def concatenate_array(array, value_on_none="", separator=", "):
     """
     Support function: if the array is not None, all the elements will be joined together on a string using the specified separator.
     If the array is None, the value_on_none string is returned.
@@ -1792,7 +2745,8 @@ def concatenate_array(array, value_on_none = '', separator = ', '):
 
     return output
 
-def convert_array_to_dictionary(array, separator='='):
+
+def convert_array_to_dictionary(array, separator="="):
     """
     Support function to convert an array of strings into a dictionary of key-value pairs.
     Each key-value pair is obtained by splitting each string at the first occurrence of the specified separator.
@@ -1803,27 +2757,53 @@ def convert_array_to_dictionary(array, separator='='):
     if array:
         dictionary = {}
         for element in array:
-            splitted = element.split('=', 1)
-            if (len(splitted) > 1):
+            splitted = element.split("=", 1)
+            if len(splitted) > 1:
                 dictionary[splitted[0]] = splitted[1]
 
     return dictionary
 
-def parse_command_line(command_line_overwrite = None):
+
+def parse_command_line(command_line_overwrite=None):
     """
     Support function for parsing command line arguments.
     If you want, you can provide a string that will be used instead of the original command line.
     Uses argparse.
     """
     # Preparing for command line arguments parsing
-    parser = argparse.ArgumentParser(description='Reads the state of a VMD Object and its metrics from VSphereDB Database.')
+    parser = argparse.ArgumentParser(
+        description="Reads the state of a VMD Object and its metrics from VSphereDB Database."
+    )
 
-    parser.add_argument('-s', '--vcsa-name',          required=True,  action='store',      dest='vcsa_name',
-        metavar='VCSAServerName',       help='Name of the VCSA queried by VSphereDB. If VSphereDB queries directly an ESXi host, its name must be provided.')
-    parser.add_argument('-t', '--object-type',        required=True,                       dest='vmd_object_type', choices=vmd_object_types,
-        metavar='VMDObjectType',        help='Type of the VMD Object of which its state you want to check. Supported types are: ' + ', '.join(vmd_object_types))
-    parser.add_argument('-m',  '--check-method',      required=False,                      dest='check_method', choices=['VCSA', 'Metrics', 'Both'], default='Both',
-        metavar='Method',               help='Method used to determine the state of the object. Possible values: VCSA, Metrics, Both. VCSA means the state of the object is the state read directly from the source used by VMD. Metrics uses thresholds to determine the state of each metric, then the worst state will be selected. Both means both VCSA and Metrics methods will be used, and the worst one will be reported. Default: %(default)s')
+    parser.add_argument(
+        "-s",
+        "--vcsa-name",
+        required=True,
+        action="store",
+        dest="vcsa_name",
+        metavar="VCSAServerName",
+        help="Name of the VCSA queried by VSphereDB. If VSphereDB queries directly an ESXi host, its name must be provided.",
+    )
+    parser.add_argument(
+        "-t",
+        "--object-type",
+        required=True,
+        dest="vmd_object_type",
+        choices=vmd_object_types,
+        metavar="VMDObjectType",
+        help="Type of the VMD Object of which its state you want to check. Supported types are: "
+        + ", ".join(vmd_object_types),
+    )
+    parser.add_argument(
+        "-m",
+        "--check-method",
+        required=False,
+        dest="check_method",
+        choices=["VCSA", "Metrics", "Both"],
+        default="Both",
+        metavar="Method",
+        help="Method used to determine the state of the object. Possible values: VCSA, Metrics, Both. VCSA means the state of the object is the state read directly from the source used by VMD. Metrics uses thresholds to determine the state of each metric, then the worst state will be selected. Both means both VCSA and Metrics methods will be used, and the worst one will be reported. Default: %(default)s",
+    )
 
     # UUID in HEX Format is not what it seems.
     # VMD uses php functions to encode and write an UUID as a sequence of bytes, but so far I am unable to convert this sequence back to the GUID Format.
@@ -1831,54 +2811,112 @@ def parse_command_line(command_line_overwrite = None):
     # E.g.: SELECT HEX(uuid) AS HEXUUID FROM object
     # This can be a headache if the UUID must be provided by command line, but Icinga Automations can provide this value and store it into the required HOst Object fairly easy.
     vmd_object_group = parser.add_mutually_exclusive_group(required=True)
-    vmd_object_group.add_argument('-n', '--object-name',         action='store',      dest='vmd_object_name',
-        metavar='VMDObjectName',        help='Name of the VMD Object of which its state you want to check. Ignored if -N is used.')
-    vmd_object_group.add_argument('-N', '--object-uuid',        action='store',      dest='vmd_object_uuid',
-        metavar='VMDObjectHEXUUID',     help='UUID in HEX Format of the VMD Object of which its state you want to check. Takes precedence over -n.')
+    vmd_object_group.add_argument(
+        "-n",
+        "--object-name",
+        action="store",
+        dest="vmd_object_name",
+        metavar="VMDObjectName",
+        help="Name of the VMD Object of which its state you want to check. Ignored if -N is used.",
+    )
+    vmd_object_group.add_argument(
+        "-N",
+        "--object-uuid",
+        action="store",
+        dest="vmd_object_uuid",
+        metavar="VMDObjectHEXUUID",
+        help="UUID in HEX Format of the VMD Object of which its state you want to check. Takes precedence over -n.",
+    )
 
-    parser.add_argument('-w', '--warning',            required=False, action='append',     dest='warning_thresholds',
-        metavar='MetricName=Threshold', help='NAGIOS-Style interval describing a warning threshold for metric MetricName. This parameter can be specified multiple times, each time for a different metric.')
-    parser.add_argument('-c', '--critical',           required=False, action='append',     dest='critical_thresholds',
-        metavar='MetricName=Threshold', help='NAGIOS-Style interval describing a critical threshold for metric MetricName. This parameter can be specified multiple times, each time for a different metric.')
-    parser.add_argument('-i', '--metric-to-include',  required=False, action='append',     dest='metrics_to_include',
-        metavar='MetricName',           help='Name of a metric you want to include . This script will load only the specifiec metric. This parameter can be specified multiple times, each time for a different metric.')
-    parser.add_argument('-x', '--metric-to-exclude',  required=False, action='append',     dest='metrics_to_exclude',
-        metavar='MetricName',           help='Name of a metric you want to skip. This script will load all the available (or included) metrics, then will discard the specified metric.This parameter can be specified multiple times, each time for a different metric.')
-    parser.add_argument(      '--override-max-value', required=False, action='append',     dest='max_values_override',
-        metavar='MetricName=MaxValue',  help='Override Maximum Value for a given Metric. The value automatically obtained by the script will be replaced with the one provided by command line.')
-    parser.add_argument(      '--override-min-value', required=False, action='append',     dest='min_values_override',
-        metavar='MetricName=MinValue',  help='Override Minimum Value for a given Metric. The value automatically obtained by the script will be replaced with the one provided by command line.')
-    parser.add_argument(      '--output-all-metrics', required=False, action='store_true', dest='output_all_metrics',
-                                        help='By default, only faulted metrics (ordered by fault severity) are displayed as output. If specified, all metrics will be displayed as output. This does not affect performance data.')
+    parser.add_argument(
+        "-w",
+        "--warning",
+        required=False,
+        action="append",
+        dest="warning_thresholds",
+        metavar="MetricName=Threshold",
+        help="NAGIOS-Style interval describing a warning threshold for metric MetricName. This parameter can be specified multiple times, each time for a different metric.",
+    )
+    parser.add_argument(
+        "-c",
+        "--critical",
+        required=False,
+        action="append",
+        dest="critical_thresholds",
+        metavar="MetricName=Threshold",
+        help="NAGIOS-Style interval describing a critical threshold for metric MetricName. This parameter can be specified multiple times, each time for a different metric.",
+    )
+    parser.add_argument(
+        "-i",
+        "--metric-to-include",
+        required=False,
+        action="append",
+        dest="metrics_to_include",
+        metavar="MetricName",
+        help="Name of a metric you want to include . This script will load only the specifiec metric. This parameter can be specified multiple times, each time for a different metric.",
+    )
+    parser.add_argument(
+        "-x",
+        "--metric-to-exclude",
+        required=False,
+        action="append",
+        dest="metrics_to_exclude",
+        metavar="MetricName",
+        help="Name of a metric you want to skip. This script will load all the available (or included) metrics, then will discard the specified metric.This parameter can be specified multiple times, each time for a different metric.",
+    )
+    parser.add_argument(
+        "--override-max-value",
+        required=False,
+        action="append",
+        dest="max_values_override",
+        metavar="MetricName=MaxValue",
+        help="Override Maximum Value for a given Metric. The value automatically obtained by the script will be replaced with the one provided by command line.",
+    )
+    parser.add_argument(
+        "--override-min-value",
+        required=False,
+        action="append",
+        dest="min_values_override",
+        metavar="MetricName=MinValue",
+        help="Override Minimum Value for a given Metric. The value automatically obtained by the script will be replaced with the one provided by command line.",
+    )
+    parser.add_argument(
+        "--output-all-metrics",
+        required=False,
+        action="store_true",
+        dest="output_all_metrics",
+        help="By default, only faulted metrics (ordered by fault severity) are displayed as output. If specified, all metrics will be displayed as output. This does not affect performance data.",
+    )
 
-    parser.add_argument('-v', '--verbose',           required=False, action='count', default=0)
-    parser.add_argument('-V', '--version',                           action='version', version='%(prog)s 0.2')
+    parser.add_argument("-v", "--verbose", required=False, action="count", default=0)
+    parser.add_argument("-V", "--version", action="version", version="%(prog)s 0.2")
 
     if command_line_overwrite:
-        arguments = parser.parse_args(command_line_overwrite.split(' '))
+        arguments = parser.parse_args(command_line_overwrite.split(" "))
     else:
         arguments = parser.parse_args()
 
     return arguments
 
+
 # Supported VMD objects types
 vmd_object_types = [
-#    'ComputeResource',
-    'ClusterComputeResource',
-#    'Datacenter',
-    'Datastore',
-#    'DatastoreHostMount',
-#    'DistributedVirtualPortgroup',
-#    'DistributedVirtualSwitch',
-#    'Folder',
-#    'HostMountInfo',
-    'HostSystem',
-#    'Network',
-    'ResourcePool',
-#    'StoragePod',
-#    'VirtualApp',
-    'VirtualMachine',
-#    'VmwareDistributedVirtualSwitch'
+    #    'ComputeResource',
+    "ClusterComputeResource",
+    #    'Datacenter',
+    "Datastore",
+    #    'DatastoreHostMount',
+    #    'DistributedVirtualPortgroup',
+    #    'DistributedVirtualSwitch',
+    #    'Folder',
+    #    'HostMountInfo',
+    "HostSystem",
+    #    'Network',
+    "ResourcePool",
+    #    'StoragePod',
+    #    'VirtualApp',
+    "VirtualMachine",
+    #    'VmwareDistributedVirtualSwitch'
 ]
 
 return_value = NagiosMetricStatus.ok
@@ -1886,19 +2924,19 @@ return_value = NagiosMetricStatus.ok
 try:
     arguments = parse_command_line()
 
-    vcsa_name           = arguments.vcsa_name
-    vmd_object_type     = arguments.vmd_object_type
-    vmd_object_name     = arguments.vmd_object_name
-    vmd_object_uuid     = arguments.vmd_object_uuid
+    vcsa_name = arguments.vcsa_name
+    vmd_object_type = arguments.vmd_object_type
+    vmd_object_name = arguments.vmd_object_name
+    vmd_object_uuid = arguments.vmd_object_uuid
     max_values_override = arguments.max_values_override
     min_values_override = arguments.min_values_override
-    metrics_to_include  = arguments.metrics_to_include
-    metrics_to_exclude  = arguments.metrics_to_exclude
-    warning_thresholds  = arguments.warning_thresholds
+    metrics_to_include = arguments.metrics_to_include
+    metrics_to_exclude = arguments.metrics_to_exclude
+    warning_thresholds = arguments.warning_thresholds
     critical_thresholds = arguments.critical_thresholds
-    output_all_metrics  = arguments.output_all_metrics
+    output_all_metrics = arguments.output_all_metrics
     status_check_method = arguments.check_method
-    log_level_count     = arguments.verbose
+    log_level_count = arguments.verbose
 
     # Setting log level for this script. Default is WARNING or above.
     # If by command line one or more verbose are specified, log level is updated accordingly
@@ -1911,84 +2949,109 @@ try:
         log_level = logging.DEBUG
 
     # Configuring log level (only if this is the main instance)
-    if __name__ == '__main__':
-        logging.basicConfig(level=log_level, format='[%(asctime)s][%(levelname)-8s] %(message)s')
+    if __name__ == "__main__":
+        logging.basicConfig(
+            level=log_level, format="[%(asctime)s][%(levelname)-8s] %(message)s"
+        )
 
     # Logging argument values. Useful for debugging.
-    metrics_to_include_string  = concatenate_array(metrics_to_include,  'All')
-    metrics_to_exclude_string  = concatenate_array(metrics_to_exclude,  'None')
-    warning_thresholds_string  = concatenate_array(warning_thresholds,  'None')
-    critical_thresholds_string = concatenate_array(critical_thresholds, 'None')
-    max_values_override_string = concatenate_array(max_values_override, 'None')
-    min_values_override_string = concatenate_array(min_values_override, 'None')
+    metrics_to_include_string = concatenate_array(metrics_to_include, "All")
+    metrics_to_exclude_string = concatenate_array(metrics_to_exclude, "None")
+    warning_thresholds_string = concatenate_array(warning_thresholds, "None")
+    critical_thresholds_string = concatenate_array(critical_thresholds, "None")
+    max_values_override_string = concatenate_array(max_values_override, "None")
+    min_values_override_string = concatenate_array(min_values_override, "None")
 
-    logging.debug('Arguments from command line:')
-    logging.debug("VCSA Server name              : '" + vcsa_name                  + "'")
-    logging.debug("VMD Object Type               : '" + vmd_object_type            + "'")
-    logging.debug("VMD Object Name               : '" + str(vmd_object_name)       + "'")
-    logging.debug("VMD Object UUID               : '" + str(vmd_object_uuid)       + "'")
-    logging.debug("Metrics Maximum value override: '" + max_values_override_string + "'")
-    logging.debug("Metrics Minimum value override: '" + min_values_override_string + "'")
-    logging.debug("Metrics to include            : '" + metrics_to_include_string  + "'")
-    logging.debug("Metrics to exclude            : '" + metrics_to_exclude_string  + "'")
-    logging.debug("Warning Thresholds            : '" + warning_thresholds_string  + "'")
-    logging.debug("Critical Thresholds           : '" + critical_thresholds_string + "'")
-    logging.debug("State calculation method      : '" + status_check_method        + "'")
-    logging.debug("Log level                     : '" + str(log_level_count)       + "'")
+    logging.debug("Arguments from command line:")
+    logging.debug("VCSA Server name              : '" + vcsa_name + "'")
+    logging.debug("VMD Object Type               : '" + vmd_object_type + "'")
+    logging.debug("VMD Object Name               : '" + str(vmd_object_name) + "'")
+    logging.debug("VMD Object UUID               : '" + str(vmd_object_uuid) + "'")
+    logging.debug(
+        "Metrics Maximum value override: '" + max_values_override_string + "'"
+    )
+    logging.debug(
+        "Metrics Minimum value override: '" + min_values_override_string + "'"
+    )
+    logging.debug("Metrics to include            : '" + metrics_to_include_string + "'")
+    logging.debug("Metrics to exclude            : '" + metrics_to_exclude_string + "'")
+    logging.debug("Warning Thresholds            : '" + warning_thresholds_string + "'")
+    logging.debug(
+        "Critical Thresholds           : '" + critical_thresholds_string + "'"
+    )
+    logging.debug("State calculation method      : '" + status_check_method + "'")
+    logging.debug("Log level                     : '" + str(log_level_count) + "'")
 
-    #Converting arguments to the right format
-    warning_thresholds_dictionary  = convert_array_to_dictionary(warning_thresholds)
+    # Converting arguments to the right format
+    warning_thresholds_dictionary = convert_array_to_dictionary(warning_thresholds)
     critical_thresholds_dictionary = convert_array_to_dictionary(critical_thresholds)
     max_values_override_dictionary = convert_array_to_dictionary(max_values_override)
     min_values_override_dictionary = convert_array_to_dictionary(min_values_override)
 
     # Connecting to VMD Database
-    logging.info('Connecting to VMD Database.')
+    logging.info("Connecting to VMD Database.")
     connector = VMDConnector(vmddb_username, vmddb_password)
     connection = connector.GetConnection()
 
     # Looking for the specified VCSA inside the database.
     # The VCSA is required because objects managed by different VCSA might have the same name, while the name of an object is unique for every VCSA
-    logging.info('Loading VCenter Server data.')
+    logging.info("Loading VCenter Server data.")
     vcenter_server = VCenterServer(connection, vcsa_name)
 
     # Searching for the requested VMD Object.
-    logging.info('Loading data for requested VMD Object.')
-    metric_factory = MetricFactory(metrics_to_include, metrics_to_exclude, warning_thresholds_dictionary, critical_thresholds_dictionary, max_values_override_dictionary, min_values_override_dictionary)
+    logging.info("Loading data for requested VMD Object.")
+    metric_factory = MetricFactory(
+        metrics_to_include,
+        metrics_to_exclude,
+        warning_thresholds_dictionary,
+        critical_thresholds_dictionary,
+        max_values_override_dictionary,
+        min_values_override_dictionary,
+    )
 
     # The object with the right type (corresponding to what expressed as an argument) will be created
     object = None
-    if (vmd_object_type == 'VirtualMachine'):
-        object = VirtualMachineObject(connection, vcenter_server, vmd_object_name, vmd_object_uuid, metric_factory)
-    elif (vmd_object_type == 'HostSystem'):
-        object = HostSystemObject(connection, vcenter_server, vmd_object_name, vmd_object_uuid, metric_factory)
-    elif (vmd_object_type == 'Datastore'):
-        object = DatastoreObject(connection, vcenter_server, vmd_object_name, vmd_object_uuid, metric_factory)
-    elif (vmd_object_type == 'ResourcePool'):
-        object = ResourcePoolObject(connection, vcenter_server, vmd_object_name, vmd_object_uuid, metric_factory)
-    elif (vmd_object_type == 'ClusterComputeResource'):
-        object = ClusterComputeResourceObject(connection, vcenter_server, vmd_object_name, vmd_object_uuid, metric_factory)
-    elif (vmd_object_type == 'Datacenter'):
+    if vmd_object_type == "VirtualMachine":
+        object = VirtualMachineObject(
+            connection, vcenter_server, vmd_object_name, vmd_object_uuid, metric_factory
+        )
+    elif vmd_object_type == "HostSystem":
+        object = HostSystemObject(
+            connection, vcenter_server, vmd_object_name, vmd_object_uuid, metric_factory
+        )
+    elif vmd_object_type == "Datastore":
+        object = DatastoreObject(
+            connection, vcenter_server, vmd_object_name, vmd_object_uuid, metric_factory
+        )
+    elif vmd_object_type == "ResourcePool":
+        object = ResourcePoolObject(
+            connection, vcenter_server, vmd_object_name, vmd_object_uuid, metric_factory
+        )
+    elif vmd_object_type == "ClusterComputeResource":
+        object = ClusterComputeResourceObject(
+            connection, vcenter_server, vmd_object_name, vmd_object_uuid, metric_factory
+        )
+    elif vmd_object_type == "Datacenter":
         pass
-    elif (vmd_object_type == 'ComputeResource'):
+    elif vmd_object_type == "ComputeResource":
         pass
-    elif (vmd_object_type == 'DatastoreHostMount'):
+    elif vmd_object_type == "DatastoreHostMount":
         pass
-    elif (vmd_object_type == 'DistributedVirtualPortgroup'):
+    elif vmd_object_type == "DistributedVirtualPortgroup":
         pass
-    elif (vmd_object_type == 'DistributedVirtualSwitch'):
+    elif vmd_object_type == "DistributedVirtualSwitch":
         pass
-    elif (vmd_object_type == 'Folder'):
+    elif vmd_object_type == "Folder":
         pass
-    elif (vmd_object_type == 'HostMountInfo'):
+    elif vmd_object_type == "HostMountInfo":
         pass
-    elif (vmd_object_type == 'Network'):
+    elif vmd_object_type == "Network":
         pass
-    elif (vmd_object_type == 'StoragePod'):
+    elif vmd_object_type == "StoragePod":
         pass
-    elif (vmd_object_type == 'VirtualApp'):
+    elif vmd_object_type == "VirtualApp":
         pass
-    elif (vmd_object_type == 'VmwareDistributedVirtualSwitch'):
+    elif vmd_object_type == "VmwareDistributedVirtualSwitch":
         pass
 
     # Assertion: at this point, OBJECT MUST EXIST
@@ -1996,54 +3059,54 @@ try:
 
     # Determining the state of the object.
     # The state will be determined by using the algorithm selected by the end user at command line.
-    logging.debug('Preparing to evaluate VMD Object status')
-    object_status  = NagiosMetricStatus.unknown
-    vcsa_status    = object.GetStatus()
+    logging.debug("Preparing to evaluate VMD Object status")
+    object_status = NagiosMetricStatus.unknown
+    vcsa_status = object.GetStatus()
     metrics_status = MetricFactory.GetMetricsStatus()
 
-    logging.debug('Status from VCSA   :' + vcsa_status.name.upper())
-    logging.debug('Status from Metrics:' + metrics_status.name.upper())
+    logging.debug("Status from VCSA   :" + vcsa_status.name.upper())
+    logging.debug("Status from Metrics:" + metrics_status.name.upper())
 
-    if status_check_method == 'VCSA':
-        logging.info('Using status from VCSA')
+    if status_check_method == "VCSA":
+        logging.info("Using status from VCSA")
         object_status = vcsa_status
-    elif status_check_method == 'Metrics':
-        logging.info('Using status from Metrics')
+    elif status_check_method == "Metrics":
+        logging.info("Using status from Metrics")
         object_status = metrics_status
-    elif status_check_method == 'Both':
+    elif status_check_method == "Both":
         if metrics_status.value > vcsa_status.value:
-            logging.info('Using worst status between VCSA and Metrics')
-            logging.info('Status from Metrics is worse')
+            logging.info("Using worst status between VCSA and Metrics")
+            logging.info("Status from Metrics is worse")
             object_status = metrics_status
         else:
-            logging.info('Status from VCSA is worse')
+            logging.info("Status from VCSA is worse")
             object_status = vcsa_status
 
     return_value = object_status
 
     # Now that the state has been determined, the right output can be produced.
     perf_output = MetricFactory.GetMetricsOutput(output_all_metrics)
-    perf_data   = MetricFactory.GetMetricsPerformance()
+    perf_data = MetricFactory.GetMetricsPerformance()
 
-    if status_check_method == 'Both':
-        output = f'{vmd_object_type} status is {return_value.name.upper()} (status from VCSA is {vcsa_status.name.upper()}, metrics are {metrics_status.name.upper()})'
+    if status_check_method == "Both":
+        output = f"{vmd_object_type} status is {return_value.name.upper()} (status from VCSA is {vcsa_status.name.upper()}, metrics are {metrics_status.name.upper()})"
     else:
-        output = f'{vmd_object_type} status is {return_value.name.upper()}'
+        output = f"{vmd_object_type} status is {return_value.name.upper()}"
 
     if len(perf_output) > 0:
-        output += ': ' + perf_output
+        output += ": " + perf_output
 
-    output += ' | ' + perf_data
+    output += " | " + perf_data
 
     print(output)
 
 except Exception as e:
-    print(NagiosMetricStatus.unknown.name + ' - ' + str(e))
+    print(NagiosMetricStatus.unknown.name + " - " + str(e))
     return_value = NagiosMetricStatus.unknown
 except SystemExit:
     pass
 except:
-    print('Unhandled exception: Unable to catch the raised exception')
+    print("Unhandled exception: Unable to catch the raised exception")
     return_value = NagiosMetricStatus.unknown
 finally:
     try:
