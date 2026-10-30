@@ -6,7 +6,7 @@ repos:
       - id: check-added-large-files
   #     - id: check-case-conflict
       - id: end-of-file-fixer
-  #     - id: fix-byte-order-marker
+      - id: fix-byte-order-marker
       - id: check-json
       - id: check-json5
       - id: check-toml
