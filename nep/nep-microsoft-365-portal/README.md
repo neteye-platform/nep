@@ -1,16 +1,17 @@
 # nep-microsoft-365-portal
 
-The `nep-microsoft-365-portal` is developed in order to provide a simple tool for monitoring the status of Office 365 online services that are reported at: **https://portal.office.com/servicestatus**
+The `nep-microsoft-365-portal` is developed in order to provide a simple tool for monitoring the status of Office 365 online services that are reported at: [https://portal.office.com/servicestatus](https://portal.office.com/servicestatus)
 
 ![Portal_Office](doc-images/portal.png "portal.office.com")
 
-This NEP calls API at https://portal.office.com/api/servicestatus/index and uses this python3 library
+This NEP calls API at [https://portal.office.com/api/servicestatus/index](https://portal.office.com/api/servicestatus/index) and uses this python3 library
 
-*  [python3-xmltodict](https://pypi.org/project/xmltodict/)
+* [python3-xmltodict](https://pypi.org/project/xmltodict/)
 
 *This NEP can be also as example in order to develp advanced XML tests by customizing the logic inside the python script.*
 
-# Table of Contents
+## Table of Contents
+
 1. [Prerequisites](#prerequisites)
 2. [Installation](#installation)
 3. [Packet Contents](#packet-contents)
@@ -18,20 +19,20 @@ This NEP calls API at https://portal.office.com/api/servicestatus/index and uses
 
 ## Prerequisites
 
-| Sofware Version | Version |
+| Software Version | Version |
 | --- | ----------- |
 | NetEye | 4.32 |
 | nep-common | 0.1 |
 
-##### Required NetEye Modules
+### Required NetEye Modules
 
 | NetEye Module |
 | --- |
 | Core |
 
-### External dependencies
+### External Dependencies
 
-This NEP needs these external dependecies other that the ones used by the NEPs reported in [Prerequisites](#prerequisites)
+This NEP needs these external dependencies other that the ones used by the NEPs reported in [Prerequisites](#prerequisites)
 
 * Access to the epel repository (granted by nep-common)
 
@@ -42,7 +43,8 @@ The installation process provides a Python script `check_office_services.py` tha
 ### NEP Installation
 
 To install the NEP, run this command using SSH on NetEye Master Node:
-```
+
+``` bash
 nep-setup install nep-microsoft-365-portal
 ```
 
@@ -50,8 +52,9 @@ nep-setup install nep-microsoft-365-portal
 
 There is no need to perform any action to complete the installation of this NEP.
 
-*Maybe it will be usefull manually run the script in order to check the compatibility with your OS.*
-```
+*Maybe it will be useful to manually run the script in order to check the compatibility with your OS.*
+
+``` bash
 /neteye/shared/monitoring/plugins/check_office_services.py -p 'https://portal.office.com/api/servicestatus/index' -m all
 ```
 
@@ -71,7 +74,6 @@ A pre installation bash script for installing the python3 library:
 The Python3 Script:
 
 * check_office_services.py
-
 
 ### Director/Icinga Objects
 
@@ -110,7 +112,6 @@ Where
 ### Metrics
 
 This NEP doesn't generate any Performance Data from its commands
-
 
 ## Usage
 
