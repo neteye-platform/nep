@@ -31,7 +31,7 @@ pub struct Package {
 
 impl From<Prerequisites> for Package {
     fn from(value: Prerequisites) -> Self {
-        // extract the version and moduels from the neteye part of the prereqs
+        // extract the version and modules from the neteye part of the prereqs
         let (neteye_version, neteye_modules) = if let Some(neteye) = value.neteye {
             (
                 Some(neteye.version),

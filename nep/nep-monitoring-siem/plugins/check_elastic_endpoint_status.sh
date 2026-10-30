@@ -4,7 +4,7 @@ DEFAULT_FILE="/neteye/shared/icinga2/data/lib/icinga2/elastic-endpoint_status.js
 
 print_help() {
     echo ""
-    echo "This script check Elastic Endpoint status from JSON file retrived by Elasticsearch"
+    echo "This script check Elastic Endpoint status from JSON file retrieved by Elasticsearch"
     echo ""
     echo "Usage:"
     echo "-h"

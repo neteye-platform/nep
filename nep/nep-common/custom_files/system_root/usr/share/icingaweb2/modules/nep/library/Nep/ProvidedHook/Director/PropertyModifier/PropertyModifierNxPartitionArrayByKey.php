@@ -57,7 +57,7 @@ class PropertyModifierNxPartitionArrayByKey extends PropertyModifierHook
             ],
         ]);
         $form->addElement('select', 'sanitize', array(
-            'label'       => $form->translate('Sanitize Paritioned Array Names'),
+            'label'       => $form->translate('Sanitize Partitioned Array Names'),
             'required'    => true,
             'description' => $form->translate(
                 'Name of each Partitioned Array will be sanitized, so it can be safely ised as Customvar Name (replace "-" with "_", then lowercased)'

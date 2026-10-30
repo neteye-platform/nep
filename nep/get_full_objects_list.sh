@@ -74,10 +74,10 @@ function get_dashboards_list() {
 
 tmpfile=$(mktemp)
 
-for key in ${!director_baskets_repos[@]}
+for key in "${!director_baskets_repos[@]}"
 do
 	baskets_dir=$key
-	if [ -d ${baskets_dir} ]
+	if [ -d "${baskets_dir}" ]
 	then
 		echo "Loading objects from ${baskets_dir}"
 

@@ -26,7 +26,7 @@ function remove_service_sets() {
             response=$(mysql -D director -e "$SQL'$s'")
             if [ -n "$response" ]; then
                 echo "------------------------------------------------------------------------------------"
-                echo "Service Set: '$s' is assigned manually to the follwoing Director Objects"
+                echo "Service Set: '$s' is assigned manually to the following Director Objects"
                 mysql -D director -e "$SQL'$s'"
                 echo "WARNING: You have to add manually this Service Set to the object BEFORE deploy config"
             fi

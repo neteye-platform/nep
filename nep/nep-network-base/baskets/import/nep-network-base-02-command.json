@@ -16,7 +16,7 @@
                     "set_if": "$tcp_all$"
                 },
                 "-D": {
-                    "description": "Minimum number of days a certificate has to be valid. 1st value is number of days for warning, 2nd is critical (if not specified: 0) - seperated by comma.",
+                    "description": "Minimum number of days a certificate has to be valid. 1st value is number of days for warning, 2nd is critical (if not specified: 0) - separated by comma.",
                     "value": "$tcp_certificate$"
                 },
                 "-E_quit": {

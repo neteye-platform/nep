@@ -203,7 +203,7 @@
             "category_id": null,
             "varname": "nx_centreon_ibm_storwize_ssh_filter",
             "caption": "[NX] Centreon IBM Storage Storwize Filter",
-            "description": "Exclude some parts (comma seperated list) (Example: --filter=host --filter=enclosurecanister) Can also exclude specific instance: --filter=host,10",
+            "description": "Exclude some parts (comma separated list) (Example: --filter=host --filter=enclosurecanister) Can also exclude specific instance: --filter=host,10",
             "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
             "format": null,
             "originalId": "10294",

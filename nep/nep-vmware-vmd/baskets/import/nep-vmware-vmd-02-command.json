@@ -14,7 +14,7 @@
                     "order": "9"
                 },
                 "-i": {
-                    "description": "Name of a metric you want to include . This script will load only the specifiec metric.",
+                    "description": "Name of a metric you want to include . This script will load only the specific metric.",
                     "repeat_key": true,
                     "value": "$nx_vmd_metrics_to_include$",
                     "order": "6"
