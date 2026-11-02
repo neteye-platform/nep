@@ -265,7 +265,7 @@ if r.status_code == 200:
     JSON_RES = json.loads(r.content)
     TOTAL_EVENTS = JSON_RES["count"]
 
-    if SHOW_EPS == True:
+    if SHOW_EPS:
         total_result = CalculateEPS(int(TOTAL_EVENTS), CHECK_INTERVAL)
     else:
         # Count Events
