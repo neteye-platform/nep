@@ -48,7 +48,7 @@ impl core::fmt::Display for NodeType {
 #[derive(Debug, Clone, Hash)]
 /// Collection of **all** the paths we will use
 pub struct Confs {
-    /// The path where neteye writes the other nodes informations on a cluster
+    /// The path where neteye writes the other nodes information on a cluster
     pub neteye_cluster_file: PathBuf,
     /// The file present on satellite nodes
     pub neteye_satellite_file: PathBuf,

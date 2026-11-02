@@ -23,7 +23,7 @@ function remove_service_sets() {
     for s in "${serviceset_objects[@]}"; do
         tmp=$(icingacli director serviceset exist "$s")
         if [[ $tmp != *"does not"* ]]; then
-            ## Retrive manual usage of service set
+            ## Retrieve manual usage of service set
             response=$(mysql -D director -e "$SQL'$s'")
             if [ -n "$response" ]; then
                 echo "------------------------------------------------------------------------------------"

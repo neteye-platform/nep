@@ -14,7 +14,7 @@ class PropertyModifierCompareFieldContentAgainstPattern extends PropertyModifier
             'label'       => $form->translate('Pattern'),
             'required'    => true,
             'description' => $form->translate(
-                'This pattern will be matched with the main selected one. If it matches exaclty, the modifier fill return true.'
+                'This pattern will be matched with the main selected one. If it matches exactly, the modifier fill return true.'
                 . 'Please provide field names in pattern using format ${some_column} .'
             )
         ));

@@ -7,7 +7,7 @@
 
 # 1) Controllare numero accessi
 # 2) max response non superi soglia
-# 2) max task per kibana istances
+# 2) max task per kibana instances
 
 # ?? gestire più istanze kibana
 
@@ -213,7 +213,7 @@ rt) # Check Max Response Time
     if [[ $MRS != null ]]; then
         MRS_N=$(echo "$MRS" | jq -c 'tonumber')
         if [[ $MRS_N -ge $critical ]] && [[ -n $critical ]]; then
-            echo "CRITICAL - Kibana's max_response_time ${MRS_N}ms exceded the thresold ${critical}ms"
+            echo "CRITICAL - Kibana's max_response_time ${MRS_N}ms exceeded the threshold ${critical}ms"
             echo "Max response time : ${MRS_N}ms<br>"
             echo "Total requests: $TR<br>"
             echo "Concurrent connections: $CC<br>"
@@ -221,7 +221,7 @@ rt) # Check Max Response Time
             echo " | 'max_response_time'=${MRS_N}ms;${warning}ms;${critical}ms;0; 'requests'=$TR;;;0; 'connections'=$CC;;;0;"
             exit $STATE_CRITICAL
         elif [[ $MRS_N -ge $warning ]] && [[ -n $warning ]]; then
-            echo "WARNING - Kibana's max_response_time ${MRS_N}ms exceded the thresold ${warning}ms"
+            echo "WARNING - Kibana's max_response_time ${MRS_N}ms exceeded the threshold ${warning}ms"
             echo "Max response time : ${MRS_N}ms<br>"
             echo "Total requests: $TR<br>"
             echo "Concurrent connections: $CC<br>"
@@ -281,7 +281,7 @@ task) ## Task Manager
 
     if [ $CAPACITY_STATUS == "ERROR" ]; then
         echo "CRITICAL - Kibana Task manager as insufficient capacity across all types of tasks, based on warning threshold of $KB_TASK_WARN_THRESHOLDS% and critical threshold of $KB_TASK_CRIT_THRESHOLDS%.<br>"
-        echo "The maximum available throughput overall Kibana instance is '$KB_MAX_TPM' tasks per minute (splitted on $KB_INSTANCE Kibana instance).<br>"
+        echo "The maximum available throughput overall Kibana instance is '$KB_MAX_TPM' tasks per minute (split by $KB_INSTANCE Kibana instance).<br>"
         echo "Based on past throughput the overdue tasks in the system could be executed within '$KB_MTDO' minute.<br>"
         echo "On average, the RECURRING tasks in the system have historically required a throughput of '$KB_AVG_RECURRING_TPM' tasks per minute. Instead the overall tasks (recurring or otherwise) have historically required a throughput of '$KB_AVG_REQUIRED_TPM' tasks per minute.<br><br>"
         echo "Estimated deployment strategy from Kibana: a minimin of '$KB_REQUIRED_INSTANCE' Kibana instance is required for current workload, the suggested number of instance are '$KB_SUGGEST_INSTANCE'."
@@ -289,7 +289,7 @@ task) ## Task Manager
         exit $STATE_CRITICAL
     elif [ $CAPACITY_STATUS == "WARNING" ]; then
         echo "WARNING - Kibana Task manager capacity is sufficient for the scheduled recurring tasks, but non-recurring tasks often cause the cluster to exceed capacity. This is based on warning threshold of $KB_TASK_WARN_THRESHOLDS% and critical threshold of $KB_TASK_CRIT_THRESHOLDS%.<br>"
-        echo "The maximum available throughput overall Kibana instance is '$KB_MAX_TPM' tasks per minute (splitted on $KB_INSTANCE Kibana instance).<br>"
+        echo "The maximum available throughput overall Kibana instance is '$KB_MAX_TPM' tasks per minute (split by $KB_INSTANCE Kibana instance).<br>"
         echo "Based on past throughput the overdue tasks in the system could be executed within '$KB_MTDO' minute.<br>"
         echo "On average, the RECURRING tasks in the system have historically required a throughput of '$KB_AVG_RECURRING_TPM' tasks per minute. Instead the overall tasks (recurring or otherwise) have historically required a throughput of '$KB_AVG_REQUIRED_TPM' tasks per minute.<br><br>"
         echo "Estimated deployment strategy from Kibana: a minimin of '$KB_REQUIRED_INSTANCE' Kibana instance is required for current workload, the suggested number of instance are '$KB_SUGGEST_INSTANCE'."
@@ -298,7 +298,7 @@ task) ## Task Manager
 
     elif [ $CAPACITY_STATUS == "OK" ]; then
         echo "OK - Kibana Task manager as sufficient capacity, based on warning threshold of $KB_TASK_WARN_THRESHOLDS% and critical threshold of $KB_TASK_CRIT_THRESHOLDS%.<br>"
-        echo "The maximum available throughput overall Kibana instance is '$KB_MAX_TPM' tasks per minute (splitted on $KB_INSTANCE Kibana instance).<br>"
+        echo "The maximum available throughput overall Kibana instance is '$KB_MAX_TPM' tasks per minute (split by $KB_INSTANCE Kibana instance).<br>"
         echo "Based on past throughput the overdue tasks in the system could be executed within '$KB_MTDO' minute.<br>"
         echo "On average, the RECURRING tasks in the system have historically required a throughput of '$KB_AVG_RECURRING_TPM' tasks per minute. Instead the overall tasks (recurring or otherwise) have historically required a throughput of '$KB_AVG_REQUIRED_TPM' tasks per minute.<br><br>"
         echo "Estimated deployment strategy from Kibana: a minimin of '$KB_REQUIRED_INSTANCE' Kibana instance is required for current workload, the suggested number of instance are '$KB_SUGGEST_INSTANCE'."

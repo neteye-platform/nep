@@ -1,17 +1,17 @@
 # NRPE
+
 The **nep-nrpe-base** package provides support for implementing agentless basic monitoring.
 
 With `nep-nrpe-base` it is possible to perform standard monitoring of:
 
-* Linux servers
-
-* Winodws servers
+- Linux servers
+- Windows servers
 
 Using the objects provided, it is possible:
 
-Perform basic check based on NRPE (CPU load, memory usage, disk space usage, swap usage, server uptime)
+- Perform basic check based on NRPE (CPU load, memory usage, disk space usage, swap usage, server uptime)
 
-# Table of Contents
+## Table of Contents
 
 1. [Prerequisites](#prerequisites)
 2. [Installation](#installation)
@@ -19,24 +19,22 @@ Perform basic check based on NRPE (CPU load, memory usage, disk space usage, swa
 
 ## Prerequisites
 
-| Sofware Version | Version |
+| Software Version | Version |
 | --- | ----------- |
 | NetEye | 4.44 |
 | nep-common | 2.0.0 |
 
-
-##### Required NetEye Modules
+### Required NetEye Modules
 
 | NetEye Module |
 | --- |
 | Core |
 
-
 ### External dependencies
 
 On NetEye environment this operation is automatically done by Setup Routine. Check and add the port 5666 in the firewall configuration on the public interface:
 
-```
+``` bash
 firewall-cmd --get-active-zones
 firewall-cmd --zone=public --add-port=5666/tcp --permanent
 firewall-cmd --reload
@@ -49,11 +47,14 @@ If all requirements are met, you can now install this package.
 ### NEP Installation
 
 In order to install the NEP run:
-```
+
+``` bash
 nep-setup install nep-nrpe-base
 ```
+
 ### Setup On the Linux Client
-```
+
+``` bash
 yum install epel-release
 yum --enablerepo=epel -y install nrpe nagios-plugins
 systemctl enable nrpe.service
@@ -61,25 +62,34 @@ systemctl start nrpe.service
 ```
 
 Check that the NRPE service is in a running state and listening on port 5666:
-```
+
+``` bash
 netstat -anop | grep nrpe
 tcp        0      0 0.0.0.0:5666            0.0.0.0:*               LISTEN      13542/nrpe           off (0.00/0/0)
 tcp6       0      0 :::5666                 :::*                    LISTEN      13542/nrpe           off (0.00/0/0)
 ```
-Edit configuration file:
-```
+
+### Edit configuration file
+
+``` bash
 vim /etc/nagios/nrpe.cfg
 ```
+
 Add the subnet to the configuration file:
-```
+
+``` bash
 allowed_hosts=127.0.0.1,::1,[YOUR SUBNET, ie: 192.168.1.0]
 ```
+
 Ensure that the ‘dont_blame_nrpe’ is set to 1 to accept the NRPE parameters:
-```
+
+``` bash
 dont_blame_nrpe=1
 ```
+
 The default commands do not accept parameters, so the following NEP-compatible commands must be added:
-```
+
+``` bash
 command[nx_check_load]=/usr/lib64/nagios/plugins/check_load $ARG1$
 command[nx_check_disk]=/usr/lib64/nagios/plugins/check_disk $ARG1$
 command[nx_check_swap]=/usr/lib64/nagios/plugins/check_swap $ARG1$
@@ -96,8 +106,10 @@ command[nx_check_procs]=/usr/lib64/nagios/plugins/check_procs $ARG1$
 command[nx_check_open_files]=/usr/lib64/nagios/plugins/check_open_files.pl $ARG1$
 command[nx_check_netstat]=/usr/lib64/nagios/plugins/check_netstat.pl -p $ARG1$ $ARG2$
 ```
+
 Save, Exit and then restart the service:
-```
+
+``` bash
 systemctl restart nrpe.service
 systemctl status nrpe.service
 
@@ -117,11 +129,14 @@ systemctl status nrpe.service
     Aug 05 17:12:10 centos7-test nrpe[13609]: Listening for connections on port 5666
     Aug 05 17:12:10 centos7-test nrpe[13609]: Allowing connections from: 127.0.0.1,::1,192.168.1.0/24
 ```
-### Setup On the Windows Client
-Download and Install the NSCP++ Agent NSCP-0.5.2.35-x64.msi (https://github.com/mickem/nscp/releases/tag/0.5.2.35)
 
-Edit the config file for NSCP++ (C:Program FilesNSClient++nsclient.ini)
-```
+### Setup On the Windows Client
+
+Download and Install the NSCP++ `Agent` NSCP-0.5.2.35-x64.msi [http://github.com/mickem/nscp/releases/tag/0.5.2.35](https://github.com/mickem/nscp/releases/tag/0.5.2.35)
+
+Edit the config file for NSCP++ (`C:\Program Files\NSClient++\nsclient.ini`)
+
+``` bash
 # If you want to fill this file with all available options run the following command:
 #   nscp settings --generate --add-defaults --load-all
 # If you want to activate a module and bring in all its options use:
@@ -250,8 +265,8 @@ vbs = cscript.exe //T:30 //NoLogo scripts\\lib\\wrapper.vbs %SCRIPT% %ARGS%
 ; POWERSHELL WRAPPING - Command line used for executing wrapped ps1 (powershell) scripts
 ps1 = cmd /c echo If (-Not (Test-Path "scripts\%SCRIPT%") ) { Write-Host "UNKNOWN: Script `"%SCRIPT%`" not found."; exit(3) }; scripts\%SCRIPT% $ARGS$; exit($lastexitcode) | powershell.exe /noprofile -command -
 ```
-In this example of the configuration file, all modules including the web server have been activated! Ensure that port 5666 is open.
 
+In this example of the configuration file, all modules including the web server have been activated! Ensure that port `5666` is open.
 
 ## Packet Contents
 
@@ -263,54 +278,54 @@ This section contains a description of all the Objects from this package that ca
 
 | Datalist name | Description |
 | --- | ----------- |
-| [NX] NRPE Target Type | Used to list the types of operating systems and discriminate the type of agent to be used |
+| `[NX] NRPE Target Type` | Used to list the types of operating systems and discriminate the type of agent to be used |
 
 #### Host Templates
 
 | Host Template name | Description |
 | --- | ----------- |
-| nx-ht-server-agentless-nrpe | Generic NRPE object |
-| nx-ht-server-agentless-nrpe-linux | Generic NRPE Linux Host Template |
-| nx-ht-server-agentless-nrpe-windows | Generic NRPE Windows Host Template |
-| nx-ht-server-agentless-nrpe-windows-legacy | Generic NRPE Windows Legacy Host Template |
+| `nx-ht-server-agentless-nrpe` | Generic NRPE object |
+| `nx-ht-server-agentless-nrpe-linux` | Generic NRPE Linux Host Template |
+| `nx-ht-server-agentless-nrpe-windows` | Generic NRPE Windows Host Template |
+| `nx-ht-server-agentless-nrpe-windows-legacy` | Generic NRPE Windows Legacy Host Template |
 
 #### Service Templates
 
 | Service Template name | Run on Agent | Description |
-| --- | --- | -------------|
-| nx-st-agentless-nrpe | YES | Generic Service Template for NRPE |
-| nx-st-agentless-nrpe-linux | YES | Generic Service Template for NRPE Linux |
-| nx-st-agentless-nrpe-linux-check-nrpe | YES | Used for NRPE Version |
-| nx-st-agentless-nrpe-linux-cpu-load | YES | Measures the performances of CPU |
-| nx-st-agentless-nrpe-linux-disk-space-usage | YES | Measuring the Disk space utilisation |
-| nx-st-agentless-nrpe-linux-memory-usage | YES | Measuring the Memory utilisation |
-| nx-st-agentless-nrpe-linux-swap-usage | YES | Measuring swap utilisation |
-| nx-st-agentless-nrpe-linux-uptime | YES | Measures the time of System Uptime |
-| nx-st-agentless-nrpe-windows | YES | Generic Service Template for NRPE Windows |
-| nx-st-agentless-nrpe-windows-counters | YES | Check the specific performance counter |
-| nx-st-agentless-nrpe-windows-cpu-load | YES | Measures the performances of CPU |
-| nx-st-agentless-nrpe-windows-cpu-load-legacy | YES | Measures the performances of CPU |
-| nx-st-agentless-nrpe-windows-disk-space-usage | YES | Measuring the Disk space utilisation |
-| nx-st-agentless-nrpe-windows-disk-space-usage-legacy | YES | Measuring the Disk space utilisation |
-| nx-st-agentless-nrpe-windows-memory-usage | YES | Measuring the Memory utilisation |
-| nx-st-agentless-nrpe-windows-memory-usage-legacy | YES | Measuring the Memory utilisation |
-| nx-st-agentless-nrpe-windows-network | YES | Measuring the Network utilisation |
-| nx-st-agentless-nrpe-windows-os-version | YES | Check the Operating system version |
-| nx-st-agentless-nrpe-windows-pagefile-usage | YES | Measuring swap utilisation |
-| nx-st-agentless-nrpe-windows-process | YES | Check system process |
-| nx-st-agentless-nrpe-windows-service | YES | Check Service state |
-| nx-st-agentless-nrpe-windows-uptime | YES | Measures the time of System Uptime |
-| nx-st-agentless-nrpe-windows-uptime-legacy | YES | Measures the time of System Uptime |
-| nx-st-agentless-nrpe-windows-wmi | YES | Check the specific WMI Query |
+| --- | --- | ------------- |
+| `nx-st-agentless-nrpe` | YES | Generic Service Template for NRPE |
+| `nx-st-agentless-nrpe-linux` | YES | Generic Service Template for NRPE Linux |
+| `nx-st-agentless-nrpe-linux-check-nrpe` | YES | Used for NRPE Version |
+| `nx-st-agentless-nrpe-linux-cpu-load` | YES | Measures the performances of CPU |
+| `nx-st-agentless-nrpe-linux-disk-space-usage` | YES | Measuring the Disk space utilisation |
+| `nx-st-agentless-nrpe-linux-memory-usage` | YES | Measuring the Memory utilisation |
+| `nx-st-agentless-nrpe-linux-swap-usage` | YES | Measuring swap utilisation |
+| `nx-st-agentless-nrpe-linux-uptime` | YES | Measures the time of System Uptime |
+| `nx-st-agentless-nrpe-windows` | YES | Generic Service Template for NRPE Windows |
+| `nx-st-agentless-nrpe-windows-counters` | YES | Check the specific performance counter |
+| `nx-st-agentless-nrpe-windows-cpu-load` | YES | Measures the performances of CPU |
+| `nx-st-agentless-nrpe-windows-cpu-load-legacy` | YES | Measures the performances of CPU |
+| `nx-st-agentless-nrpe-windows-disk-space-usage` | YES | Measuring the Disk space utilisation |
+| `nx-st-agentless-nrpe-windows-disk-space-usage-legacy` | YES | Measuring the Disk space utilisation |
+| `nx-st-agentless-nrpe-windows-memory-usage` | YES | Measuring the Memory utilisation |
+| `nx-st-agentless-nrpe-windows-memory-usage-legacy` | YES | Measuring the Memory utilisation |
+| `nx-st-agentless-nrpe-windows-network` | YES | Measuring the Network utilisation |
+| `nx-st-agentless-nrpe-windows-os-version` | YES | Check the Operating system version |
+| `nx-st-agentless-nrpe-windows-pagefile-usage` | YES | Measuring swap utilisation |
+| `nx-st-agentless-nrpe-windows-process` | YES | Check system process |
+| `nx-st-agentless-nrpe-windows-service` | YES | Check Service state |
+| `nx-st-agentless-nrpe-windows-uptime` | YES | Measures the time of System Uptime |
+| `nx-st-agentless-nrpe-windows-uptime-legacy` | YES | Measures the time of System Uptime |
+| `nx-st-agentless-nrpe-windows-wmi` | YES | Check the specific WMI Query |
 
 #### Sercices Sets
 
 | Service Set name | Description |
-| --- | -------------|
-| nx-ss-server-agentless-nrpe-linux-basic | Service Set providing common monitoring for Linux-based servers |
-| nx-ss-server-agentless-nrpe-windows-basic | Service Set providing common monitoring for Windows-based servers |
-| nx-ss-server-agentless-nrpe-windows-basic-legacy | Service Set providing common monitoring for Windows-based servers Legacy |
+| --- | ------------- |
+| `nx-ss-server-agentless-nrpe-linux-basic` | Service Set providing common monitoring for Linux-based servers |
+| `nx-ss-server-agentless-nrpe-windows-basic` | Service Set providing common monitoring for Windows-based servers |
+| `nx-ss-server-agentless-nrpe-windows-basic-legacy` | Service Set providing common monitoring for Windows-based servers Legacy |
 
-#### Command
+#### Commands
 
-* nx-c-check-nrpe
+- `nx-c-check-nrpe`

@@ -1,4 +1,4 @@
-﻿# Nagios Exchange 2010 Backup Monitoring Script
+# Nagios Exchange 2010 Backup Monitoring Script
 # Author: Andy Grogan
 # Version 1.0
 # www.telnetport25.com

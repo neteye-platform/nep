@@ -686,7 +686,7 @@ last_backup)
             ret_state=$STATE_OK
             [ $runtime_int -ge $HANA_WARN ] && ret_state=$STATE_WARNING
             [ $runtime_int -ge $HANA_CRIT ] && ret_state=$STATE_CRITICAL
-            result_string="Last successful data backup of the past $HANA_LOOKBACK day(s) startet $(echo $last_backup | cut -d',' -f 14 | tr -d '[" ]') days ago (runtime: ${runtime}m)"
+            result_string="Last successful data backup of the past $HANA_LOOKBACK day(s) started $(echo $last_backup | cut -d',' -f 14 | tr -d '[" ]') days ago (runtime: ${runtime}m)"
             PERF_OUT="|'runtime'=$runtime;$HANA_WARN;$HANA_CRIT;0;0"
         fi
         [ $ret_state -eq $STATE_CRITICAL ] && result_string="CRITICAL - $result_string"

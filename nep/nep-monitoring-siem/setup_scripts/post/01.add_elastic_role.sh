@@ -69,7 +69,7 @@ EOF
   CURL_RAW_RESPONSE="$(${ES_CURL_DIR}/es_curl.sh -sS -w '{"ErrorCode": %{http_code}}' -H 'Content-Type: application/json' -X PUT "https://elasticsearch.neteyelocal:9200/_security/role/${ROLE_NAME}" --data-binary "@${QUERY_FILE}")"
 
   check_api_response "$CURL_RAW_RESPONSE" "$?"
-  echo "[i] Role added succesfully to Elastic '$ROLE_NAME'"
+  echo "[i] Role added successfully to Elastic '$ROLE_NAME'"
 
   ####
   ## Add role_mapping
@@ -92,7 +92,7 @@ EOF
   CURL_RAW_RESPONSE="$(${ES_CURL_DIR}/es_curl.sh -sS -w '{"ErrorCode": %{http_code}}' -H 'Content-Type: application/json' -X PUT "https://elasticsearch.neteyelocal:9200/_security/role_mapping/${ROLE_NAME}" --data-binary "@${QUERY_FILE}")"
 
   check_api_response "$CURL_RAW_RESPONSE" "$?"
-  echo "[i] Role mapping added succesfully to Elastic '$ROLE_NAME'"
+  echo "[i] Role mapping added successfully to Elastic '$ROLE_NAME'"
 
   ####
   # Add fleet role
@@ -127,7 +127,7 @@ EOF
   CURL_RAW_RESPONSE="$(${ES_CURL_DIR}/es_curl.sh -sS -w '{"ErrorCode": %{http_code}}' -H 'Content-Type: application/json' -X PUT "https://elasticsearch.neteyelocal:9200/_security/role/${ROLE_NAME}" --data-binary "@${QUERY_FILE}")"
 
   check_api_response "$CURL_RAW_RESPONSE" "$?"
-  echo "[i] Role added succesfully to Elastic '$ROLE_NAME'"
+  echo "[i] Role added successfully to Elastic '$ROLE_NAME'"
 }
 
 if [[ $neteye_deployment == 'single_node' ]]; then

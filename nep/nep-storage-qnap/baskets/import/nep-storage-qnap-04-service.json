@@ -73,7 +73,7 @@
         "419": {
             "varname": "nx_centreon_qnap_storage_filter",
             "caption": "[NX] Storage QNAP Filter",
-            "description": "Exclude some parts (comma seperated list) (Example: --filter=disk) Can also exclude specific instance: --filter=disk,1",
+            "description": "Exclude some parts (comma separated list) (Example: --filter=disk) Can also exclude specific instance: --filter=disk,1",
             "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeArray",
             "format": null,
             "originalId": "419",

@@ -366,7 +366,7 @@
         },
         "154": {
             "varname": "nx_http_auth_pair",
-            "caption": "[NX] Authenticaton credential",
+            "caption": "[NX] Authentication credential",
             "description": "Username:password on sites with basic authentication",
             "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
             "format": null,
@@ -401,7 +401,7 @@
         "157": {
             "varname": "nx_http_onredirect",
             "caption": "[NX] On HTTP 3xx",
-            "description": "Define the behavior in case the HTTP response is an HTTP Recirect (HTTP Code 3xx)",
+            "description": "Define the behavior in case the HTTP response is an HTTP Redirect (HTTP Code 3xx)",
             "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeDatalist",
             "format": null,
             "originalId": "157",
