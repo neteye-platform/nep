@@ -18,7 +18,7 @@
                     "value": "$nx_centreon_dell_n4000_critical$"
                 }
             },
-            "command": "\/usr\/lib\/centreon\/plugins\/centreon_dell_n4000.pl",
+            "command": "\/usr\/lib\/centreon\/plugins\/centreon_dell_nseries_snmp.pl",
             "disabled": false,
             "fields": [],
             "imports": [
