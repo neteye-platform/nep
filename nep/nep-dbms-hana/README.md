@@ -80,7 +80,6 @@ Available values:
 
 `DATA_BACKUP` is a special value that includes complete, incremental, differential data backups and data snapshots.
 
-
 #### Host Templates
 
 Host Template:
