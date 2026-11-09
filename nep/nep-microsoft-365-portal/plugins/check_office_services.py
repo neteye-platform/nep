@@ -135,12 +135,12 @@ def main():
         args = parser.parse_args()
         if args.verbose is not None and args.verbose == "true":
             DEBUG = True
-        if args.portal == None:
+        if args.portal is None:
             print(
                 "Warning: missing portal URL (i.e. https://portal.office.com/api/servicestatus/index)"
             )
             sys.exit(WARNING)
-        if args.mode == None:
+        if args.mode is None:
             print("Warning: service mode parameter (i.e. all, Oulook.com, OneDrive)")
             sys.exit(WARNING)
     except TypeError as e:

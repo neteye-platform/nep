@@ -44,7 +44,7 @@ repos:
         name: codespell-itoa-dashboards
         files: ^nep/[^/]+/itoa/[^/]+/.*\.json$
         args:
-        - --ignore-words-list=showIn
+          - --ignore-words-list=showIn
 
       - id: codespell # Skip files that do not directly belong to NEP Project
         exclude: |
@@ -76,29 +76,29 @@ repos:
     hooks:
       - id: actionlint
 
-  # - repo: https://github.com/shellcheck-py/shellcheck-py
-  #   rev: 745eface02aef23e168a8afb6b5737818efbea95 # frozen: v0.11.0.1
-  #   hooks:
-  #     - id: shellcheck
-  #       args: [--severity=error]
+  - repo: https://github.com/shellcheck-py/shellcheck-py
+    rev: 745eface02aef23e168a8afb6b5737818efbea95 # frozen: v0.11.0.1
+    hooks:
+      - id: shellcheck
+        args: [--severity=error]
 
-  # - repo: https://github.com/astral-sh/ruff-pre-commit
-  #   rev: 0671d8ab202c4ac093b78433ae5baf74f3fc7246 # frozen: v0.15.15
-  #   hooks:
-  #     - id: ruff-check
-  #       args:
-  #         - --fix
-  #     - id: ruff-format
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: 0671d8ab202c4ac093b78433ae5baf74f3fc7246 # frozen: v0.15.15
+    hooks:
+      - id: ruff-check
+        args:
+          - --fix
+      - id: ruff-format
 
   - repo: https://github.com/astral-sh/uv-pre-commit
     rev: 254dd0011fda0cd4bbb281ff135792b157e43e1f # frozen: 0.11.17
     hooks:
       - id: uv-lock
 
-  # - repo: https://github.com/ansible/ansible-lint
-  #   rev: 5fac056c45595896c973fbde871f01f6cb14d74c # frozen: v26.4.0
-  #   hooks:
-  #     - id: ansible-lint
+  - repo: https://github.com/ansible/ansible-lint
+    rev: 5fac056c45595896c973fbde871f01f6cb14d74c # frozen: v26.4.0
+    hooks:
+      - id: ansible-lint
 
   - repo: https://github.com/hadolint/hadolint
     rev: 57e1618d78fd469a92c1e584e8c9313024656623 # frozen: v2.14.0

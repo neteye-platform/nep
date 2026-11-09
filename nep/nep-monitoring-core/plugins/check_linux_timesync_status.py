@@ -4,13 +4,12 @@ import argparse
 import csv
 import io
 import os
-import platform
 import subprocess
 import sys
 
 
 def main(args):
-    os_family = platform.linux_distribution()[0]
+    # os_family = platform.linux_distribution()[0]
 
     if args.daemon == "chronyc":
         if args.resource == "leap_status":
@@ -55,7 +54,7 @@ def chronycSources(chk_resource):
     # TODO: Support thresholds from the cmd line
 
     chronyc_status = chronycMonitor("sources")
-    chronyc_sources = len(chronyc_status)
+    # chronyc_sources = len(chronyc_status)
     sources_out = {}
     sources_out["service"] = {}
     sources_out["perfd"] = {}
@@ -76,7 +75,7 @@ def chronycSources(chk_resource):
 
     for s in chronyc_status:
         s_status = s[1]
-        s_host = s[2]
+        # s_host = s[2]
 
         sources_configured += 1
 
@@ -169,7 +168,7 @@ def chronycTracking():
     chronyc_status = chronycMonitor("tracking")
     leap_status = 0 if chronyc_status[0][13] == "Normal" else 1
     system_time = chronyc_status[0][4]
-    root_delay = chronyc_status[0][10]
+    # root_delay = chronyc_status[0][10]
     root_dispersion = chronyc_status[0][11]
     max_estimated_error = (
         float(system_time) + float(root_dispersion) / 2 + float(root_dispersion)
