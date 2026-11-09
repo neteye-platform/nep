@@ -56,6 +56,7 @@ repos:
             |nep/nep-database-mssql/plugins/check_mssql_health
             |nep/nep-database-oracle/plugins/check_oracle_health
             |nep/nep-monitoring-asset/plugins/check_systemd_timer
+            |nep/nep-monitoring-core/plugins/check_linux_timesync_status.py
             |nep/nep-monitoring-core/plugins/check_modem_smst.pl
             |nep/nep-monitoring-core/plugins/check_mysql_health
             |nep/nep-monitoring-siem/plugins/check_es_system\.sh
