@@ -162,7 +162,13 @@
         },
         "nx-st-hana-last-backup": {
             "check_command": "nx-c-sap-check-hana-last-backup",
-            "fields": [],
+            "fields": [
+                {
+                    "datafield_id": 2053,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
             "imports": [
                 "nx-st-agentless-sap-hana"
             ],
@@ -308,6 +314,20 @@
             "format": null,
             "settings": {
                 "visibility": "visible"
+            },
+            "category": "[NX] HANA Database Tenant"
+        },
+        "2053": {
+            "uuid": "f2c1e6d9-8a73-4b5e-91d4-6c2f7a0b53e8",
+            "varname": "nx_sap_hana_backup_type",
+            "caption": "[NX] SAP HANA backup type",
+            "description": "Backup type to be used for services based on command nx-c-sap-check-hana-last-backup",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeDatalist",
+            "format": null,
+            "settings": {
+                "behavior": "strict",
+                "data_type": "string",
+                "datalist": "[NX] SAP HANA Backup Type List"
             },
             "category": "[NX] HANA Database Tenant"
         }
