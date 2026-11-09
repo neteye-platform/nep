@@ -52,7 +52,7 @@ class ArgumentValueError(ValueError):
             + "'"
         )
 
-        ValueError(self, self.message)
+        super().__init__(self.message)
 
     def __str__(self):
         return self.message
@@ -1794,7 +1794,6 @@ AND vm_uuid = UNHEX('{self.GetUUId()}')
             )
 
         for row in data:
-            metric_name = "disk_" + str(row[0]).replace(" ", "_") + "_used"
             disk_capacity = row[1]
             disk_free = row[2]
             disk_used = disk_capacity - disk_free
@@ -3100,13 +3099,10 @@ try:
 
     print(output)
 
-except Exception as e:
-    print(NagiosMetricStatus.unknown.name + " - " + str(e))
-    return_value = NagiosMetricStatus.unknown
 except SystemExit:
     pass
-except Exception:
-    print("Unhandled exception: Unable to catch the raised exception")
+except Exception as e:
+    print(NagiosMetricStatus.unknown.name + " - " + str(e))
     return_value = NagiosMetricStatus.unknown
 finally:
     try:
