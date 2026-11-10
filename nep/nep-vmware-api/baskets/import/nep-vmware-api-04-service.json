@@ -334,7 +334,7 @@
                 "check_vmware_snapshot_critical": "2",
                 "check_vmware_snapshot_mode": "count",
                 "check_vmware_snapshot_password": "PASSWORD",
-                "check_vmware_snapshot_username": "neteye@vshpere.local",
+                "check_vmware_snapshot_username": "neteye@local",
                 "check_vmware_snapshot_warning": "1"
             },
             "volatile": null,
