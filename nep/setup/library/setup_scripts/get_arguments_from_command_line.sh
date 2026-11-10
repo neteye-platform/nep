@@ -1,4 +1,4 @@
-# shellcheck shell=bash
+#!/usr/bin/env bash
 
 #####################################################################
 ## Check actual arguments and store them into local variables      ##
