@@ -5,7 +5,7 @@ for Citrix NetScaler load balancers to NetEye using Centreon plugins.
 It provides service checks for CPU, hardware health, interfaces, memory,
 connections, certificates, virtual servers, and high availability state.
 
-# Table of Contents
+## Table of Contents
 
 1. [Prerequisites](#prerequisites)
 2. [Installation](#installation)
@@ -18,13 +18,13 @@ This package can be installed on systems running the software described
 below. Systems with equivalent components are also suitable for
 installation.
 
-| Sofware Version | Version |
+| Software Version | Version |
 | --- | ----------- |
 | NetEye | 4.46+ |
 | nep-common | 0.6.8+ |
 | nep-centreon-plugins-base | 0.2.2+ |
 
-##### Required NetEye Modules
+### Required NetEye Modules
 
 | NetEye Module |
 | --- |

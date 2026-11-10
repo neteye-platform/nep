@@ -124,7 +124,7 @@
             "category_id": null,
             "varname": "emc_datadomain_filter",
             "caption": "emc_datadomain_filter",
-            "description": "Exclude some parts (comma seperated list) (Example: --filter=fan --filter=psu) Can also exclude specific instance: --filter=psu,3.3",
+            "description": "Exclude some parts (comma separated list) (Example: --filter=fan --filter=psu) Can also exclude specific instance: --filter=psu,3.3",
             "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
             "format": null,
             "originalId": "241",

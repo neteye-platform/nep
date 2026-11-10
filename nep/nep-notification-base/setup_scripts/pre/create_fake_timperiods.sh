@@ -15,7 +15,7 @@ function create_fake_timeperiods() {
     timeperiods=( "holidays" "" )
 
     ## Create timeperiod objects
-    for t in "${timeperiods}"; do
+    for t in "${timeperiods[@]}"; do
         tmp=$(icingacli director timeperiod exist "$t")
         if [[ $tmp == *"does not"* ]]; then
             icingacli director timeperiod create "$t"

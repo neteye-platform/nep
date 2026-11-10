@@ -312,7 +312,7 @@
                     "value": "$nx_kibana_hostname$"
                 },
                 "-P": {
-                    "description": "Port for check: defualt 5601",
+                    "description": "Port for check: default 5601",
                     "value": "$nx_kibana_port$"
                 },
                 "-K": {

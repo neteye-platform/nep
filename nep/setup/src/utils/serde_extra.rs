@@ -10,7 +10,7 @@
 //! ```
 use semver::{Version, VersionReq};
 use serde::de::Error;
-use serde::ser::SerializeMap;
+use serde::ser::SerializeMap;   // codespell:ignore ser
 use serde::{Deserialize, Deserializer, Serializer};
 use std::collections::BTreeMap;
 

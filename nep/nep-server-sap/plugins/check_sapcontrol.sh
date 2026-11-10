@@ -75,7 +75,7 @@ case $SC_FUNCTION in
       echo $LINE | awk '{print $1}' | grep -e '\\' >/dev/null && DIR_SEP='\'
       # SID ermitteln
       SID=$(echo $LINE | cut -d"$DIR_SEP" -f 4)
-      # JAVA oder ABAP?
+      # JAVA or ABAP?
       TYP=$(echo $LINE | cut -d"$DIR_SEP" -f 5 | cut -c 1)
       # EXT-Kernel?
       EXT=""

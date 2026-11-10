@@ -19,14 +19,14 @@ function remove_ss_before_import() {
     echo "Removing direct Service Set assignment (if present) for these Service Sets: ${serviceset_objects}"
 
     ## Delete service set objects
-    for s in "${serviceset_objects}"; do
+    for s in "${serviceset_objects[@]}"; do
         tmp=$(icingacli director serviceset exist "$s")
         if [[ $tmp != *"does not"* ]]; then
-            ## Retrive manual usage of service set
+            ## Retrieve manual usage of service set
             response=$(mysql -D director -e "$SQL'$s'")
             if [ -n "$response" ]; then
                 echo "------------------------------------------------------------------------------------"
-                echo "Service Set: '$s' is assigned manually to the follwoing Director Objects"
+                echo "Service Set: '$s' is assigned manually to the following Director Objects"
                 mysql -D director -e "$SQL'$s'"
                 echo "WARNING: You have to add manually this Service Set to the object BEFORE deploy config"
             fi

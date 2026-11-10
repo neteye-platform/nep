@@ -17,7 +17,7 @@
                     "value": "$nx_centreon_qnap_storage_warning$"
                 },
                 "--filter": {
-                    "description": "Exclude some parts (comma seperated list) (Example: --filter=disk) Can also exclude specific instance: --filter=disk,1",
+                    "description": "Exclude some parts (comma separated list) (Example: --filter=disk) Can also exclude specific instance: --filter=disk,1",
                     "repeat_key": true,
                     "value": "$nx_centreon_qnap_storage_filter$"
                 },

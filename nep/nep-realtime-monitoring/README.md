@@ -2,30 +2,27 @@
 
 The `nep-realtime-monitoring` provide basic Host Templates and Service Templates pre-configured with minimal Service Checks for Linux and Windows Operating Systems based on InfluxDB data sent by Telegraf agents installed on the Operating System.
 
+## Table of Contents
 
-# Table of Contents
 1. [Prerequisites](#prerequisites)
 2. [Installation](#installation)
 3. [Packet Contents](#packet-contents)
 4. [Usage](#usage)
-
 
 ## Prerequisites
 
 | Software Version          | Version |
 | ------------------------- | ------- |
 | NetEye                    | 4.32    |
-| nep-common                | 0.2.0  |
+| nep-common                | 0.2.0   |
 | nep-centreon-plugins-base | 0.1.0   |
 | nep-influxdb-query        | 0.1.1   |
 
-
-##### Required NetEye Modules
+### Required NetEye Modules
 
 | NetEye Module |
 | ------------- |
 | None          |
-
 
 ### External dependencies
 
@@ -34,23 +31,21 @@ The `nep-realtime-monitoring` provide basic Host Templates and Service Templates
 
 ## Installation
 
-#### Before Installation
+### Before Installation
 
 There is no need to perform any action before installing this NEP
-
 
 ### NEP Installation
 
 To install the NEP, run this command using SSH on NetEye Master Node:
+
 ```bash
 nep-setup install nep-realtime-monitoring
 ```
 
-
 #### Finalizing Installation
 
 There is no need to perform any action to complete the installation of this NEP
-
 
 ## Packet Contents
 
@@ -62,7 +57,6 @@ There is no need to perform any action to complete the installation of this NEP
 * `nx-ht-server-realtime-linux`
 * `nx-ht-server-realtime-windows`
 * `nx-ht-status-influxdb-uptime`
-
 
 #### Service Templates
 
@@ -78,33 +72,32 @@ There is no need to perform any action to complete the installation of this NEP
 * `nx-st-centreon-influxdb-query-uptime-value`
 * `nx-st-centreon-influxdb-query-windows-service-status`
 
-
 #### Services Sets
 
 * `nx-ss-server-realtime-linux-basic`
-    * CPU Usage
-    * Disk Free Space
-    * Memory Free
-    * Memory Usage
-    * System Uptime
+  * CPU Usage
+  * Disk Free Space
+  * Memory Free
+  * Memory Usage
+  * System Uptime
 * `nx-ss-server-realtime-windows-basic`
-    * CPU Usage
-    * Disk Free Space
-    * Memory Free
-    * Memory Usage
-    * System Uptime
+  * CPU Usage
+  * Disk Free Space
+  * Memory Free
+  * Memory Usage
+  * System Uptime
 * `nx-ss-server-realtime-windows-basic-blending`
-    * Realtime CPU Usage
-    * Realtime Disk Free Space
-    * Realtime Memory Free
-    * Realtime Memory Usage
-    * Realtime System Uptime
+  * Realtime CPU Usage
+  * Realtime Disk Free Space
+  * Realtime Memory Free
+  * Realtime Memory Usage
+  * Realtime System Uptime
 * `nx-ss-server-realtime-linux-basic-blending`
-    * Realtime CPU Usage
-    * Realtime Disk Free Space
-    * Realtime Memory Free
-    * Realtime Memory Usage
-    * Realtime System Uptime
+  * Realtime CPU Usage
+  * Realtime Disk Free Space
+  * Realtime Memory Free
+  * Realtime Memory Usage
+  * Realtime System Uptime
 
 #### Command
 
@@ -123,9 +116,9 @@ Command Objects:
 
 #### Data List
 
-* [NX] Centreon InfluxDB Query aggregations List
-* [NX] Centreon InfluxDB SystemD Active Code List
-* [NX] Centreon InfluxDB Windows Service State Code List
+* `[NX] Centreon InfluxDB Query aggregations List`
+* `[NX] Centreon InfluxDB SystemD Active Code List`
+* `[NX] Centreon InfluxDB Windows Service State Code List`
 
 #### Notification
 
@@ -135,16 +128,13 @@ This NEP doesn't provide any Notification definition
 
 This NEP doesn't provide any Automation
 
-
 ### Tornado Rules
 
 This NEP doesn't provide any Tornado rules
 
-
 ### Dashboard ITOA
 
 This NEP doesn't provide any ITOA Dashboards
-
 
 ### Metrics
 
@@ -176,17 +166,18 @@ This NEP doesn't generate any Performance Data from its commands.
    3. Always define an alias for the sole field the query will return
    4. The alias should be used as prefix for the query text, as requested by the Plugin
    5. Example of query for the status of unit `ssh.service`:
-        ``` sql
-        active_code,select last(active_code) as active_code from telegraf_master.autogen.systemd_units where time > now() - 1m and host='nexus' and "name"='ssh.service' group by host;
-        ```
+
+      ``` sql
+      active_code,select last(active_code) as active_code from telegraf_master.autogen.systemd_units where time > now() - 1m and host='nexus' and "name"='ssh.service' group by host;
+      ```
+
 5. Add a new Service Object to the Host Object
    1. Use template `nx-st-agentless-influxdb-centreon-query`
-    ![Use the template nx-st-agentless-influxdb-centreon-query](/doc-images/use-st.png)
+    ![Use the template nx-st-agentless-influxdb-centreon-query](doc-images/use-st.png)
    2. Add the query, then provide values for thresholds, Output Text and Global Text *at least*:
-    ![Create and compile the new service](/doc-images/create-and-compile-new-service.png)
+    ![Create and compile the new service](doc-images/create-and-compile-new-service.png)
    3.Deploy and see the result:
-    ![Deploy and see the result](/doc-images/deploy-result.png)
-
+    ![Deploy and see the result](doc-images/deploy-result.png)
 
 #### Setup Realtime Monitoring Clients (Telegraf Agents)
 

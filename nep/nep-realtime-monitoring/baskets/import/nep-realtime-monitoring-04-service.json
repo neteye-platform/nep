@@ -789,7 +789,7 @@
         },
         "2879": {
             "varname": "nx_centreon_influxdb_query_mem_used_pct_critical",
-            "caption": "[NX] Memory used Critical treshold (%)",
+            "caption": "[NX] Memory used Critical threshold (%)",
             "description": null,
             "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeNumber",
             "format": null,
