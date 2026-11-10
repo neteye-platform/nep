@@ -1,6 +1,10 @@
 # NEP Nutanix
 
-The Vectra NEP is based on the Vectra Rest API. In order to use it, REST API must be enabled on the target device. This NEP provides an Host Template `nx-ht-restapi-vectra` based on `nx-ht-restapi` that can be added to the Host. This template is linked to a Service Set: `nx-ss-vectra` that monitors these elements on the Vectra Device:
+The Vectra NEP is based on the Vectra Rest API. In order to use it, REST API
+must be enabled on the target device. This NEP provides an Host Template
+`nx-ht-restapi-vectra` based on `nx-ht-restapi` that can be added to the Host.
+This template is linked to a Service Set: `nx-ss-vectra` that monitors these
+elements on the Vectra Device:
 
 * CPU Usage
 * Disk Usage
@@ -8,7 +12,8 @@ The Vectra NEP is based on the Vectra Rest API. In order to use it, REST API mus
 * Sensors Status
 
 > [!NOTE]
-> The PERL plugin, used for this scope, provides also some additional features such as Interfaces and Uptime
+> The PERL plugin, used for this scope, provides also some additional features
+> such as Interfaces and Uptime
 
 ## Table of Contents
 
@@ -40,7 +45,8 @@ This NEP needs access to this additional repository
 
 ## Installation
 
-The installation process provides a PERL script that is automatically installed via dnf at `/usr/lib/centreon/plugins/`
+The installation process provides a PERL script that is automatically installed
+via dnf at `/usr/lib/centreon/plugins/`
 
 ## Before Installation
 
@@ -116,7 +122,9 @@ This NEP doesn't provide any Tornado rules
 
 ### Dashboard ITOA
 
-The NEP provides a dashboard vectra_dashboard.json with four panels that plot the various metrics collected by this plugin. Other metrics are available in INFLUXDB and graphs can be extended.
+The NEP provides a dashboard vectra_dashboard.json with four panels that plot
+the various metrics collected by this plugin. Other metrics are available in
+INFLUXDB and graphs can be extended.
 
 ### Metrics
 
@@ -124,7 +132,8 @@ This NEP doesn't produce any performance data
 
 ## Usage
 
-In order to use this NEP, add the HT **`nx-ht-restapi-vectra` based on `nx-ht-restapi`** to the Host.
+In order to use this NEP, add the HT **`nx-ht-restapi-vectra` based on
+`nx-ht-restapi`** to the Host.
 Configure these fields:
 
 * `[NX] API Token`

@@ -1,6 +1,7 @@
 # NEP Windows Domain Controller
 
-The `nep-windows-active-directory` provides the monitoring of Windows Domain Controller Server.
+The `nep-windows-active-directory` provides the monitoring of Windows Domain
+Controller Server.
 
 Using the provided objects, is possible to:
 
@@ -37,7 +38,8 @@ Using the provided objects, is possible to:
 
 ### External dependencies
 
-This NEP doesn't need any external dependencies other that the ones used by the NEPs reported in [Prerequisites](#prerequisites)
+This NEP doesn't need any external dependencies other that the ones used by the
+NEPs reported in [Prerequisites](#prerequisites)
 
 ## Installation
 
@@ -47,7 +49,8 @@ There is no need to perform any action before installing this NEP
 
 ### NEP Installation
 
-To install the `nep-windows-active-directory`, use `nep-setup` via SSH on NetEye Master Node:
+To install the `nep-windows-active-directory`, use `nep-setup` via SSH on NetEye
+Master Node:
 
 ``` bash
 nep-setup install nep-windows-active-directory
@@ -55,16 +58,19 @@ nep-setup install nep-windows-active-directory
 
 #### Finalizing Installation
 
-These scripts must be downloaded on every Windows Domain Controller Server at path `C:\\ScriptsIcinga`
+These scripts must be downloaded on every Windows Domain Controller Server at
+path `C:\\ScriptsIcinga`
 
 * [check_adreplication.ps1](https://raw.githubusercontent.com/juangranados/nagios-plugins/master/check_adreplication.ps1)
 * [check_ad.vbs](https://exchange.nagios.org/directory/Plugins/Operating-Systems/Windows/Active-Directory-(AD)-Check/details)
 
 The following variable has to be set on the environment
 
+<!-- markdownlint-disable MD013 -->
 ``` bash
 (main template windows-generic-domain-controller) AD Bind password AD Bind username (read only user, like the Import Source) DNS Domain Name (domain.it) LDAP Domain DN (like dc=domain,dc=it)
 ```
+<!-- markdownlint-enable MD013 -->
 
 ## Packet Contents
 
@@ -77,28 +83,36 @@ This NEP doesn't provide any Director/Icinga object
 The following Host Templates can be used to freely create Host Objects.
 
 > [!WARNING]
-> Do not edit these Host Templates because they will be restored/updated at the next NEP package update_:
+> Do not edit these Host Templates because they will be restored/updated at the
+> next NEP package update_:
 
-* `nx-ht-server-agent-windows-domain-controller`: Describe a generic Windows AD Controller Server
-* `nx-ht-server-agent-windows-domain-controller-readonly`: Describe a generic Windows AD Controller Server readonly
+* `nx-ht-server-agent-windows-domain-controller`: Describe a generic Windows AD
+  Controller Server
+* `nx-ht-server-agent-windows-domain-controller-readonly`: Describe a generic
+  Windows AD Controller Server readonly
 
 #### Service Templates
 
-The following Service Templates can be used to freely create Service Objects, Service Apply Rules or Service Sets.
+The following Service Templates can be used to freely create Service Objects,
+Service Apply Rules or Service Sets.
 
 > [!WARNING]
-> Do not edit these Service Templates as they will be restored/updated at the next NEP Package update_:
+> Do not edit these Service Templates as they will be restored/updated at the
+> next NEP Package update_:
 
-* `nx-st-agentless-ldap-query`: Checks all aspects of monitoring of Windows AD Controller Server
+* `nx-st-agentless-ldap-query`: Checks all aspects of monitoring of Windows AD
+  Controller Server
 
 #### Services Sets
 
 The following Service Sets can be used to freely monitor Host Objects.
 
 > [!WARNING]
-> Do not edit these Service Sets because they will be restored/updated at the next NEP Package update_:
+> Do not edit these Service Sets because they will be restored/updated at the
+> next NEP Package update_:
 
-* `nx-ss-windows-ad-dc-server`: Service Set providing common monitoring for Windows Domain Controller Server
+* `nx-ss-windows-ad-dc-server`: Service Set providing common monitoring for
+  Windows Domain Controller Server
   * Service AD Domain Services Status
   * Service AD Web Services Status
   * Service DFS Replication Status

@@ -1,9 +1,13 @@
 # Notification Base
 
-The `nep-notification-base` provides common basic behavior to manage Icinga2 Notifications right out-of-the-box. Because Icinga2 Notification Objects are quite complex, facilities provided by this NEP and its companions will implement a basic notification behavior.
+The `nep-notification-base` provides common basic behavior to manage Icinga2
+Notifications right out-of-the-box. Because Icinga2 Notification Objects are
+quite complex, facilities provided by this NEP and its companions will implement
+a basic notification behavior.
 
 > [!NOTE]
-> This package provide common facilities. To actually allow notifications to be sent over a specific communication channel, please install the related NEP.
+> This package provide common facilities. To actually allow notifications to be
+> sent over a specific communication channel, please install the related NEP.
 
 Here are explained some terms using in this guide:
 
@@ -21,7 +25,8 @@ Here are explained some terms using in this guide:
 
 ## Prerequisites
 
-This package can be installed on systems running the software described below. Systems with equivalent components are also suitable for installation.
+This package can be installed on systems running the software described below.
+Systems with equivalent components are also suitable for installation.
 
 | Software Version | Version |
 | --- | ----------- |
@@ -36,7 +41,8 @@ This package can be installed on systems running the software described below. S
 
 ## Installation
 
-The installation process provides several basic components used by the other specific nep-notification channels.
+The installation process provides several basic components used by the other
+specific nep-notification channels.
 
 ### NEP Installation
 
@@ -46,11 +52,13 @@ To setup Package `nep-notification-base`, just use the Setup Utility:
 nep-setup install nep-notification-base
 ```
 
-After the installation is complete, add the support for the required Notification Channel by installing the related NEP.
+After the installation is complete, add the support for the required
+Notification Channel by installing the related NEP.
 
 ## Packet Contents
 
-This section contains a description of all the Objects from this package that can be used to build your own monitoring environment.
+This section contains a description of all the Objects from this package that
+can be used to build your own monitoring environment.
 
 ### Director/Icinga Objects
 
@@ -87,11 +95,19 @@ The following Time Periods are available to select to all Objects.
 
 ### Notification Facility description
 
-Icinga2 Notifications have a variety of options to decide how, when and where notifications are sent, so a simplified model had to be implemented. Here follows a brief description of this model.
+Icinga2 Notifications have a variety of options to decide how, when and where
+notifications are sent, so a simplified model had to be implemented. Here
+follows a brief description of this model.
 
-The bottom idea is that Notifications Behavior is driven by a configuration at Host Object level, meaning all the configuration options are managed insode the Host Object, then and all its Service Objects will inherit those settings. However, it is possible to override a limited set of settings at Service Object level. Here a brief summary of the whole logic:
+The bottom idea is that Notifications Behavior is driven by a configuration at
+Host Object level, meaning all the configuration options are managed insode the
+Host Object, then and all its Service Objects will inherit those settings.
+However, it is possible to override a limited set of settings at Service Object
+level. Here a brief summary of the whole logic:
 
-* Notifications are disabled by default. It is possible, for each Host Object, to decide if activate them onlky for the Host Object itseld or also for all its Service Objects.
+* Notifications are disabled by default. It is possible, for each Host Object,
+  to decide if activate them onlky for the Host Object itseld or also for all
+  its Service Objects.
 
 * At Host Object Level, is possible to define:
   * One or more channel to use
@@ -102,14 +118,28 @@ The bottom idea is that Notifications Behavior is driven by a configuration at H
   * Override Recipients (Users, User Groups or both of them) for the Service Object
 
 > [!WARNING]
-> One Host Object supports only one set of Communication Channels, and this set is shared with all its Service Objects. Also, all the Communication Channels share the same settings; therefore, is not possible to implement notification processes like the ones describe in ITIL.
+> One Host Object supports only one set of Communication Channels, and this set
+> is shared with all its Service Objects. Also, all the Communication Channels
+> share the same settings; therefore, is not possible to implement notification
+> processes like the ones describe in ITIL.
 
 ### How the Notification Facility works
 
-All configuration options are provided through Custom Variables. These variables are implemented directly into `nx-ht-type-custom` and `nx-st-type-custom` Templates. This means it is possible to set notification options to all Host and Service Objects using a Template derived from the right Template Type Custom as well as set them directly at Host/Service Object Level.
+All configuration options are provided through Custom Variables. These variables
+are implemented directly into `nx-ht-type-custom` and `nx-st-type-custom`
+Templates. This means it is possible to set notification options to all Host and
+Service Objects using a Template derived from the right Template Type Custom as
+well as set them directly at Host/Service Object Level.
 
-As a last notice, these options are just tags, meaning nep-notification-base is not able to understand them. The actual notification logic must be completed by installing other NEPs: there is one NEP for each Notification Channel available, so to send notifications through this channel *it is required to install the NEP referring to that very Notification Channel*.
+As a last notice, these options are just tags, meaning nep-notification-base is
+not able to understand them. The actual notification logic must be completed by
+installing other NEPs: there is one NEP for each Notification Channel available,
+so to send notifications through this channel *it is required to install the NEP
+referring to that very Notification Channel*.
 
 ### Troubleshoot Notification instances
 
-After Notifications have been deployed, there is no way to easily understand what State Changes will be notified and who are the recipients. To have a better grasp of the situation, please apply what described at [Troubleshoot Icinga Notifications](https://www.neteye-blog.com/2023/12/troubleshooting-icinga-notifications/).
+After Notifications have been deployed, there is no way to easily understand
+what State Changes will be notified and who are the recipients. To have a better
+grasp of the situation, please apply what described at [Troubleshoot Icinga
+Notifications](https://www.neteye-blog.com/2023/12/troubleshooting-icinga-notifications/).

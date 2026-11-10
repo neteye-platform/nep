@@ -32,6 +32,7 @@ This NEP needs access to this additional repository
 
 Changes to `DEFAULT.PFL`:
 
+<!-- markdownlint-disable MD013 -->
 ``` text
 ##### add new line:
 
@@ -205,6 +206,7 @@ Interfaces: XAL, XMB
 
 ------------------------
 ```
+<!-- markdownlint-enable MD013 -->
 
 ### NEP Installation
 
