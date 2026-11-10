@@ -1,6 +1,7 @@
 # Overview
 
-This dashboard helps you (IT operation user) to see the status of the testcases that you want to control.
+This dashboard helps you (IT operation user) to see the status of the testcases
+that you want to control.
 
 ## Dashboard Output
 
@@ -22,9 +23,12 @@ This dashboard used the standard Icinga2 datasource of NetEye
 
 ## Variable definition
 
-From Dashboard - Settings - Variables (Host and Testcase) verify that are correctly populated.
+From Dashboard - Settings - Variables (Host and Testcase) verify that are
+correctly populated.
 
 ## How to import dashboard
 
 To create the ITOA Dashboard, import the JSON file provided.
-For more info about importing Dashboards into Grafana, please refer to the [official documentation](https://grafana.com/docs/grafana/latest/dashboards/export-import/#import-dashboard.).
+For more info about importing Dashboards into Grafana, please refer to the
+[official
+documentation](https://grafana.com/docs/grafana/latest/dashboards/export-import/#import-dashboard.).

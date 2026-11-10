@@ -1,6 +1,7 @@
 # NEP Network Sophos Firewall
 
-The service checks in this nep module are based on `check_snmp` and specific SNMP OIDs and needs Sophos SNMP MIB installation on your NetEye system.
+The service checks in this nep module are based on `check_snmp` and specific
+SNMP OIDs and needs Sophos SNMP MIB installation on your NetEye system.
 
 - You can download the MIB from [http(s)://docs.sophos.com/nsg/sophos-firewall/MIB/SOPHOS-XG-MIB.zip](https://docs.sophos.com/nsg/sophos-firewall/MIB/SOPHOS-XG-MIB.zip)
 - Sophos SNMP manual reference: [https://docs.sophos.com/nsg/sophos-firewall/18.0/Help/en-us/webhelp/onlinehelp/nsg/sfos/concepts/AdministrationSNMP.html?hl=mib#concept_rrc_3sl_4y__mz3_nm1_vhb](https://docs.sophos.com/nsg/sophos-firewall/18.0/Help/en-us/webhelp/onlinehelp/nsg/sfos/concepts/AdministrationSNMP.html?hl=mib#concept_rrc_3sl_4y__mz3_nm1_vhb)

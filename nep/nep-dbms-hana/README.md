@@ -1,6 +1,7 @@
 # NEP Hana Database
 
-The HANA DB NEP is based on plugin `hana_check.sh`. This NEP provides an Host Template `nx-ht-hana-system` that can be added to the Host.
+The HANA DB NEP is based on plugin `hana_check.sh`. This NEP provides an Host
+Template `nx-ht-hana-system` that can be added to the Host.
 Commands check
 
 * DB connection-time
@@ -42,7 +43,8 @@ Client should be installed on folder `/neteye/shared/monitoring/plugins/sap/hana
 
 ## Installation
 
-The installation process provides a Shell script `check_hana.sh` that is automatically installed at `/neteye/shared/monitoring/plugins/`
+The installation process provides a Shell script `check_hana.sh` that is
+automatically installed at `/neteye/shared/monitoring/plugins/`
 
 ## Before Installation
 
@@ -78,7 +80,8 @@ Available values:
 * Data snapshot (`data snapshot`)
 * All data backups and snapshots (`DATA_BACKUP`)
 
-`DATA_BACKUP` is a special value that includes complete, incremental, differential data backups and data snapshots.
+`DATA_BACKUP` is a special value that includes complete, incremental,
+differential data backups and data snapshots.
 
 #### Host Templates
 
@@ -155,7 +158,8 @@ This NEP produce this performance data:
 
 ## Usage
 
-In order to use this NEP, add the HT `nx-ht-hana-tenant` to the Host. Configure these fields:
+In order to use this NEP, add the HT `nx-ht-hana-tenant` to the Host. Configure
+these fields:
 
 * HANA Database Tenant ID
 * HANA Database Tenant Password
@@ -165,6 +169,8 @@ In order to use this NEP, add the HT `nx-ht-hana-tenant` to the Host. Configure 
 * HANA Instance Number
 * SAP sapcontrol Protocol
 
-For the HANA Last Backup service, configure the backup type according to the backup strategy. The default value is `complete data backup` to preserve the existing behavior.
+For the HANA Last Backup service, configure the backup type according to the
+backup strategy. The default value is `complete data backup` to preserve the
+existing behavior.
 
 Services are then attached to this device and monitored.

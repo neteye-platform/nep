@@ -1,6 +1,8 @@
 # Overview
 
-This dashboard helps you to quickly understand how is the health status of  NetEye system (from the point of view of performance monitoring and host performance).
+This dashboard helps you to quickly understand how is the health status of
+NetEye system (from the point of view of performance monitoring and host
+performance).
 Some panels reads data from a Telegraf datasource ([telegraf configuration](https://neteye.guide/current/core-modules/itoa/telegraf-config.html#telegraf-configuration)).
 **It works only for only for NetEye single node installations.**
 
@@ -14,8 +16,10 @@ You can find an example on the [NetEye Demo](https://neteyedemo.wuerth-phoenix.c
 
 ## Requirements
 
-This Dashboard is compatible with Grafana 7.5.5 (released with NetEye 4.19) and newer.
-Before importing this dashboard, ensure the following requirements are met. If not, please make the required changes accordingly.
+This Dashboard is compatible with Grafana 7.5.5 (released with NetEye 4.19) and
+newer.
+Before importing this dashboard, ensure the following requirements are met. If
+not, please make the required changes accordingly.
 
 ## Mysql user creation
 
@@ -29,7 +33,8 @@ flush privileges;
 
 ## Grafana Datasources creation
 
-From ITOA - Data Sources menu create a new MySQL datasource named `icinga-mysql` (if not exists)
+From ITOA - Data Sources menu create a new MySQL datasource named `icinga-mysql`
+(if not exists)
 
 ``` ini
 Host: mariadb.neteyelocal
@@ -40,7 +45,8 @@ Password: XXXXXXXX
 
 Save and test
 
-From ITOA ` Data Sources menu create a new InfluxDB datasource named `Telegraf` (if not exists)
+From ITOA ` Data Sources menu create a new InfluxDB datasource named `Telegraf`
+(if not exists)
 
 ``` ini
 URL: https://influxdb.neteyelocal:8086
@@ -60,7 +66,10 @@ Save and test
 
 ## Grafana Variable definition
 
-From Dashboard - Settings - Variables (neteye_master) correct the default Regex related to neteye_master variable from dashboard settings. The simple Regex /neteye/ used in our demo environment must be corrected selecting the correct hostname related to your NetEye monitored.
+From Dashboard - Settings - Variables (neteye_master) correct the default Regex
+related to neteye_master variable from dashboard settings. The simple Regex
+/neteye/ used in our demo environment must be corrected selecting the correct
+hostname related to your NetEye monitored.
 
 ## Grafana pie-chart and clock-panel plugins installation
 
@@ -73,4 +82,6 @@ From Dashboard - Settings - Variables (neteye_master) correct the default Regex 
 ## How to import dashboard
 
 To create the ITOA Dashboard, import the JSON file provided.
-For more info about importing Dashboards into Grafara, please refer to the [official documentation](https://grafana.com/docs/grafana/latest/dashboards/export-import/#import-dashboard.).
+For more info about importing Dashboards into Grafara, please refer to the
+[official
+documentation](https://grafana.com/docs/grafana/latest/dashboards/export-import/#import-dashboard.).

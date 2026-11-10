@@ -3,9 +3,14 @@
 > [!WARNING]
 > This NEP is provided as a Proof of Concept (PoC) and it is not fully supported!
 
-_As described before this template has been used during a PoC and in order to be reused some customizations are needed. Use this as starting point of your ServiceNow Integration._
+_As described before this template has been used during a PoC and in order to be
+reused some customizations are needed. Use this as starting point of your
+ServiceNow Integration._
 
-If you install this NEP have a look to the script  `nx-notification-servicenow.py` and the conf file `nx-notification-servicenow.json` in order to adapt to your ServiceNow installation.
+If you install this NEP have a look to the script
+`nx-notification-servicenow.py` and the conf file
+`nx-notification-servicenow.json` in order to adapt to your ServiceNow
+installation.
 
 ## Table of Contents
 
@@ -29,7 +34,8 @@ If you install this NEP have a look to the script  `nx-notification-servicenow.p
 
 ### External dependencies
 
-This NEP doesn't need any external dependencies other that the ones used by the NEPs reported in [Prerequisites](#prerequisites)
+This NEP doesn't need any external dependencies other that the ones used by the
+NEPs reported in [Prerequisites](#prerequisites)
 
 ## Installation
 

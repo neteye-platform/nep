@@ -1,0 +1,6 @@
+config:
+  line-length:
+    tables: false
+# The license text is kept as it was published.
+ignores:
+  - LICENSE.md

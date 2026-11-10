@@ -1,6 +1,7 @@
 # Server IBM AS400
 
-The `nep-server-ibm-as400` is used to deliver IBM AS400 monitoring without agent installed on remote machine. With this package, it is possible to monitor:
+The `nep-server-ibm-as400` is used to deliver IBM AS400 monitoring without agent
+installed on remote machine. With this package, it is possible to monitor:
 
 * CPU Usage
 * DISK Hardware Status
@@ -39,7 +40,8 @@ or is possible pass the credential in the host Template.
 
 ## Installation
 
-Before associating a new host with the Host Template you need to modify the credentials file.
+Before associating a new host with the Host Template you need to modify the
+credentials file.
 
 If all requirements are met, you can now install this package.
 
@@ -53,7 +55,8 @@ nep-setup install nep-server-ibm-as400
 
 ## Packet Contents
 
-This section contains a description of all the Objects from this package that can be used to build your own monitoring environment.
+This section contains a description of all the Objects from this package that
+can be used to build your own monitoring environment.
 
 ### Director/Icinga Objects
 

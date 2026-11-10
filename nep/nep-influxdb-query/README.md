@@ -1,6 +1,7 @@
 # NEP InfluxDB Query
 
-The `nep-influxdb-query` package is the NEP designed to perform (custom) queries to InfluxDB and return data that you can use to create custom checks on NetEye.
+The `nep-influxdb-query` package is the NEP designed to perform (custom) queries
+to InfluxDB and return data that you can use to create custom checks on NetEye.
 
 ## Table of Contents
 
@@ -109,14 +110,19 @@ This NEP doesn't generate any Performance Data from its commands
 
 These steps must be repeated for each InfluxDB Database that must be queried:
 
-1. Create username and password on the InfluxDB server to query. If the Database is on NetEye Cluster, connect to `influxdb.neteyelocal`.
-    1. Connect to Local InfluxDB; here how you can connect to NetEye InfluxDB Database (for other databases, please adapt this command):
+1. Create username and password on the InfluxDB server to query. If the Database
+   is on NetEye Cluster, connect to `influxdb.neteyelocal`.
+    1. Connect to Local InfluxDB; here how you can connect to NetEye InfluxDB
+       Database (for other databases, please adapt this command):
 
+        <!-- markdownlint-disable MD013 -->
         ``` bash
         influx -ssl -unsafeSsl -host influxdb.neteyelocal -username root -password $(cat /root/.pwd_influxdb_root) -precision rfc3339
         ```
+        <!-- markdownlint-enable MD013 -->
 
-    2. Create username and password with the right privileges (as an example, `read` privileges on `telegraf_master` DB):
+    2. Create username and password with the right privileges (as an example,
+       `read` privileges on `telegraf_master` DB):
 
         ```bash
         create user realtime_monitoring with password 'ChangeMe!'
@@ -124,17 +130,21 @@ These steps must be repeated for each InfluxDB Database that must be queried:
         exit
         ```
 
-2. On Director, create a new Host Template that can provide connection parameters for InfluxDB.
+2. On Director, create a new Host Template that can provide connection
+   parameters for InfluxDB.
     1. Give the new Template a proper name
     2. It must inherits from `nx-ht-influxdb`
     3. Under **Centreon InfluxDB Connection** settings:
-        1. Set the Hostname of the InfluxDB that needs to be queried and the TCP Port where it is exposed
+        1. Set the Hostname of the InfluxDB that needs to be queried and the TCP
+           Port where it is exposed
         2. Set Backend Type to `LWP`
         3. Set Protocol to the one InfluxDB is configured to use (on NetEye, HTTPS)
         4. Fill Username and Password with the credential created before
     4. Under Centreon InfluxDB Connection SSL settings:
-       1. Set the requires SSL Options in case your InfluxDB requests HTTPS connection (on NetEye, enable TLSv1)
+       1. Set the requires SSL Options in case your InfluxDB requests HTTPS
+          connection (on NetEye, enable TLSv1)
        ![Create the Host Template that inherits from nx-ht-influxdb](/doc-images/create-ht.png)
 
 > If you want to query NetEye�s InfluxDB, your Template should inherit from `nx-ht-influxdb-neteye`.
-> Then, you should only provide Username and Password: other options are already set in accordance with NetEye current settings.
+> Then, you should only provide Username and Password: other options are already
+> set in accordance with NetEye current settings.

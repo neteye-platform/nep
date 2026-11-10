@@ -1,11 +1,18 @@
 # Notification Email
 
-The `nep-notification-email` adds to the Notification Facility provided with `nep-notification-base` the ability to send Notifications by email, in two channels:
+The `nep-notification-email` adds to the Notification Facility provided with
+`nep-notification-base` the ability to send Notifications by email, in two
+channels:
 
-- **E-Mail (HTML)** : branded multipart (text + HTML) email with an embedded logo, state-coloured banner, a 2-column detail table and a "View in NetEye" button linking to IcingaDB.
-- **E-Mail (text)** : plain-text only email produced from the same script, for gateways or clients that cannot render HTML.
+- **E-Mail (HTML)** : branded multipart (text + HTML) email with an embedded
+  logo, state-coloured banner, a 2-column detail table and a "View in NetEye"
+  button linking to IcingaDB.
+- **E-Mail (text)** : plain-text only email produced from the same script, for
+  gateways or clients that cannot render HTML.
 
-Both channels are produced by a single Perl script, `mail-html-notification.pl`; the channel is selected per Director command via the `--format` argument (`html` is the default, `text` is set explicitly by the text commands).
+Both channels are produced by a single Perl script, `mail-html-notification.pl`;
+the channel is selected per Director command via the `--format` argument (`html`
+is the default, `text` is set explicitly by the text commands).
 
 ## Table of Contents
 
@@ -17,7 +24,8 @@ Both channels are produced by a single Perl script, `mail-html-notification.pl`;
 
 ## Prerequisites
 
-This package can be installed on systems running the software described below. Systems with equivalent components are also suitable for installation.
+This package can be installed on systems running the software described below.
+Systems with equivalent components are also suitable for installation.
 
 | Software | Version |
 | --- | ----------- |
@@ -33,7 +41,8 @@ This package can be installed on systems running the software described below. S
 
 ## External dependencies
 
-The setup script `pre/install_perl_dependencies.sh` installs the following from EPEL:
+The setup script `pre/install_perl_dependencies.sh` installs the following from
+EPEL:
 
 - `perl-Mail-Sendmail`
 
@@ -54,7 +63,8 @@ After the installation is complete, you can use the objects and configure the NE
 
 #### Finalizing Installation
 
-After installation, deploy the Director configuration so that the imported commands and notification objects become active:
+After installation, deploy the Director configuration so that the imported
+commands and notification objects become active:
 
 ``` bash
 icingacli director config deploy
@@ -62,7 +72,9 @@ icingacli director config deploy
 
 ## Packet Contents
 
-This `nep-notification-email` does not provide any object that the End User must create manually. All objects are created automatically after the current Director configuration is deployed.
+This `nep-notification-email` does not provide any object that the End User must
+create manually. All objects are created automatically after the current
+Director configuration is deployed.
 
 ### Director/Icinga Objects
 
@@ -94,7 +106,8 @@ The package contains the following Director objects.
 
 #### Commands
 
-All four commands invoke the same script. The text commands additionally pass `--format text`.
+All four commands invoke the same script. The text commands additionally pass
+`--format text`.
 
 | Icinga Command | Script |
 | --- | --- |
@@ -112,7 +125,9 @@ All four commands invoke the same script. The text commands additionally pass `-
 
 #### Data Fields
 
-The command basket defines the following Director Data Fields, associated with the four commands so they appear as Custom Properties when the commands are used:
+The command basket defines the following Director Data Fields, associated with
+the four commands so they appear as Custom Properties when the commands are
+used:
 
 | Data Field (varname) | Caption | Used for |
 | --- | --- | --- |
@@ -123,7 +138,10 @@ The command basket defines the following Director Data Fields, associated with t
 
 ### Constants
 
-The setup script `pre/define_email_constants.sh` defines the following Icinga2 constants in a dedicated file `conf.d/nx-constants-notification-email.conf`. The standard notification template chain sources the notification variables from these constants.
+The setup script `pre/define_email_constants.sh` defines the following Icinga2
+constants in a dedicated file `conf.d/nx-constants-notification-email.conf`. The
+standard notification template chain sources the notification variables from
+these constants.
 
 | Constant | Default value | Notification variable it feeds |
 | --- | --- | --- |
@@ -133,7 +151,8 @@ The setup script `pre/define_email_constants.sh` defines the following Icinga2 c
 
 ### Channels
 
-The setup script `pre/add_channel_to_list.sh` registers the channels in the notification channel list:
+The setup script `pre/add_channel_to_list.sh` registers the channels in the
+notification channel list:
 
 | Key | Name |
 | --- | --- |
@@ -144,7 +163,9 @@ The setup script `pre/add_channel_to_list.sh` registers the channels in the noti
 
 ### Configuration file
 
-The `.cfg` file is generated once at install time by `pre/add_default_config_file.sh` and is **never overwritten on upgrade**, so administrator changes are preserved.
+The `.cfg` file is generated once at install time by
+`pre/add_default_config_file.sh` and is **never overwritten on upgrade**, so
+administrator changes are preserved.
 
 Location: `/neteye/shared/icinga2/conf/icinga2/scripts/mail-html-notification.cfg`
 
@@ -156,10 +177,22 @@ Location: `/neteye/shared/icinga2/conf/icinga2/scripts/mail-html-notification.cf
 
 ### Notification variable flow
 
-The three notification variables `notification_from`, `nx_neteye_web_interface_fqdn` and `nx_mail_gateway` reach the command arguments in one of two ways:
+The three notification variables `notification_from`,
+`nx_neteye_web_interface_fqdn` and `nx_mail_gateway` reach the command arguments
+in one of two ways:
 
-- **Standard NEP flow (automatic)**: The conf-file notification templates (`nx-nt-channel-html-email`, `nx-nt-channel-text-email`) set these variables from the constants above. Any notification that imports the template chain : including the NEP apply rules - inherits them automatically. No Director configuration is required.
-- **Custom notification template flow (manual)**: When an administrator creates a custom notification template that does **not** import the NEP conf-file template chain, the variables are not inherited. In that case the administrator must set them as Custom Properties on the notification template (the Data Fields above make them available as named fields). At minimum `notification_from` must be set, otherwise the email has no `From` address and the send fails.
+- **Standard NEP flow (automatic)**: The conf-file notification templates
+  (`nx-nt-channel-html-email`, `nx-nt-channel-text-email`) set these variables
+  from the constants above. Any notification that imports the template chain :
+  including the NEP apply rules - inherits them automatically. No Director
+  configuration is required.
+- **Custom notification template flow (manual)**: When an administrator creates
+  a custom notification template that does **not** import the NEP conf-file
+  template chain, the variables are not inherited. In that case the
+  administrator must set them as Custom Properties on the notification template
+  (the Data Fields above make them available as named fields). At minimum
+  `notification_from` must be set, otherwise the email has no `From` address and
+  the send fails.
 
 ## Usage
 

@@ -1,7 +1,10 @@
 # NEP Database Oracle
 
-The NEP is based on the check_oracle_health script (for more information have look to this [Page](https://labs.consol.de/nagios/check_oracle_health/)). <!-- codespell:ignore consol -->
-This NEP provides an Host Template  `nx-ht-status-oracle-conn-time` that can be added to the Host. This template is linked to a Service Set: `nx-ss-database-oracle-basic` that monitors these elements on Oracle Database:
+The NEP is based on the check_oracle_health script (for more information have
+look to this [Page](https://labs.consol.de/nagios/check_oracle_health/)).
+This NEP provides an Host Template  `nx-ht-status-oracle-conn-time` that can be
+added to the Host. This template is linked to a Service Set:
+`nx-ss-database-oracle-basic` that monitors these elements on Oracle Database:
 
 * Connected Users Count
 * Connection time
@@ -32,13 +35,15 @@ This NEP provides an Host Template  `nx-ht-status-oracle-conn-time` that can be 
 
 ### External dependencies
 
-This NEP doesn't require external references, if you want to manually download a new version via WGET see:
+This NEP doesn't require external references, if you want to manually download a
+new version via WGET see:
 
-* [https://labs.consol.de/nagios/check_oracle_health/index.html#download](https://labs.consol.de/nagios/check_oracle_health/index.html#download) <!-- codespell:ignore consol -->
+* [https://labs.consol.de/nagios/check_oracle_health/index.html#download](https://labs.consol.de/nagios/check_oracle_health/index.html#download)
 
 ## Installation
 
-The installation process provides a PERL script `check_oracle_health` that is automatically installed at /neteye/shared/monitoring/plugins/
+The installation process provides a PERL script `check_oracle_health` that is
+automatically installed at /neteye/shared/monitoring/plugins/
 
 ### NEP Installation
 
@@ -100,7 +105,8 @@ Commands:
 * `nx-c-oracle-health-tablespace-free`
 * `nx-c-oracle-health-tablespace-usage`
 
-Command objects uses plugins from Consol Labs library. To see more details about the included plugin, see the following links: <!-- codespell:ignore consol -->
+Command objects uses plugins from Consol Labs library. To see more details about
+the included plugin, see the following links:
 
 * [Oracle Health Plugin](https://github.com/lausser/check_oracle_health)
 
@@ -110,7 +116,8 @@ The NEP doesn't provide a dedicated dashboard, but user can build it
 
 ## Usage
 
-In order to use this NEP, add the Host Template `nx-ht-status-oracle-conn-time` to the Host.
+In order to use this NEP, add the Host Template `nx-ht-status-oracle-conn-time`
+to the Host.
 Configure these fields:
 
 * Client Connection String

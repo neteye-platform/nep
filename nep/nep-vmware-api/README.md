@@ -1,8 +1,12 @@
 # VMWare API
 
-The `nep-vmware-api` provides the minimum requirements to implement VMWare Environment monitoring through VCSA and Directly
+The `nep-vmware-api` provides the minimum requirements to implement VMWare
+Environment monitoring through VCSA and Directly
 
-Using the provided objects, is possible to: - Cluster monitoring - ESXi monitoring - ESXi monitoring (used also with VMD Module) - ESXi monitoring Directly - vCenter Basic Service monitored - vCenter Basic Service monitored directly - vCenter Snapshots monitoring (age and count)
+Using the provided objects, is possible to: - Cluster monitoring - ESXi
+monitoring - ESXi monitoring (used also with VMD Module) - ESXi monitoring
+Directly - vCenter Basic Service monitored - vCenter Basic Service monitored
+directly - vCenter Snapshots monitoring (age and count)
 
 Using the provided objects, is possible to:
 
@@ -42,7 +46,8 @@ Using the provided objects, is possible to:
 
 ### External Dependencies
 
-To use the command you need to add the auth file under the Icinga2 dir, with NetEye this will be done by Setup like code below:
+To use the command you need to add the auth file under the Icinga2 dir, with
+NetEye this will be done by Setup like code below:
 
 ``` bash
 mkdir -p /neteye/shared/icinga2/conf/vmware-auth-files/
@@ -72,7 +77,8 @@ nep-setup install nep-vmware-api
 
 ## Packet Contents
 
-This section contains a description of all the Objects from this package that can be used to build your own monitoring environment.
+This section contains a description of all the Objects from this package that
+can be used to build your own monitoring environment.
 
 ### Director/Icinga Objects
 

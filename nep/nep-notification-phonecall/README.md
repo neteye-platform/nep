@@ -1,6 +1,7 @@
 # Notification Phone Call
 
-The `nep-notification-phonecall` adds to the Notification Facility provided with `nep-notification-base` the ability to send Notifications using Phone Call.
+The `nep-notification-phonecall` adds to the Notification Facility provided with
+`nep-notification-base` the ability to send Notifications using Phone Call.
 
 ## Table of Contents
 
@@ -10,7 +11,8 @@ The `nep-notification-phonecall` adds to the Notification Facility provided with
 
 ## Prerequisites
 
-This package can be installed on systems running the software described below. Systems with equivalent components are also suitable for installation.
+This package can be installed on systems running the software described below.
+Systems with equivalent components are also suitable for installation.
 
 | Software Version | Version |
 | --- | ----------- |
@@ -38,7 +40,9 @@ After the installation is complete, you can use objects and configure the NEP.
 
 ## Packet Contents
 
-This `nep-notification-phonecall` does not provide any Object for the End User. All Objects will be automatically created after the current Director Configuration is deployed.
+This `nep-notification-phonecall` does not provide any Object for the End User.
+All Objects will be automatically created after the current Director
+Configuration is deployed.
 
 ### Director/Icinga Objects
 
