@@ -1,6 +1,7 @@
 # NRPE
 
-The **nep-nrpe-base** package provides support for implementing agentless basic monitoring.
+The **nep-nrpe-base** package provides support for implementing agentless basic
+monitoring.
 
 With `nep-nrpe-base` it is possible to perform standard monitoring of:
 
@@ -9,7 +10,8 @@ With `nep-nrpe-base` it is possible to perform standard monitoring of:
 
 Using the objects provided, it is possible:
 
-- Perform basic check based on NRPE (CPU load, memory usage, disk space usage, swap usage, server uptime)
+- Perform basic check based on NRPE (CPU load, memory usage, disk space usage,
+  swap usage, server uptime)
 
 ## Table of Contents
 
@@ -32,7 +34,9 @@ Using the objects provided, it is possible:
 
 ### External dependencies
 
-On NetEye environment this operation is automatically done by Setup Routine. Check and add the port 5666 in the firewall configuration on the public interface:
+On NetEye environment this operation is automatically done by Setup Routine.
+Check and add the port 5666 in the firewall configuration on the public
+interface:
 
 ``` bash
 firewall-cmd --get-active-zones
@@ -63,11 +67,13 @@ systemctl start nrpe.service
 
 Check that the NRPE service is in a running state and listening on port 5666:
 
+<!-- markdownlint-disable MD013 -->
 ``` bash
 netstat -anop | grep nrpe
 tcp        0      0 0.0.0.0:5666            0.0.0.0:*               LISTEN      13542/nrpe           off (0.00/0/0)
 tcp6       0      0 :::5666                 :::*                    LISTEN      13542/nrpe           off (0.00/0/0)
 ```
+<!-- markdownlint-enable MD013 -->
 
 ### Edit configuration file
 
@@ -87,8 +93,10 @@ Ensure that the ‘dont_blame_nrpe’ is set to 1 to accept the NRPE parameters:
 dont_blame_nrpe=1
 ```
 
-The default commands do not accept parameters, so the following NEP-compatible commands must be added:
+The default commands do not accept parameters, so the following NEP-compatible
+commands must be added:
 
+<!-- markdownlint-disable MD013 -->
 ``` bash
 command[nx_check_load]=/usr/lib64/nagios/plugins/check_load $ARG1$
 command[nx_check_disk]=/usr/lib64/nagios/plugins/check_disk $ARG1$
@@ -106,9 +114,11 @@ command[nx_check_procs]=/usr/lib64/nagios/plugins/check_procs $ARG1$
 command[nx_check_open_files]=/usr/lib64/nagios/plugins/check_open_files.pl $ARG1$
 command[nx_check_netstat]=/usr/lib64/nagios/plugins/check_netstat.pl -p $ARG1$ $ARG2$
 ```
+<!-- markdownlint-enable MD013 -->
 
 Save, Exit and then restart the service:
 
+<!-- markdownlint-disable MD013 -->
 ``` bash
 systemctl restart nrpe.service
 systemctl status nrpe.service
@@ -129,6 +139,7 @@ systemctl status nrpe.service
     Aug 05 17:12:10 centos7-test nrpe[13609]: Listening for connections on port 5666
     Aug 05 17:12:10 centos7-test nrpe[13609]: Allowing connections from: 127.0.0.1,::1,192.168.1.0/24
 ```
+<!-- markdownlint-enable MD013 -->
 
 ### Setup On the Windows Client
 
@@ -136,6 +147,7 @@ Download and Install the NSCP++ `Agent` NSCP-0.5.2.35-x64.msi [http://github.com
 
 Edit the config file for NSCP++ (`C:\Program Files\NSClient++\nsclient.ini`)
 
+<!-- markdownlint-disable MD013 -->
 ``` bash
 # If you want to fill this file with all available options run the following command:
 #   nscp settings --generate --add-defaults --load-all
@@ -265,12 +277,15 @@ vbs = cscript.exe //T:30 //NoLogo scripts\\lib\\wrapper.vbs %SCRIPT% %ARGS%
 ; POWERSHELL WRAPPING - Command line used for executing wrapped ps1 (powershell) scripts
 ps1 = cmd /c echo If (-Not (Test-Path "scripts\%SCRIPT%") ) { Write-Host "UNKNOWN: Script `"%SCRIPT%`" not found."; exit(3) }; scripts\%SCRIPT% $ARGS$; exit($lastexitcode) | powershell.exe /noprofile -command -
 ```
+<!-- markdownlint-enable MD013 -->
 
-In this example of the configuration file, all modules including the web server have been activated! Ensure that port `5666` is open.
+In this example of the configuration file, all modules including the web server
+have been activated! Ensure that port `5666` is open.
 
 ## Packet Contents
 
-This section contains a description of all the Objects from this package that can be used to build your own monitoring environment.
+This section contains a description of all the Objects from this package that
+can be used to build your own monitoring environment.
 
 ### Director/Icinga Objects
 

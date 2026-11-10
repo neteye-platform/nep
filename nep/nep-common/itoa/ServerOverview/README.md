@@ -1,10 +1,12 @@
 # Overview
 
-This dashboard helps you to show better basic performance and problems of agent-based monitored objects.
+This dashboard helps you to show better basic performance and problems of
+agent-based monitored objects.
 
 ## Dashboard Output
 
-The dashabord will show you a status, actual problems, used disk space, cpu load, memory used for a filtered group of hosts
+The dashabord will show you a status, actual problems, used disk space, cpu
+load, memory used for a filtered group of hosts
 
 ## Dashboard Example
 
@@ -12,8 +14,10 @@ You can find an example [at this link](https://neteyedemo.wuerth-phoenix.com/net
 
 ## Requirements
 
-This Dashboard is compatible with Grafana 7.5.5 (released with NetEye 4.19) and newer.
-Before importing this dashboard, ensure the following requirements are met. If not, please make the required changes accordingly.
+This Dashboard is compatible with Grafana 7.5.5 (released with NetEye 4.19) and
+newer.
+Before importing this dashboard, ensure the following requirements are met. If
+not, please make the required changes accordingly.
 
 ## Mysql user creation
 
@@ -27,7 +31,8 @@ flush privileges;
 
 ## Grafana Datasource creation
 
-From ITOA - Data Sources menu create a new MySQL datasource named `icinga-mysql` (if not exists)
+From ITOA - Data Sources menu create a new MySQL datasource named `icinga-mysql`
+(if not exists)
 
 ``` text
 Host: mariadb.neteyelocal
@@ -40,7 +45,8 @@ Save and test
 
 ## Grafana Variable definition
 
-From Dashboard - Settings - Variables (hostname) correct the needed filter in the WHERE clause.
+From Dashboard - Settings - Variables (hostname) correct the needed filter in
+the WHERE clause.
 
 ``` sql
 ...
@@ -50,4 +56,6 @@ WHERE icinga_hostgroups.alias like 'windows%';
 ## How to import dashboard
 
 To create the ITOA Dashboard, import the JSON file provided.
-For more info about importing Dashboards into Grafara, please refer to the [official documentation](https://grafana.com/docs/grafana/latest/dashboards/export-import/#import-dashboard.).
+For more info about importing Dashboards into Grafara, please refer to the
+[official
+documentation](https://grafana.com/docs/grafana/latest/dashboards/export-import/#import-dashboard.).

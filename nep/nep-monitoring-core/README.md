@@ -1,11 +1,15 @@
 # NEP Monitoring Core
 
-Package `nep-monitoring-core` adds self-monitoring capabilities to a NetEye. It enables NetEye to:
+Package `nep-monitoring-core` adds self-monitoring capabilities to a NetEye. It
+enables NetEye to:
 
 * Find the main components of the current Infrastructure
 * Monitor them using a predefined set of checks
 
-This Package is the first of a series: it covers only NetEye Core module functionalities. To monitor other NetEye modules, other NEPs are required. This Package will also act as a common base for other NetEye Monitoring-related Packages, therefore it is required to successfully monitor other NetEye modules.
+This Package is the first of a series: it covers only NetEye Core module
+functionalities. To monitor other NetEye modules, other NEPs are required. This
+Package will also act as a common base for other NetEye Monitoring-related
+Packages, therefore it is required to successfully monitor other NetEye modules.
 
 ## Table of Contents
 
@@ -29,7 +33,8 @@ This Package is the first of a series: it covers only NetEye Core module functio
 
 ### External dependencies
 
-This NEP doesn't need any external dependencies other that the ones used by the NEPs reported in [Prerequisites](#prerequisites)
+This NEP doesn't need any external dependencies other that the ones used by the
+NEPs reported in [Prerequisites](#prerequisites)
 
 ## Installation
 
@@ -39,7 +44,9 @@ There is no need to perform any action before installing this NEP
 
 ### NEP Installation
 
-If all requirements are met, you can now install this package. To manually set up the `nep-monitoring-core` package, just use `nep-setup` utility to install it:
+If all requirements are met, you can now install this package. To manually set
+up the `nep-monitoring-core` package, just use `nep-setup` utility to install
+it:
 
 ``` bash
 nep-setup install nep-monitoring-core
@@ -47,7 +54,8 @@ nep-setup install nep-monitoring-core
 
 #### Finalizing Installation
 
-Package `nep-monitoring-core` has self-populating capabilities. To create the required monitoring objects, just run the automations provided by this Package.
+Package `nep-monitoring-core` has self-populating capabilities. To create the
+required monitoring objects, just run the automations provided by this Package.
 
 1. __Run the following Import Sources__
 
@@ -59,17 +67,22 @@ Package `nep-monitoring-core` has self-populating capabilities. To create the re
    * NetEye infrastructure endpoints Rule
    * NetEye infrastructure child zones Rule
 
-This will create the required objects for NetEye Monitoring. Then, the generated Host Objects' properties must be updated to reflect the current configuration of the NetEye infrastructure:
+This will create the required objects for NetEye Monitoring. Then, the generated
+Host Objects' properties must be updated to reflect the current configuration of
+the NetEye infrastructure:
 
 1. Open Director
 2. Locate Host Object NetEye Master zone Endpoint
 3. Edit Custom Property Installed modules, selecting all the installed NetEye modules
 4. __If it is a Clustered NetEye deployment__:
 
-   1. Search _NetEye Cluster node_ inside the Host Objects: all cluster nodes will be found
-   2. Edit Custom Property _Local Services_ and select all the eventually installed NetEye Local services
+   1. Search _NetEye Cluster node_ inside the Host Objects: all cluster nodes
+      will be found
+   2. Edit Custom Property _Local Services_ and select all the eventually
+      installed NetEye Local services
 
-After this, all the required services will be automatically assigned to the right Host Objects.
+After this, all the required services will be automatically assigned to the
+right Host Objects.
 
 Then, the new configuration can be safely deployed.
 
@@ -77,7 +90,10 @@ Then, the new configuration can be safely deployed.
 
 ### Automatic Object's Update
 
-Automations provided by this Package can be freely used to generate and refresh all the required monitoring objects. NetEye deployments are not updated often, but the automations can be eventually scheduled by the End User in the `Jobs` section of Director Automations.
+Automations provided by this Package can be freely used to generate and refresh
+all the required monitoring objects. NetEye deployments are not updated often,
+but the automations can be eventually scheduled by the End User in the `Jobs`
+section of Director Automations.
 
 ### Director/Icinga Objects
 
@@ -85,7 +101,9 @@ This NEP provide the following Director objects.
 
 #### Host Templates
 
-The following Host Templates can be used to freely create Host Objects. Remember to not edit these Host Templates because they will be restored/updated at the next NEP package update.
+The following Host Templates can be used to freely create Host Objects. Remember
+to not edit these Host Templates because they will be restored/updated at the
+next NEP package update.
 
 | Host Template name                     | Description                                                                                                      |
 | -------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
@@ -98,9 +116,11 @@ The following Host Templates can be used to freely create Host Objects. Remember
 
 #### Service Templates
 
-The following Service Templates can be used to freely create Service Objects, Service Apply Rules or Service Sets.
+The following Service Templates can be used to freely create Service Objects,
+Service Apply Rules or Service Sets.
 
-_Remember to not edit these Service Templates as they will be restored/updated at the next NEP Package update_:
+_Remember to not edit these Service Templates as they will be restored/updated
+at the next NEP Package update_:
 
 | Template Name                                  | Run on Agent | Description                                                                                 |
 |------------------------------------------------| ------------ |---------------------------------------------------------------------------------------------|
@@ -126,7 +146,8 @@ _Remember to not edit these Service Templates as they will be restored/updated a
 
 The following Service Sets can be used to freely monitor Host Objects.
 
-_Remember to not edit these Service Sets because they will be restored/updated at the next NEP Package update_:
+_Remember to not edit these Service Sets because they will be restored/updated
+at the next NEP Package update_:
 
 | Service Set Name                                  | Description                                                           |
 | ------------------------------------------------- | --------------------------------------------------------------------- |
@@ -146,7 +167,8 @@ _Remember to not edit these Service Sets because they will be restored/updated a
 
 #### Automations
 
-The following Automations can be used to populate and maintain the monitored Host Objects.
+The following Automations can be used to populate and maintain the monitored
+Host Objects.
 
 Import Sources:
 
@@ -174,9 +196,11 @@ Jobs:
 
 #### Command
 
-The following Commands can be used to freely create Command Objects, Command Template and Service Template.
+The following Commands can be used to freely create Command Objects, Command
+Template and Service Template.
 
-_Remember to not edit these Service Templates as they will be restored/updated at the next NEP Package update_:
+_Remember to not edit these Service Templates as they will be restored/updated
+at the next NEP Package update_:
 
 * `nx-c-director-health-check`
 * `nx-c-check-crm`

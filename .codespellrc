@@ -1,0 +1,24 @@
+[codespell]
+# Plugins and MIB files from third parties are kept as they came from upstream.
+skip =
+    */custom_files/system_root/usr/share/snmp/mibs/*,
+    */nep-common/plugins/check_mem.pl,
+    */nep-common/plugins/check_netstat.pl,
+    */nep-database-mssql/plugins/check_mssql_health,
+    */nep-database-oracle/plugins/check_oracle_health,
+    */nep-monitoring-asset/plugins/check_systemd_timer,
+    */nep-monitoring-core/plugins/check_modem_smst.pl,
+    */nep-monitoring-core/plugins/check_mysql_health,
+    */nep-monitoring-siem/plugins/check_es_system.sh,
+    */nep-network-base/plugins/check_nwc_health,
+    */nep-network-messpc-ethernetbox/plugins/check_pcmeasure2.pl,
+    */nep-network-printer/plugins/check_printer_health,
+    */nep-network-ups/plugins/check_ups_health,
+    */nep-server-email/plugins/check_smtp_send,
+    */nep-server-sap/plugins/check_sap_health,
+    */nep-vmware-api/plugins/check_vmware_api,
+    */nep-windows-server-exchange/plugins/Exchange_FullBackupMonitoring.ps1,
+    */nep-windows-server-exchange/plugins/Exchange_IncrementalBackupMonitoring.ps1
+# aNULL is an OpenSSL cipher name, ConSol is the company of the check_*_health plugins
+# and showIn is an attribute name in ITOA dashboards.
+ignore-words-list = anull,consol,showin

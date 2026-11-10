@@ -1,14 +1,18 @@
 # Overview
 
-This dashboard helps you to have a summary of how many notifications are produced, by whom and to whom they are delivered.
+This dashboard helps you to have a summary of how many notifications are
+produced, by whom and to whom they are delivered.
 
 ## Dashboard Output
 
 The dashboard will show you a table with those filters:
 
 - state type (Hard,Soft)
-- state transitions (Host to UP, Host to DOWN, Host to N/A, Service to OK, Service to WARNING, Service to CRITICAL, Service to UNKNOWN, Service to N/A)
-- notification reasons (Normal notification, Problem acknowledgement, Flapping started, Flapping stopped, Downtime started , Downtime ended, Downtime removed, Custom)
+- state transitions (Host to UP, Host to DOWN, Host to N/A, Service to OK,
+  Service to WARNING, Service to CRITICAL, Service to UNKNOWN, Service to N/A)
+- notification reasons (Normal notification, Problem acknowledgement, Flapping
+  started, Flapping stopped, Downtime started , Downtime ended, Downtime
+  removed, Custom)
 
 The Time Range selected (i.e. 6 hours) is used to filter the output.
 
@@ -18,8 +22,10 @@ You can find an example [at this link](https://neteyedemo.wuerth-phoenix.com/net
 
 ## Requirements
 
-This Dashboard is compatible with Grafana 7.5.5 (released with NetEye 4.19) and newer.
-Before importing this dashboard, ensure the following requirements are met. If not, please make the required changes accordingly.
+This Dashboard is compatible with Grafana 7.5.5 (released with NetEye 4.19) and
+newer.
+Before importing this dashboard, ensure the following requirements are met. If
+not, please make the required changes accordingly.
 
 ## Mysql user creation
 
@@ -33,7 +39,8 @@ flush privileges;
 
 ## Datasource creation
 
-From ITOA - Data Sources menu create a new MySQL datasource named `icinga-mysql` (if not exists)
+From ITOA - Data Sources menu create a new MySQL datasource named `icinga-mysql`
+(if not exists)
 
 ``` text
 Host: mariadb.neteyelocal
@@ -47,4 +54,6 @@ Save and Test
 ## How to import dashboard
 
 To create the ITOA Dashboard, import the JSON file provided.
-For more info about importing Dashboards into Grafara, please refer to the [official documentation](https://grafana.com/docs/grafana/latest/dashboards/export-import/#import-dashboard.).
+For more info about importing Dashboards into Grafara, please refer to the
+[official
+documentation](https://grafana.com/docs/grafana/latest/dashboards/export-import/#import-dashboard.).

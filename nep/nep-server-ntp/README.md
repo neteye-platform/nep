@@ -1,6 +1,7 @@
 # NEP Server NTP
 
-The `nep-server-ntp` provides the minimum requirements to implement a monitoring of NTP Server
+The `nep-server-ntp` provides the minimum requirements to implement a monitoring
+of NTP Server
 
 Using the provided objects, is possible to:
 
@@ -29,7 +30,8 @@ Perform `ntp` service checks on Linux Server
 
 ### External dependencies
 
-This NEP doesn't need any external dependencies other that the ones used by the NEPs reported in [Prerequisites](#prerequisites)
+This NEP doesn't need any external dependencies other that the ones used by the
+NEPs reported in [Prerequisites](#prerequisites)
 
 ## Installation
 
@@ -59,16 +61,19 @@ This NEP doesn't provide any Director/Icinga object
 
 The following Host Templates can be used to freely create Host Objects.
 
-_Remember to not edit these Host Templates because they will be restored/updated at the next NEP package update_:
+_Remember to not edit these Host Templates because they will be restored/updated
+at the next NEP package update_:
 
 * `nx-ht-server-agent-linux-ntp`: Describe a generic Linux NTP Server
 * `nx-ht-server-agent-windows-ntp`: Describe a generic Windows NTP Server
 
 #### Service Templates
 
-The following Service Templates can be used to freely create Service Objects, Service Apply Rules or Service Sets.
+The following Service Templates can be used to freely create Service Objects,
+Service Apply Rules or Service Sets.
 
-_Remember to not edit these Service Templates as they will be restored/updated at the next NEP Package update_:
+_Remember to not edit these Service Templates as they will be restored/updated
+at the next NEP Package update_:
 
 * `nx-st-agentless-ntp`: Checks all aspects of monitoring of a NTP Server
 
@@ -76,12 +81,15 @@ _Remember to not edit these Service Templates as they will be restored/updated a
 
 The following Service Sets can be used to freely monitor Host Objects.
 
-_Remember to not edit these Service Sets because they will be restored/updated at the next NEP Package update_:
+_Remember to not edit these Service Sets because they will be restored/updated
+at the next NEP Package update_:
 
-* `nx-ss-server-agent-linux-ntp`: Service Set providing common monitoring for Linux NTP Server
+* `nx-ss-server-agent-linux-ntp`: Service Set providing common monitoring for
+  Linux NTP Server
   * Service CHRONYD Status
   * System time Drift Status
-* `nx-ss-server-agent-windows-ntp`: Service Set providing common monitoring for Windows NTP Server
+* `nx-ss-server-agent-windows-ntp`: Service Set providing common monitoring for
+  Windows NTP Server
   * Service Win32Time Status
   * System time Drift Status
 

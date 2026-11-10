@@ -1,12 +1,15 @@
 # NEP VMWare VMD
 
-The `nep-vmware-vmd` uses NetEye VMD module to deliver VMware monitoring without further access to the VMware infrastructure. With this package, it is possible to monitor:
+The `nep-vmware-vmd` uses NetEye VMD module to deliver VMware monitoring without
+further access to the VMware infrastructure. With this package, it is possible
+to monitor:
 
 * VMware Host Systems
 * VMware Virtual Machines
 * VMware datastores
 
-It has also the ability to automatically create Monitoring Objects, including parent-child relationships, using Icinga Director Automations.
+It has also the ability to automatically create Monitoring Objects, including
+parent-child relationships, using Icinga Director Automations.
 
 ## Table of Contents
 
@@ -31,7 +34,12 @@ It has also the ability to automatically create Monitoring Objects, including pa
 
 ### External Dependencies
 
-To perform monitoring, this package makes direct queries to the underlying MariaDB of NetEye. To avoid issues, consider increasing the maximum number of connections that MariaDB allows is adequate. To increase the maximum number of allowed connections, set the `max_connections` variable of `my.cnf` file at an adequate value. Depending on how much objects are monitored, adequate means from a minimum of 200 to a maximum of some thousands.
+To perform monitoring, this package makes direct queries to the underlying
+MariaDB of NetEye. To avoid issues, consider increasing the maximum number of
+connections that MariaDB allows is adequate. To increase the maximum number of
+allowed connections, set the `max_connections` variable of `my.cnf` file at an
+adequate value. Depending on how much objects are monitored, adequate means from
+a minimum of 200 to a maximum of some thousands.
 
 ``` ini
 [mysqld]
@@ -57,7 +65,9 @@ Go to file `/neteye/shared/icingaweb2/conf.resources.ini`
 Go to `[vspheredb]` section
 Get username (by default, it is `vspheredb`) and password from that section
 Another way is to ask to VMWare admin user and password.
-Create the following file `/neteye/shared/monitoring/plugins/check_vmd_object.conf` and insert the username and password
+Create the following file
+`/neteye/shared/monitoring/plugins/check_vmd_object.conf` and insert the
+username and password
 
 ``` ini
 username=vspheredb
@@ -66,7 +76,8 @@ password=xxxxx
 
 ## Packet Contents
 
-This section contains a description of all the Objects from this package that can be used to build your own monitoring environment.
+This section contains a description of all the Objects from this package that
+can be used to build your own monitoring environment.
 
 ### Director/Icinga Objects
 

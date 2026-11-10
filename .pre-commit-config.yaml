@@ -25,7 +25,6 @@ repos:
     hooks:
       - id: check-ast
       - id: check-shebang-scripts-are-executable
-        exclude: ^nep/setup/(?:templates/|library/setup_scripts/)
       - id: requirements-txt-fixer
 
   - repo: meta
@@ -38,39 +37,9 @@ repos:
       - id: gitleaks
 
   - repo: https://github.com/codespell-project/codespell
-    rev: 2ccb47ff45ad361a21071a7eedda4c37e6ae8c5a # frozen: v2.4.2
+    rev: 57b21406f092110c18776e39b0bda50d37c945c8 # frozen: v2.4.3
     hooks:
-      - id: codespell # Ignore attribute names in Dashboard JSON files
-        name: codespell-itoa-dashboards
-        files: ^nep/[^/]+/itoa/[^/]+/.*\.json$
-        args:
-          - --ignore-words-list=showIn
-
-      - id: codespell # Skip files that do not directly belong to NEP Project
-        exclude: |
-          (?x)^(
-            nep/[^/]+/itoa/[^/]+/.*\.json
-            |nep/[^/]+/custom_files/system_root/usr/share/snmp/mibs/.+
-            |nep/nep-common/plugins/check_mem\.pl
-            |nep/nep-common/plugins/check_netstat\.pl
-            |nep/nep-database-mssql/plugins/check_mssql_health
-            |nep/nep-database-oracle/plugins/check_oracle_health
-            |nep/nep-monitoring-asset/plugins/check_systemd_timer
-            |nep/nep-monitoring-core/plugins/check_linux_timesync_status.py
-            |nep/nep-monitoring-core/plugins/check_modem_smst.pl
-            |nep/nep-monitoring-core/plugins/check_mysql_health
-            |nep/nep-monitoring-siem/plugins/check_es_system\.sh
-            |nep/nep-network-base/plugins/check_nwc_health
-            |nep/nep-network-messpc-ethernetbox/plugins/check_pcmeasure2\.pl
-            |nep/nep-network-printer/plugins/check_printer_health
-            |nep/nep-network-ups/plugins/check_ups_health
-            |nep/nep-server-email/plugins/check_smtp_send
-            |nep/nep-server-sap/plugins/check_sap_health
-            |nep/nep-vmware-api/plugins/check_vmware_api
-            |nep/nep-vmware-api/plugins/check_vmware_snapshots\.pl
-            |nep/nep-windows-server-exchange/plugins/Exchange_FullBackupMonitoring\.ps1
-            |nep/nep-windows-server-exchange/plugins/Exchange_IncrementalBackupMonitoring\.ps1
-          )$
+      - id: codespell
 
   - repo: https://github.com/rhysd/actionlint
     rev: 914e7df21a07ef503a81201c76d2b11c789d3fca # frozen: v1.7.12
@@ -81,10 +50,11 @@ repos:
     rev: 745eface02aef23e168a8afb6b5737818efbea95 # frozen: v0.11.0.1
     hooks:
       - id: shellcheck
+        # TODO: Remove this filter after the scripts are fixed for all severities.
         args: [--severity=error]
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: 0671d8ab202c4ac093b78433ae5baf74f3fc7246 # frozen: v0.15.15
+    rev: c0f278f1254ccc8fb09676bcdb8d847e7db493e5 # frozen: v0.17.4
     hooks:
       - id: ruff-check
         args:
@@ -92,32 +62,27 @@ repos:
       - id: ruff-format
 
   - repo: https://github.com/astral-sh/uv-pre-commit
-    rev: 254dd0011fda0cd4bbb281ff135792b157e43e1f # frozen: 0.11.17
+    rev: d1df990f871e616da38bb602a2671d5e840b9989 # frozen: 0.13.7
     hooks:
       - id: uv-lock
 
   - repo: https://github.com/ansible/ansible-lint
-    rev: 5fac056c45595896c973fbde871f01f6cb14d74c # frozen: v26.4.0
+    rev: b74fb6f73d234bf92672372cb1c10768e4018d16 # frozen: v26.11.0
     hooks:
       - id: ansible-lint
 
   - repo: https://github.com/hadolint/hadolint
-    rev: 57e1618d78fd469a92c1e584e8c9313024656623 # frozen: v2.14.0
+    rev: 2eece55955ced00200be9729e9728cb7dacca505 # frozen: v2.15.1
     hooks:
       - id: hadolint-docker
 
   - repo: https://github.com/DavidAnson/markdownlint-cli2
-    rev: 996abf60411a8d954288ac9856aae7602b80cbda # frozen: v0.22.1
+    rev: 341e2a331ba578029e66c2e01183e7a6b5ca9ab4 # frozen: v0.24.0
     hooks:
       - id: markdownlint-cli2
-        exclude: |
-          (?x)^(
-            LICENSE\.md
-            |CHANGELOG\.md
-          )$
 
   - repo: https://github.com/renovatebot/pre-commit-hooks
-    rev: 3e70e24e4a930974005a744c9fa29b1c4714f44d # frozen: 43.205.2
+    rev: 9fd1972c2dd675ea03b47fb8b29d5563f622921f # frozen: 44.221.2
     hooks:
       - id: renovate-config-validator
         args: [--strict]

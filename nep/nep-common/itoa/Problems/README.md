@@ -1,10 +1,12 @@
 # Overview
 
-This dashboard allows you to monitor existing problems on NetEye (both for hosts and for services).
+This dashboard allows you to monitor existing problems on NetEye (both for hosts
+and for services).
 
 ## Dashboard Output
 
-The dashboard will show you two different tables showing Hosts DOWN and Services WARNING/CRITICAL with those filters:
+The dashboard will show you two different tables showing Hosts DOWN and Services
+WARNING/CRITICAL with those filters:
 
 - problem handled (Handled/Not handled/All)
 - service state (WARNING, CRITICAL, All)
@@ -15,11 +17,15 @@ You can find an example on the [NetEye Demo](https://neteyedemo.wuerth-phoenix.c
 
 ## Requirements
 
-This Dashboard is compatible with Grafana 7.5.5 (released with NetEye 4.19) and newer.
-Before importing this dashboard, ensure the following requirements are met. If not, please make the required changes accordingly.
+This Dashboard is compatible with Grafana 7.5.5 (released with NetEye 4.19) and
+newer.
+Before importing this dashboard, ensure the following requirements are met. If
+not, please make the required changes accordingly.
 
 > [!WARNING]
-> This dashboard does not take into account the user’s role and related permissions and it is intended for use by an administrator on an on-premise non multi-tenant installation of NetEye.
+> This dashboard does not take into account the user’s role and related
+> permissions and it is intended for use by an administrator on an on-premise
+> non multi-tenant installation of NetEye.
 
 ## Mysql user creation
 
@@ -33,7 +39,8 @@ flush privileges;
 
 ## Grafana Datasource creation
 
-From ITOA - Data Sources menu create a new MySQL datasource named `icinga-mysql` (if not exists)
+From ITOA - Data Sources menu create a new MySQL datasource named `icinga-mysql`
+(if not exists)
 
 ```ini
 Host: mariadb.neteyelocal
@@ -46,11 +53,14 @@ Save and test
 
 ## Grafana Variable definition
 
-From Dashboard - Settings - Variables (neteye_hostname) define the correct FQDN of your NetEye System (removing neteyedemo.wuerth-phoenix.com)
+From Dashboard - Settings - Variables (neteye_hostname) define the correct FQDN
+of your NetEye System (removing neteyedemo.wuerth-phoenix.com)
 
 ## Time zone setup
 
-If the column "Last state change" report only "null" value, it is needed to convert time to local timezone on mysql. You can find mysql [documentation reference](https://dev.mysql.com/doc/refman/8.0/en/time-zone-support.html)
+If the column "Last state change" report only "null" value, it is needed to
+convert time to local timezone on mysql. You can find mysql [documentation
+reference](https://dev.mysql.com/doc/refman/8.0/en/time-zone-support.html)
 
 ``` bash
 mysql_tzinfo_to_sql /usr/share/zoneinfo | mysql mysql
@@ -59,4 +69,6 @@ mysql_tzinfo_to_sql /usr/share/zoneinfo | mysql mysql
 ## How to import dashboard
 
 To create the ITOA Dashboard, import the JSON file provided.
-For more info about importing Dashboards into Grafara, please refer to the [official documentation](https://grafana.com/docs/grafana/latest/dashboards/export-import/#import-dashboard.).
+For more info about importing Dashboards into Grafara, please refer to the
+[official
+documentation](https://grafana.com/docs/grafana/latest/dashboards/export-import/#import-dashboard.).
