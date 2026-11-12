@@ -6,13 +6,13 @@
             "object_name": "nx-ss-microsoft-365-portal-service-basic",
             "object_type": "template",
             "services": {
-                " Online Office 365 services Status": {
+                "Online Office 365 services Status": {
                     "fields": [],
                     "imports": [
                         "nx-st-agentless-office365-portal-service",
                         "nx-st-type-custom"
                     ],
-                    "object_name": " Online Office 365 services Status",
+                    "object_name": "Online Office 365 services Status",
                     "object_type": "object",
                     "vars": {
                         "nx_on_host_down": "disable_check_on_down_hard"
