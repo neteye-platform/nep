@@ -10,12 +10,6 @@
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
         "name": "Annotations & Alerts",
-        "target": {
-          "limit": 100,
-          "matchAny": false,
-          "tags": [],
-          "type": "dashboard"
-        },
         "type": "dashboard"
       }
     ]
@@ -32,15 +26,16 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "palette-classic"
+            "fixedColor": "dark-blue",
+            "mode": "fixed"
           },
           "custom": {
             "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
-            "axisLabel": "",
+            "axisGridShow": true,
+            "axisLabel": "Uptime",
             "axisPlacement": "auto",
-            "axisWidth": 70,
             "barAlignment": 0,
             "barWidthFactor": 0.6,
             "drawStyle": "line",
@@ -53,6 +48,9 @@
             },
             "insertNulls": false,
             "lineInterpolation": "linear",
+            "lineStyle": {
+              "fill": "solid"
+            },
             "lineWidth": 2,
             "pointSize": 5,
             "scaleDistribution": {
@@ -60,13 +58,13 @@
             },
             "showPoints": "never",
             "showValues": false,
-            "spanNulls": 600000,
+            "spanNulls": true,
             "stacking": {
               "group": "A",
               "mode": "none"
             },
             "thresholdsStyle": {
-              "mode": "off"
+              "mode": "line+area"
             }
           },
           "mappings": [],
@@ -74,65 +72,28 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
+                "color": "transparent",
                 "value": 0
               }
             ]
           },
-          "unit": "bps"
+          "unit": "dtdhms"
         },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "In Traffic"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "fixedColor": "semi-dark-blue",
-                  "mode": "fixed"
-                }
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Out Traffic"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "fixedColor": "semi-dark-purple",
-                  "mode": "fixed"
-                }
-              }
-            ]
-          }
-        ]
+        "overrides": []
       },
       "gridPos": {
-        "h": 11,
-        "w": 17,
+        "h": 14,
+        "w": 14,
         "x": 0,
         "y": 0
       },
       "id": null,
       "options": {
-        "alertThreshold": true,
         "legend": {
-          "calcs": [
-            "mean",
-            "lastNotNull",
-            "max",
-            "min"
-          ],
-          "displayMode": "table",
+          "calcs": [],
+          "displayMode": "list",
           "placement": "bottom",
-          "showLegend": true
+          "showLegend": false
         },
         "tooltip": {
           "hideZeros": false,
@@ -143,7 +104,7 @@
       "pluginVersion": "12.4.3",
       "targets": [
         {
-          "alias": "In Traffic",
+          "alias": "System Uptime",
           "datasource": {
             "type": "influxdb"
           },
@@ -156,17 +117,23 @@
             },
             {
               "params": [
-                "none"
+                "metric"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "null"
               ],
               "type": "fill"
             }
           ],
-          "measurement": "check_iftraffic64",
+          "measurement": "/^$command$/",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT mean(\"value\") FROM \"$command\" WHERE (\"hostname\" =~ /^$hostname$/ AND \"service\" =~ /^$service$/ ) AND \"metric\" = 'traffic_in' AND value < 999999999 AND $timeFilter GROUP BY metric, time($__interval) fill(none)",
+          "query": "SELECT mean(\"value\")*60 FROM /^$command$/ WHERE (\"hostname\" =~ /^$hostname$/ AND \"service\" =~ /^$service$/) AND $timeFilter GROUP BY time($__interval), \"metric\" fill(null)",
           "rawQuery": true,
-          "refId": "A",
+          "refId": "VALUE",
           "resultFormat": "time_series",
           "select": [
             [
@@ -193,142 +160,132 @@
               "key": "service",
               "operator": "=~",
               "value": "/^$service$/"
-            },
-            {
-              "condition": "AND",
-              "key": "metric",
-              "operator": "=",
-              "value": "inBandwidth"
-            }
-          ]
-        },
-        {
-          "alias": "Out Traffic",
-          "datasource": {
-            "type": "influxdb"
-          },
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "none"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "check_iftraffic64",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT mean(\"value\") FROM \"$command\" WHERE (\"hostname\" =~ /^$hostname$/ AND \"service\" =~ /^$service$/ ) AND \"metric\" = 'traffic_out' AND value < 999999999 AND $timeFilter GROUP BY metric, time($__interval) fill(none)",
-          "rawQuery": true,
-          "refId": "B",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "hostname",
-              "operator": "=~",
-              "value": "/^$hostname$/"
-            },
-            {
-              "condition": "AND",
-              "key": "service",
-              "operator": "=~",
-              "value": "/^$service$/"
-            },
-            {
-              "condition": "AND",
-              "key": "metric",
-              "operator": "=",
-              "value": "inBandwidth"
-            }
-          ]
-        },
-        {
-          "alias": "[[tag_metric]]",
-          "datasource": {
-            "type": "influxdb"
-          },
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "none"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "check_iftraffic64",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT mean(\"value\") FROM \"$command\" WHERE (\"hostname\" =~ /^$hostname$/ AND \"service\" =~ /^$service$/ )  AND \"metric\" != 'traffic_in' AND \"metric\" != 'traffic_out' AND value < 999999999 AND $timeFilter GROUP BY metric, time($__interval) fill(none)",
-          "rawQuery": true,
-          "refId": "C",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "hostname",
-              "operator": "=~",
-              "value": "/^$hostname$/"
-            },
-            {
-              "condition": "AND",
-              "key": "service",
-              "operator": "=~",
-              "value": "/^$service$/"
-            },
-            {
-              "condition": "AND",
-              "key": "metric",
-              "operator": "=",
-              "value": "inBandwidth"
             }
           ]
         }
       ],
-      "title": "Interface Traffic - $service",
+      "title": "$service",
       "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "text",
+            "mode": "fixed"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "transparent",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "dtdhms"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 11,
+        "x": 0,
+        "y": 14
+      },
+      "id": null,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/^System Uptime$/",
+          "values": false
+        },
+        "showPercentChange": false,
+        "text": {
+          "valueSize": 100
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.4.3",
+      "targets": [
+        {
+          "alias": "System Uptime",
+          "datasource": {
+            "type": "influxdb"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "metric"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "/^$command$/",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT mean(\"value\")*60 FROM /^$command$/ WHERE (\"hostname\" =~ /^$hostname$/ AND \"service\" =~ /^$service$/) AND $timeFilter GROUP BY time($__interval), \"metric\" fill(null)",
+          "rawQuery": true,
+          "refId": "VALUE",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "hostname",
+              "operator": "=~",
+              "value": "/^$hostname$/"
+            },
+            {
+              "condition": "AND",
+              "key": "service",
+              "operator": "=~",
+              "value": "/^$service$/"
+            }
+          ]
+        }
+      ],
+      "title": "$service",
+      "type": "stat"
     }
   ],
   "preload": false,
-  "refresh": "",
   "schemaVersion": 42,
   "tags": [],
   "templating": {
@@ -336,15 +293,15 @@
       {
         "allowCustomValue": false,
         "current": {
-          "text": "${VAR_HOSTNAME",
-          "value": "${VAR_HOSTNAME"
+          "text": "${VAR_HOSTNAME}",
+          "value": "${VAR_HOSTNAME}"
         },
         "description": "",
         "hide": 2,
-        "label": "Host",
+        "includeAll": false,
         "name": "hostname",
         "options": [],
-        "query": "${VAR_HOSTNAME",
+        "query": "${VAR_HOSTNAME}",
         "type": "custom",
         "valuesFormat": "csv"
       },
@@ -356,7 +313,7 @@
         },
         "description": "",
         "hide": 2,
-        "label": "Service",
+        "includeAll": false,
         "name": "service",
         "options": [],
         "query": "${VAR_SERVICE}",
@@ -371,6 +328,7 @@
         },
         "description": "",
         "hide": 2,
+        "includeAll": false,
         "name": "command",
         "options": [],
         "query": "${VAR_COMMAND}",
@@ -385,8 +343,8 @@
   },
   "timepicker": {},
   "timezone": "browser",
-  "title": "nx-c-centreon-fortinet-fortigate-interfaces",
-  "version": 5,
+  "title": "nx-c-check-nwc-health-uptime",
+  "version": 8,
   "weekStart": "",
   "id": null
 }

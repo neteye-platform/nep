@@ -25,7 +25,7 @@
                 "-t": {
                     "description": "Teanant ID",
                     "required": true,
-                    "value": "$nx_neteye_tenant$"
+                    "value": "$neteye_tenant$"
                 },
                 "-H": {
                     "description": "Hostaname",
@@ -312,7 +312,7 @@
                     "value": "$nx_kibana_hostname$"
                 },
                 "-P": {
-                    "description": "Port for check: defualt 5601",
+                    "description": "Port for check: default 5601",
                     "value": "$nx_kibana_port$"
                 },
                 "-K": {
@@ -388,9 +388,9 @@
                     "value": "$nx_elastic_critical$"
                 },
                 "--tenant": {
-                    "description": "Tenand ID where search data (like namespace for ElasticAgent)",
+                    "description": "Tenant ID where search data (like namespace for ElasticAgent)",
                     "required": true,
-                    "value": "$nx_neteye_tenant$"
+                    "value": "$nx_elastic_namespace$"
                 }
             },
             "command": "PluginContribDir + \/check_elastic_ingest_status.py",
@@ -512,8 +512,8 @@
                     "value": "$nx_tornado_webhook_secret$"
                 },
                 "--tenant": {
-                    "description": "Tenand ID where search data (like namespace for ElasticAgent)",
-                    "value": "$nx_neteye_tenant$"
+                    "description": "Tenant ID where search data (like namespace for ElasticAgent)",
+                    "value": "$nx_elastic_namespace$"
                 },
                 "--webhook": {
                     "description": "Webhook endpoint enabled in Tornado",

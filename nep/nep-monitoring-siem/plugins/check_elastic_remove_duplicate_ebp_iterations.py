@@ -28,10 +28,7 @@ URL = "https://elasticsearch.neteyelocal:9200"
 ICINGA_URL = "https://icinga2-master.neteyelocal:5665/v1/objects/services"
 ICINGA_USER = "nx-ebp-monitoring"
 ICINGA_PASSWORD = "@@PASSWORD@@"
-ICINGA_HEADERS = {
-    "Accept": "application/json",
-    "Content-Type": "application/json"
-}
+ICINGA_HEADERS = {"Accept": "application/json", "Content-Type": "application/json"}
 
 OK_CODE = 0
 WARNING_CODE = 1
@@ -39,12 +36,13 @@ CRITICAL_CODE = 2
 UNKNOWN_CODE = 3
 ### END GLOBAL VARS ###
 
+
 ### START FUNCTIONS ###
 def get_icinga_service(blockchain):
     payload = {
         "type": "Service",
         "filter": f'service.name=="EBP Verify Status - {blockchain}"',
-        "attrs": ["state", "last_check_result"]
+        "attrs": ["state", "last_check_result"],
     }
 
     try:
@@ -53,9 +51,9 @@ def get_icinga_service(blockchain):
             ICINGA_URL,
             auth=(ICINGA_USER, ICINGA_PASSWORD),
             headers=ICINGA_HEADERS,
-            verify = f"{ icinga2_ca_path }",
+            verify=f"{icinga2_ca_path}",
             data=json.dumps(payload),
-            timeout=30
+            timeout=30,
         )
     except requests.RequestException as ex:
         message = f"CRITICAL - Error while contacting Icinga API: {ex}"
@@ -82,21 +80,35 @@ def get_icinga_service(blockchain):
         return None
 
     return results[0]
+
+
 ### END FUNCTIONS ###
 
 ### MAIN ####
-__version__ = '0.1.0'
-__version_date__ = '2026-07-08'
+__version__ = "0.1.0"
+__version_date__ = "2026-07-08"
 
 
 def main():
     # Arguments definition
-    parser = argparse.ArgumentParser(description="Remove duplicate EBP iterations from Elasticsearch")
-    parser.add_argument("-V", "--version", help="Show program version", action="store_true")
-    parser.add_argument('-v', '--verbose', help="Enable verbose mode", action='store_true')
-    parser.add_argument('--logging', help="Enable logging mode", action='store_true')
-    parser.add_argument("-b", "--blockchain", dest="Blockchain", type=str, required=True,
-                        help='Blockchain to search iterations into the format <tenant>-<retention>-<tag>')
+    parser = argparse.ArgumentParser(
+        description="Remove duplicate EBP iterations from Elasticsearch"
+    )
+    parser.add_argument(
+        "-V", "--version", help="Show program version", action="store_true"
+    )
+    parser.add_argument(
+        "-v", "--verbose", help="Enable verbose mode", action="store_true"
+    )
+    parser.add_argument("--logging", help="Enable logging mode", action="store_true")
+    parser.add_argument(
+        "-b",
+        "--blockchain",
+        dest="Blockchain",
+        type=str,
+        required=True,
+        help="Blockchain to search iterations into the format <tenant>-<retention>-<tag>",
+    )
 
     # Read arguments from command line
     args = parser.parse_args()
@@ -132,7 +144,9 @@ def main():
     service_output = attrs.get("last_check_result", {}).get("output", "")
 
     if service_state == 0:
-        message = f"OK - The Blockchain [{blockchain}] does not have duplicated iterations."
+        message = (
+            f"OK - The Blockchain [{blockchain}] does not have duplicated iterations."
+        )
         logging.debug(message)
         print(message)
         sys.exit(OK_CODE)
@@ -146,14 +160,16 @@ def main():
     ITERATIONS = []
     try:
         ITERATIONS = re.findall(
-            r'The blockchain contains duplicate logs, on iterations: \[(.*?)\]',
-            service_output
-        )[0].split(', ')
+            r"The blockchain contains duplicate logs, on iterations: \[(.*?)\]",
+            service_output,
+        )[0].split(", ")
     except Exception:
         ITERATIONS = []
 
     if len(ITERATIONS) == 0:
-        message = f"OK - The Blockchain [{blockchain}] does not have duplicated iterations."
+        message = (
+            f"OK - The Blockchain [{blockchain}] does not have duplicated iterations."
+        )
         logging.debug(message)
         print(message)
         sys.exit(OK_CODE)
@@ -162,13 +178,9 @@ def main():
     docs_deleted = 0  # Initializing counter for metrics
     for e in ITERATIONS:
         payload = {
-            "query": {
-                "terms": {
-                    "ES_BLOCKCHAIN.iteration": [e]
-                }
-            },
+            "query": {"terms": {"ES_BLOCKCHAIN.iteration": [e]}},
             "_source": ["_id", "_index"],
-            "size": 1000
+            "size": 1000,
         }
 
         # Retrieving the documents IDs and Indexes where they are located
@@ -176,11 +188,13 @@ def main():
             f"{URL}/*-{blockchain}/_search",
             headers=headers,
             cert=(cert_path + cert_file, cert_path + key_file),
-            verify = f"{ root_ca_path }",
-            data=json.dumps(payload)
+            verify=f"{root_ca_path}",
+            data=json.dumps(payload),
         )
         if http_response.status_code != 200:
-            message = f"WARNING - Elasticsearch is throwing an error.\n{http_response.text}"
+            message = (
+                f"WARNING - Elasticsearch is throwing an error.\n{http_response.text}"
+            )
             logging.error(message)
             print(message)
             sys.exit(WARNING_CODE)
@@ -188,14 +202,14 @@ def main():
         JSON_RES = json.loads(http_response.content)
 
         ## Deleting the documents for the same iteration
-        for hit in JSON_RES['hits']['hits'][1:]:
+        for hit in JSON_RES["hits"]["hits"][1:]:
             logging.debug(f"Checking and enabling writes on {hit['_index']}")
             # Retrieving index settings
             writes_request = requests.get(
                 f"{URL}/{hit['_index']}/_settings",
                 headers=headers,
                 cert=(cert_path + cert_file, cert_path + key_file),
-                verify = f"{ root_ca_path }"
+                verify=f"{root_ca_path}",
             )
             if writes_request.status_code != 200:
                 message = f"WARNING - Elasticsearch is throwing an error.\n{http_response.text}"
@@ -205,7 +219,9 @@ def main():
 
             # Retrieve if index is blocked or not
             try:
-                is_index_blocked = json.loads(writes_request.content)[hit['_index']]['settings']['index']['blocks']['write']
+                is_index_blocked = json.loads(writes_request.content)[hit["_index"]][
+                    "settings"
+                ]["index"]["blocks"]["write"]
             except KeyError:
                 is_index_blocked = None
 
@@ -215,8 +231,8 @@ def main():
                     f"{URL}/{hit['_index']}/_settings",
                     headers=headers,
                     cert=(cert_path + cert_file, cert_path + key_file),
-                    verify = f"{ root_ca_path }",
-                    json={"index.blocks.write": False}
+                    verify=f"{root_ca_path}",
+                    json={"index.blocks.write": False},
                 )
                 if writes_request.status_code != 200:
                     message = f"WARNING - Elasticsearch is throwing an error.\n{http_response.text}"
@@ -231,7 +247,7 @@ def main():
                 f"{URL}/{hit['_index']}/_doc/{hit['_id']}",
                 headers=headers,
                 cert=(cert_path + cert_file, cert_path + key_file),
-                verify = f"{ root_ca_path }"
+                verify=f"{root_ca_path}",
             )
             if http_response.status_code != 200:
                 message = (
@@ -255,4 +271,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

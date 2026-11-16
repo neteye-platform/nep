@@ -14,55 +14,42 @@ logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
 SETTINGS_SCHEMA = {
-    "type":"object",
-    "properties":{
+    "type": "object",
+    "properties": {
         "method": {
             "enum": ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS", "HEAD"],
-            "default":"POST"
+            "default": "POST",
         },
-        "url":{"type":"string"},
-        "user":{"type":"string"},
-        "pass":{"type":"string"},
-        "headers":{
-            "type":"object",
-            "patternProperties":{
-                ".+":{"type":"string"}
-            }
-        },
-        "cookies":{
-            "type":"object",
-            "patternProperties":{
-                ".+":{"type":"string"}
-            }
-        },
-        "timeout":{
-            "type":"number",
-            "default":60.0,
-            "minimum":0.0
-        },
-        "verify":{"type":"boolean"},
-        "cert":{
-            "oneOf":[
-                {"type":"string"},
-                {"const":None},
+        "url": {"type": "string"},
+        "user": {"type": "string"},
+        "pass": {"type": "string"},
+        "headers": {"type": "object", "patternProperties": {".+": {"type": "string"}}},
+        "cookies": {"type": "object", "patternProperties": {".+": {"type": "string"}}},
+        "timeout": {"type": "number", "default": 60.0, "minimum": 0.0},
+        "verify": {"type": "boolean"},
+        "cert": {
+            "oneOf": [
+                {"type": "string"},
+                {"const": None},
             ],
         },
-        "retries":{
-            "type":"integer",
-            "$comment":"how many retries before moving on to the next endpoint, -1 is infinite retries",
-            "default":5,
-            "minimum": -1
+        "retries": {
+            "type": "integer",
+            "$comment": "how many retries before moving on to the next endpoint, -1 is infinite retries",
+            "default": 5,
+            "minimum": -1,
         },
-        "retries_delay":{
-            "type":"number",
-            "$comment":"how many seconds to wait between each retry",
-            "default":0.5,
-            "minimum": 0.0
-        }
+        "retries_delay": {
+            "type": "number",
+            "$comment": "how many seconds to wait between each retry",
+            "default": 0.5,
+            "minimum": 0.0,
+        },
     },
     "required": ["url"],
-    "additionalProperties": False
+    "additionalProperties": False,
 }
+
 
 def extend_with_default(validator_class):
     validate_properties = validator_class.VALIDATORS["properties"]
@@ -73,13 +60,18 @@ def extend_with_default(validator_class):
                 instance.setdefault(property, subschema["default"])
 
         for error in validate_properties(
-            validator, properties, instance, schema,
+            validator,
+            properties,
+            instance,
+            schema,
         ):
             yield error
 
     return validators.extend(
-        validator_class, {"properties" : set_defaults},
+        validator_class,
+        {"properties": set_defaults},
     )
+
 
 def get_settings(path):
     if not os.path.exists(path) or not os.path.isfile(path):
@@ -92,51 +84,49 @@ def get_settings(path):
     extend_with_default(Draft7Validator)(SETTINGS_SCHEMA).validate(settings)
     return settings
 
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        '--settings',
+        "--settings",
         type=str,
         default=os.path.join(ROOT, "nx-notification-servicenow.json"),
-        help='The path to the endpoint settings. Default: %(default)s'
+        help="The path to the endpoint settings. Default: %(default)s",
     )
     parser.add_argument(
-        '--service',
+        "--service",
         type=str,
-        help='Is the name of the service / CI in the SN that faulted'
+        help="Is the name of the service / CI in the SN that faulted",
     )
+    parser.add_argument("--message", type=str, help="Is the fault's info message")
     parser.add_argument(
-        '--message',
-        type=str,
-        help='Is the fault\'s info message'
-    )
-    parser.add_argument(
-        '--type',
+        "--type",
         type=str,
         choices=["degradation", "outage", "planned", "ok"],
-        help='is the type of fault'
+        help="is the type of fault",
     )
-    parser.add_argument(
-        '--start',
-        type=str,
-        help=''
-    )
+    parser.add_argument("--start", type=str, help="")
     args = parser.parse_args()
 
     settings = get_settings(args.settings)
 
     payload = {
-        "u_ci_service":args.service,
-        "u_message":args.message,
-        "u_type":args.type,
-        "u_start":args.start,
+        "u_ci_service": args.service,
+        "u_message": args.message,
+        "u_type": args.type,
+        "u_start": args.start,
     }
 
     request_args = {
-        key:settings[key]
+        key: settings[key]
         for key in [
-            "method", "url", "headers", "cookies", "timeout",
-            "verify", "cert",
+            "method",
+            "url",
+            "headers",
+            "cookies",
+            "timeout",
+            "verify",
+            "cert",
         ]
         if key in settings
     }

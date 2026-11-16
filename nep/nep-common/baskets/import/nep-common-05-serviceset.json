@@ -148,7 +148,7 @@
                     "volatile": null,
                     "zone": null
                 },
-                "Memory Free": {
+                "Memory Usage": {
                     "action_url": null,
                     "apply_for": null,
                     "assign_filter": null,
@@ -180,7 +180,7 @@
                     "max_check_attempts": null,
                     "notes": null,
                     "notes_url": null,
-                    "object_name": "Memory Free",
+                    "object_name": "Memory Usage",
                     "object_type": "object",
                     "retry_interval": null,
                     "service_set": null,
@@ -375,6 +375,27 @@
                 }
             }
         },
+        "nx-ss-client-agent-windows-extra": {
+            "description": "Service Set extra for Windows-based clients",
+            "object_name": "nx-ss-client-agent-windows-extra",
+            "object_type": "template",
+            "services": [
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-agent-windows-memory-free",
+                        "nx-st-type-custom"
+                    ],
+                    "object_name": "Memory free",
+                    "object_type": "object",
+                    "vars": {
+                        "nx_memory_win_crit": "5%",
+                        "nx_memory_win_unit": "mb",
+                        "nx_memory_win_warn": "10%"
+                    }
+                }
+            ]
+        },
         "nx-ss-server-agent-windows-basic": {
             "assign_filter": "host.vars.nx_enable_nep_ss=true&!\"nx-ss-server-agent-windows-basic\"=host.vars.nx_nep_ss_to_exclude&\"nx-ht-server-agent-windows\"=host.templates",
             "description": "Service Set providing common monitoring for Windows-based servers",
@@ -427,7 +448,7 @@
                     "volatile": null,
                     "zone": null
                 },
-                "Memory Free": {
+                "Memory Usage": {
                     "action_url": null,
                     "apply_for": null,
                     "assign_filter": null,
@@ -459,7 +480,7 @@
                     "max_check_attempts": null,
                     "notes": null,
                     "notes_url": null,
-                    "object_name": "Memory Free",
+                    "object_name": "Memory Usage",
                     "object_type": "object",
                     "retry_interval": null,
                     "service_set": null,
@@ -834,6 +855,27 @@
                     "zone": null
                 }
             }
+        },
+        "nx-ss-server-agent-windows-extra": {
+            "description": "Service Set extra for Windows-based servers",
+            "object_name": "nx-ss-server-agent-windows-extra",
+            "object_type": "template",
+            "services": [
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-agent-windows-memory-free",
+                        "nx-st-type-custom"
+                    ],
+                    "object_name": "Memory free",
+                    "object_type": "object",
+                    "vars": {
+                        "nx_memory_win_crit": "5%",
+                        "nx_memory_win_unit": "mb",
+                        "nx_memory_win_warn": "10%"
+                    }
+                }
+            ]
         },
         "nx-ss-server-agent-linux-init": {
             "assign_filter": "host.vars.nx_enable_nep_ss=true&!\"nx-ss-server-agent-linux-init\"=host.vars.nx_nep_ss_to_exclude&\"nx-ht-server-agent-linux\"=host.templates&host.vars.nx_host_os_name=%5B%22linux_centos_6%22%5D",

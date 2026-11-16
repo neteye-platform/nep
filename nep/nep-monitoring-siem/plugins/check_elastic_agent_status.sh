@@ -1,16 +1,16 @@
 #!/usr/bin/env bash
 
 DEFAULT_FILE="/neteye/shared/icinga2/data/lib/icinga2/elastic-agent_status.json"
+POLICIES_FILE="/neteye/shared/icinga2/data/lib/icinga2/elastic-agent_policies.json"
 
 print_help() {
     echo ""
-    echo "This script check ElasticAgent status from JSON file retrived by Fleet API status"
+    echo "This script checks Elastic Agent status from the JSON file retrieved from the Fleet API."
     echo ""
     echo "Usage:"
     echo "-h"
     echo "-H <hostname>     [required]    ... hostname FQDN"
     echo "-f <file_path>    [optional]    ... file path of JSON result of Fleet API (default: $DEFAULT_FILE)"
-    exit 0
 }
 
 # --- Read options
@@ -24,29 +24,36 @@ while getopts "hH:f:" opt; do
             ;;
         h)
             print_help
+            exit 0
             ;;
         *)
             print_help
+            exit 3
             ;;
     esac
 done
 
-if [ -z $HOST_FQDN ]; then
-    echo ""
+if [ -z "$HOST_FQDN" ]; then
     echo "Hostname is required!"
     print_help
-    exit 1
+    exit 3
 fi
 
-if [ -z $JSON_FILE ]; then
-    JSON_FILE=$DEFAULT_FILE
+if [ -z "$JSON_FILE" ]; then
+    JSON_FILE="$DEFAULT_FILE"
+fi
+
+if [ -z "$JSON_POLICY" ]; then
+    JSON_POLICY="$POLICIES_FILE"
 fi
 
 HOST_KEY=$(echo "$HOST_FQDN" | tr '[:upper:]' '[:lower:]')
+
 if [[ ! "$HOST_KEY" =~ ^[a-z0-9][a-z0-9._-]*$ ]]; then
     echo "CHECK UNKNOWN - Invalid hostname for status cache lookup."
     exit 3
 fi
+
 CACHE_DIR="${JSON_FILE%.json}.d"
 CACHE_FILE="$CACHE_DIR/$HOST_KEY"
 
@@ -56,38 +63,93 @@ CACHE_FILE="$CACHE_DIR/$HOST_KEY"
 if [ -r "$CACHE_FILE" ]; then
     STATUS_JSON=$(cat "$CACHE_FILE")
 elif [ ! -d "$CACHE_DIR" ]; then
-    STATUS_JSON=$(jq --arg host "$HOST_KEY" '.[] | select((.local_metadata.host.hostname // "" | ascii_downcase) == $host)' "$JSON_FILE")
+    STATUS_JSON=$(jq --arg host "$HOST_KEY" \
+        '.[] | select((.local_metadata.host.hostname // "" | ascii_downcase) == $host)' \
+        "$JSON_FILE")
 else
     STATUS_JSON=""
 fi
 
-# Check if host exist
+# Check if host exists
 if [ -z "$STATUS_JSON" ]; then
     echo "CHECK UNKNOWN - Agent not found on Fleet Management."
     exit 3
-else
-    # check duplicated
-    ITEMS=$(echo $STATUS_JSON | jq '.agent.id' | wc -l)
-    if [ "$ITEMS" != "1" ]; then
-        echo "CHECK CRITICAL - Duplicated host on Fleet Management!\nCheck and remove duplicates manually..."
-        exit 2
-    fi
 fi
 
-AGENT_STATUS=$(echo $STATUS_JSON | jq -r ".status")
-AGENT_VERSION=$(echo $STATUS_JSON | jq -r ".agent.version")
-AGENT_ID=$(echo $STATUS_JSON | jq -r ".agent.id")
+# Check duplicates
+ITEMS=$(printf '%s\n' "$STATUS_JSON" | jq -r '.agent.id' | wc -l)
 
-message="<br>Agent Version: $AGENT_VERSION<br>Agent ID: $AGENT_ID"
+if [ "$ITEMS" != "1" ]; then
+    echo "CHECK CRITICAL - Duplicated host on Fleet Management! Check and remove duplicates manually..."
+    exit 2
+fi
 
-if [ "$AGENT_STATUS" = "online" ];then
-    echo "CHECK OK - Agent is $AGENT_STATUS. $message"
-elif [ "$AGENT_STATUS" = "unhealthy" ] || [ "$AGENT_STATUS" = "updating" ] || [ "$AGENT_STATUS" = "degraded" ]; then
-    # ERROR_MESSAGE=$(echo $STATUS_JSON | jq -r ".last_checkin_message")
-    ERROR_MESSAGE=$(echo $STATUS_JSON | jq -r ".components[].units[] | select(.status==\"FAILED\" or .status==\"DEGRADED\") | .message")
-    echo "CHECK WARNING - Agent is $AGENT_STATUS! $message <br> $ERROR_MESSAGE"
-    exit 1
-elif [ "$AGENT_STATUS" = "error" ] || [ "$AGENT_STATUS" = "offline" ]; then
+AGENT_STATUS=$(printf '%s\n' "$STATUS_JSON" | jq -r '.status')
+AGENT_VERSION=$(printf '%s\n' "$STATUS_JSON" | jq -r '.agent.version')
+AGENT_ID=$(printf '%s\n' "$STATUS_JSON" | jq -r '.agent.id')
+AGENT_POLICY_ID=$(printf '%s\n' "$STATUS_JSON" | jq -r '.policy_id')
+AGENT_POLICY_REVISION=$(printf '%s\n' "$STATUS_JSON" | jq -r '.policy_revision')
+
+message="<br>Agent Version: $AGENT_VERSION<br>Agent ID: $AGENT_ID<br>Agent Policy: $AGENT_POLICY_ID"
+
+# Evaluate agent status before checking Fleet policy
+if [ "$AGENT_STATUS" = "error" ] || \
+   [ "$AGENT_STATUS" = "offline" ] || \
+   [ "$AGENT_STATUS" = "orphaned" ]; then
     echo "CHECK CRITICAL - Agent status is $AGENT_STATUS, check Fleet Dashboard. $message"
     exit 2
+
+elif [ "$AGENT_STATUS" = "unhealthy" ] || \
+     [ "$AGENT_STATUS" = "updating" ] || \
+     [ "$AGENT_STATUS" = "degraded" ]; then
+
+    ERROR_MESSAGE=$(printf '%s\n' "$STATUS_JSON" | jq -r \
+        '.components[].units[] | select(.status=="FAILED" or .status=="DEGRADED") | .message')
+
+    echo "CHECK WARNING - Agent is $AGENT_STATUS! $message <br> $ERROR_MESSAGE"
+    exit 1
+
+elif [ "$AGENT_STATUS" != "online" ]; then
+    echo "CHECK UNKNOWN - Unexpected agent status: $AGENT_STATUS. $message"
+    exit 3
+fi
+
+# Agent is online: retrieve Fleet policy
+if [ ! -r "$JSON_POLICY" ]; then
+    echo "CHECK UNKNOWN - Fleet policy file is not readable: $JSON_POLICY. $message"
+    exit 3
+fi
+
+if [ -z "$AGENT_POLICY_ID" ] || [ "$AGENT_POLICY_ID" = "null" ]; then
+    echo "CHECK UNKNOWN - Agent policy ID is missing. $message"
+    exit 3
+fi
+
+if ! [[ "$AGENT_POLICY_REVISION" =~ ^[0-9]+$ ]]; then
+    echo "CHECK UNKNOWN - Invalid agent policy revision: $AGENT_POLICY_REVISION. $message"
+    exit 3
+fi
+
+POLICY_JSON=$(jq --arg policy_id "$AGENT_POLICY_ID" \
+    '.[] | select(.id == $policy_id)' \
+    "$JSON_POLICY")
+
+if [ -z "$POLICY_JSON" ]; then
+    echo "CHECK UNKNOWN - Fleet policy $AGENT_POLICY_ID not found. $message"
+    exit 3
+fi
+
+POLICY_REVISION=$(printf '%s\n' "$POLICY_JSON" | jq -r '.revision')
+
+if ! [[ "$POLICY_REVISION" =~ ^[0-9]+$ ]]; then
+    echo "CHECK UNKNOWN - Invalid Fleet policy revision: $POLICY_REVISION. $message"
+    exit 3
+fi
+
+if (( AGENT_POLICY_REVISION == POLICY_REVISION )); then
+    echo "CHECK OK - Agent is online. $message"
+    exit 0
+else
+    echo "CHECK WARNING - Agent policy is v.$AGENT_POLICY_REVISION that is different from Fleet Policy v.$POLICY_REVISION! $message"
+    exit 1
 fi

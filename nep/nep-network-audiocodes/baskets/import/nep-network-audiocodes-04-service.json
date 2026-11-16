@@ -439,7 +439,7 @@
     "2873": {
       "varname": "nx_centreon_audiocodes_hardware_absent_problem",
       "caption": "[NX] Centreon Audiocodes Hardware Absent Problem",
-      "description": "Return an error if an entity is not 'present' (default is skipping) (comma seperated list) Can be specific or global: --absent-problem=psu,1",
+      "description": "Return an error if an entity is not 'present' (default is skipping) (comma separated list) Can be specific or global: --absent-problem=psu,1",
       "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
       "format": null,
       "settings": {

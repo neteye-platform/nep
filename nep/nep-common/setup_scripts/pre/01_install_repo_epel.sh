@@ -9,7 +9,7 @@ SETUP_LIBRARY=${NEP_STAGE_DIR}/setup/library
 ##########################################
 ## Script main code: add your code here ##
 ##########################################
-## Install and disabel EPEL Repo
+## Install and disable EPEL Repo
 echo "[i] Installing EPEL Repo definitions"
 dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
 if [ $? -eq 0 ]; then

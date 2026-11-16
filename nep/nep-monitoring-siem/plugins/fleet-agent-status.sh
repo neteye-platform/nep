@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
-###########################################################
-## Retrive all ElasticAgent status from Kibana Fleet API ##
-###########################################################
+##########################################################
+## Retrieve all ElasticAgent status from Kibana Fleet API ##
+##########################################################
 
 DEFAULT_FILE="/neteye/shared/icinga2/data/lib/icinga2/elastic-agent_status.json"
 
 print_help() {
     echo ""
-    echo "This script retrive ElasticAgent status by Kibana Fleet API and write to Json File"
+    echo "This script retrieves ElasticAgent status by Kibana Fleet API and writes to Json File"
     echo ""
     echo "Usage:"
     echo "-h"

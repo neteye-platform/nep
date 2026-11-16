@@ -9,7 +9,8 @@
                 {
                     "fields": [],
                     "imports": [
-                        "nx-st-hana-instance-status"
+                        "nx-st-hana-instance-status",
+                        "nx-st-type-custom"
                     ],
                     "object_name": "HANA Instance Status",
                     "object_type": "object",
@@ -26,7 +27,8 @@
                 {
                     "fields": [],
                     "imports": [
-                        "nx-st-hana-replication-status"
+                        "nx-st-hana-replication-status",
+                        "nx-st-type-custom"
                     ],
                     "object_name": "HANA Replication Status",
                     "object_type": "object",
@@ -44,7 +46,8 @@
                 {
                     "fields": [],
                     "imports": [
-                        "nx-st-hana-connection-time"
+                        "nx-st-hana-connection-time",
+                        "nx-st-type-custom"
                     ],
                     "object_name": "HANA Connection Time",
                     "object_type": "object",
@@ -57,17 +60,8 @@
                 {
                     "fields": [],
                     "imports": [
-                        "nx-st-hana-disk-usage",
+                        "nx-st-hana-failed-data-backups",
                         "nx-st-type-custom"
-                    ],
-                    "object_name": "HANA Disk Usage",
-                    "object_type": "object",
-                    "uuid": "eb54c8e1-86f6-4a51-8613-3227afa3eb64"
-                },
-                {
-                    "fields": [],
-                    "imports": [
-                        "nx-st-hana-failed-data-backups"
                     ],
                     "object_name": "HANA Failed Data Backups",
                     "object_type": "object",
@@ -76,7 +70,8 @@
                 {
                     "fields": [],
                     "imports": [
-                        "nx-st-hana-failed-log-backups"
+                        "nx-st-hana-failed-log-backups",
+                        "nx-st-type-custom"
                     ],
                     "object_name": "HANA Failed Log Backups",
                     "object_type": "object",
@@ -85,16 +80,21 @@
                 {
                     "fields": [],
                     "imports": [
-                        "nx-st-hana-last-backup"
+                        "nx-st-hana-last-backup",
+                        "nx-st-type-custom"
                     ],
                     "object_name": "HANA Last Backup",
                     "object_type": "object",
-                    "uuid": "246247d5-9ace-4f6a-a9b6-2a16b766e060"
+                    "uuid": "246247d5-9ace-4f6a-a9b6-2a16b766e060",
+                    "vars": {
+                        "nx_sap_hana_backup_type": "complete data backup"
+                    }
                 },
                 {
                     "fields": [],
                     "imports": [
-                        "nx-st-hana-memory-usage"
+                        "nx-st-hana-memory-usage",
+                        "nx-st-type-custom"
                     ],
                     "object_name": "HANA Memory Usage",
                     "object_type": "object",
@@ -103,7 +103,8 @@
                 {
                     "fields": [],
                     "imports": [
-                        "nx-st-hana-missing-index"
+                        "nx-st-hana-missing-index",
+                        "nx-st-type-custom"
                     ],
                     "object_name": "HANA Missing Index",
                     "object_type": "object",
@@ -112,7 +113,8 @@
                 {
                     "fields": [],
                     "imports": [
-                        "nx-st-hana-used-space"
+                        "nx-st-hana-used-space",
+                        "nx-st-type-custom"
                     ],
                     "object_name": "HANA Used Space",
                     "object_type": "object",

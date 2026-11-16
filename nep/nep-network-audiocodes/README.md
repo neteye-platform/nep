@@ -2,7 +2,7 @@
 
 The `nep-network-audiocodes` adds SNMP-based monitoring for Audiocodes devices to NetEye, using Centreon plugins. It provides service checks for CPU, hardware health, memory, interfaces, SBC calls, and trunk status.
 
-# Table of Contents
+## Table of Contents
 
 1. [Prerequisites](#prerequisites)
 2. [Installation](#installation)
@@ -20,7 +20,7 @@ This package can be installed on systems running the software described below. S
 | nep-network-base | 0.5.0+ |
 | nep-centreon-plugins-base | 0.2.4+ |
 
-##### Required NetEye Modules
+### Required NetEye Modules
 
 | NetEye Module |
 | --- |

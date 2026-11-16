@@ -828,11 +828,6 @@
                     "var_filter": "host.vars.nx_enable_nep_ss=true"
                 },
                 {
-                    "datafield_id": 169,
-                    "is_required": "n",
-                    "var_filter": null
-                },
-                {
                     "datafield_id": 170,
                     "is_required": "n",
                     "var_filter": "host.vars.nx_notification_basic_mode_host!=%22disabled%22"
@@ -1421,18 +1416,6 @@
                 "behavior": "strict",
                 "data_type": "array",
                 "datalist": "[NX] Default service sets List"
-            },
-            "category": "Common Settings (Advanced)"
-        },
-        "169": {
-            "uuid": "87246f58-974b-4a66-9708-c38b0000055f",
-            "varname": "nx_neteye_tenant",
-            "caption": "[NX] NetEye Tenant",
-            "description": "Tenant name where search data (like namespace for ElasticAgent)",
-            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
-            "format": null,
-            "settings": {
-                "visibility": "visible"
             },
             "category": "Common Settings (Advanced)"
         },

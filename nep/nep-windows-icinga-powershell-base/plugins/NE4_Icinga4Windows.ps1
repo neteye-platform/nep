@@ -1,4 +1,4 @@
-﻿#----------install framework---------------
+#----------install framework---------------
 #must have internet access
     [Net.ServicePointManager]::SecurityProtocol = 'tls12, tls11';
     $ProgressPreference                         = 'SilentlyContinue';

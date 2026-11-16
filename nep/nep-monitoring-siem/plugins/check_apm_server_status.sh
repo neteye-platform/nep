@@ -4,7 +4,7 @@ DEFAULT_FILE="/neteye/shared/icinga2/data/lib/icinga2/elastic-agent_status.json"
 
 print_help() {
     echo ""
-    echo "This script check APM Server status from JSON file retrived by Fleet API status"
+    echo "This script check APM Server status from JSON file retrieved by Fleet API status"
     echo ""
     echo "Usage:"
     echo "-h"

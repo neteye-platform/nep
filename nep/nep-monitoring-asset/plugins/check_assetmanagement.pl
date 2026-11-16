@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 # Check the OCS asset management for old assets and duplicate host items
 #
-# Use this plugin for your OCS assetmanagement server to check for items not beeing updated any more.
+# Use this plugin for your OCS assetmanagement server to check for items not being updated any more.
 # Search also for duplicate items having the same name.
 #
 # Usage: check_assetmanagement.pl -C <age|duplicates> [-w <item age warning in days>] [-c <item age critical in days>] [-x \"<host1,host2,host3,..>\" ]
@@ -70,7 +70,7 @@ if ($DEBUG==1) {
 if ($DEBUG==1){
   $i=0;
   while ($a_exclHosts[$i]){
-    print "Exluding host: ".$a_exclHosts[$i]."\n";
+    print "Excluding host: ".$a_exclHosts[$i]."\n";
     $i++;
   }
 }
@@ -142,7 +142,7 @@ sub check_ocs_new_software
 
    $var_return = $ERRORS{"OK"};
 
-   $query = "SELECT COUNT(DISTINCT name) FROM softwares where name not in (select EXTRACTED from dico_ignored) and name not in (select EXTRACTED from dico_soft) and name <> ''";
+   $query = "SELECT COUNT(DISTINCT name) FROM softwares where name not in (select EXTRACTED from dico_ignored) and name not in (select EXTRACTED from dico_soft) and name <> ''"; # codespell:ignore softwares
 
    $dbh = DBI->connect("DBI:mysql:".$dbOCSVars{"db"}.":".$dbOCSVars{"host"},$dbOCSVars{"user"}, $dbOCSVars{"pass"});
    $sqlQuery  = $dbh->prepare($query)
@@ -178,7 +178,7 @@ sub check_os_count
    $rv = $sqlQuery->execute()
       or die "can't execute the query: $sqlQuery->errstr";
 
-   #Loop trough all rows
+   #Loop through all rows
    while(@row = $sqlQuery->fetchrow_array()){
      $str_detailOutput .= "Matching computer name: ".$row[0].".\n";
    }
@@ -214,7 +214,7 @@ or die "can't execute the query: $sqlQuery->errstr";
 
 $int_nonOk_itmes_counter = 0;
 
-#Loop trough all rows
+#Loop through all rows
 while (@row= $sqlQuery->fetchrow_array()) {
 
   #Date of ocs asset and pass regex
@@ -288,7 +288,7 @@ or die "Can't prepare $query: $dbh->errstr\n";
 $rv = $sqlQuery->execute
 or die "can't execute the query: $sqlQuery->errstr";
 
-#Loop trough all rows
+#Loop through all rows
 while (@row= $sqlQuery->fetchrow_array()) {
 
   if (check_if_host_to_exclude($row[0], @a_exclHosts) == 1){
@@ -352,7 +352,7 @@ or die "can't execute the query: $sqlQuery->errstr";
 $int_duplicate_itmes_counter = 0;
 $str_curr_duplicate_hostName = "";
 
-#Loop trough all rows
+#Loop through all rows
 while (@row= $sqlQuery->fetchrow_array()) {
 
 
@@ -403,13 +403,13 @@ if (defined ($o_ignoretrash) ) {
      if (length($str_detailOutput) > 2000){
 
 	$str_detailOutput .= substr $str_detailOutput,0,2000;
-	$str_detailOutput .= "<br/>Other itmes...";
+	$str_detailOutput .= "<br/>Other items...";
      }
   }
 }
 
 ############################################
-## Check for GLPI computers not beeing in monitoring (monarch)
+## Check for GLPI computers not being in monitoring (monarch)
 #############################################
 sub check_for_glpi_not_in_monitoring
 {
@@ -503,7 +503,7 @@ or die "can't execute the query: $sqlQuery->errstr";
 
 $int_nonOk_itmes_counter = 0;
 
-#Loop trough all rows
+#Loop through all rows
 while (@row= $sqlQuery->fetchrow_array()) {
 
    if (check_if_host_to_exclude($row[0], @a_exclHosts) == 1){
@@ -550,7 +550,7 @@ or die "can't execute the query: $sqlQuery->errstr";
 my $dateNow = time;
 $str_resultOutput = "UNKNOWN: Now automatic Job matching.";
 
-#Loop trough all rows
+#Loop through all rows
 if (@row= $sqlQuery->fetchrow_array()) {
 
    $str_resultOutput .= "Job '".$row[0]."' last execution time:'".$row[2]."'<br/>";
@@ -595,10 +595,10 @@ sub check_glpi_software_installations
 	#print ($str_resultOutput.$str_detailOutput."\n");
 
 
-	#Loop trough all rows
+	#Loop through all rows
 	while (@row= $sqlQuery->fetchrow_array()) {
 	  if ($DEBUG==1) {
-		print "Name: ".$row[1]." Entitiy ".$row[2]." Install No: ".$row[3]."  License No: ".$row[4]."\n";
+		print "Name: ".$row[1]." Entity ".$row[2]." Install No: ".$row[3]."  License No: ".$row[4]."\n";
 	  }
 
 	  if (check_if_host_to_exclude($row[1], @a_exclHosts) == 1){
@@ -662,7 +662,7 @@ if ( ! defined($o_warn)) { $o_warn =10; }
 if ( ! defined($o_crit)) { $o_crit =20; }
 if (defined ($o_verb) )   {
   $DEBUG=1;
-  print "Verbouse mode on !\n";
+  print "Verbose mode on !\n";
   #Log::Log4perl->easy_init( { level   => $DEBUG,
   #file    => ">>/tmp/check_assetmanagement.log" } );
   }
@@ -721,7 +721,7 @@ sub print_usage
 sub help
 ############################################
 {
-print "\nCheck OCS for hardware asset not beeing updated for a while.\nCheck also for duplicate items in the asset management.\n";
+print "\nCheck OCS for hardware asset not being updated for a while.\nCheck also for duplicate items in the asset management.\n";
 print "Version: ".$Version."\n\n";
 
 print_usage();
@@ -732,10 +732,10 @@ print this help message
 -C, --command
 specify the kind of check to perform on the OCS assetmanagement
   - age:            check for old not up-to-date assets
-  - duplicates      check in OCS and GLPI for duplicate assests having the same host name
-  - ocs_duplicates  check in OCS for duplicate assests having the same host name
+  - duplicates      check in OCS and GLPI for duplicate assets having the same host name
+  - ocs_duplicates  check in OCS for duplicate assets having the same host name
   - ocs_newsoft     check in OCS for software in category NEW
-  - glpi_duplicates check in GLPI for duplicate assests having the same host name
+  - glpi_duplicates check in GLPI for duplicate assets having the same host name
   Each Duplicate check will lead to a WARNING if a duplicate is found
   - automatic_action_last_run check regular execution of automatic action: verify last run
   - os_count check count of computers with relation to a non existing operating system
@@ -747,7 +747,7 @@ Default: 10
 specify the number of days an asset item has not to be updated before returning a critical
 Default: 20
 -x "host1,host2,neteye_.*,..."
-    exlude those host name from the check results
+    exclude those host name from the check results
     Expression is taken as case insensitive Perl Regular Expression
 
 -I Ignore items marked as deleted
@@ -757,7 +757,7 @@ Default: 20
 -t GLPI Tech. Groups ID (only for -C assets_in_monitoring )
 -a GLPI automatic action name to verify (only for -C automatic_action_last_run)
 -v, --verbose
-verbouse execution mode
+verbose execution mode
 
 Example Usage:
 $0 -C age -x \"host1,host2,host3,..\" -w 30 -c 60

@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
-# Incollo qui l'URL completo che il browser restituisce
+# Paste here the full url obtained after authorizing the app in the browser
 REDIRECT_URL=""
 
-# Estrai la parte 'code' tutto ciò che sta dopo 'code=' e prima del '&'
+# Extract the 'code' part, everything after 'code=' and before the '&'
 AUTH_CODE="${REDIRECT_URL#*code=}"
 AUTH_CODE="${AUTH_CODE%%&*}"
 
-echo "Il mio authorization code è: $AUTH_CODE"
+echo "My authorization code is: $AUTH_CODE"

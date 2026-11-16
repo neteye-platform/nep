@@ -678,7 +678,7 @@
         "210": {
             "uuid": "ba0ecf1b-ce1e-4bf1-9b30-69959554d321",
             "varname": "nx_centreon_plugin_verbose",
-            "caption": "[NX] Enable verbose output (Long outout)",
+            "caption": "[NX] Enable verbose output (Long output)",
             "description": "nx_centreon_plugin_verbose",
             "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeBoolean",
             "format": null,
@@ -985,7 +985,7 @@
             "uuid": "646c5a51-c6b1-4013-98ac-61453fb7867f",
             "varname": "nx_centreon_plugin_snmp_subsetleef",
             "caption": "[NX] Leef batch size",
-            "description": "How many oid values per SNMP request (default: 50) (for get_leef method. Be cautious whe you set it. Prefer to let the default value).",
+            "description": "How many oid values per SNMP request (default: 50) (for get_leef method. Be cautious when you set it. Prefer to let the default value).",
             "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeNumber",
             "format": null,
             "settings": {},

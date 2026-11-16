@@ -1139,11 +1139,44 @@
             "volatile": null,
             "zone": null
         },
+        "nx-st-agent-windows-memory-free": {
+            "check_command": "nx-c-windows-mem-free",
+            "fields": [
+                {
+                    "datafield_id": 2741,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 2744,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 2747,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "icon_image": "img/nep/service/ram.png",
+            "imports": [
+                "nx-st-agent-windows"
+            ],
+            "object_name": "nx-st-agent-windows-memory-free",
+            "object_type": "template",
+            "uuid": "ce5fa636-f21c-49b0-aa07-539292cb2fa8",
+            "vars": {
+                "memory_win_show_used": false,
+                "nx_memory_win_crit": "5%",
+                "nx_memory_win_unit": "mb",
+                "nx_memory_win_warn": "10%"
+            }
+        },
         "nx-st-agent-windows-memory-usage": {
             "action_url": null,
             "apply_for": null,
             "assign_filter": null,
-            "check_command": "memory-windows",
+            "check_command": "nx-c-windows-mem-usage",
             "check_interval": null,
             "check_period": null,
             "check_timeout": null,
@@ -1159,22 +1192,17 @@
             "event_command": null,
             "fields": [
                 {
-                    "datafield_id": 74,
+                    "datafield_id": 2741,
                     "is_required": "n",
                     "var_filter": null
                 },
                 {
-                    "datafield_id": 75,
+                    "datafield_id": 2744,
                     "is_required": "n",
                     "var_filter": null
                 },
                 {
-                    "datafield_id": 76,
-                    "is_required": "n",
-                    "var_filter": null
-                },
-                {
-                    "datafield_id": 77,
+                    "datafield_id": 2747,
                     "is_required": "n",
                     "var_filter": null
                 }
@@ -1199,7 +1227,10 @@
             "use_agent": null,
             "use_var_overrides": null,
             "vars": {
-                "memory_win_show_used": false
+                "memory_win_show_used": false,
+                "nx_memory_win_crit": "95%",
+                "nx_memory_win_unit": "mb",
+                "nx_memory_win_warn": "90%"
             },
             "volatile": null,
             "zone": null
@@ -2853,11 +2884,6 @@
                     "datafield_id": 166,
                     "is_required": "n",
                     "var_filter": null
-                },
-                {
-                    "datafield_id": 167,
-                    "is_required": "n",
-                    "var_filter": null
                 }
             ],
             "flapping_threshold_high": null,
@@ -3015,7 +3041,7 @@
             "category_id": null,
             "varname": "disk_cfree",
             "caption": "Disk Free space critical threshold",
-            "description": "Exit with CRITICAL status if less than INTEGER units of disk are free or Exit with CRITCAL status if less than PERCENT of disk space is free",
+            "description": "Exit with CRITICAL status if less than INTEGER units of disk are free or Exit with CRITICAL status if less than PERCENT of disk space is free",
             "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
             "format": null,
             "originalId": "28",
@@ -3566,7 +3592,7 @@
             "category_id": null,
             "varname": "perfmon_win_syntax",
             "caption": "Performance counter Output label",
-            "description": "Use this instead of the counter name in the perfomance data",
+            "description": "Use this instead of the counter name in the performance data",
             "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
             "format": null,
             "originalId": "80",
@@ -3875,7 +3901,7 @@
         "109": {
             "category_id": null,
             "varname": "uptime_win_crit",
-            "caption": "Uptime critical theshold",
+            "caption": "Uptime critical threshold",
             "description": "Critical threshold",
             "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
             "format": null,
@@ -4233,7 +4259,7 @@
         "161": {
             "varname": "nx_notification_basic_groups_override",
             "caption": "[NX] Recipient groups list Override",
-            "description": "Overrides Recepient groups list from owning Host Object",
+            "description": "Overrides Recipient groups list from owning Host Object",
             "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeDirectorObject",
             "format": null,
             "settings": {
@@ -4245,7 +4271,7 @@
         "162": {
             "varname": "nx_notification_basic_users_override",
             "caption": "[NX] Recipients list Override",
-            "description": "Override Recepients from onwing Host Object",
+            "description": "Override Recipients from owning Host Object",
             "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeDirectorObject",
             "format": null,
             "settings": {
@@ -4306,18 +4332,6 @@
                 "datalist": "[NX] Notification Channels List"
             },
             "category": "[NX] Basic notifications Settings (Advanced)"
-        },
-        "167": {
-            "varname": "nx_neteye_tenant",
-            "caption": "[NX] NetEye Tenant",
-            "description": "Tenant name where search data (like namespace for ElasticAgent)",
-            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
-            "format": null,
-            "originalId": "167",
-            "settings": {
-                "visibility": "visible"
-            },
-            "category": "Common Settings (Advanced)"
         },
         "10559": {
             "category_id": null,
@@ -4390,7 +4404,7 @@
         "584": {
             "varname": "nx_netstat_port",
             "caption": "[NX] Netstat Port",
-            "description": "Comma separated. Which tcp ports (attributes) to check. The value here can be either numeric or name that would be come from /etc/services. The value should be prefixed with: > : check outgoing TCP connections, < : check incoming TCP connections (default). Special value of '>@' or just '>' allow to specify that you want to check on total number of TCP connections (this is reported in perfomance data as 'all_out').",
+            "description": "Comma separated. Which tcp ports (attributes) to check. The value here can be either numeric or name that would be come from /etc/services. The value should be prefixed with: > : check outgoing TCP connections, < : check incoming TCP connections (default). Special value of '>@' or just '>' allow to specify that you want to check on total number of TCP connections (this is reported in performance data as 'all_out').",
             "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
             "format": null,
             "originalId": "584",
@@ -4466,6 +4480,44 @@
                 "datalist": "[NX] Infrastructural Object List"
             },
             "category": "Common Settings (Advanced)"
+        },
+        "2741": {
+            "uuid": "fa64d7bf-4ecc-4c52-a84f-d87120054ceb",
+            "varname": "nx_memory_win_crit",
+            "caption": "[NX] Memory Win Crit",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": null
+        },
+        "2744": {
+            "uuid": "a9a33487-39cf-475b-92e3-2a1acecc7971",
+            "varname": "nx_memory_win_unit",
+            "caption": "[NX] Memory Win Unit Display",
+            "description": "Use this unit to display value and interpret thresholds",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeDatalist",
+            "format": null,
+            "settings": {
+                "behavior": "strict",
+                "data_type": "string",
+                "datalist": "[NX] Byte Unit Lowercase List"
+            },
+            "category": null
+        },
+        "2747": {
+            "uuid": "82620edc-20a4-4f47-9b36-66e735fe8dd5",
+            "varname": "nx_memory_win_warn",
+            "caption": "[NX] Memory Win Warn",
+            "description": null,
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": null
         }
     },
     "DatafieldCategory": {

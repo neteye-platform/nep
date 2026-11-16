@@ -175,14 +175,11 @@ unitcalc() {
 }
 
 thresholdlogic() {
-  if [ -n $warning ] && [ -z $critical ]; then
-    echo "UNKNOWN - Define both warning and critical thresholds"
-    exit $STATE_UNKNOWN
-  fi
-  if [ -n $critical ] && [ -z $warning ]; then
-    echo "UNKNOWN - Define both warning and critical thresholds"
-    exit $STATE_UNKNOWN
-  fi
+if { [ -n "$warning" ] && [ -z "$critical" ]; } ||
+   { [ -n "$critical" ] && [ -z "$warning" ]; }; then
+  echo "UNKNOWN - Define both warning and critical thresholds"
+  exit "$STATE_UNKNOWN"
+fi
 }
 
 default_percentage_thresholds() {
@@ -283,27 +280,28 @@ if [[ -n ${local} ]] && (! [[ ${checktype} =~ ^(cpu|mem|disk|jthreads)$ ]]); the
 fi
 ################################################################################
 # Check requirements
-for cmd in curl expr ${parser}; do
-  if ! $(which ${cmd} >/dev/null 2>&1); then
-    echo "UNKNOWN: ${cmd} does not exist, please check if command exists and PATH is correct"
-    exit ${STATE_UNKNOWN}
+for cmd in curl expr; do
+  if ! command -v "$cmd" >/dev/null 2>&1; then
+    echo "UNKNOWN: $cmd does not exist, please check if command exists and PATH is correct"
+    exit "$STATE_UNKNOWN"
   fi
 done
 # Find parser
-if [ -z ${parser} ]; then
-  for cmd in ${parsers[@]}; do
-    if $(which ${cmd} >/dev/null 2>&1); then
-      parser=${cmd}
+if [ -z "$parser" ]; then
+  for cmd in "${parsers[@]}"; do
+    if command -v "$cmd" >/dev/null 2>&1; then
+      parser=$cmd
       break
     fi
   done
-  if [ -z "${parser}" ]; then
-    echo "UNKNOWN: No JSON parser found. Either one of the following is required: $(
-      IFS=,
-      echo "${parsers[*]}"
-    )"
-    exit ${STATE_UNKNOWN}
+  if [ -z "$parser" ]; then
+    parser_list=$(IFS=,; printf '%s' "${parsers[*]}")
+    printf 'UNKNOWN: No JSON parser found. Either one of the following is required: %s\n' "$parser_list"
+    exit "$STATE_UNKNOWN"
   fi
+elif ! command -v "$parser" >/dev/null 2>&1; then
+  echo "UNKNOWN: $parser does not exist, please check if command exists and PATH is correct"
+  exit "$STATE_UNKNOWN"
 fi
 
 ################################################################################
@@ -963,7 +961,7 @@ maxshards) # Check Max Shards Setting
     nodeShard_Map[$nodeName]=$nodeShards
   done
 
-  if [[ ${#nodeShard_Map[@]} < 1 ]]; then
+  if [[ ${#nodeShard_Map[@]} -eq 0 ]]; then
     echo "UNKNOWN - Shouldnt retrive total shard per node count"
     exit $STATE_UNKNOWN
   fi
@@ -983,7 +981,7 @@ maxshards) # Check Max Shards Setting
 
   metrics=""
 
-  for name in ${!nodeShard_Map[@]}; do
+  for name in "${!nodeShard_Map[@]}"; do
     if [[ ${nodeShard_Map[$name]} -ge $criticalsize ]]; then
       #echo "CRITICAL "
       criticalNodes[$name]=${nodeShard_Map[$name]}
@@ -1004,7 +1002,7 @@ maxshards) # Check Max Shards Setting
 
     echo "ES SYSTEM CRITICAL - Cluster's number of shard exceeded the critical threshold of $criticalsize in a one or more nodes.<br>"
 
-    for key in ${!criticalNodes[@]}; do
+    for key in "${!criticalNodes[@]}"; do
       echo $key ":" ${criticalNodes[$key]}
     done
     echo " |"$metrics
@@ -1016,7 +1014,7 @@ maxshards) # Check Max Shards Setting
   then
     echo "ES SYSTEM WARNING - Cluster's number of shard exceeded the warnign threshold of $warningsize in a one or more nodes.<br>"
 
-    for key in ${!warnignNodes[@]}; do
+    for key in "${!warnignNodes[@]}"; do
       echo $key ":" ${warnignNodes[$key]}
     done
     echo " |"$metrics
@@ -1027,7 +1025,7 @@ maxshards) # Check Max Shards Setting
     [[ ${#okNodes[@]} -gt 0 ]]
     echo "ES SYSTEM OK - Cluster's number of shard is ok in all nodes.<br>"
 
-    for key in ${!okNodes[@]}; do
+    for key in "${!okNodes[@]}"; do
       echo $key ":" ${okNodes[$key]}
     done
     echo " |"$metrics

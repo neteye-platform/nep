@@ -1,4 +1,5 @@
 # NEP Storage IBM
+
 The `nep-storage-ibm` provides common basic template to manage Storage IBM systems listed below:
 
 * IBM DS3000 smcli by Centreon
@@ -7,39 +8,38 @@ The `nep-storage-ibm` provides common basic template to manage Storage IBM syste
 
 This package can be installed on systems running the software described below. Systems with equivalent components are also suitable for installation.
 
-# Table of Contents
+## Table of Contents
+
 1. [Prerequisites](#prerequisites)
 2. [Installation](#installation)
 3. [Packet Contents](#packet-contents)
-4. [Usage](#usage)
-
 
 ## Prerequisites
 
-| Sofware Version | Version |
+| Software Version | Version |
 | --- | ----------- |
 | NetEye | 4.23 |
 | nep-common | >=0.0.4 |
 | nep-centreon-plugins-base | >=0.0.5 |
 | nep-storage-base | >=0.0.2 |
 
-
-##### Required NetEye Modules
+### Required NetEye Modules
 
 | NetEye Module |
 | --- |
 | CORE |
 
-
-## Installation
+### Installation
 
 #### Before Installation
+
 There is no need to perform any action before installing this NEP
 
 ### NEP Installation
 
 To install the `nep-storage-ibm`, use `nep-setup` via SSH on NetEye Master Node:
-```
+
+``` bash
 nep-setup install nep-storage-ibm
 ```
 
@@ -64,7 +64,6 @@ This NEP doesn't provide any Director/Icinga object
 
 This NEP doesn't provide any Host Templates
 
-
 #### Service Templates
 
 The following Service Templates can be used to freely create Service Objects, Service Apply Rules or Service Sets.
@@ -73,7 +72,6 @@ _Remember to not edit these Service Templates as they will be restored/updated a
 
 * `nx-st-agentless-cli-centreon-storage-ibm-ds`: Checks all base monitoring DELL Switch N40XXX using Centreon Plugins
 * `nx-st-agentless-ssh-centreon-storage-ibm-storwize`: Checks all base monitoring DELL Switch OS10 using Centreon Plugins
-
 
 #### Services Sets
 
@@ -84,31 +82,25 @@ _Remember to not edit these Service Sets because they will be restored/updated a
 * `nx-ss-storage-centreon-ibm-ds`: Service Set providing all Base monitoring IBM Storage DS3000
 * `nx-ss-storage-centreon-ibm-storwize`: Service Set providing all Base monitoring IBM Storage Storwize
 
-
 #### Command
 
 This NEP doesn't provide any command
-
 
 #### Notification
 
 This NEP doesn't provide any Notification definition
 
-
 ### Automation
 
 This NEP doesn't provide any Automation
-
 
 ### Tornado Rules
 
 This NEP doesn't provide any Tornado rules
 
-
 ### Dashboard ITOA
 
 This NEP doesn't provide any ITOA Dashboards
-
 
 ### Metrics
 

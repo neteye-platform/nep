@@ -42,6 +42,8 @@ spec:
       value: "{{ target_branch }}"
     - name: projects
       value: "gh-pub:nep:{{ source_branch }}"
+    - name: sourceGitUrl
+      value: "{{ source_url }}"
     - name: releaseTag
       value: "alpha"
     - name: skipTests

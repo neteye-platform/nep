@@ -48,6 +48,7 @@ DEFAULT_TONE: str = "TIME: 60 1,9,3,3,6,2,2,1,2,3,6"
 _E164_MIN_DIGITS = 7
 _E164_MAX_DIGITS = 15
 
+
 class CompactArgumentParser(argparse.ArgumentParser):
     """ArgumentParser that prints a compact error block instead of the full help."""
 
@@ -59,6 +60,7 @@ class CompactArgumentParser(argparse.ArgumentParser):
         """Print the error and a short usage hint, then exit with code 2."""
         self.print_usage(sys.stderr)
         self.exit(2, f"\nERROR: {message}\n\nRun with -h/--help for full usage.\n")
+
 
 def validate_phone_number(raw: str, param_name: str) -> str:
     """Validate and normalize a phone number for use with SMSD.
@@ -269,53 +271,88 @@ def parse_arguments() -> Namespace:
     ring_group.add_argument("-T", "--phone-tone", dest="phone_tone", help="Custom tone")
 
     # Generic (common) options for both SMS and ring notifications.
-    parser.add_argument("-t", "--notification-type", dest="notification_type",
-                        required=True, help="NOTIFICATIONTYPE")
     parser.add_argument(
-        "-d", "--datetime", help="LONGDATETIME (defaults to current time if omitted)")
+        "-t",
+        "--notification-type",
+        dest="notification_type",
+        required=True,
+        help="NOTIFICATIONTYPE",
+    )
+    parser.add_argument(
+        "-d", "--datetime", help="LONGDATETIME (defaults to current time if omitted)"
+    )
 
-    parser.add_argument("-s", "--state", required=True,
-                        help="HOST or SERVICE STATE")
-    parser.add_argument("-o", "--output", required=True,
-                        help="HOST or SERVICE OUTPUT")
+    parser.add_argument("-s", "--state", required=True, help="HOST or SERVICE STATE")
+    parser.add_argument("-o", "--output", required=True, help="HOST or SERVICE OUTPUT")
 
     parser.add_argument("-4", "--ipv4", dest="ipv4", help="IPv4 address")
     parser.add_argument("-6", "--ipv6", dest="ipv6", help="IPv6 address")
 
-    parser.add_argument("-l", "--host-name", required=True, dest="host_name", help="HOSTNAME")
-    parser.add_argument("-n", "--host-display-name", dest="host_display_name", help="HOSTDISPLAYNAME")
+    parser.add_argument(
+        "-l", "--host-name", required=True, dest="host_name", help="HOSTNAME"
+    )
+    parser.add_argument(
+        "-n", "--host-display-name", dest="host_display_name", help="HOSTDISPLAYNAME"
+    )
     parser.add_argument("-e", "--service-name", dest="service_name", help="SERVICENAME")
-    parser.add_argument("-u", "--service-display-name", dest="service_display_name",
-                        help="SERVICEDISPLAYNAME")
+    parser.add_argument(
+        "-u",
+        "--service-display-name",
+        dest="service_display_name",
+        help="SERVICEDISPLAYNAME",
+    )
 
     # Advanced configuration options for SMSD spool integration and logging. These have defaults but can be overridden as needed.
-    parser.add_argument("--spool-path", default=DEFAULT_SPOOL_PATH, dest="spool_path",
-                        help="Outgoing SMSD spool directory")
-    parser.add_argument("--spool-user", default=DEFAULT_SPOOL_USER, dest="spool_user",
-                        help="Outgoing SMSD spool owner user")
-    parser.add_argument("--spool-group", default=DEFAULT_SPOOL_GROUP, dest="spool_group",
-                        help="Outgoing SMSD spool owner group")
-    parser.add_argument("--log-dir", default=LOG_DIR, dest="log_dir",
-                        help="Directory for notification, SMS and ring audit logs")
-    parser.add_argument("--smsd-target-server", type=str, dest="smsd_target_server",
-                        help="Remote host running SMSD. If set, files are copied there with rsync.")
-    parser.add_argument("-v", "--verbose", action="store_true",
-                        help="Enable debug output")
+    parser.add_argument(
+        "--spool-path",
+        default=DEFAULT_SPOOL_PATH,
+        dest="spool_path",
+        help="Outgoing SMSD spool directory",
+    )
+    parser.add_argument(
+        "--spool-user",
+        default=DEFAULT_SPOOL_USER,
+        dest="spool_user",
+        help="Outgoing SMSD spool owner user",
+    )
+    parser.add_argument(
+        "--spool-group",
+        default=DEFAULT_SPOOL_GROUP,
+        dest="spool_group",
+        help="Outgoing SMSD spool owner group",
+    )
+    parser.add_argument(
+        "--log-dir",
+        default=LOG_DIR,
+        dest="log_dir",
+        help="Directory for notification, SMS and ring audit logs",
+    )
+    parser.add_argument(
+        "--smsd-target-server",
+        type=str,
+        dest="smsd_target_server",
+        help="Remote host running SMSD. If set, files are copied there with rsync.",
+    )
+    parser.add_argument(
+        "-v", "--verbose", action="store_true", help="Enable debug output"
+    )
 
     # Deprecated options for backward compatibility. These are accepted but ignored, and will be removed in future versions.
     parser.add_argument("-b", "--author", dest="author", help="AUTHOR (deprecated)")
     parser.add_argument("-c", "--comment", dest="comment", help="COMMENT (deprecated)")
-    parser.add_argument("-i", "--icingaweb-url", dest="icingaweb_url",
-                        help="ICINGAWEB2URL (deprecated)")
-    parser.add_argument("-f", "--mail-from", dest="mail_from", help="MAILFROM (deprecated)")
+    parser.add_argument(
+        "-i", "--icingaweb-url", dest="icingaweb_url", help="ICINGAWEB2URL (deprecated)"
+    )
+    parser.add_argument(
+        "-f", "--mail-from", dest="mail_from", help="MAILFROM (deprecated)"
+    )
 
     return parser.parse_args()
 
 
 def setup_logging(verbose: bool, notification_log_file: str) -> Logger:
     """Configure and return a logger that writes to file and stdout."""
-    os.makedirs(os.path.dirname(notification_log_file),
-                mode=0o755, exist_ok=True)
+    os.makedirs(os.path.dirname(notification_log_file), mode=0o755, exist_ok=True)
 
     logger = logging.getLogger("nx-sms-with-ring-notification")
     logger.handlers = []
@@ -368,13 +405,14 @@ def _append_audit(log_file: str, line: str) -> None:
 
 
 def write_smsd_file(
-        payload: str,
-        file_prefix: str,
-        spool_path: str,
-        spool_user: str,
-        spool_group: str,
-        spool_server: str,
-        logger: Logger,) -> str:
+    payload: str,
+    file_prefix: str,
+    spool_path: str,
+    spool_user: str,
+    spool_group: str,
+    spool_server: str,
+    logger: Logger,
+) -> str:
     """Write an SMSD command file and deliver it locally or via rsync.
 
     The file is first created atomically in a temporary directory with the
@@ -407,21 +445,26 @@ def write_smsd_file(
 
         # Remote mode: send the temporary file through rsync.
         if (spool_server or "").strip():
-            dest = "{}:{}".format(
-                spool_server, _ensure_trailing_slash(spool_path))
+            dest = "{}:{}".format(spool_server, _ensure_trailing_slash(spool_path))
             cmd = ["rsync", "-az", "--", tmp_path, dest]
             proc = subprocess.run(
-                cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True
+                cmd,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                universal_newlines=True,
             )
             if proc.returncode != 0:
-                raise RuntimeError(f"rsync failed (rc={proc.returncode}): stdout={proc.stdout!r} stderr={proc.stderr!r}")
+                raise RuntimeError(
+                    f"rsync failed (rc={proc.returncode}): stdout={proc.stdout!r} stderr={proc.stderr!r}"
+                )
             logger.info("Delivered file to remote spool: %s", dest)
             return tmp_path
 
         # Local mode: ensure destination spool path exists and is a directory.
         if not os.path.isdir(spool_path):
             raise FileNotFoundError(
-                f"spool_path does not exist or is not a directory: {spool_path}")
+                f"spool_path does not exist or is not a directory: {spool_path}"
+            )
 
         # Move into spool atomically from the same filesystem when possible.
         final_path = os.path.join(spool_path, os.path.basename(tmp_path))
@@ -504,8 +547,10 @@ def send_sms(args: Namespace, logger: Logger, sms_log_file: str) -> int:
         # Store a single-line audit entry for troubleshooting and traceability.
         _append_audit(
             sms_log_file,
-            "{}  {}".format(datetime.now().strftime(
-                "%a %b %d %Y %H:%M:%S %Z"), payload.replace("\n", " | ")),
+            "{}  {}".format(
+                datetime.now().strftime("%a %b %d %Y %H:%M:%S %Z"),
+                payload.replace("\n", " | "),
+            ),
         )
         return 0
     except Exception as e:
@@ -533,8 +578,10 @@ def send_ring(args: Namespace, logger: Logger, ring_log_file: str) -> int:
         # Persist ring command details as one-line audit for operations visibility.
         _append_audit(
             ring_log_file,
-            "{}  {}".format(datetime.now().strftime(
-                "%a %b %d %Y %H:%M:%S %Z"), payload.replace("\n", " | ")),
+            "{}  {}".format(
+                datetime.now().strftime("%a %b %d %Y %H:%M:%S %Z"),
+                payload.replace("\n", " | "),
+            ),
         )
         return 0
     except Exception as e:
@@ -546,16 +593,14 @@ def send_ring(args: Namespace, logger: Logger, ring_log_file: str) -> int:
 def main() -> None:
     """Execute end-to-end notification flow and return process exit status."""
     args = parse_arguments()
-    notification_log_file, sms_log_file, ring_log_file = get_log_paths(
-        args.log_dir)
+    notification_log_file, sms_log_file, ring_log_file = get_log_paths(args.log_dir)
     logger = setup_logging(args.verbose, notification_log_file)
     initialize_log_files(logger, sms_log_file, ring_log_file)
 
     logger.debug("Started with args: %s", vars(args))
 
     sms_status = send_sms(args, logger, sms_log_file)
-    ring_status = send_ring(
-        args, logger, ring_log_file) if args.ring_number else 0
+    ring_status = send_ring(args, logger, ring_log_file) if args.ring_number else 0
 
     if sms_status != 0 or ring_status != 0:
         sys.exit(1)
