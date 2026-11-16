@@ -15,8 +15,6 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 38,
-  "iteration": 1632996549099,
   "links": [],
   "panels": [
     {
@@ -39,7 +37,10 @@
       "cacheTimeout": null,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "icinga-mysql",
+      "datasource": {
+        "type": "mysql",
+        "uid": "icingadb-mysql"
+      },
       "description": "Count all transitions in the given time range. Min grouping is 1H.",
       "fieldConfig": {
         "defaults": {},
@@ -93,7 +94,7 @@
           "hide": false,
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\r\n   $__timeGroupAlias(sh.state_time,$__interval),\r\n   CASE sh.state\r\n    WHEN 0 THEN IF(o.objecttype_id=1, 'Host to UP',   'Service to OK')\r\n    WHEN 1 THEN IF(o.objecttype_id=1, 'Host to DOWN', 'Service to WARNING')\r\n    WHEN 2 THEN IF(o.objecttype_id=1, 'Host to DOWN', 'Service to CRITICAL')\r\n    WHEN 3 THEN IF(o.objecttype_id=1, 'Host to DOWN', 'Service to UNKNOWN')\r\n    ELSE IF(o.objecttype_id=1, 'Host to N/A', 'Service to N/A')\r\n   END AS metric,\r\n   COUNT(sh.state) AS value\r\nFROM\r\n   icinga_statehistory sh\r\n   INNER JOIN icinga_objects o ON sh.object_id = o.object_id AND sh.instance_id = o.instance_id\r\nWHERE\r\n   $__timeFilter(sh.state_time)\r\n   AND o.objecttype_id IN(1, 2)\r\n   AND sh.state_type IN(${state_types})\r\n   AND (\r\n     CASE sh.state\r\n       WHEN 0 THEN IF(o.objecttype_id=1, 'Host to UP',   'Service to OK')\r\n       WHEN 1 THEN IF(o.objecttype_id=1, 'Host to DOWN', 'Service to WARNING')\r\n       WHEN 2 THEN IF(o.objecttype_id=1, 'Host to DOWN', 'Service to CRITICAL')\r\n       WHEN 3 THEN IF(o.objecttype_id=1, 'Host to DOWN', 'Service to UNKNOWN')\r\n       ELSE IF(o.objecttype_id=1, 'Host to N/A', 'Service to N/A')\r\n     END\r\n    ) IN(${state_transitions})\r\nGROUP BY 1,2\r\nORDER BY $__timeGroup(sh.state_time,$__interval)",
+          "rawSql": "SELECT\n   (FLOOR(sh.event_time / $__interval_ms) * $__interval_ms) DIV 1000 AS time,\n   CASE sh.soft_state\n      WHEN 0 THEN IF(sh.object_type='host', 'Host to UP',   'Service to OK')\n      WHEN 1 THEN IF(sh.object_type='host', 'Host to DOWN', 'Service to WARNING')\n      WHEN 2 THEN IF(sh.object_type='host', 'Host to DOWN', 'Service to CRITICAL')\n      WHEN 3 THEN IF(sh.object_type='host', 'Host to DOWN', 'Service to UNKNOWN')\n      ELSE IF(sh.object_type='host', 'Host to N/A', 'Service to N/A')\n   END AS metric,\n   COUNT(sh.soft_state) AS value\nFROM\n   state_history sh\nWHERE\n   sh.environment_id = (SELECT id FROM environment LIMIT 1)\n   AND sh.event_time BETWEEN $__unixEpochFrom() * 1000 AND $__unixEpochTo() * 1000\n   AND CASE sh.state_type WHEN 'soft' THEN 0 WHEN 'hard' THEN 1 END IN(${state_types})\n   AND (\n     CASE sh.soft_state\n      WHEN 0 THEN IF(sh.object_type='host', 'Host to UP',   'Service to OK')\n      WHEN 1 THEN IF(sh.object_type='host', 'Host to DOWN', 'Service to WARNING')\n      WHEN 2 THEN IF(sh.object_type='host', 'Host to DOWN', 'Service to CRITICAL')\n      WHEN 3 THEN IF(sh.object_type='host', 'Host to DOWN', 'Service to UNKNOWN')\n      ELSE IF(sh.object_type='host', 'Host to N/A', 'Service to N/A')\n   END\n    ) IN(${state_transitions})\nGROUP BY 1,2\nORDER BY 1\n",
           "refId": "Hosts transitions to UP",
           "select": [
             [
@@ -105,7 +106,6 @@
               }
             ]
           ],
-          "table": "icinga_acknowledgements",
           "timeColumn": "entry_time",
           "timeColumnType": "timestamp",
           "where": [
@@ -160,7 +160,10 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "icinga-mysql",
+      "datasource": {
+        "type": "mysql",
+        "uid": "icingadb-mysql"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -223,7 +226,7 @@
           "group": [],
           "metricColumn": "CAST(state AS CHAR)",
           "rawQuery": true,
-          "rawSql": "SELECT\r\n   $__timeGroupAlias(sh.state_time,$__interval),\r\n   CASE sh.state\r\n    WHEN 0 THEN IF(o.objecttype_id=1, 'Host to UP',   'Service to OK')\r\n    WHEN 1 THEN IF(o.objecttype_id=1, 'Host to DOWN', 'Service to WARNING')\r\n    WHEN 2 THEN IF(o.objecttype_id=1, 'Host to DOWN', 'Service to CRITICAL')\r\n    WHEN 3 THEN IF(o.objecttype_id=1, 'Host to DOWN', 'Service to UNKNOWN')\r\n    ELSE IF(o.objecttype_id=1, 'Host to N/A', 'Service to N/A')\r\n   END AS metric,\r\n   COUNT(sh.state) AS value\r\nFROM\r\n   icinga_statehistory sh\r\n   INNER JOIN icinga_objects o ON sh.object_id = o.object_id AND sh.instance_id = o.instance_id\r\nWHERE\r\n   $__timeFilter(sh.state_time)\r\n   AND o.objecttype_id IN(1, 2)\r\n   AND sh.state_type IN(${state_types})\r\n   AND (\r\n     CASE sh.state\r\n       WHEN 0 THEN IF(o.objecttype_id=1, 'Host to UP',   'Service to OK')\r\n       WHEN 1 THEN IF(o.objecttype_id=1, 'Host to DOWN', 'Service to WARNING')\r\n       WHEN 2 THEN IF(o.objecttype_id=1, 'Host to DOWN', 'Service to CRITICAL')\r\n       WHEN 3 THEN IF(o.objecttype_id=1, 'Host to DOWN', 'Service to UNKNOWN')\r\n       ELSE IF(o.objecttype_id=1, 'Host to N/A', 'Service to N/A')\r\n     END\r\n    ) IN(${state_transitions})\r\nGROUP BY 1,2\r\nORDER BY $__timeGroup(sh.state_time,$__interval)",
+          "rawSql": "SELECT\n   (FLOOR(sh.event_time / $__interval_ms) * $__interval_ms) DIV 1000 AS time,\n   CASE sh.soft_state\n      WHEN 0 THEN IF(sh.object_type='host', 'Host to UP',   'Service to OK')\n      WHEN 1 THEN IF(sh.object_type='host', 'Host to DOWN', 'Service to WARNING')\n      WHEN 2 THEN IF(sh.object_type='host', 'Host to DOWN', 'Service to CRITICAL')\n      WHEN 3 THEN IF(sh.object_type='host', 'Host to DOWN', 'Service to UNKNOWN')\n      ELSE IF(sh.object_type='host', 'Host to N/A', 'Service to N/A')\n   END AS metric,\n   COUNT(sh.soft_state) AS value\nFROM\n   state_history sh\nWHERE\n   sh.environment_id = (SELECT id FROM environment LIMIT 1)\n   AND sh.event_time BETWEEN $__unixEpochFrom() * 1000 AND $__unixEpochTo() * 1000\n   AND CASE sh.state_type WHEN 'soft' THEN 0 WHEN 'hard' THEN 1 END IN(${state_types})\n   AND (\n     CASE sh.soft_state\n      WHEN 0 THEN IF(sh.object_type='host', 'Host to UP',   'Service to OK')\n      WHEN 1 THEN IF(sh.object_type='host', 'Host to DOWN', 'Service to WARNING')\n      WHEN 2 THEN IF(sh.object_type='host', 'Host to DOWN', 'Service to CRITICAL')\n      WHEN 3 THEN IF(sh.object_type='host', 'Host to DOWN', 'Service to UNKNOWN')\n      ELSE IF(sh.object_type='host', 'Host to N/A', 'Service to N/A')\n   END\n    ) IN(${state_transitions})\nGROUP BY 1,2\nORDER BY 1\n",
           "refId": "A",
           "select": [
             [
@@ -235,7 +238,6 @@
               }
             ]
           ],
-          "table": "icinga_statehistory",
           "timeColumn": "state_time",
           "timeColumnType": "timestamp",
           "where": [
@@ -253,7 +255,10 @@
       "type": "piechart"
     },
     {
-      "datasource": "icinga-mysql",
+      "datasource": {
+        "type": "mysql",
+        "uid": "icingadb-mysql"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -305,7 +310,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\n   now() as time,\n   o.name1 AS 'Host name',\n   COUNT(*) AS 'Total transitions'\nFROM\n   icinga_statehistory sh\n   INNER JOIN icinga_objects o ON sh.object_id = o.object_id AND sh.instance_id = o.instance_id\nWHERE\n   $__timeFilter(sh.state_time)\n   AND o.objecttype_id = 1\n   AND sh.state_type IN(${state_types})\nGROUP BY 2\nORDER BY 3 DESC",
+          "rawSql": "SELECT\n   now() as time,\n   h.name AS 'Host name',\n   COUNT(*) AS 'Total transitions'\nFROM\n   state_history sh\n   INNER JOIN host h ON h.id = sh.host_id\nWHERE\n   sh.environment_id = (SELECT id FROM environment LIMIT 1)\n   AND sh.event_time BETWEEN $__unixEpochFrom() * 1000 AND $__unixEpochTo() * 1000\n   AND sh.object_type = 'host'\n   AND CASE sh.state_type WHEN 'soft' THEN 0 WHEN 'hard' THEN 1 END IN(${state_types})\nGROUP BY 2\nORDER BY 3 DESC\n",
           "refId": "A",
           "select": [
             [
@@ -317,7 +322,6 @@
               }
             ]
           ],
-          "table": "icinga_statehistory",
           "timeColumn": "state_time",
           "timeColumnType": "timestamp",
           "where": [
@@ -335,7 +339,10 @@
       "type": "bargauge"
     },
     {
-      "datasource": "icinga-mysql",
+      "datasource": {
+        "type": "mysql",
+        "uid": "icingadb-mysql"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -385,7 +392,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\n   now() as time,\n   CONCAT(o.name2, ' on ', o.name1) AS 'Service name',\n   COUNT(*) AS 'Total transitions'\nFROM\n   icinga_statehistory sh\n   INNER JOIN icinga_objects o ON sh.object_id = o.object_id AND sh.instance_id = o.instance_id\nWHERE\n   $__timeFilter(sh.state_time)\n   AND o.objecttype_id = 2\n   AND sh.state_type IN(${state_types})\nGROUP BY 2\nORDER BY 3 DESC\n",
+          "rawSql": "SELECT\n   now() as time,\n   CONCAT(s.name, ' on ', h.name) AS 'Service name',\n   COUNT(*) AS 'Total transitions'\nFROM\n   state_history sh\n   INNER JOIN service s ON s.id = sh.service_id\n   INNER JOIN host h ON h.id = s.host_id\nWHERE\n   sh.environment_id = (SELECT id FROM environment LIMIT 1)\n   AND sh.event_time BETWEEN $__unixEpochFrom() * 1000 AND $__unixEpochTo() * 1000\n   AND sh.object_type = 'service'\n   AND CASE sh.state_type WHEN 'soft' THEN 0 WHEN 'hard' THEN 1 END IN(${state_types})\nGROUP BY 2\nORDER BY 3 DESC\n",
           "refId": "A",
           "select": [
             [
@@ -397,7 +404,6 @@
               }
             ]
           ],
-          "table": "icinga_statehistory",
           "timeColumn": "state_time",
           "timeColumnType": "timestamp",
           "where": [
@@ -430,7 +436,10 @@
           "bars": true,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "icinga-mysql",
+          "datasource": {
+            "type": "mysql",
+            "uid": "icingadb-mysql"
+          },
           "fieldConfig": {
             "defaults": {},
             "overrides": []
@@ -480,7 +489,7 @@
               "group": [],
               "metricColumn": "COUNT(*)",
               "rawQuery": true,
-              "rawSql": "SELECT\r\n  $__timeGroupAlias(n.start_time,$__interval),\r\n   CASE n.notification_reason\r\n      WHEN 0 THEN 'Normal notification'\r\n      WHEN 1 THEN 'Problem acknowledgement'\r\n      WHEN 2 THEN 'Flapping started'\r\n      WHEN 3 THEN 'Flapping stopped'\r\n      WHEN 5 THEN 'Downtime started'\r\n      WHEN 6 THEN 'Downtime ended'\r\n      WHEN 7 THEN 'Downtime removed'\r\n      WHEN 8 THEN 'Custom'\r\n      ELSE 'N/A'\r\n   END AS metric,\r\n  COUNT(n.notification_reason) AS value\r\nFROM\r\n   icinga_notifications n\r\nWHERE\r\n  $__timeFilter(n.start_time)\r\n  AND n.notification_reason IN(${notification_reasons})\r\nGROUP BY 1,2\r\nORDER BY $__timeGroup(n.start_time,$__interval)",
+              "rawSql": "SELECT\n   (FLOOR(nh.send_time / $__interval_ms) * $__interval_ms) DIV 1000 AS time,\n   CASE nh.type\n      WHEN 'problem' THEN 'Normal notification'\n      WHEN 'recovery' THEN 'Normal notification'\n      WHEN 'acknowledgement' THEN 'Problem acknowledgement'\n      WHEN 'flapping_start' THEN 'Flapping started'\n      WHEN 'flapping_end' THEN 'Flapping stopped'\n      WHEN 'downtime_start' THEN 'Downtime started'\n      WHEN 'downtime_end' THEN 'Downtime ended'\n      WHEN 'downtime_removed' THEN 'Downtime removed'\n      WHEN 'custom' THEN 'Custom'\n      ELSE 'N/A'\n   END AS metric,\n   COUNT(*) AS value\nFROM\n   notification_history nh\nWHERE\n   nh.send_time BETWEEN $__unixEpochFrom() * 1000 AND $__unixEpochTo() * 1000\n   AND (CASE nh.type WHEN 'problem' THEN 0 WHEN 'recovery' THEN 0 WHEN 'acknowledgement' THEN 1 WHEN 'flapping_start' THEN 2 WHEN 'flapping_end' THEN 3 WHEN 'downtime_start' THEN 5 WHEN 'downtime_end' THEN 6 WHEN 'downtime_removed' THEN 7 WHEN 'custom' THEN 8 END) IN(${notification_reasons})\nGROUP BY 1,2\nORDER BY 1\n",
               "refId": "Normal notification",
               "select": [
                 [
@@ -498,7 +507,6 @@
                   }
                 ]
               ],
-              "table": "icinga_notifications",
               "timeColumn": "start_time",
               "timeColumnType": "timestamp",
               "where": [
@@ -553,7 +561,10 @@
         },
         {
           "cacheTimeout": null,
-          "datasource": "icinga-mysql",
+          "datasource": {
+            "type": "mysql",
+            "uid": "icingadb-mysql"
+          },
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -616,7 +627,7 @@
               "group": [],
               "metricColumn": "CAST(state AS CHAR)",
               "rawQuery": true,
-              "rawSql": "SELECT\r\n  $__timeGroupAlias(n.start_time,$__interval),\r\n   CASE n.notification_reason\r\n      WHEN 0 THEN 'Normal notification'\r\n      WHEN 1 THEN 'Problem acknowledgement'\r\n      WHEN 2 THEN 'Flapping started'\r\n      WHEN 3 THEN 'Flapping stopped'\r\n      WHEN 5 THEN 'Downtime started'\r\n      WHEN 6 THEN 'Downtime ended'\r\n      WHEN 7 THEN 'Downtime removed'\r\n      WHEN 8 THEN 'Custom'\r\n      ELSE 'N/A'\r\n   END AS metric,\r\n  COUNT(n.notification_reason) AS value\r\nFROM\r\n   icinga_notifications n\r\nWHERE\r\n  $__timeFilter(n.start_time)\r\n  AND n.notification_reason IN(${notification_reasons})\r\nGROUP BY 1,2\r\nORDER BY $__timeGroup(n.start_time,$__interval)",
+              "rawSql": "SELECT\n   (FLOOR(nh.send_time / $__interval_ms) * $__interval_ms) DIV 1000 AS time,\n   CASE nh.type\n      WHEN 'problem' THEN 'Normal notification'\n      WHEN 'recovery' THEN 'Normal notification'\n      WHEN 'acknowledgement' THEN 'Problem acknowledgement'\n      WHEN 'flapping_start' THEN 'Flapping started'\n      WHEN 'flapping_end' THEN 'Flapping stopped'\n      WHEN 'downtime_start' THEN 'Downtime started'\n      WHEN 'downtime_end' THEN 'Downtime ended'\n      WHEN 'downtime_removed' THEN 'Downtime removed'\n      WHEN 'custom' THEN 'Custom'\n      ELSE 'N/A'\n   END AS metric,\n   COUNT(*) AS value\nFROM\n   notification_history nh\nWHERE\n   nh.send_time BETWEEN $__unixEpochFrom() * 1000 AND $__unixEpochTo() * 1000\n   AND (CASE nh.type WHEN 'problem' THEN 0 WHEN 'recovery' THEN 0 WHEN 'acknowledgement' THEN 1 WHEN 'flapping_start' THEN 2 WHEN 'flapping_end' THEN 3 WHEN 'downtime_start' THEN 5 WHEN 'downtime_end' THEN 6 WHEN 'downtime_removed' THEN 7 WHEN 'custom' THEN 8 END) IN(${notification_reasons})\nGROUP BY 1,2\nORDER BY 1\n",
               "refId": "A",
               "select": [
                 [
@@ -628,7 +639,6 @@
                   }
                 ]
               ],
-              "table": "icinga_statehistory",
               "timeColumn": "state_time",
               "timeColumnType": "timestamp",
               "where": [
@@ -646,7 +656,10 @@
           "type": "piechart"
         },
         {
-          "datasource": "icinga-mysql",
+          "datasource": {
+            "type": "mysql",
+            "uid": "icingadb-mysql"
+          },
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -696,7 +709,7 @@
               "group": [],
               "metricColumn": "none",
               "rawQuery": true,
-              "rawSql": "SELECT\r\n  now() as time,\r\n  o.name1 AS metric,\r\n  COUNT(*) AS value\r\nFROM\r\n   icinga_notifications n\r\n   INNER JOIN icinga_objects o ON n.object_id = o.object_id AND n.instance_id = o.instance_id\r\nWHERE\r\n  $__timeFilter(n.start_time)\r\n  AND o.objecttype_id = 1\r\n  AND n.notification_reason IN(${notification_reasons})\r\nGROUP BY\r\n   2\r\nORDER BY 3 DESC",
+              "rawSql": "SELECT\n   now() as time,\n   h.name AS metric,\n   COUNT(*) AS value\nFROM\n   notification_history nh\n   INNER JOIN host h ON h.id = nh.host_id\nWHERE\n   nh.send_time BETWEEN $__unixEpochFrom() * 1000 AND $__unixEpochTo() * 1000\n   AND nh.object_type = 'host'\n   AND (CASE nh.type WHEN 'problem' THEN 0 WHEN 'recovery' THEN 0 WHEN 'acknowledgement' THEN 1 WHEN 'flapping_start' THEN 2 WHEN 'flapping_end' THEN 3 WHEN 'downtime_start' THEN 5 WHEN 'downtime_end' THEN 6 WHEN 'downtime_removed' THEN 7 WHEN 'custom' THEN 8 END) IN(${notification_reasons})\nGROUP BY 2\nORDER BY 3 DESC\n",
               "refId": "A",
               "select": [
                 [
@@ -708,7 +721,6 @@
                   }
                 ]
               ],
-              "table": "icinga_statehistory",
               "timeColumn": "state_time",
               "timeColumnType": "timestamp",
               "where": [
@@ -726,7 +738,10 @@
           "type": "bargauge"
         },
         {
-          "datasource": "icinga-mysql",
+          "datasource": {
+            "type": "mysql",
+            "uid": "icingadb-mysql"
+          },
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -776,7 +791,7 @@
               "group": [],
               "metricColumn": "none",
               "rawQuery": true,
-              "rawSql": "SELECT\n   now() as time,\n   CONCAT(o.name2, ' on ', o.name1) AS metric,\n   COUNT(*) AS value\nFROM\n   icinga_notifications n\n   INNER JOIN icinga_objects o ON n.object_id = o.object_id AND n.instance_id = o.instance_id\nWHERE\n   $__timeFilter(n.start_time)\n   AND o.objecttype_id = 2\n   AND n.notification_reason IN(${notification_reasons})\nGROUP BY 2\nORDER BY 3 DESC",
+              "rawSql": "SELECT\n   now() as time,\n   CONCAT(s.name, ' on ', h.name) AS metric,\n   COUNT(*) AS value\nFROM\n   notification_history nh\n   INNER JOIN service s ON s.id = nh.service_id\n   INNER JOIN host h ON h.id = s.host_id\nWHERE\n   nh.send_time BETWEEN $__unixEpochFrom() * 1000 AND $__unixEpochTo() * 1000\n   AND nh.object_type = 'service'\n   AND (CASE nh.type WHEN 'problem' THEN 0 WHEN 'recovery' THEN 0 WHEN 'acknowledgement' THEN 1 WHEN 'flapping_start' THEN 2 WHEN 'flapping_end' THEN 3 WHEN 'downtime_start' THEN 5 WHEN 'downtime_end' THEN 6 WHEN 'downtime_removed' THEN 7 WHEN 'custom' THEN 8 END) IN(${notification_reasons})\nGROUP BY 2\nORDER BY 3 DESC\n",
               "refId": "A",
               "select": [
                 [
@@ -788,7 +803,6 @@
                   }
                 ]
               ],
-              "table": "icinga_statehistory",
               "timeColumn": "state_time",
               "timeColumnType": "timestamp",
               "where": [
@@ -825,7 +839,10 @@
           "bars": true,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "icinga-mysql",
+          "datasource": {
+            "type": "mysql",
+            "uid": "icingadb-mysql"
+          },
           "fieldConfig": {
             "defaults": {},
             "overrides": []
@@ -875,7 +892,7 @@
               "group": [],
               "metricColumn": "COUNT(*)",
               "rawQuery": true,
-              "rawSql": "SELECT\r\n   $__timeGroupAlias(cn.start_time,$__interval),\r\n   o.name1 AS metric,\r\n   COUNT(n.notification_reason) AS value\r\nFROM\r\n   icinga_contactnotifications cn\r\n   INNER JOIN icinga_objects o ON cn.contact_object_id = o.object_id AND cn.instance_id = o.instance_id\r\n   INNER JOIN icinga_notifications n ON cn.notification_id = n.notification_id AND cn.instance_id = n.instance_id\r\nWHERE\r\n  $__timeFilter(cn.start_time)\r\n  AND n.notification_reason IN(${notification_reasons})\r\nGROUP BY 1,2\r\nORDER BY $__timeGroup(cn.start_time,$__interval)",
+              "rawSql": "SELECT\n   (FLOOR(nh.send_time / $__interval_ms) * $__interval_ms) DIV 1000 AS time,\n   u.name AS metric,\n   COUNT(*) AS value\nFROM\n   user_notification_history unh\n   INNER JOIN notification_history nh ON nh.id = unh.notification_history_id\n   INNER JOIN `user` u ON u.id = unh.user_id\nWHERE\n   nh.send_time BETWEEN $__unixEpochFrom() * 1000 AND $__unixEpochTo() * 1000\n   AND (CASE nh.type WHEN 'problem' THEN 0 WHEN 'recovery' THEN 0 WHEN 'acknowledgement' THEN 1 WHEN 'flapping_start' THEN 2 WHEN 'flapping_end' THEN 3 WHEN 'downtime_start' THEN 5 WHEN 'downtime_end' THEN 6 WHEN 'downtime_removed' THEN 7 WHEN 'custom' THEN 8 END) IN(${notification_reasons})\nGROUP BY 1,2\nORDER BY 1\n",
               "refId": "Normal notification",
               "select": [
                 [
@@ -893,7 +910,6 @@
                   }
                 ]
               ],
-              "table": "icinga_notifications",
               "timeColumn": "start_time",
               "timeColumnType": "timestamp",
               "where": [
@@ -947,7 +963,10 @@
           }
         },
         {
-          "datasource": "icinga-mysql",
+          "datasource": {
+            "type": "mysql",
+            "uid": "icingadb-mysql"
+          },
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -996,7 +1015,7 @@
               "group": [],
               "metricColumn": "output",
               "rawQuery": true,
-              "rawSql": "SELECT\r\n  now() as time,\r\n   o.name1 AS metric,\r\n   COUNT(*) AS value  \r\nFROM\r\n   icinga_contactnotifications cn\r\n   INNER JOIN icinga_objects o ON cn.contact_object_id = o.object_id AND cn.instance_id = o.instance_id\r\n   INNER JOIN icinga_notifications n ON cn.notification_id = n.notification_id AND cn.instance_id = n.instance_id\r\nWHERE\r\n   $__timeFilter(cn.start_time)\r\n   AND n.notification_reason IN(${notification_reasons})\r\nGROUP BY\r\n   2\r\nORDER BY 3 DESC",
+              "rawSql": "SELECT\n   now() as time,\n   u.name AS metric,\n   COUNT(*) AS value\nFROM\n   user_notification_history unh\n   INNER JOIN notification_history nh ON nh.id = unh.notification_history_id\n   INNER JOIN `user` u ON u.id = unh.user_id\nWHERE\n   nh.send_time BETWEEN $__unixEpochFrom() * 1000 AND $__unixEpochTo() * 1000\n   AND (CASE nh.type WHEN 'problem' THEN 0 WHEN 'recovery' THEN 0 WHEN 'acknowledgement' THEN 1 WHEN 'flapping_start' THEN 2 WHEN 'flapping_end' THEN 3 WHEN 'downtime_start' THEN 5 WHEN 'downtime_end' THEN 6 WHEN 'downtime_removed' THEN 7 WHEN 'custom' THEN 8 END) IN(${notification_reasons})\nGROUP BY 2\nORDER BY 3 DESC\n",
               "refId": "A",
               "select": [
                 [
@@ -1008,7 +1027,6 @@
                   }
                 ]
               ],
-              "table": "icinga_statehistory",
               "timeColumn": "state_time",
               "timeColumnType": "timestamp",
               "where": [
@@ -1223,6 +1241,5 @@
   "timepicker": {},
   "timezone": "",
   "title": "State and Notification History",
-  "uid": "OcWYNyWnk",
-  "version": 18
+  "uid": "OcWYNyWnk"
 }
