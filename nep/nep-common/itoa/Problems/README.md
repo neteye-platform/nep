@@ -15,46 +15,17 @@ You can find an example on the [NetEye Demo](https://neteyedemo.wuerth-phoenix.c
 
 ## Requirements
 
-This Dashboard is compatible with Grafana 7.5.5 (released with NetEye 4.19) and newer.
+This dashboard requires NetEye 4.48 or newer: monitoring data are read from IcingaDB, since the Icinga IDO database is no longer available.
 Before importing this dashboard, ensure the following requirements are met. If not, please make the required changes accordingly.
 
 > [!WARNING]
 > This dashboard does not take into account the user’s role and related permissions and it is intended for use by an administrator on an on-premise non multi-tenant installation of NetEye.
 
-## Mysql user creation
+## Grafana Datasources
 
-Create a ReadOnly user in MySQL to access icinga2 database
+The dashboard reads monitoring data from the MySQL datasource `icingadb-mysql` (database `icingadb`). The datasource is created automatically in the Main Org by the `nep-common` setup (`setup_scripts/pre/09_create_grafana_datasources.sh`), so no manual MySQL user or datasource creation is needed.
 
-```sql
-create user 'grafanareadonly'@'localhost' identified by 'XXXXXXXX';
-grant select on icinga2.* to 'grafanareadonly'@'localhost';
-flush privileges;
-```
-
-## Grafana Datasource creation
-
-From ITOA - Data Sources menu create a new MySQL datasource named `icinga-mysql` (if not exists)
-
-```ini
-Host: mariadb.neteyelocal
-Database: icinga
-User: grafanareadonly
-Password: XXXXXXXX
-```
-
-Save and test
-
-## Grafana Variable definition
-
-From Dashboard - Settings - Variables (neteye_hostname) define the correct FQDN of your NetEye System (removing neteyedemo.wuerth-phoenix.com)
-
-## Time zone setup
-
-If the column "Last state change" report only "null" value, it is needed to convert time to local timezone on mysql. You can find mysql [documentation reference](https://dev.mysql.com/doc/refman/8.0/en/time-zone-support.html)
-
-``` bash
-mysql_tzinfo_to_sql /usr/share/zoneinfo | mysql mysql
-```
+Datasources are referenced by name, so the dashboard works without changes on any NetEye installation where they exist.
 
 ## How to import dashboard
 

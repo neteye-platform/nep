@@ -16,31 +16,14 @@ You can find an example on the [NetEye Demo](https://neteyedemo.wuerth-phoenix.c
 
 ## Requirements
 
-This Dashboard is compatible with Grafana 7.5.5 (released with NetEye 4.19) and newer.
+This dashboard requires NetEye 4.48 or newer: monitoring data are read from IcingaDB, since the Icinga IDO database is no longer available.
 Before importing this dashboard, ensure the following requirements are met. If not, please make the required changes accordingly.
 
-## Mysql user creation
+## Grafana Datasources
 
-Create a ReadOnly user in MySQL to access icinga2 database
+The dashboard reads monitoring data from the MySQL datasource `icingadb-mysql` (database `icingadb`). The datasource is created automatically in the Main Org by the `nep-common` setup (`setup_scripts/pre/09_create_grafana_datasources.sh`), so no manual MySQL user or datasource creation is needed.
 
-``` sql
-create user 'grafanareadonly'@'localhost' identified by 'XXXXXXXX';
-grant select on icinga2.* to 'grafanareadonly'@'localhost';
-flush privileges;
-```
-
-## Datasource creation
-
-From ITOA - Data Sources menu create a new MySQL datasource named `icinga-mysql` (if not exists)
-
-``` ini
-Host: mariadb.neteyelocal
-Database: icinga
-User: grafanareadonly
-Password: XXXXXXXX
-```
-
-Save and test
+Datasources are referenced by name, so the dashboard works without changes on any NetEye installation where they exist.
 
 ## Variable definition
 
