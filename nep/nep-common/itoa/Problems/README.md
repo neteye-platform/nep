@@ -9,13 +9,18 @@ The dashboard will show you two different tables showing Hosts DOWN and Services
 # Dashboard Example
 You can find an example [here](https://neteyedemo.wuerth-phoenix.com/neteye/analytics/show?src=%2Fneteye%2Fanalytics%2Fgrafana%2Fd%2FXfwT78pMz1%2Fneteye-problems%3ForgId%3D3%26refresh%3D30s).
 
+<<<<<<< HEAD
 # Requirements
 This Dashboard is compatible with Grafana 7.5.5 (released with NetEye 4.19) and newer.
+=======
+This dashboard requires NetEye 4.48 or newer: monitoring data are read from IcingaDB, since the Icinga IDO database is no longer available.
+>>>>>>> 3441837 (fix(NEP-962): migrate ITOA dashboards from Icinga IDO to IcingaDB (#114))
 Before importing this dashboard, ensure the following requirements are met. If not, please make the required changes accordingly.
 
 # Warning
 This dashboard does not take into account the user’s role and related permissions and it is intended for use by an administrator on an on-premise non multi-tenant installation of NetEye.
 
+<<<<<<< HEAD
 ## Mysql user creation
 Create a ReadOnly user in MySQL to access icinga2 database
 ```
@@ -43,6 +48,13 @@ If the column "Last state change" report only "null" value, it is needed to conv
 ```
 mysql_tzinfo_to_sql /usr/share/zoneinfo | mysql mysql
 ```
+=======
+## Grafana Datasources
+
+The dashboard reads monitoring data from the MySQL datasource `icingadb-mysql` (database `icingadb`). The datasource is created automatically in the Main Org by the `nep-common` setup (`setup_scripts/pre/09_create_grafana_datasources.sh`), so no manual MySQL user or datasource creation is needed.
+
+Datasources are referenced by name, so the dashboard works without changes on any NetEye installation where they exist.
+>>>>>>> 3441837 (fix(NEP-962): migrate ITOA dashboards from Icinga IDO to IcingaDB (#114))
 
 # How to import dashboard
 To create the ITOA Dashboard, import the JSON file provided.
