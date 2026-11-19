@@ -1161,7 +1161,7 @@
             "object_name": "nx-ss-vmware-vcenter-datacenter",
             "object_type": "template",
             "services": {
-                "VMFS ": {
+                "VMFS": {
                     "action_url": null,
                     "apply_for": null,
                     "assign_filter": null,
@@ -1193,7 +1193,7 @@
                     "max_check_attempts": null,
                     "notes": null,
                     "notes_url": null,
-                    "object_name": "VMFS ",
+                    "object_name": "VMFS",
                     "object_type": "object",
                     "retry_interval": null,
                     "service_set": null,
@@ -1358,7 +1358,7 @@
             "object_name": "nx-ss-vmware-vcenter-direct",
             "object_type": "template",
             "services": {
-                "VMFS ": {
+                "VMFS": {
                     "action_url": null,
                     "apply_for": null,
                     "assign_filter": null,
@@ -1390,7 +1390,7 @@
                     "max_check_attempts": null,
                     "notes": null,
                     "notes_url": null,
-                    "object_name": "VMFS ",
+                    "object_name": "VMFS",
                     "object_type": "object",
                     "retry_interval": null,
                     "service_set": null,
