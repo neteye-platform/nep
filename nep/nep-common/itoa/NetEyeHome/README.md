@@ -1,6 +1,6 @@
 # Overview
 This dashboard helps you to quickly understand how is the health status of  NetEye system (from the point of view of performance monitoring and host performance).
-Some panels reads data from a Telegraf datasource ([telegraf configuration](https://neteye.guide/current/core-modules/itoa/telegraf-config.html#telegraf-configuration)).
+Some panels read data from the Telegraf datasource `telegraf_master` ([telegraf configuration](https://neteye.guide/current/core-modules/itoa/telegraf-config.html#telegraf-configuration)).
 **It works only for only for NetEye single node installations.**
 
 # Dashboard Output
@@ -14,11 +14,12 @@ You can find an example [here](https://neteyedemo.wuerth-phoenix.com/neteye/anal
 
 # Requirements
 
-This Dashboard is compatible with Grafana 7.5.5 (released with NetEye 4.19) and newer.
+This dashboard requires NetEye 4.48 or newer: monitoring data are read from IcingaDB, since the Icinga IDO database is no longer available.
 Before importing this dashboard, ensure the following requirements are met. If not, please make the required changes accordingly.
 
-## Mysql user creation
+## Grafana Datasources
 
+<<<<<<< HEAD
 Create a ReadOnly user in MySQL to access icinga2 database
 ```
 create user 'grafanareadonly'@'localhost' identified by 'XXXXXXXX';
@@ -55,6 +56,14 @@ Password: (look at cat /root/.pwd_analytics_grafana_viewer_user)
 ```
 
 **Save&Test**
+=======
+The dashboard reads monitoring data from the MySQL datasource `icingadb-mysql` (database `icingadb`). The datasource is created automatically in the Main Org by the `nep-common` setup (`setup_scripts/pre/09_create_grafana_datasources.sh`), so no manual MySQL user or datasource creation is needed.
+
+The InfluxDB datasources `icinga2-influxdb` (Icinga metrics, `neteye_master` variable and Monitoring Performance panels) and `telegraf_master` (Host Performance panels, Telegraf metrics of the NetEye nodes) are also required.
+
+Datasources are referenced by name, so the dashboard works without changes on any NetEye installation where they exist.
+
+>>>>>>> 3441837 (fix(NEP-962): migrate ITOA dashboards from Icinga IDO to IcingaDB (#114))
 ## Grafana Variable definition
 
 From Dashboard - Settings - Variables (neteye_master) correct the default Regex related to neteye_master variable from dashboard settings. The simple Regex /neteye/ used in our demo environment must be corrected selecting the correct hostname related to your NetEye monitored.
