@@ -1540,7 +1540,7 @@
             "category_id": null,
             "varname": "disk_cfree",
             "caption": "Disk Free space critical threshold",
-            "description": "Exit with CRITICAL status if less than INTEGER units of disk are free or Exit with CRITCAL status if less than PERCENT of disk space is free",
+            "description": "Exit with CRITICAL status if less than INTEGER units of disk are free or Exit with CRITICAL status if less than PERCENT of disk space is free",
             "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
             "format": null,
             "originalId": "25",

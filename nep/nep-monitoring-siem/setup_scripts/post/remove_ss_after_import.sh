@@ -24,7 +24,7 @@ function remove_service_set() {
             response=$(mysql -D director -e "$SQL'$s'")
             if [ -n "$response" ]; then
                 echo "------------------------------------------------------------------------------------"
-                echo "Service Set: '$s' is assigned manually to the follwoing Director Objects"
+                echo "Service Set: '$s' is assigned manually to the following Director Objects"
                 mysql -D director -e "$SQL'$s'"
                 echo "WARNING: this Service Set was not more available"
             fi

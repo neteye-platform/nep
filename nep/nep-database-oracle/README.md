@@ -1,6 +1,7 @@
-# nep-database-oracle
-The NEP is based on the check_oracle_health script (for more information have look to this [Page](https://labs.consol.de/nagios/check_oracle_health/)).
-This NEP provides an HT **nx-ht-status-oracle-conn-time** that can be added to the Host. This template is linked to a SS: **nx-ss-database-oracle-basic** that monitors these elements on Oracle Database:
+# NEP Database Oracle
+
+The NEP is based on the check_oracle_health script (for more information have look to this [Page](https://labs.consol.de/nagios/check_oracle_health/)). <!-- codespell:ignore consol -->
+This NEP provides an Host Template  `nx-ht-status-oracle-conn-time` that can be added to the Host. This template is linked to a Service Set: `nx-ss-database-oracle-basic` that monitors these elements on Oracle Database:
 
 * Connected Users Count
 * Connection time
@@ -8,7 +9,7 @@ This NEP provides an HT **nx-ht-status-oracle-conn-time** that can be added to t
 * Session usage
 * Tablespace usage
 
-# Table of Contents
+## Table of Contents
 
 1. [Prerequisites](#prerequisites)
 2. [Installation](#installation)
@@ -17,40 +18,39 @@ This NEP provides an HT **nx-ht-status-oracle-conn-time** that can be added to t
 
 ## Prerequisites
 
-| Sofware Version | Version |
+| Software Version | Version |
 | --- | ----------- |
 | NetEye | 4.36 |
 | nep-common | 0.1.6 |
 | nep-dbms-base | >=0.0.3 |
 
-##### Required NetEye Modules
+### Required NetEye Modules
 
 | NetEye Module |
 | --- |
 | Monitoring |
 
-
 ### External dependencies
 
 This NEP doesn't require external references, if you want to manually download a new version via WGET see:
 
-* https://labs.consol.de/nagios/check_oracle_health/index.html#download
+* [https://labs.consol.de/nagios/check_oracle_health/index.html#download](https://labs.consol.de/nagios/check_oracle_health/index.html#download) <!-- codespell:ignore consol -->
 
 ## Installation
 
-The installation process provides a PERL script **check_oracle_health** that is automatically installed at /neteye/shared/monitoring/plugins/
-
+The installation process provides a PERL script `check_oracle_health` that is automatically installed at /neteye/shared/monitoring/plugins/
 
 ### NEP Installation
 
 In order to install the NEP run:
-```
+
+``` bash
 nep-setup install nep-database-oracle
 ```
 
 ## Packet Contents
 
-Perl script: check_oracle_health
+Perl script: `check_oracle_health`
 
 ### Director/Icinga Objects
 
@@ -58,53 +58,51 @@ Perl script: check_oracle_health
 
 Host Templates:
 
-* nx-ht-oracle-object
-* nx-ht-status-oracle-conn-time
+* `nx-ht-oracle-object`
+* `nx-ht-status-oracle-conn-time`
 
 #### Service Templates
 
 Service Templates:
 
-* nx-st-agentless-oracle-health
-    * nx-st-agentless-oracle-health-connected-users
-    * nx-st-agentless-oracle-health-connection-time
-    * nx-st-agentless-oracle-health-sql
-    * nx-st-agentless-oracle-health-tnsping
-    * nx-st-agentless-oracle-health-process-usage
-    * nx-st-agentless-oracle-health-session-usage
-    * nx-st-agentless-oracle-health-tablespace-free
-    * nx-st-agentless-oracle-health-tablespace-usage
+* `nx-st-agentless-oracle-health`
+  * `nx-st-agentless-oracle-health-connected-users`
+  * `nx-st-agentless-oracle-health-connection-time`
+  * `nx-st-agentless-oracle-health-sql`
+  * `nx-st-agentless-oracle-health-tnsping`
+  * `nx-st-agentless-oracle-health-process-usage`
+  * `nx-st-agentless-oracle-health-session-usage`
+  * `nx-st-agentless-oracle-health-tablespace-free`
+  * `nx-st-agentless-oracle-health-tablespace-usage`
 
-
-#### Sercices Sets
+#### Service Sets
 
 Service Set:
 
-* nx-ss-database-oracle-basic
+* `nx-ss-database-oracle-basic`
 
 #### Command Templates
 
 Command templatess:
 
-* nx-ct-check-oracle-health
+* `nx-ct-check-oracle-health`
 
 #### Command
 
 Commands:
 
-* nx-c-oracle-health-connected-users
-* nx-c-oracle-health-connection-time
-* nx-c-oracle-health-sql
-* nx-c-oracle-health-tnsping
-* nx-c-oracle-health-process-usage
-* nx-c-oracle-health-session-usage
-* nx-c-oracle-health-tablespace-free
-* nx-c-oracle-health-tablespace-usage
+* `nx-c-oracle-health-connected-users`
+* `nx-c-oracle-health-connection-time`
+* `nx-c-oracle-health-sql`
+* `nx-c-oracle-health-tnsping`
+* `nx-c-oracle-health-process-usage`
+* `nx-c-oracle-health-session-usage`
+* `nx-c-oracle-health-tablespace-free`
+* `nx-c-oracle-health-tablespace-usage`
 
-Command objects uses plugins from Consol Labas library. To see more details about the included plugin, see the following links:
+Command objects uses plugins from Consol Labs library. To see more details about the included plugin, see the following links: <!-- codespell:ignore consol -->
 
 * [Oracle Health Plugin](https://github.com/lausser/check_oracle_health)
-
 
 ### Dashboard ITOA
 
@@ -112,8 +110,8 @@ The NEP doesn't provide a dedicated dashboard, but user can build it
 
 ## Usage
 
-In order to use this NEP, add the HT **nx-ht-status-oracle-conn-time** to the Host.
-Configure these fileds:
+In order to use this NEP, add the Host Template `nx-ht-status-oracle-conn-time` to the Host.
+Configure these fields:
 
 * Client Connection String
 * Client User name

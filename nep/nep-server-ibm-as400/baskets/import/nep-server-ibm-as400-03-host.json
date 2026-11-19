@@ -44,7 +44,7 @@
         "592": {
             "varname": "nx-as400-os-version",
             "caption": "[NX] AS400 OS Version",
-            "description": "Provide OS version in numberic format: 5.4, 5.3, ...",
+            "description": "Provide OS version in numeric format: 5.4, 5.3, ...",
             "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
             "format": null,
             "originalId": "592",

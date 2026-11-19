@@ -16,6 +16,7 @@ import os
 
 # Disable warning for Self Signed Certs
 import urllib3
+
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 headers = {"Content-Type": "application/json"}
@@ -29,24 +30,44 @@ WARNING_CODE = 1
 CRITICAL_CODE = 2
 UNKNOWN_CODE = 3
 
-__version__ = '0.1.1'
-__version_date__ = '2024-12-03'
+__version__ = "0.1.1"
+__version_date__ = "2024-12-03"
 
 
 def get_flood_stage():
     try:
-        response = requests.get(f"{elasticsearch_url}/_cluster/settings?include_defaults=true",
-                                cert=(f"{cert_path}{cert_file}", f"{cert_path}{key_file}"),
-                                verify=False,
-                                timeout=120)
+        response = requests.get(
+            f"{elasticsearch_url}/_cluster/settings?include_defaults=true",
+            cert=(f"{cert_path}{cert_file}", f"{cert_path}{key_file}"),
+            verify=False,
+            timeout=120,
+        )
         response.raise_for_status()
         settings = response.json()
 
         # Search the flood_stage in persistent, transient or default
         flood_stage = (
-          settings.get('persistent', {}).get('cluster', {}).get('routing', {}).get('allocation', {}).get('disk', {}).get('watermark', {}).get('flood_stage') or
-          settings.get('transient', {}).get('cluster', {}).get('routing', {}).get('allocation', {}).get('disk', {}).get('watermark', {}).get('flood_stage') or
-          settings.get('defaults', {}).get('cluster', {}).get('routing', {}).get('allocation', {}).get('disk', {}).get('watermark', {}).get('flood_stage')
+            settings.get("persistent", {})
+            .get("cluster", {})
+            .get("routing", {})
+            .get("allocation", {})
+            .get("disk", {})
+            .get("watermark", {})
+            .get("flood_stage")
+            or settings.get("transient", {})
+            .get("cluster", {})
+            .get("routing", {})
+            .get("allocation", {})
+            .get("disk", {})
+            .get("watermark", {})
+            .get("flood_stage")
+            or settings.get("defaults", {})
+            .get("cluster", {})
+            .get("routing", {})
+            .get("allocation", {})
+            .get("disk", {})
+            .get("watermark", {})
+            .get("flood_stage")
         )
 
         if flood_stage is None:
@@ -87,27 +108,34 @@ def monitor_disk(path, warning_multiplier, critical_multiplier):
 
     # Verify thresholds
     if free_space < critical_multiplier * flood_stage:
-        print(f"CRITICAL - Free space is below {critical_multiplier}x flood_stage threshold ({free_space_percentage*100:.2f}% free - {format_size(free_space)}) - (Used: {format_size(used_space)}) - (flood_stage: {flood_stage_string})")
+        print(
+            f"CRITICAL - Free space is below {critical_multiplier}x flood_stage threshold ({free_space_percentage * 100:.2f}% free - {format_size(free_space)}) - (Used: {format_size(used_space)}) - (flood_stage: {flood_stage_string})"
+        )
         sys.exit(CRITICAL_CODE)
     elif free_space < warning_multiplier * flood_stage:
-        print(f"WARNING - Free space is below {warning_multiplier}x flood_stage threshold ({free_space_percentage*100:.2f}% free - {format_size(free_space)}) - (Used: {format_size(used_space)}) - (flood_stage: {flood_stage_string})")
+        print(
+            f"WARNING - Free space is below {warning_multiplier}x flood_stage threshold ({free_space_percentage * 100:.2f}% free - {format_size(free_space)}) - (Used: {format_size(used_space)}) - (flood_stage: {flood_stage_string})"
+        )
         sys.exit(WARNING_CODE)
     else:
-        print(f"OK - Free space is sufficient ({free_space_percentage*100:.2f}% free - {format_size(free_space)}) - (Used: {format_size(used_space)}) - (flood_stage: {flood_stage_string})")
+        print(
+            f"OK - Free space is sufficient ({free_space_percentage * 100:.2f}% free - {format_size(free_space)}) - (Used: {format_size(used_space)}) - (flood_stage: {flood_stage_string})"
+        )
         sys.exit(OK_CODE)
+
 
 # Function to convert flood_stage from string to bytes
 def parse_size(size_str):
     size_str = size_str.lower().strip()
     size_mapping = {
-        'b': 1,
-        'kb': 1024,
-        'mb': 1024**2,
-        'gb': 1024**3,
-        'tb': 1024**4,
-        'g': 1024**3,  # Manage 'g' without 'b'
-        'm': 1024**2,  # Manage 'm' without 'b'
-        'k': 1024      # Manage 'k' without 'b'
+        "b": 1,
+        "kb": 1024,
+        "mb": 1024**2,
+        "gb": 1024**3,
+        "tb": 1024**4,
+        "g": 1024**3,  # Manage 'g' without 'b'
+        "m": 1024**2,  # Manage 'm' without 'b'
+        "k": 1024,  # Manage 'k' without 'b'
     }
 
     # Use regex to extract numerical value and unit
@@ -118,6 +146,7 @@ def parse_size(size_str):
         return value * size_mapping.get(unit, 1)  # Default to byte if not specified
 
     raise ValueError(f"Invalid size format: {size_str}")
+
 
 # Function to format byte sizes in human readable format
 def format_size(byte_size):
@@ -132,12 +161,32 @@ def format_size(byte_size):
     else:
         return f"{byte_size / 1024**4:.2f} TB"
 
+
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='Monitor Elasticsearch disk space against flood_stage threshold.')
-    parser.add_argument("-V", "--version", help="Show program version", action="store_true")
-    parser.add_argument('--path', type=str, required=True, help='Path to the Elasticsearch data disk (Usually /neteye/local/elasticsearch/data)')
-    parser.add_argument('--warning-multiplier', type=float, default=2.0, help='Multiplier for warning threshold (default: 2.0)')
-    parser.add_argument('--critical-multiplier', type=float, default=1.5, help='Multiplier for critical threshold (default: 1.5)')
+    parser = argparse.ArgumentParser(
+        description="Monitor Elasticsearch disk space against flood_stage threshold."
+    )
+    parser.add_argument(
+        "-V", "--version", help="Show program version", action="store_true"
+    )
+    parser.add_argument(
+        "--path",
+        type=str,
+        required=True,
+        help="Path to the Elasticsearch data disk (Usually /neteye/local/elasticsearch/data)",
+    )
+    parser.add_argument(
+        "--warning-multiplier",
+        type=float,
+        default=2.0,
+        help="Multiplier for warning threshold (default: 2.0)",
+    )
+    parser.add_argument(
+        "--critical-multiplier",
+        type=float,
+        default=1.5,
+        help="Multiplier for critical threshold (default: 1.5)",
+    )
 
     args = parser.parse_args()
 

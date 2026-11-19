@@ -2,7 +2,7 @@
 
 The `nep-network-pfsense-firewall` adds SNMP-based monitoring for pfSense firewalls to NetEye, using Centreon plugins. It provides service checks for CPU, load, memory, swap, runtime, firewall interfaces, and state table connections.
 
-# Table of Contents
+## Table of Contents
 
 1. [Prerequisites](#prerequisites)
 2. [Installation](#installation)
@@ -13,14 +13,14 @@ The `nep-network-pfsense-firewall` adds SNMP-based monitoring for pfSense firewa
 
 This package can be installed on systems running the software described below. Systems with equivalent components are also suitable for installation.
 
-| Sofware Version | Version |
+| Software Version | Version |
 | --- | ----------- |
 | NetEye | 4.47+ |
 | nep-common | 0.8.8+ |
 | nep-network-base | 0.4.0+ |
 | nep-centreon-plugins-base | 0.2.3+ |
 
-##### Required NetEye Modules
+### Required NetEye Modules
 
 | NetEye Module |
 | --- |
@@ -40,7 +40,7 @@ There is no need to perform any action before installing this NEP
 
 To setup Package `nep-network-pfsense-firewall`, just use the Setup Utility:
 
-```
+``` bash
 nep-setup install nep-network-pfsense-firewall
 ```
 
@@ -88,25 +88,25 @@ This NEP doesn't provide any Host Template definition
 
 #### Service Templates
 
-* `nx-st-agentless-snmp-centreon-pfsense-cpu`
-* `nx-st-agentless-snmp-centreon-pfsense-load`
-* `nx-st-agentless-snmp-centreon-pfsense-memory`
-* `nx-st-agentless-snmp-centreon-pfsense-pfinterfaces`
-* `nx-st-agentless-snmp-centreon-pfsense-runtime`
-* `nx-st-agentless-snmp-centreon-pfsense-state-table`
-* `nx-st-agentless-snmp-centreon-pfsense-swap`
+- `nx-st-agentless-snmp-centreon-pfsense-cpu`
+- `nx-st-agentless-snmp-centreon-pfsense-load`
+- `nx-st-agentless-snmp-centreon-pfsense-memory`
+- `nx-st-agentless-snmp-centreon-pfsense-pfinterfaces`
+- `nx-st-agentless-snmp-centreon-pfsense-runtime`
+- `nx-st-agentless-snmp-centreon-pfsense-state-table`
+- `nx-st-agentless-snmp-centreon-pfsense-swap`
 
 #### Services Sets
 
-* `nx-ss-network-centreon-pfsense`
-    * `CPU Load`
-    * `Load Status`
-    * `Memory Usage`
-    * `Runtime`
-    * `Swap Usage`
-* `nx-ss-network-centreon-pfsense-extras`
-    * `Interfaces Status`
-    * `State Table Connections Status`
+- `nx-ss-network-centreon-pfsense`
+  - `CPU Load`
+  - `Load Status`
+  - `Memory Usage`
+  - `Runtime`
+  - `Swap Usage`
+- `nx-ss-network-centreon-pfsense-extras`
+  - `Interfaces Status`
+  - `State Table Connections Status`
 
 #### Commands
 

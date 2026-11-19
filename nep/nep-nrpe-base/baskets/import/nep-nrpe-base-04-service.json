@@ -697,7 +697,7 @@
         "412": {
             "uuid": "2b41190b-4a05-403c-8144-c2a8455c7480",
             "varname": "nx_nrpe_chiper_list",
-            "caption": "[NX] Chiper List",
+            "caption": "[NX] Cipher List",
             "description": "The list of SSL ciphers to use (currently defaults to \"ALL:!MD5:@STRENGTH:@SECLEVEL=0\". THIS WILL change in a future release.)",
             "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
             "format": null,

@@ -11,7 +11,7 @@ The `nep-monitoring-siem` package is the NEP designed to monitor the NetEye Elas
 * Elastic dataset ingestion status and transforms
 * Elastic Watchers and Blockchain (EBP) integrity checks
 
-# Table of Contents
+## Table of Contents
 
 1. [Prerequisites](#prerequisites)
 2. [Installation](#installation)
@@ -19,12 +19,11 @@ The `nep-monitoring-siem` package is the NEP designed to monitor the NetEye Elas
 4. [Usage](#usage)
 5. [Data Migrations](#migrations)
 
-
 ## Prerequisites
 
 This package can be installed on systems running the software described below. Systems with equivalent components are also suitable for installation.
 
-| Sofware Version | Version |
+| Software Version | Version |
 | --- | ----------- |
 | NetEye | 4.44+ |
 | nep-common | 0.1.0+ |
@@ -51,7 +50,7 @@ There is no need to perform any action before installing this NEP
 
 To setup Package `nep-monitoring-siem`, just use the Setup Utility:
 
-```
+``` bash
 nep-setup install nep-monitoring-siem
 ```
 
@@ -71,76 +70,76 @@ The Package contains the following Director Objects.
 
 | Object Type | Object Name | Editable | Containing File |
 | --- | --- | --- | --- |
-| Director Data List | [NX] Elastic Check Types List | No | baskets/import/nep-monitoring-siem-01-datalist.json |
-| Director Data List | [NX] Kibana Check Types List | No | baskets/import/nep-monitoring-siem-01-datalist.json |
-| Director Data List | [NX] Elastic Agent Types List | No | baskets/import/nep-monitoring-siem-01-datalist.json |
-| Director Command | nx-c-check-elastic-slm-policy | No | baskets/import/nep-monitoring-siem-02-command.json |
-| Director Command | nx-c-check-elastic-slm-status | No | baskets/import/nep-monitoring-siem-02-command.json |
-| Director Command | nx-c-check_elastic_blockchain_status | No | baskets/import/nep-monitoring-siem-02-command.json |
-| Director Command | nx-c-check-es-system | No | baskets/import/nep-monitoring-siem-02-command.json |
-| Director Command | nx-c-check-filebeat | No | baskets/import/nep-monitoring-siem-02-command.json |
-| Director Command | nx-c-check-kibana-stats | No | baskets/import/nep-monitoring-siem-02-command.json |
-| Director Command | nx-c-check-logstash | No | baskets/import/nep-monitoring-siem-02-command.json |
-| Director Command | nx-c-check-logstash-pipeline | No | baskets/import/nep-monitoring-siem-02-command.json |
-| Director Command | nx-c-check-logstash-events | No | baskets/import/nep-monitoring-siem-02-command.json |
-| Director Command | nx-c-check-logstash-queue | No | baskets/import/nep-monitoring-siem-02-command.json |
-| Director Command | nx-c-check_elastic_ingest_status | No | baskets/import/nep-monitoring-siem-02-command.json |
-| Director Command | nx-c-check-elastic-agent-status | No | baskets/import/nep-monitoring-siem-02-command.json |
-| Director Command | nx-c-check-apm-server-status | No | baskets/import/nep-monitoring-siem-02-command.json |
-| Director Command | nx-c-check-elastic-endpoint-status | No | baskets/import/nep-monitoring-siem-02-command.json |
-| Director Command | nx-c-fleet-agent-status | No | baskets/import/nep-monitoring-siem-02-command.json |
-| Director Command | nx-c-endpoint-agent-status | No | baskets/import/nep-monitoring-siem-02-command.json |
-| Director Command | nx-c-check_elastic_dataset_status | No | baskets/import/nep-monitoring-siem-02-command.json |
-| Director Command | nx-c-check_elastic_transforms_status | No | baskets/import/nep-monitoring-siem-02-command.json |
-| Director Command | nx-c-check_elastic_remove_duplicate_ebp_iterations | No | baskets/import/nep-monitoring-siem-02-command.json |
-| Director Command | nx-c-check-elastic-dataset-object | No | baskets/import/nep-monitoring-siem-02-command.json |
-| Director Command | nx-c-check_elastic_disk_watermark_flooding | No | baskets/import/nep-monitoring-siem-02-command.json |
-| Director Command | nx-c-check_elastic_watchers_status | No | baskets/import/nep-monitoring-siem-02-command.json |
-| Director Service Template | nx-st-agent-elastic | No | baskets/import/nep-monitoring-siem-04-service.json |
-| Director Service Template | nx-st-agent-elastic-neteye | No | baskets/import/nep-monitoring-siem-04-service.json |
-| Director Service Template | nx-st-agent-filebeat | No | baskets/import/nep-monitoring-siem-04-service.json |
-| Director Service Template | nx-st-agent-filebeat-neteye | No | baskets/import/nep-monitoring-siem-04-service.json |
-| Director Service Template | nx-st-agent-kibana | No | baskets/import/nep-monitoring-siem-04-service.json |
-| Director Service Template | nx-st-agent-logstash | No | baskets/import/nep-monitoring-siem-04-service.json |
-| Director Service Template | nx-st-agent-logstash-health | No | baskets/import/nep-monitoring-siem-04-service.json |
-| Director Service Template | nx-st-agent-logstash-pipeline | No | baskets/import/nep-monitoring-siem-04-service.json |
-| Director Service Template | nx-st-agent-logstash-events | No | baskets/import/nep-monitoring-siem-04-service.json |
-| Director Service Template | nx-st-agent-logstash-neteye | No | baskets/import/nep-monitoring-siem-04-service.json |
-| Director Service Template | nx-st-agent-logstash-queue | No | baskets/import/nep-monitoring-siem-04-service.json |
-| Director Service Template | nx-st-agentless-apm-server-check | No | baskets/import/nep-monitoring-siem-04-service.json |
-| Director Service Template | nx-st-agentless-elastic-agent-check | No | baskets/import/nep-monitoring-siem-04-service.json |
-| Director Service Template | nx-st-agentless-elastic-dataset-object | No | baskets/import/nep-monitoring-siem-04-service.json |
-| Director Service Template | nx-st-agentless-elastic-dataset-status | No | baskets/import/nep-monitoring-siem-04-service.json |
-| Director Service Template | nx-st-agentless-elastic-endpoint-check | No | baskets/import/nep-monitoring-siem-04-service.json |
-| Director Service Template | nx-st-agentless-elastic-slm-policy | No | baskets/import/nep-monitoring-siem-04-service.json |
-| Director Service Template | nx-st-agentless-elastic-slm-status | No | baskets/import/nep-monitoring-siem-04-service.json |
-| Director Service Template | nx-st-agentless-elastic-transforms-status | No | baskets/import/nep-monitoring-siem-04-service.json |
-| Director Service Template | nx-st-agentless-elastic-watchers-status | No | baskets/import/nep-monitoring-siem-04-service.json |
-| Director Service Template | nx-st-agentless-restapi-elastic-blockchain-status | No | baskets/import/nep-monitoring-siem-04-service.json |
-| Director Service Template | nx-st-agentless-restapi-elastic-ingest-status | No | baskets/import/nep-monitoring-siem-04-service.json |
-| Director Service Template | nx-st-check_elastic_disk_watermark_flooding | No | baskets/import/nep-monitoring-siem-04-service.json |
-| Director Service Template | nx-st-endpoint-agent-status | No | baskets/import/nep-monitoring-siem-04-service.json |
-| Director Service Template | nx-st-fleet-agent-status | No | baskets/import/nep-monitoring-siem-04-service.json |
-| Director Service Set | nx-ss-agent-linux-elastic-agent-state | No | baskets/import/nep-monitoring-siem-05-serviceset.json |
-| Director Service Set | nx-ss-agent-linux-elastic-endpoint-state | No | baskets/import/nep-monitoring-siem-05-serviceset.json |
-| Director Service Set | nx-ss-agent-windows-elastic-agent-state | No | baskets/import/nep-monitoring-siem-05-serviceset.json |
-| Director Service Set | nx-ss-agent-windows-elastic-endpoint-state | No | baskets/import/nep-monitoring-siem-05-serviceset.json |
-| Director Service Set | nx-ss-elastic-blockchain-extras | No | baskets/import/nep-monitoring-siem-05-serviceset.json |
-| Director Service Set | nx-ss-neteye-endpoint-apm-server-state | No | baskets/import/nep-monitoring-siem-05-serviceset.json |
-| Director Service Set | nx-ss-neteye-endpoint-elastic-agent-extras | No | baskets/import/nep-monitoring-siem-05-serviceset.json |
-| Director Service Set | nx-ss-neteye-endpoint-elastic-agent-state | No | baskets/import/nep-monitoring-siem-05-serviceset.json |
-| Director Service Set | nx-ss-neteye-endpoint-elastic-state | No | baskets/import/nep-monitoring-siem-05-serviceset.json |
-| Director Service Set | nx-ss-neteye-endpoint-filebeat-state | No | baskets/import/nep-monitoring-siem-05-serviceset.json |
-| Director Service Set | nx-ss-neteye-endpoint-kibana-state | No | baskets/import/nep-monitoring-siem-05-serviceset.json |
-| Director Service Set | nx-ss-neteye-endpoint-logstash-extras | No | baskets/import/nep-monitoring-siem-05-serviceset.json |
-| Director Service Set | nx-ss-neteye-endpoint-logstash-state | No | baskets/import/nep-monitoring-siem-05-serviceset.json |
-| Director Service Set | nx-ss-neteye-local-extras | No | baskets/import/nep-monitoring-siem-05-serviceset.json |
-| Director Service Set | nx-ss-neteye-local-siem | No | baskets/import/nep-monitoring-siem-05-serviceset.json |
-| Director Service Set | nx-ss-neteye-siem-disks-state | No | baskets/import/nep-monitoring-siem-05-serviceset.json |
-| Director Service Set | nx-ss-neteye-siem-extras | No | baskets/import/nep-monitoring-siem-05-serviceset.json |
-| Director Service Set | nx-ss-neteye-siem-services-state | No | baskets/import/nep-monitoring-siem-05-serviceset.json |
-| Director Service Set | nx-ss-neteye-siem-units-state | No | baskets/import/nep-monitoring-siem-05-serviceset.json |
-| Icinga2 Configuration | nx-dependency-elastic-agent | Yes | custom_files/neteye_shared_root/icinga2/conf/icinga2/conf.d/nx-dependency-elastic-agent.conf |
+| Director Data List | `[NX] Elastic Check Types List` | No | `baskets/import/nep-monitoring-siem-01-datalist.json` |
+| Director Data List | `[NX] Kibana Check Types List` | No | `baskets/import/nep-monitoring-siem-01-datalist.json` |
+| Director Data List | `[NX] Elastic Agent Types List` | No | `baskets/import/nep-monitoring-siem-01-datalist.json` |
+| Director Command | `nx-c-check-elastic-slm-policy` | No | `baskets/import/nep-monitoring-siem-02-command.json` |
+| Director Command | `nx-c-check-elastic-slm-status` | No | `baskets/import/nep-monitoring-siem-02-command.json` |
+| Director Command | `nx-c-check_elastic_blockchain_status` | No | `baskets/import/nep-monitoring-siem-02-command.json` |
+| Director Command | `nx-c-check-es-system` | No | `baskets/import/nep-monitoring-siem-02-command.json` |
+| Director Command | `nx-c-check-filebeat` | No | `baskets/import/nep-monitoring-siem-02-command.json` |
+| Director Command | `nx-c-check-kibana-stats` | No | `baskets/import/nep-monitoring-siem-02-command.json` |
+| Director Command | `nx-c-check-logstash` | No | `baskets/import/nep-monitoring-siem-02-command.json` |
+| Director Command | `nx-c-check-logstash-pipeline` | No | `baskets/import/nep-monitoring-siem-02-command.json` |
+| Director Command | `nx-c-check-logstash-events` | No | `baskets/import/nep-monitoring-siem-02-command.json` |
+| Director Command | `nx-c-check-logstash-queue` | No | `baskets/import/nep-monitoring-siem-02-command.json` |
+| Director Command | `nx-c-check_elastic_ingest_status` | No | `baskets/import/nep-monitoring-siem-02-command.json` |
+| Director Command | `nx-c-check-elastic-agent-status` | No | `baskets/import/nep-monitoring-siem-02-command.json` |
+| Director Command | `nx-c-check-apm-server-status` | No | `baskets/import/nep-monitoring-siem-02-command.json` |
+| Director Command | `nx-c-check-elastic-endpoint-status` | No | `baskets/import/nep-monitoring-siem-02-command.json` |
+| Director Command | `nx-c-fleet-agent-status` | No | `baskets/import/nep-monitoring-siem-02-command.json` |
+| Director Command | `nx-c-endpoint-agent-status` | No | `baskets/import/nep-monitoring-siem-02-command.json` |
+| Director Command | `nx-c-check_elastic_dataset_status` | No | `baskets/import/nep-monitoring-siem-02-command.json` |
+| Director Command | `nx-c-check_elastic_transforms_status` | No | `baskets/import/nep-monitoring-siem-02-command.json` |
+| Director Command | `nx-c-check_elastic_remove_duplicate_ebp_iterations` | No | `baskets/import/nep-monitoring-siem-02-command.json` |
+| Director Command | `nx-c-check-elastic-dataset-object` | No | `baskets/import/nep-monitoring-siem-02-command.json` |
+| Director Command | `nx-c-check_elastic_disk_watermark_flooding` | No | `baskets/import/nep-monitoring-siem-02-command.json` |
+| Director Command | `nx-c-check_elastic_watchers_status` | No | `baskets/import/nep-monitoring-siem-02-command.json` |
+| Director Service Template | `nx-st-agent-elastic` | No | baskets/import/nep-monitoring-siem-04-service.json |
+| Director Service Template | `nx-st-agent-elastic-neteye` | No | baskets/import/nep-monitoring-siem-04-service.json |
+| Director Service Template | `nx-st-agent-filebeat` | No | baskets/import/nep-monitoring-siem-04-service.json |
+| Director Service Template | `nx-st-agent-filebeat-neteye` | No | baskets/import/nep-monitoring-siem-04-service.json |
+| Director Service Template | `nx-st-agent-kibana` | No | baskets/import/nep-monitoring-siem-04-service.json |
+| Director Service Template | `nx-st-agent-logstash` | No | baskets/import/nep-monitoring-siem-04-service.json |
+| Director Service Template | `nx-st-agent-logstash-health` | No | baskets/import/nep-monitoring-siem-04-service.json |
+| Director Service Template | `nx-st-agent-logstash-pipeline` | No | baskets/import/nep-monitoring-siem-04-service.json |
+| Director Service Template | `nx-st-agent-logstash-events` | No | baskets/import/nep-monitoring-siem-04-service.json |
+| Director Service Template | `nx-st-agent-logstash-neteye` | No | baskets/import/nep-monitoring-siem-04-service.json |
+| Director Service Template | `nx-st-agent-logstash-queue` | No | baskets/import/nep-monitoring-siem-04-service.json |
+| Director Service Template | `nx-st-agentless-apm-server-check` | No | baskets/import/nep-monitoring-siem-04-service.json |
+| Director Service Template | `nx-st-agentless-elastic-agent-check` | No | baskets/import/nep-monitoring-siem-04-service.json |
+| Director Service Template | `nx-st-agentless-elastic-dataset-object` | No | baskets/import/nep-monitoring-siem-04-service.json |
+| Director Service Template | `nx-st-agentless-elastic-dataset-status` | No | baskets/import/nep-monitoring-siem-04-service.json |
+| Director Service Template | `nx-st-agentless-elastic-endpoint-check` | No | baskets/import/nep-monitoring-siem-04-service.json |
+| Director Service Template | `nx-st-agentless-elastic-slm-policy` | No | baskets/import/nep-monitoring-siem-04-service.json |
+| Director Service Template | `nx-st-agentless-elastic-slm-status` | No | baskets/import/nep-monitoring-siem-04-service.json |
+| Director Service Template | `nx-st-agentless-elastic-transforms-status` | No | baskets/import/nep-monitoring-siem-04-service.json |
+| Director Service Template | `nx-st-agentless-elastic-watchers-status` | No | baskets/import/nep-monitoring-siem-04-service.json |
+| Director Service Template | `nx-st-agentless-restapi-elastic-blockchain-status` | No | baskets/import/nep-monitoring-siem-04-service.json |
+| Director Service Template | `nx-st-agentless-restapi-elastic-ingest-status` | No | baskets/import/nep-monitoring-siem-04-service.json |
+| Director Service Template | `nx-st-check_elastic_disk_watermark_flooding` | No | baskets/import/nep-monitoring-siem-04-service.json |
+| Director Service Template | `nx-st-endpoint-agent-status` | No | baskets/import/nep-monitoring-siem-04-service.json |
+| Director Service Template | `nx-st-fleet-agent-status` | No | baskets/import/nep-monitoring-siem-04-service.json |
+| Director Service Set | `nx-ss-agent-linux-elastic-agent-state` | No | baskets/import/nep-monitoring-siem-05-serviceset.json |
+| Director Service Set | `nx-ss-agent-linux-elastic-endpoint-state` | No | baskets/import/nep-monitoring-siem-05-serviceset.json |
+| Director Service Set | `nx-ss-agent-windows-elastic-agent-state` | No | baskets/import/nep-monitoring-siem-05-serviceset.json |
+| Director Service Set | `nx-ss-agent-windows-elastic-endpoint-state` | No | baskets/import/nep-monitoring-siem-05-serviceset.json |
+| Director Service Set | `nx-ss-elastic-blockchain-extras` | No | baskets/import/nep-monitoring-siem-05-serviceset.json |
+| Director Service Set | `nx-ss-neteye-endpoint-apm-server-state` | No | baskets/import/nep-monitoring-siem-05-serviceset.json |
+| Director Service Set | `nx-ss-neteye-endpoint-elastic-agent-extras` | No | baskets/import/nep-monitoring-siem-05-serviceset.json |
+| Director Service Set | `nx-ss-neteye-endpoint-elastic-agent-state` | No | baskets/import/nep-monitoring-siem-05-serviceset.json |
+| Director Service Set | `nx-ss-neteye-endpoint-elastic-state` | No | baskets/import/nep-monitoring-siem-05-serviceset.json |
+| Director Service Set | `nx-ss-neteye-endpoint-filebeat-state` | No | baskets/import/nep-monitoring-siem-05-serviceset.json |
+| Director Service Set | `nx-ss-neteye-endpoint-kibana-state` | No | baskets/import/nep-monitoring-siem-05-serviceset.json |
+| Director Service Set | `nx-ss-neteye-endpoint-logstash-extras` | No | baskets/import/nep-monitoring-siem-05-serviceset.json |
+| Director Service Set | `nx-ss-neteye-endpoint-logstash-state` | No | baskets/import/nep-monitoring-siem-05-serviceset.json |
+| Director Service Set | `nx-ss-neteye-local-extras` | No | baskets/import/nep-monitoring-siem-05-serviceset.json |
+| Director Service Set | `nx-ss-neteye-local-siem` | No | baskets/import/nep-monitoring-siem-05-serviceset.json |
+| Director Service Set | `nx-ss-neteye-siem-disks-state` | No | baskets/import/nep-monitoring-siem-05-serviceset.json |
+| Director Service Set | `nx-ss-neteye-siem-extras` | No | baskets/import/nep-monitoring-siem-05-serviceset.json |
+| Director Service Set | `nx-ss-neteye-siem-services-state` | No | baskets/import/nep-monitoring-siem-05-serviceset.json |
+| Director Service Set | `nx-ss-neteye-siem-units-state` | No | baskets/import/nep-monitoring-siem-05-serviceset.json |
+| Icinga2 Configuration | `nx-dependency-elastic-agent` | Yes | custom_files/neteye_shared_root/icinga2/conf/icinga2/conf.d/nx-dependency-elastic-agent.conf |
 
 #### Host Templates
 
@@ -152,9 +151,9 @@ The following Data Lists can be freely customized by the End User. Their purpose
 
 | Data List name | Description |
 | --- | --- |
-| [NX] Elastic Check Types List | Check type selector for `nx-c-check-es-system` (cpu, disk, master, maxshards, mem, status) |
-| [NX] Kibana Check Types List | Check type selector for `nx-c-check-kibana-stats` (rt = Response Time, task = Task Manager) |
-| [NX] Elastic Agent Types List | Agent type selector (all, auditbeat, elastic_agent, filebeat, logstash, metricbeat, packetbeat, winlogbeat) |
+| `[NX] Elastic Check Types List` | Check type selector for `nx-c-check-es-system` (cpu, disk, master, maxshards, mem, status) |
+| `[NX] Kibana Check Types List` | Check type selector for `nx-c-check-kibana-stats` (rt = Response Time, task = Task Manager) |
+| `[NX] Elastic Agent Types List` | Agent type selector (all, auditbeat, elastic_agent, filebeat, logstash, metricbeat, packetbeat, winlogbeat) |
 
 #### Service Templates
 
@@ -275,28 +274,28 @@ _Remember to not edit these Service Sets because they will be restored/updated a
 
 | Icinga Command | File Path |
 | --- | --- |
-| nx-c-check-elastic-slm-policy | /neteye/shared/monitoring/plugins/check_elastic_slm.py |
-| nx-c-check-elastic-slm-status | /neteye/shared/monitoring/plugins/check_elastic_slm.py |
-| nx-c-check_elastic_blockchain_status | /neteye/shared/monitoring/plugins/check_elastic_blockchain_status.py |
-| nx-c-check-es-system | /neteye/shared/monitoring/plugins/check_es_system.sh |
-| nx-c-check-filebeat | /neteye/shared/monitoring/plugins/check_filebeat |
-| nx-c-check-kibana-stats | /neteye/shared/monitoring/plugins/check_kibana_stats.sh |
-| nx-c-check-logstash | /neteye/shared/monitoring/plugins/check_logstash |
-| nx-c-check-logstash-pipeline | /neteye/shared/monitoring/plugins/check_logstash |
-| nx-c-check-logstash-events | /neteye/shared/monitoring/plugins/check_logstash_events.sh |
-| nx-c-check-logstash-queue | /neteye/shared/monitoring/plugins/check_logstash_queue.sh |
-| nx-c-check_elastic_ingest_status | /neteye/shared/monitoring/plugins/check_elastic_ingest_status.py |
-| nx-c-check-elastic-agent-status | /neteye/shared/monitoring/plugins/check_elastic_agent_status.sh |
-| nx-c-check-apm-server-status | /neteye/shared/monitoring/plugins/check_apm_server_status.sh |
-| nx-c-check-elastic-endpoint-status | /neteye/shared/monitoring/plugins/check_elastic_endpoint_status.sh |
-| nx-c-fleet-agent-status | /neteye/shared/monitoring/plugins/fleet-agent-status.sh |
-| nx-c-endpoint-agent-status | /neteye/shared/monitoring/plugins/endpoint-agent-status.sh |
-| nx-c-check_elastic_dataset_status | /neteye/shared/monitoring/plugins/check_elastic_dataset_status.py |
-| nx-c-check_elastic_transforms_status | /neteye/shared/monitoring/plugins/check_elastic_transforms_status.py |
-| nx-c-check_elastic_remove_duplicate_ebp_iterations | /neteye/shared/monitoring/plugins/check_elastic_remove_duplicate_ebp_iterations.py |
-| nx-c-check-elastic-dataset-object | /neteye/shared/monitoring/plugins/check_elastic_dataset_object.py |
-| nx-c-check_elastic_disk_watermark_flooding | /neteye/shared/monitoring/plugins/check_elastic_disk_watermark_flooding.py |
-| nx-c-check_elastic_watchers_status | /neteye/shared/monitoring/plugins/check_elastic_watchers_status.py |
+| `nx-c-check-elastic-slm-policy` | `/neteye/shared/monitoring/plugins/check_elastic_slm.py` |
+| `nx-c-check-elastic-slm-status` | `/neteye/shared/monitoring/plugins/check_elastic_slm.py` |
+| `nx-c-check_elastic_blockchain_status` | `/neteye/shared/monitoring/plugins/check_elastic_blockchain_status.py` |
+| `nx-c-check-es-system` | `/neteye/shared/monitoring/plugins/check_es_system.sh` |
+| `nx-c-check-filebeat` | `/neteye/shared/monitoring/plugins/check_filebeat` |
+| `nx-c-check-kibana-stats` | `/neteye/shared/monitoring/plugins/check_kibana_stats.sh` |
+| `nx-c-check-logstash` | `/neteye/shared/monitoring/plugins/check_logstash` |
+| `nx-c-check-logstash-pipeline` | `/neteye/shared/monitoring/plugins/check_logstash` |
+| `nx-c-check-logstash-events` | `/neteye/shared/monitoring/plugins/check_logstash_events.sh` |
+| `nx-c-check-logstash-queue` | `/neteye/shared/monitoring/plugins/check_logstash_queue.sh` |
+| `nx-c-check_elastic_ingest_status` | `/neteye/shared/monitoring/plugins/check_elastic_ingest_status.py` |
+| `nx-c-check-elastic-agent-status` | `/neteye/shared/monitoring/plugins/check_elastic_agent_status.sh` |
+| `nx-c-check-apm-server-status` | `/neteye/shared/monitoring/plugins/check_apm_server_status.sh` |
+| `nx-c-check-elastic-endpoint-status` | `/neteye/shared/monitoring/plugins/check_elastic_endpoint_status.sh` |
+| `nx-c-fleet-agent-status` | `/neteye/shared/monitoring/plugins/fleet-agent-status.sh` |
+| `nx-c-endpoint-agent-status` | `/neteye/shared/monitoring/plugins/endpoint-agent-status.sh` |
+| `nx-c-check_elastic_dataset_status` | `/neteye/shared/monitoring/plugins/check_elastic_dataset_status.py` |
+| `nx-c-check_elastic_transforms_status` | `/neteye/shared/monitoring/plugins/check_elastic_transforms_status.py` |
+| `nx-c-check_elastic_remove_duplicate_ebp_iterations` | `/neteye/shared/monitoring/plugins/check_elastic_remove_duplicate_ebp_iterations.py` |
+| `nx-c-check-elastic-dataset-object` | `/neteye/shared/monitoring/plugins/check_elastic_dataset_object.py` |
+| `nx-c-check_elastic_disk_watermark_flooding` | `/neteye/shared/monitoring/plugins/check_elastic_disk_watermark_flooding.py` |
+| `nx-c-check_elastic_watchers_status` | `/neteye/shared/monitoring/plugins/check_elastic_watchers_status.py` |
 
 #### Notification
 

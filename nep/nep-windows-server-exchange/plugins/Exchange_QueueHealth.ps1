@@ -95,4 +95,3 @@ if ($NagiosStatus -eq "2") {
 $output = "$outputlb|$outputval"
 $output
 exit $NagiosStatus
-

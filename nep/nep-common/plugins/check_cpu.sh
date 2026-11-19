@@ -28,8 +28,11 @@ exit $STATE_UNKNOWN;
 }
 
 thresholdlogic () {
-if [ -n $WARN ] && [ -z $CRIT ]; then echo "UNKNOWN - Define both warning and critical thresholds"; exit $STATE_UNKNOWN; fi
-if [ -n $CRIT ] && [ -z $WARN ]; then echo "UNKNOWN - Define both warning and critical thresholds"; exit $STATE_UNKNOWN; fi
+  if { [ -n "$WARN" ] && [ -z "$CRIT" ]; } || { [ -n "$CRIT" ] && [ -z "$WARN" ]; };
+  then
+    echo "UNKNOWN - Define both warning and critical thresholds"
+    exit "$STATE_UNKNOWN"
+  fi
 }
 
 ################################################################################

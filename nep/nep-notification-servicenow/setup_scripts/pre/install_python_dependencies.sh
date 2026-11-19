@@ -10,17 +10,17 @@ SETUP_LIBRARY=${NEP_STAGE_DIR}/setup/library
 ## Script main code: add your code here ##
 ##########################################
 function install_python_modules() {
-    python3 -m pip install jsonschema requests
+    dnf -y install python3-jsonschema python3-requests
 }
 
 if [[ $neteye_deployment == 'single_node' ]]; then
     install_python_modules
-    exit 0
+    exit $?
 fi
 if [[ $neteye_deployment == 'cluster' ]]; then
     if [[ $neteye_node_type == 'node' ]]; then
         install_python_modules
-        exit 0
+        exit $?
     fi
     if [[ $neteye_node_type == 'elastic_only' ]]; then
         exit 0

@@ -159,7 +159,7 @@ impl Context {
                 let installed = self
                     .installed_packages
                     .get(&package.name)
-                    .expect("how can a pacakge be updatable but not installed??");
+                    .expect("how can a package be updatable but not installed??");
                 println!(
                     "{:<40} {:<10} => {:<10}",
                     package.name, installed, package.version

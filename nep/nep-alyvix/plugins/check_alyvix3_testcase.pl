@@ -415,7 +415,7 @@ sub get_testcase_status {
 
 	if (!defined($testcode)) {
 		$teststate = 3;
-		print "UNKNOWN - Could not find any performace data for the testcase $opt_testcase!";
+		print "UNKNOWN - Could not find any performance data for the testcase $opt_testcase!";
 		exit 3;
 	}
 
@@ -482,7 +482,7 @@ sub print_help() {
 	print "\n";
 	print_usage();
 	print "\n";
-	print " -V (--version)     Programm version\n";
+	print " -V (--version)     Program version\n";
 	print " -h (--help)        usage help\n";
 	print " -v (--verbose)     verbose output\n";
 	print " -D (--debug)       debug output\n";

@@ -74,7 +74,7 @@
                     "order": "18"
                 },
                 "-L": {
-                    "description": "Chiper List",
+                    "description": "Cipher List",
                     "required": false,
                     "value": "$nx_nrpe_chiper_list$",
                     "order": "16"

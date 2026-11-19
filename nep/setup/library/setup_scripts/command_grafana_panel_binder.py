@@ -20,21 +20,22 @@ import configparser
 import os
 import sys
 import logging
+
 logger = logging.getLogger(__name__)
 
 GRAPHS_INI_DEFAULT = "/neteye/shared/icingaweb2/conf/modules/grafana/graphs.ini"
 
+
 def load_graphs_ini(graphs_path):
     """Load and parse graphs.ini"""
-    logging.debug('load graphs.ini')
+    logging.debug("load graphs.ini")
 
     config = configparser.ConfigParser()
-    config.optionxform = str # Do not normalize keys to lowercase
+    config.optionxform = str  # Do not normalize keys to lowercase
 
     if os.path.isfile(graphs_path):
         config.read(graphs_path)
     return config
-
 
 
 def bind_target_to_source(config, source_cmd, target_cmd, update=True, dry_run=False):
@@ -48,7 +49,6 @@ def bind_target_to_source(config, source_cmd, target_cmd, update=True, dry_run=F
     section_removed = []
     section_added = []
     errors = []
-
 
     # Validate source section exists
     if not config.has_section(source_cmd):
@@ -82,12 +82,12 @@ def bind_target_to_source(config, source_cmd, target_cmd, update=True, dry_run=F
 
     # recap
     if section_removed:
-        logger.info(f"[-] Removed section(s):")
+        logger.info("[-] Removed section(s):")
         for s in section_removed:
             logger.info(f"    [{s}]")
 
     if section_added:
-        logger.info(f"[+] Added section(s):")
+        logger.info("[+] Added section(s):")
         for s in section_added:
             logger.info(f"    [{s}]")
             for key, val in config[s].items():
@@ -100,11 +100,11 @@ def bind_target_to_source(config, source_cmd, target_cmd, update=True, dry_run=F
 
     return config, errors
 
+
 def save_graphs_ini(config, graphs_path):
     """Save graphs.ini."""
     with open(graphs_path, "w") as f:
         config.write(f)
-
 
 
 def main():
@@ -115,7 +115,7 @@ def main():
     parser.add_argument(
         "--copy-from",
         required=True,
-        help=f"Existing Command name with Grafana Dashboard (examples: [hostalive, check-memory, nscp-local-disk])",
+        help="Existing Command name with Grafana Dashboard (examples: [hostalive, check-memory, nscp-local-disk])",
     )
     parser.add_argument(
         "--command",
@@ -135,21 +135,22 @@ def main():
         help="Show what would be done without writing changes",
     )
     parser.add_argument(
-        "-u", "--update",
+        "-u",
+        "--update",
         action="store_true",
         default=True,
-        help="Allow update of existing commmand in graphs.ini",
+        help="Allow update of existing command in graphs.ini",
     )
     parser.add_argument(
-        "-v", "--verbose",
+        "-v",
+        "--verbose",
         action="store_true",
         help="Show detailed output",
     )
 
-
     args = parser.parse_args()
 
-    if (args.verbose):
+    if args.verbose:
         logging.basicConfig(level=logging.DEBUG)
     else:
         logging.basicConfig(level=logging.INFO)
@@ -186,7 +187,7 @@ def main():
         save_graphs_ini(config, args.graphs)
         logger.info(f"Saved to {args.graphs}")
     elif args.dry_run:
-        logger.info(f"Dry run - no changes written.")
+        logger.info("Dry run - no changes written.")
 
     # === Exit code === #
     if errors:
