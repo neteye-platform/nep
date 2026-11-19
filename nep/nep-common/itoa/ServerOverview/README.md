@@ -12,39 +12,26 @@ You can find an example [at this link](https://neteyedemo.wuerth-phoenix.com/net
 
 ## Requirements
 
-This Dashboard is compatible with Grafana 7.5.5 (released with NetEye 4.19) and newer.
+This dashboard requires NetEye 4.48 or newer: monitoring data are read from IcingaDB, since the Icinga IDO database is no longer available.
 Before importing this dashboard, ensure the following requirements are met. If not, please make the required changes accordingly.
 
-## Mysql user creation
+## Grafana Datasources
 
-Create a ReadOnly user in MySQL to access icinga2 database
+The dashboard reads monitoring data from the MySQL datasource `icingadb-mysql` (database `icingadb`). The datasource is created automatically in the Main Org by the `nep-common` setup (`setup_scripts/pre/09_create_grafana_datasources.sh`), so no manual MySQL user or datasource creation is needed.
 
-``` sql
-create user 'grafanareadonly'@'localhost' identified by 'XXXXXXXX';
-grant select on icinga2.* to 'grafanareadonly'@'localhost';
-flush privileges;
-```
+The InfluxDB datasource `icinga2-influxdb` is also required for the performance panels.
 
-## Grafana Datasource creation
-
-From ITOA - Data Sources menu create a new MySQL datasource named `icinga-mysql` (if not exists)
-
-``` text
-Host: mariadb.neteyelocal
-Database: icinga
-User: grafanareadonly
-Password: XXXXXXXX
-```
-
-Save and test
+Datasources are referenced by name, so the dashboard works without changes on any NetEye installation where they exist.
 
 ## Grafana Variable definition
 
-From Dashboard - Settings - Variables (hostname) correct the needed filter in the WHERE clause.
+The `hostgroup` variable lists the host groups whose display name contains `Windows` and that have at least one member; the `hostname` (Node) variable lists the hosts of the selected group. To use different host groups, adjust the `WHERE` clause of the `hostgroup` variable from Dashboard - Settings - Variables.
 
 ``` sql
-...
-WHERE icinga_hostgroups.alias like 'windows%';
+SELECT g.display_name AS __text, g.name AS __value FROM hostgroup g
+WHERE g.display_name LIKE '%Windows%'
+  AND EXISTS (SELECT 1 FROM hostgroup_member m WHERE m.hostgroup_id = g.id)
+ORDER BY g.display_name
 ```
 
 ## How to import dashboard

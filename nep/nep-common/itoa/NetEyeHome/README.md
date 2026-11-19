@@ -1,7 +1,7 @@
 # Overview
 
 This dashboard helps you to quickly understand how is the health status of  NetEye system (from the point of view of performance monitoring and host performance).
-Some panels reads data from a Telegraf datasource ([telegraf configuration](https://neteye.guide/current/core-modules/itoa/telegraf-config.html#telegraf-configuration)).
+Some panels read data from the Telegraf datasource `telegraf_master` ([telegraf configuration](https://neteye.guide/current/core-modules/itoa/telegraf-config.html#telegraf-configuration)).
 **It works only for only for NetEye single node installations.**
 
 ## Dashboard Output
@@ -14,49 +14,16 @@ You can find an example on the [NetEye Demo](https://neteyedemo.wuerth-phoenix.c
 
 ## Requirements
 
-This Dashboard is compatible with Grafana 7.5.5 (released with NetEye 4.19) and newer.
+This dashboard requires NetEye 4.48 or newer: monitoring data are read from IcingaDB, since the Icinga IDO database is no longer available.
 Before importing this dashboard, ensure the following requirements are met. If not, please make the required changes accordingly.
 
-## Mysql user creation
+## Grafana Datasources
 
-Create a ReadOnly user in MySQL to access icinga2 database
+The dashboard reads monitoring data from the MySQL datasource `icingadb-mysql` (database `icingadb`). The datasource is created automatically in the Main Org by the `nep-common` setup (`setup_scripts/pre/09_create_grafana_datasources.sh`), so no manual MySQL user or datasource creation is needed.
 
-``` sql
-create user 'grafanareadonly'@'localhost' identified by 'XXXXXXXX';
-grant select on icinga2.* to 'grafanareadonly'@'localhost';
-flush privileges;
-```
+The InfluxDB datasources `icinga2-influxdb` (Icinga metrics, `neteye_master` variable and Monitoring Performance panels) and `telegraf_master` (Host Performance panels, Telegraf metrics of the NetEye nodes) are also required.
 
-## Grafana Datasources creation
-
-From ITOA - Data Sources menu create a new MySQL datasource named `icinga-mysql` (if not exists)
-
-``` ini
-Host: mariadb.neteyelocal
-Database: icinga
-User: grafanareadonly
-Password: XXXXXXXX
-```
-
-Save and test
-
-From ITOA ` Data Sources menu create a new InfluxDB datasource named `Telegraf` (if not exists)
-
-``` ini
-URL: https://influxdb.neteyelocal:8086
-Basic auth enabled
-
-Basic auth Details
-
-User: influxdbreader
-Password: (look at cat /root/.pwd_analytics_grafana_viewer_user)
-
-Database: telegraf
-User: influxdbreader
-Password: (look at cat /root/.pwd_analytics_grafana_viewer_user)
-```
-
-Save and test
+Datasources are referenced by name, so the dashboard works without changes on any NetEye installation where they exist.
 
 ## Grafana Variable definition
 
