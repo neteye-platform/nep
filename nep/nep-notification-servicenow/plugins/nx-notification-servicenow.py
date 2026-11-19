@@ -6,7 +6,7 @@ import requests
 import argparse
 import logging
 from time import sleep
-from jsonschema import Draft7Validator, validators
+from jsonschema import Draft4Validator, validators
 
 ROOT = os.path.abspath(os.path.dirname(__file__))
 
@@ -30,7 +30,7 @@ SETTINGS_SCHEMA = {
         "cert": {
             "oneOf": [
                 {"type": "string"},
-                {"const": None},
+                {"type": "null"},
             ],
         },
         "retries": {
@@ -81,7 +81,7 @@ def get_settings(path):
     with open(path, "r") as f:
         settings = json.load(f)
     # THIS SETS THE DEFAULT IN PLACE
-    extend_with_default(Draft7Validator)(SETTINGS_SCHEMA).validate(settings)
+    extend_with_default(Draft4Validator)(SETTINGS_SCHEMA).validate(settings)
     return settings
 
 
