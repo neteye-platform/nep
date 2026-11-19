@@ -3,7 +3,9 @@
     "list": [
       {
         "builtIn": 1,
-        "datasource": "-- Grafana --",
+        "datasource": {
+          "uid": "-- Grafana --"
+        },
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
@@ -16,19 +18,16 @@
   },
   "description": "NetEye open problems",
   "editable": true,
-  "gnetId": null,
+  "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 82,
-  "iteration": 1635437707012,
   "links": [],
   "panels": [
     {
-      "datasource": null,
-      "description": "",
-      "fieldConfig": {
-        "defaults": {},
-        "overrides": []
+      "datasource": {
+        "type": "influxdb",
+        "uid": "icinga2-influxdb"
       },
+      "description": "",
       "gridPos": {
         "h": 3,
         "w": 24,
@@ -43,6 +42,10 @@
       "pluginVersion": "7.5.5",
       "targets": [
         {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "icinga2-influxdb"
+          },
           "groupBy": [
             {
               "params": [
@@ -78,13 +81,13 @@
           "tags": []
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "type": "text"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "icinga-mysql",
+      "datasource": {
+        "type": "mysql",
+        "uid": "icingadb-mysql"
+      },
       "fieldConfig": {
         "defaults": {
           "links": [
@@ -96,19 +99,20 @@
           ],
           "mappings": [
             {
-              "id": 0,
-              "op": "=",
-              "text": "N/A",
-              "type": 1,
-              "value": "null"
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
             }
           ],
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
-                "color": "rgba(68, 176, 15, 0.9)",
-                "value": null
+                "color": "rgba(68, 176, 15, 0.9)"
               },
               {
                 "color": "rgba(207, 18, 18, 0.97)",
@@ -127,7 +131,6 @@
         "y": 3
       },
       "id": 17,
-      "links": [],
       "options": {
         "colorMode": "background",
         "graphMode": "area",
@@ -146,11 +149,14 @@
       "pluginVersion": "7.5.5",
       "targets": [
         {
+          "datasource": {
+            "uid": "icingadb-mysql"
+          },
           "format": "table",
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT COUNT(*) AS down \r\nFROM icinga_objects AS ho\r\nINNER JOIN icinga_hosts AS h ON h.host_object_id = ho.object_id AND ho.is_active = 1 AND ho.objecttype_id = 1\r\nINNER JOIN icinga_hoststatus AS hs ON hs.host_object_id = ho.object_id\r\n-- INNER JOIN icinga_customvariables cv_lista ON cv_lista.object_id = ho.object_id \r\n-- INNER JOIN icinga_customvariables cv_cliente ON cv_cliente.object_id = ho.object_id \r\nWHERE \r\n\t-- cv_lista.varname = 'lista' and cv_lista.varvalue IN(${lista}) \r\n\t-- AND cv_cliente.varname = 'cliente' AND cv_cliente.varvalue IN(${clienti})\r\n\t-- AND ho.is_active = '1'\r\n\tho.is_active = '1'\r\n\tAND\r\n\ths.current_state = '1'\r\n\tAND \r\n\t(hs.problem_has_been_acknowledged + hs.scheduled_downtime_depth) = 0",
+          "rawSql": "SELECT COUNT(*) AS down\nFROM\n   host h\n   INNER JOIN host_state hs ON hs.host_id = h.id\nWHERE\n   hs.soft_state = 1\n   AND hs.is_handled = 'n'",
           "refId": "A",
           "select": [
             [
@@ -162,7 +168,6 @@
               }
             ]
           ],
-          "table": "icinga_acknowledgements",
           "timeColumn": "entry_time",
           "timeColumnType": "timestamp",
           "where": [
@@ -178,8 +183,10 @@
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "icinga-mysql",
+      "datasource": {
+        "type": "mysql",
+        "uid": "icingadb-mysql"
+      },
       "fieldConfig": {
         "defaults": {
           "links": [
@@ -191,19 +198,20 @@
           ],
           "mappings": [
             {
-              "id": 0,
-              "op": "=",
-              "text": "N/A",
-              "type": 1,
-              "value": "null"
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
             }
           ],
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
-                "color": "rgba(68, 176, 15, 0.9)",
-                "value": null
+                "color": "rgba(68, 176, 15, 0.9)"
               },
               {
                 "color": "light-red",
@@ -222,7 +230,6 @@
         "y": 3
       },
       "id": 19,
-      "links": [],
       "options": {
         "colorMode": "background",
         "graphMode": "area",
@@ -241,11 +248,14 @@
       "pluginVersion": "7.5.5",
       "targets": [
         {
+          "datasource": {
+            "uid": "icingadb-mysql"
+          },
           "format": "table",
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT COUNT(*) AS cnt \r\nFROM icinga_objects AS ho\r\nINNER JOIN icinga_hosts AS h ON h.host_object_id = ho.object_id AND ho.is_active = 1 AND ho.objecttype_id = 1\r\nINNER JOIN icinga_hoststatus AS hs ON hs.host_object_id = ho.object_id\r\n-- INNER JOIN icinga_customvariables cv_lista ON cv_lista.object_id = ho.object_id \r\n-- INNER JOIN icinga_customvariables cv_cliente ON cv_cliente.object_id = ho.object_id \r\nWHERE \r\n\t-- cv_lista.varname = 'lista' and cv_lista.varvalue IN(${lista}) \r\n\t-- AND cv_cliente.varname = 'cliente' AND cv_cliente.varvalue IN(${clienti})\r\n\t-- AND\r\n\tho.is_active = '1'\r\n\tAND hs.current_state = '1' \r\n\tAND (hs.problem_has_been_acknowledged + hs.scheduled_downtime_depth) > 0",
+          "rawSql": "SELECT COUNT(*) AS cnt\nFROM\n   host h\n   INNER JOIN host_state hs ON hs.host_id = h.id\nWHERE\n   hs.soft_state = 1\n   AND hs.is_handled = 'y'",
           "refId": "A",
           "select": [
             [
@@ -257,7 +267,6 @@
               }
             ]
           ],
-          "table": "icinga_acknowledgements",
           "timeColumn": "entry_time",
           "timeColumnType": "timestamp",
           "where": [
@@ -273,8 +282,10 @@
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "icinga-mysql",
+      "datasource": {
+        "type": "mysql",
+        "uid": "icingadb-mysql"
+      },
       "fieldConfig": {
         "defaults": {
           "links": [
@@ -286,19 +297,20 @@
           ],
           "mappings": [
             {
-              "id": 0,
-              "op": "=",
-              "text": "N/A",
-              "type": 1,
-              "value": "null"
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
             }
           ],
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
-                "color": "rgba(68, 176, 15, 0.9)",
-                "value": null
+                "color": "rgba(68, 176, 15, 0.9)"
               },
               {
                 "color": "red",
@@ -317,7 +329,6 @@
         "y": 3
       },
       "id": 21,
-      "links": [],
       "options": {
         "colorMode": "background",
         "graphMode": "area",
@@ -336,11 +347,14 @@
       "pluginVersion": "7.5.5",
       "targets": [
         {
+          "datasource": {
+            "uid": "icingadb-mysql"
+          },
           "format": "table",
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT COUNT(*) AS cnt \r\nFROM\r\n   icinga_services s\r\n   INNER JOIN icinga_objects os ON s.service_object_id = os.object_id\r\n   INNER JOIN icinga_objects oh ON s.host_object_id = oh.object_id\r\n   INNER JOIN icinga_hosts AS h ON h.host_object_id = s.host_object_id\r\n   INNER JOIN icinga_hoststatus AS hs ON hs.host_object_id = s.host_object_id\r\n   INNER JOIN icinga_servicestatus AS ss ON ss.service_object_id =os.object_id \r\n   -- INNER JOIN icinga_customvariables cv_lista ON cv_lista.object_id = oh.object_id\r\n   -- INNER JOIN icinga_customvariables cv_cliente ON cv_cliente.object_id = oh.object_id\r\nWHERE\r\n   os.is_active = 1\r\n   AND oh.is_active = 1\r\n   AND ss.current_state = 2\r\n   AND \tss.problem_has_been_acknowledged + ss.scheduled_downtime_depth = 0\r\n   -- AND cv_lista.varname = 'lista' and cv_lista.varvalue IN(${lista}) \r\n   -- AND cv_cliente.varname = 'cliente' AND cv_cliente.varvalue IN(${clienti})",
+          "rawSql": "SELECT COUNT(*) AS cnt\nFROM\n   service s\n   INNER JOIN host h ON h.id = s.host_id\n   INNER JOIN host_state hs ON hs.host_id = h.id\n   INNER JOIN service_state ss ON ss.service_id = s.id\nWHERE\n   ss.soft_state = 2\n   AND ss.is_handled = 'n'\nAND NOT EXISTS (\n   SELECT 1\n   FROM service_customvar sc\n   INNER JOIN customvar cv_infra ON cv_infra.id = sc.customvar_id\n   WHERE sc.service_id = s.id\n     AND cv_infra.name = 'nx_is_infrastructural'\n     AND cv_infra.value = '\"y\"'\n)",
           "refId": "A",
           "select": [
             [
@@ -352,7 +366,6 @@
               }
             ]
           ],
-          "table": "icinga_acknowledgements",
           "timeColumn": "entry_time",
           "timeColumnType": "timestamp",
           "where": [
@@ -368,8 +381,10 @@
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "icinga-mysql",
+      "datasource": {
+        "type": "mysql",
+        "uid": "icingadb-mysql"
+      },
       "fieldConfig": {
         "defaults": {
           "links": [
@@ -381,19 +396,20 @@
           ],
           "mappings": [
             {
-              "id": 0,
-              "op": "=",
-              "text": "N/A",
-              "type": 1,
-              "value": "null"
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
             }
           ],
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
-                "color": "rgba(68, 176, 15, 0.9)",
-                "value": null
+                "color": "rgba(68, 176, 15, 0.9)"
               },
               {
                 "color": "super-light-red",
@@ -412,7 +428,6 @@
         "y": 3
       },
       "id": 23,
-      "links": [],
       "options": {
         "colorMode": "background",
         "graphMode": "area",
@@ -431,11 +446,14 @@
       "pluginVersion": "7.5.5",
       "targets": [
         {
+          "datasource": {
+            "uid": "icingadb-mysql"
+          },
           "format": "table",
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT COUNT(*) AS cnt \r\nFROM\r\n   icinga_services s\r\n   INNER JOIN icinga_objects os ON s.service_object_id = os.object_id\r\n   INNER JOIN icinga_objects oh ON s.host_object_id = oh.object_id\r\n   INNER JOIN icinga_hosts AS h ON h.host_object_id = s.host_object_id\r\n   INNER JOIN icinga_hoststatus AS hs ON hs.host_object_id = s.host_object_id\r\n   INNER JOIN icinga_servicestatus AS ss ON ss.service_object_id =os.object_id \r\n   -- INNER JOIN icinga_customvariables cv_lista ON cv_lista.object_id = oh.object_id\r\n   -- INNER JOIN icinga_customvariables cv_cliente ON cv_cliente.object_id = oh.object_id\r\nWHERE\r\n   os.is_active = 1\r\n   AND oh.is_active = 1\r\n   AND ss.current_state = 2\r\n   AND (ss.problem_has_been_acknowledged + ss.scheduled_downtime_depth + COALESCE(hs.current_state, 0)) > 0 \r\n   -- AND cv_lista.varname = 'lista' and cv_lista.varvalue IN(${lista}) \r\n   -- AND cv_cliente.varname = 'cliente' AND cv_cliente.varvalue IN(${clienti})",
+          "rawSql": "SELECT COUNT(*) AS cnt\nFROM\n   service s\n   INNER JOIN host h ON h.id = s.host_id\n   INNER JOIN host_state hs ON hs.host_id = h.id\n   INNER JOIN service_state ss ON ss.service_id = s.id\nWHERE\n   ss.soft_state = 2\n   AND ss.is_handled = 'y'\nAND NOT EXISTS (\n   SELECT 1\n   FROM service_customvar sc\n   INNER JOIN customvar cv_infra ON cv_infra.id = sc.customvar_id\n   WHERE sc.service_id = s.id\n     AND cv_infra.name = 'nx_is_infrastructural'\n     AND cv_infra.value = '\"y\"'\n)",
           "refId": "A",
           "select": [
             [
@@ -447,7 +465,6 @@
               }
             ]
           ],
-          "table": "icinga_acknowledgements",
           "timeColumn": "entry_time",
           "timeColumnType": "timestamp",
           "where": [
@@ -463,8 +480,10 @@
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "icinga-mysql",
+      "datasource": {
+        "type": "mysql",
+        "uid": "icingadb-mysql"
+      },
       "fieldConfig": {
         "defaults": {
           "links": [
@@ -476,19 +495,20 @@
           ],
           "mappings": [
             {
-              "id": 0,
-              "op": "=",
-              "text": "N/A",
-              "type": 1,
-              "value": "null"
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
             }
           ],
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
-                "color": "rgba(68, 176, 15, 0.9)",
-                "value": null
+                "color": "rgba(68, 176, 15, 0.9)"
               },
               {
                 "color": "yellow",
@@ -507,7 +527,6 @@
         "y": 3
       },
       "id": 25,
-      "links": [],
       "options": {
         "colorMode": "background",
         "graphMode": "area",
@@ -526,11 +545,14 @@
       "pluginVersion": "7.5.5",
       "targets": [
         {
+          "datasource": {
+            "uid": "icingadb-mysql"
+          },
           "format": "table",
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT COUNT(*) AS cnt \r\nFROM\r\n   icinga_services s\r\n   INNER JOIN icinga_objects os ON s.service_object_id = os.object_id\r\n   INNER JOIN icinga_objects oh ON s.host_object_id = oh.object_id\r\n   INNER JOIN icinga_hosts AS h ON h.host_object_id = s.host_object_id\r\n   INNER JOIN icinga_hoststatus AS hs ON hs.host_object_id = s.host_object_id\r\n   INNER JOIN icinga_servicestatus AS ss ON ss.service_object_id =os.object_id \r\n   -- INNER JOIN icinga_customvariables cv_lista ON cv_lista.object_id = oh.object_id\r\n   -- INNER JOIN icinga_customvariables cv_cliente ON cv_cliente.object_id = oh.object_id\r\nWHERE\r\n   os.is_active = 1\r\n   AND oh.is_active = 1\r\n   AND ss.current_state = 1\r\n   AND ss.problem_has_been_acknowledged + ss.scheduled_downtime_depth = 0\r\n   -- AND cv_lista.varname = 'lista' and cv_lista.varvalue IN(${lista}) \r\n   -- AND cv_cliente.varname = 'cliente' AND cv_cliente.varvalue IN(${clienti})",
+          "rawSql": "SELECT COUNT(*) AS cnt\nFROM\n   service s\n   INNER JOIN host h ON h.id = s.host_id\n   INNER JOIN host_state hs ON hs.host_id = h.id\n   INNER JOIN service_state ss ON ss.service_id = s.id\nWHERE\n   ss.soft_state = 1\n   AND ss.is_handled = 'n'\nAND NOT EXISTS (\n   SELECT 1\n   FROM service_customvar sc\n   INNER JOIN customvar cv_infra ON cv_infra.id = sc.customvar_id\n   WHERE sc.service_id = s.id\n     AND cv_infra.name = 'nx_is_infrastructural'\n     AND cv_infra.value = '\"y\"'\n)",
           "refId": "A",
           "select": [
             [
@@ -542,7 +564,6 @@
               }
             ]
           ],
-          "table": "icinga_acknowledgements",
           "timeColumn": "entry_time",
           "timeColumnType": "timestamp",
           "where": [
@@ -558,8 +579,10 @@
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "icinga-mysql",
+      "datasource": {
+        "type": "mysql",
+        "uid": "icingadb-mysql"
+      },
       "fieldConfig": {
         "defaults": {
           "links": [
@@ -571,19 +594,20 @@
           ],
           "mappings": [
             {
-              "id": 0,
-              "op": "=",
-              "text": "N/A",
-              "type": 1,
-              "value": "null"
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
             }
           ],
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
-                "color": "rgba(68, 176, 15, 0.9)",
-                "value": null
+                "color": "rgba(68, 176, 15, 0.9)"
               },
               {
                 "color": "super-light-yellow",
@@ -602,7 +626,6 @@
         "y": 3
       },
       "id": 27,
-      "links": [],
       "options": {
         "colorMode": "background",
         "graphMode": "area",
@@ -621,11 +644,14 @@
       "pluginVersion": "7.5.5",
       "targets": [
         {
+          "datasource": {
+            "uid": "icingadb-mysql"
+          },
           "format": "table",
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT COUNT(*) AS cnt \r\nFROM\r\n   icinga_services s\r\n   INNER JOIN icinga_objects os ON s.service_object_id = os.object_id\r\n   INNER JOIN icinga_objects oh ON s.host_object_id = oh.object_id\r\n   INNER JOIN icinga_hosts AS h ON h.host_object_id = s.host_object_id\r\n   INNER JOIN icinga_hoststatus AS hs ON hs.host_object_id = s.host_object_id\r\n   INNER JOIN icinga_servicestatus AS ss ON ss.service_object_id =os.object_id \r\n   -- INNER JOIN icinga_customvariables cv_lista ON cv_lista.object_id = oh.object_id\r\n   -- INNER JOIN icinga_customvariables cv_cliente ON cv_cliente.object_id = oh.object_id\r\nWHERE\r\n   os.is_active = 1\r\n   AND oh.is_active = 1\r\n   AND ss.current_state = 1\r\n   -- AND cv_lista.varname = 'lista' and cv_lista.varvalue IN(${lista}) \r\n   -- AND cv_cliente.varname = 'cliente' AND cv_cliente.varvalue IN(${clienti})\r\n   AND (ss.problem_has_been_acknowledged + ss.scheduled_downtime_depth + COALESCE(hs.current_state, 0)) > 0 ",
+          "rawSql": "SELECT COUNT(*) AS cnt\nFROM\n   service s\n   INNER JOIN host h ON h.id = s.host_id\n   INNER JOIN host_state hs ON hs.host_id = h.id\n   INNER JOIN service_state ss ON ss.service_id = s.id\nWHERE\n   ss.soft_state = 1\n   AND ss.is_handled = 'y'\nAND NOT EXISTS (\n   SELECT 1\n   FROM service_customvar sc\n   INNER JOIN customvar cv_infra ON cv_infra.id = sc.customvar_id\n   WHERE sc.service_id = s.id\n     AND cv_infra.name = 'nx_is_infrastructural'\n     AND cv_infra.value = '\"y\"'\n)",
           "refId": "A",
           "select": [
             [
@@ -637,7 +663,6 @@
               }
             ]
           ],
-          "table": "icinga_acknowledgements",
           "timeColumn": "entry_time",
           "timeColumnType": "timestamp",
           "where": [
@@ -653,8 +678,10 @@
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "icinga-mysql",
+      "datasource": {
+        "type": "mysql",
+        "uid": "icingadb-mysql"
+      },
       "fieldConfig": {
         "defaults": {
           "links": [
@@ -666,19 +693,20 @@
           ],
           "mappings": [
             {
-              "id": 0,
-              "op": "=",
-              "text": "N/A",
-              "type": 1,
-              "value": "null"
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
             }
           ],
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
-                "color": "rgba(68, 176, 15, 0.9)",
-                "value": null
+                "color": "rgba(68, 176, 15, 0.9)"
               },
               {
                 "color": "purple",
@@ -697,7 +725,6 @@
         "y": 3
       },
       "id": 29,
-      "links": [],
       "options": {
         "colorMode": "background",
         "graphMode": "area",
@@ -716,11 +743,14 @@
       "pluginVersion": "7.5.5",
       "targets": [
         {
+          "datasource": {
+            "uid": "icingadb-mysql"
+          },
           "format": "table",
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT COUNT(*) AS cnt \r\nFROM\r\n   icinga_services s\r\n   INNER JOIN icinga_objects os ON s.service_object_id = os.object_id\r\n   INNER JOIN icinga_objects oh ON s.host_object_id = oh.object_id\r\n   INNER JOIN icinga_hosts AS h ON h.host_object_id = s.host_object_id\r\n   INNER JOIN icinga_hoststatus AS hs ON hs.host_object_id = s.host_object_id\r\n   INNER JOIN icinga_servicestatus AS ss ON ss.service_object_id =os.object_id \r\n   -- INNER JOIN icinga_customvariables cv_lista ON cv_lista.object_id = oh.object_id\r\n   -- INNER JOIN icinga_customvariables cv_cliente ON cv_cliente.object_id = oh.object_id\r\nWHERE\r\n   os.is_active = 1\r\n   AND oh.is_active = 1\r\n   AND ss.current_state = 3\r\n   AND \tss.problem_has_been_acknowledged + ss.scheduled_downtime_depth = 0\r\n   -- AND cv_lista.varname = 'lista' and cv_lista.varvalue IN(${lista}) \r\n   -- AND cv_cliente.varname = 'cliente' AND cv_cliente.varvalue IN(${clienti})",
+          "rawSql": "SELECT COUNT(*) AS cnt\nFROM\n   service s\n   INNER JOIN host h ON h.id = s.host_id\n   INNER JOIN host_state hs ON hs.host_id = h.id\n   INNER JOIN service_state ss ON ss.service_id = s.id\nWHERE\n   ss.soft_state = 3\n   AND ss.is_handled = 'n'\nAND NOT EXISTS (\n   SELECT 1\n   FROM service_customvar sc\n   INNER JOIN customvar cv_infra ON cv_infra.id = sc.customvar_id\n   WHERE sc.service_id = s.id\n     AND cv_infra.name = 'nx_is_infrastructural'\n     AND cv_infra.value = '\"y\"'\n)",
           "refId": "A",
           "select": [
             [
@@ -732,7 +762,6 @@
               }
             ]
           ],
-          "table": "icinga_acknowledgements",
           "timeColumn": "entry_time",
           "timeColumnType": "timestamp",
           "where": [
@@ -748,8 +777,10 @@
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "icinga-mysql",
+      "datasource": {
+        "type": "mysql",
+        "uid": "icingadb-mysql"
+      },
       "fieldConfig": {
         "defaults": {
           "links": [
@@ -761,19 +792,20 @@
           ],
           "mappings": [
             {
-              "id": 0,
-              "op": "=",
-              "text": "N/A",
-              "type": 1,
-              "value": "null"
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
             }
           ],
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
-                "color": "rgba(68, 176, 15, 0.9)",
-                "value": null
+                "color": "rgba(68, 176, 15, 0.9)"
               },
               {
                 "color": "light-purple",
@@ -792,7 +824,6 @@
         "y": 3
       },
       "id": 31,
-      "links": [],
       "options": {
         "colorMode": "background",
         "graphMode": "area",
@@ -811,11 +842,14 @@
       "pluginVersion": "7.5.5",
       "targets": [
         {
+          "datasource": {
+            "uid": "icingadb-mysql"
+          },
           "format": "table",
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT COUNT(*) AS cnt \r\nFROM\r\n   icinga_services s\r\n   INNER JOIN icinga_objects os ON s.service_object_id = os.object_id\r\n   INNER JOIN icinga_objects oh ON s.host_object_id = oh.object_id\r\n   INNER JOIN icinga_hosts AS h ON h.host_object_id = s.host_object_id\r\n   INNER JOIN icinga_hoststatus AS hs ON hs.host_object_id = s.host_object_id\r\n   INNER JOIN icinga_servicestatus AS ss ON ss.service_object_id =os.object_id \r\n   -- INNER JOIN icinga_customvariables cv_lista ON cv_lista.object_id = oh.object_id\r\n   -- INNER JOIN icinga_customvariables cv_cliente ON cv_cliente.object_id = oh.object_id\r\nWHERE\r\n   os.is_active = 1\r\n   AND oh.is_active = 1\r\n   AND ss.current_state = 3\r\n   -- AND cv_lista.varname = 'lista' and cv_lista.varvalue IN(${lista}) \r\n   -- AND cv_cliente.varname = 'cliente' AND cv_cliente.varvalue IN(${clienti})\r\n   AND (ss.problem_has_been_acknowledged + ss.scheduled_downtime_depth + COALESCE(hs.current_state, 0)) > 0 ",
+          "rawSql": "SELECT COUNT(*) AS cnt\nFROM\n   service s\n   INNER JOIN host h ON h.id = s.host_id\n   INNER JOIN host_state hs ON hs.host_id = h.id\n   INNER JOIN service_state ss ON ss.service_id = s.id\nWHERE\n   ss.soft_state = 3\n   AND ss.is_handled = 'y'\nAND NOT EXISTS (\n   SELECT 1\n   FROM service_customvar sc\n   INNER JOIN customvar cv_infra ON cv_infra.id = sc.customvar_id\n   WHERE sc.service_id = s.id\n     AND cv_infra.name = 'nx_is_infrastructural'\n     AND cv_infra.value = '\"y\"'\n)",
           "refId": "A",
           "select": [
             [
@@ -827,7 +861,6 @@
               }
             ]
           ],
-          "table": "icinga_acknowledgements",
           "timeColumn": "entry_time",
           "timeColumnType": "timestamp",
           "where": [
@@ -843,14 +876,16 @@
       "type": "stat"
     },
     {
-      "datasource": "icinga-mysql",
+      "datasource": {
+        "type": "mysql",
+        "uid": "icingadb-mysql"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "thresholds"
           },
           "custom": {
-            "align": null,
             "filterable": true
           },
           "mappings": [],
@@ -858,8 +893,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -892,8 +926,7 @@
                 "value": "time: YYYY-MM-DD HH:mm:ss"
               },
               {
-                "id": "custom.align",
-                "value": null
+                "id": "custom.align"
               }
             ]
           },
@@ -912,8 +945,11 @@
                 "value": "none"
               },
               {
-                "id": "custom.displayMode",
-                "value": "color-background"
+                "id": "custom.cellOptions",
+                "value": {
+                  "mode": "gradient",
+                  "type": "color-background"
+                }
               },
               {
                 "id": "custom.align",
@@ -925,8 +961,7 @@
                   "mode": "absolute",
                   "steps": [
                     {
-                      "color": "rgba(50, 172, 45, 0.97)",
-                      "value": null
+                      "color": "rgba(50, 172, 45, 0.97)"
                     },
                     {
                       "color": "dark-red",
@@ -943,19 +978,22 @@
                 "id": "mappings",
                 "value": [
                   {
-                    "from": "",
-                    "id": 1,
-                    "text": "DOWN",
-                    "to": "",
-                    "type": 1,
-                    "value": "1"
+                    "options": {
+                      "1": {
+                        "text": "DOWN"
+                      }
+                    },
+                    "type": "value"
                   },
                   {
-                    "from": "2",
-                    "id": 2,
-                    "text": "UNREACHABLE",
-                    "to": "99999",
-                    "type": 2
+                    "options": {
+                      "from": 2,
+                      "result": {
+                        "text": "UNREACHABLE"
+                      },
+                      "to": 99999
+                    },
+                    "type": "range"
                   }
                 ]
               }
@@ -972,8 +1010,7 @@
                 "value": "Acknownledged"
               },
               {
-                "id": "custom.align",
-                "value": null
+                "id": "custom.align"
               }
             ]
           },
@@ -1018,8 +1055,7 @@
                 ]
               },
               {
-                "id": "custom.align",
-                "value": null
+                "id": "custom.align"
               }
             ]
           },
@@ -1038,8 +1074,7 @@
                 "value": "short"
               },
               {
-                "id": "custom.align",
-                "value": null
+                "id": "custom.align"
               }
             ]
           },
@@ -1062,8 +1097,7 @@
                 "value": 2
               },
               {
-                "id": "custom.align",
-                "value": null
+                "id": "custom.align"
               }
             ]
           },
@@ -1243,11 +1277,14 @@
       "pluginVersion": "7.5.5",
       "targets": [
         {
+          "datasource": {
+            "uid": "icingadb-mysql"
+          },
           "format": "table",
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\n   o.name1 AS host_name,\n   h.address AS 'ip address',\n   hs.current_state AS 'host_state',\n   convert_tz(hs.last_state_change, 'Europe/Rome','Etc/UTC') AS host_last_state_change,\n   CONCAT(\n\t  TIMESTAMPDIFF(day,hs.last_state_change,now()) , ' d ',\n\t  MOD( TIMESTAMPDIFF(hour,hs.last_state_change,now()), 24), ' h ',\n\t  MOD( TIMESTAMPDIFF(minute,hs.last_state_change,now()), 60), ' m '\n\t) as duration,\n   hs.output AS 'output',\n   IF(hs.problem_has_been_acknowledged=0, 'Not acknowledged', 'Acknowledged') AS 'acknowledged',\n   IF(hs.scheduled_downtime_depth=0, 'Not in Downtime', 'In Downtime') AS 'in downtime',\n   IF((hs.problem_has_been_acknowledged + hs.scheduled_downtime_depth) > 0, 'Handled', 'Not handled') AS 'Handled'\nFROM\n   icinga_hoststatus hs\n   INNER JOIN icinga_objects o ON hs.host_object_id = o.object_id AND hs.instance_id = o.instance_id\n   INNER JOIN icinga_hosts h ON hs.host_object_id = h.host_object_id AND hs.instance_id = h.instance_id\n   -- INNER JOIN icinga_customvariables cv_lista ON cv_lista.object_id = o.object_id \n   -- INNER JOIN icinga_customvariables cv_cliente ON cv_cliente.object_id = o.object_id\nWHERE\n   o.is_active = 1\n   AND \n    CASE\n\tWHEN '${problem_handled}' = 'Handled' THEN \n\t\ths.problem_has_been_acknowledged + hs.scheduled_downtime_depth > 0\n\tWHEN '${problem_handled}' = 'Not Handled' THEN \n\t\ths.problem_has_been_acknowledged + hs.scheduled_downtime_depth = 0\n\tWHEN '${problem_handled}' = 'All' THEN \n\t\ths.problem_has_been_acknowledged + hs.scheduled_downtime_depth >= 0\n\tEND  \n  AND hs.current_state > 0\n  -- AND cv_lista.varname = 'lista' and cv_lista.varvalue IN(${lista}) \n  -- AND cv_cliente.varname = 'cliente' AND cv_cliente.varvalue IN(${clienti})",
+          "rawSql": "SELECT\n   h.name AS host_name,\n   h.address AS 'ip address',\n   hs.soft_state AS 'host_state',\n   IF(hs.last_state_change = 0, NULL, TIMESTAMPADD(SECOND, hs.last_state_change DIV 1000, '1970-01-01 00:00:00')) AS host_last_state_change,\n   IF(hs.last_state_change = 0, 'n/a', CONCAT(\n      (GREATEST(CAST(UNIX_TIMESTAMP()*1000 AS SIGNED) - CAST(hs.last_state_change AS SIGNED), 0) DIV 86400000), ' d ',\n      MOD((GREATEST(CAST(UNIX_TIMESTAMP()*1000 AS SIGNED) - CAST(hs.last_state_change AS SIGNED), 0) DIV 3600000), 24), ' h ',\n      MOD((GREATEST(CAST(UNIX_TIMESTAMP()*1000 AS SIGNED) - CAST(hs.last_state_change AS SIGNED), 0) DIV 60000), 60), ' m '\n   )) AS duration,\n   hs.output AS 'output',\n   IF(hs.is_acknowledged='n', 'Not acknowledged', 'Acknowledged') AS 'acknowledged',\n   IF(hs.in_downtime='n', 'Not in Downtime', 'In Downtime') AS 'in downtime',\n   IF(hs.is_handled='y', 'Handled', 'Not handled') AS 'Handled'\nFROM\n   host_state hs\n   INNER JOIN host h ON h.id = hs.host_id\nWHERE\n   CASE\n      WHEN '${problem_handled}' = 'Handled' THEN\n         hs.is_handled = 'y'\n      WHEN '${problem_handled}' = 'Not Handled' THEN\n         hs.is_handled = 'n'\n      WHEN '${problem_handled}' = 'All' THEN\n         TRUE\n   END\n   AND hs.soft_state > 0\n",
           "refId": "A",
           "select": [
             [
@@ -1259,7 +1296,6 @@
               }
             ]
           ],
-          "table": "icinga_acknowledgements",
           "timeColumn": "entry_time",
           "timeColumnType": "timestamp",
           "where": [
@@ -1271,8 +1307,6 @@
           ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Hosts DOWN [$problem_handled]",
       "transformations": [
         {
@@ -1285,14 +1319,16 @@
       "type": "table"
     },
     {
-      "datasource": "icinga-mysql",
+      "datasource": {
+        "type": "mysql",
+        "uid": "icingadb-mysql"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "thresholds"
           },
           "custom": {
-            "align": null,
             "filterable": true
           },
           "mappings": [],
@@ -1300,8 +1336,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1330,8 +1365,11 @@
                 "value": 0
               },
               {
-                "id": "custom.displayMode",
-                "value": "color-background"
+                "id": "custom.cellOptions",
+                "value": {
+                  "mode": "gradient",
+                  "type": "color-background"
+                }
               },
               {
                 "id": "thresholds",
@@ -1339,8 +1377,7 @@
                   "mode": "absolute",
                   "steps": [
                     {
-                      "color": "#E0B400",
-                      "value": null
+                      "color": "#E0B400"
                     },
                     {
                       "color": "#C4162A",
@@ -1357,20 +1394,15 @@
                 "id": "mappings",
                 "value": [
                   {
-                    "from": "",
-                    "id": 1,
-                    "text": "WARNING",
-                    "to": "",
-                    "type": 1,
-                    "value": "1"
-                  },
-                  {
-                    "from": "",
-                    "id": 2,
-                    "text": "CRITICAL",
-                    "to": "",
-                    "type": 1,
-                    "value": "2"
+                    "options": {
+                      "1": {
+                        "text": "WARNING"
+                      },
+                      "2": {
+                        "text": "CRITICAL"
+                      }
+                    },
+                    "type": "value"
                   }
                 ]
               },
@@ -1399,8 +1431,7 @@
                 "value": 2
               },
               {
-                "id": "custom.align",
-                "value": null
+                "id": "custom.align"
               }
             ]
           },
@@ -1423,8 +1454,7 @@
                 "value": 2
               },
               {
-                "id": "custom.align",
-                "value": null
+                "id": "custom.align"
               }
             ]
           },
@@ -1447,8 +1477,7 @@
                 "value": 2
               },
               {
-                "id": "custom.align",
-                "value": null
+                "id": "custom.align"
               }
             ]
           },
@@ -1481,8 +1510,7 @@
                 ]
               },
               {
-                "id": "custom.align",
-                "value": null
+                "id": "custom.align"
               }
             ]
           },
@@ -1515,8 +1543,7 @@
                 ]
               },
               {
-                "id": "custom.align",
-                "value": null
+                "id": "custom.align"
               }
             ]
           },
@@ -1539,8 +1566,7 @@
                 "value": 2
               },
               {
-                "id": "custom.align",
-                "value": null
+                "id": "custom.align"
               }
             ]
           },
@@ -1688,11 +1714,14 @@
       "pluginVersion": "7.5.5",
       "targets": [
         {
+          "datasource": {
+            "uid": "icingadb-mysql"
+          },
           "format": "table",
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\r\n   os.name1 AS host_name,\r\n   h.address AS host_address,\r\n   os.name2 AS service_description,\r\n   ss.current_state AS service_state,\r\n   -- ss.last_state_change AS service_last_state_change,\r\n   convert_tz(ss.last_state_change, 'Europe/Rome','Etc/UTC') AS 'State time',\r\n   CONCAT(\r\n\tTIMESTAMPDIFF(day,ss.last_state_change,now()) , ' d ',\r\n\tMOD( TIMESTAMPDIFF(hour,ss.last_state_change,now()), 24), ' h ',\r\n\tMOD( TIMESTAMPDIFF(minute,ss.last_state_change,now()), 60), ' m '\r\n\t) as duration,\r\n   if(length(ss.output) > 80, concat(left(ss.output, 80),'    (...)'), ss.output) as service_output,\r\n   IF(ss.problem_has_been_acknowledged=0, 'Not acknowledged', 'Acknowledged') AS service_acknowledged,\r\n   IF(ss.scheduled_downtime_depth=0, 'Not in Downtime', 'In Downtime') AS service_in_downtime,\r\n   IF((ss.problem_has_been_acknowledged + ss.scheduled_downtime_depth) > 0, 'Handled', 'Not handled') AS 'Handled'\r\nFROM\r\n   icinga_services s\r\n   INNER JOIN icinga_objects os ON s.service_object_id = os.object_id\r\n   INNER JOIN icinga_objects oh ON s.host_object_id = oh.object_id\r\n   INNER JOIN icinga_hosts AS h ON h.host_object_id = s.host_object_id\r\n   INNER JOIN icinga_hoststatus AS hs ON hs.host_object_id = s.host_object_id\r\n   INNER JOIN icinga_servicestatus AS ss ON ss.service_object_id =os.object_id \r\n   -- INNER JOIN icinga_customvariables cv_lista ON cv_lista.object_id = oh.object_id\r\n   -- INNER JOIN icinga_customvariables cv_cliente ON cv_cliente.object_id = oh.object_id\r\nWHERE\r\n   os.is_active = 1\r\n   AND oh.is_active = 1\r\n   AND ss.current_state IN ($service_state)\r\n   AND\r\n   CASE\r\n\tWHEN '${problem_handled}' = 'Handled' THEN \r\n\t\tss.problem_has_been_acknowledged + ss.scheduled_downtime_depth > 0\r\n\tWHEN '${problem_handled}' = 'Not Handled' THEN \r\n\t\tss.problem_has_been_acknowledged + ss.scheduled_downtime_depth = 0\r\n\tWHEN '${problem_handled}' = 'All' THEN \r\n\t  ss.problem_has_been_acknowledged + ss.scheduled_downtime_depth >= 0\r\n\tEND   \r\n  -- AND cv_lista.varname = 'lista' and cv_lista.varvalue IN(${lista}) \r\n  -- AND cv_cliente.varname = 'cliente' AND cv_cliente.varvalue IN(${clienti})\r\nORDER BY ss.last_state_change DESC",
+          "rawSql": "SELECT\n   h.name AS host_name,\n   h.address AS host_address,\n   s.name AS service_description,\n   ss.soft_state AS service_state,\n   IF(ss.last_state_change = 0, NULL, TIMESTAMPADD(SECOND, ss.last_state_change DIV 1000, '1970-01-01 00:00:00')) AS 'State time',\n   IF(ss.last_state_change = 0, 'n/a', CONCAT(\n      (GREATEST(CAST(UNIX_TIMESTAMP()*1000 AS SIGNED) - CAST(ss.last_state_change AS SIGNED), 0) DIV 86400000), ' d ',\n      MOD((GREATEST(CAST(UNIX_TIMESTAMP()*1000 AS SIGNED) - CAST(ss.last_state_change AS SIGNED), 0) DIV 3600000), 24), ' h ',\n      MOD((GREATEST(CAST(UNIX_TIMESTAMP()*1000 AS SIGNED) - CAST(ss.last_state_change AS SIGNED), 0) DIV 60000), 60), ' m '\n   )) AS duration,\n   IF(LENGTH(ss.output) > 80, CONCAT(LEFT(ss.output, 80), '    (...)'), ss.output) AS service_output,\n   IF(ss.is_acknowledged='n', 'Not acknowledged', 'Acknowledged') AS service_acknowledged,\n   IF(ss.in_downtime='n', 'Not in Downtime', 'In Downtime') AS service_in_downtime,\n   IF(ss.is_handled='y', 'Handled', 'Not handled') AS 'Handled'\nFROM\n   service s\n   INNER JOIN host h ON h.id = s.host_id\n   INNER JOIN host_state hs ON hs.host_id = h.id\n   INNER JOIN service_state ss ON ss.service_id = s.id\nWHERE\n   ss.soft_state IN ($service_state)\n   AND\n   CASE\n      WHEN '${problem_handled}' = 'Handled' THEN\n         ss.is_handled = 'y'\n      WHEN '${problem_handled}' = 'Not Handled' THEN\n         ss.is_handled = 'n'\n      WHEN '${problem_handled}' = 'All' THEN\n         TRUE\n   END\nAND NOT EXISTS (\n   SELECT 1\n   FROM service_customvar sc\n   INNER JOIN customvar cv_infra ON cv_infra.id = sc.customvar_id\n   WHERE sc.service_id = s.id\n     AND cv_infra.name = 'nx_is_infrastructural'\n     AND cv_infra.value = '\"y\"'\n)\nORDER BY ss.last_state_change DESC\n",
           "refId": "A",
           "select": [
             [
@@ -1714,8 +1743,6 @@
           ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Services WARNING and CRITICAL [$problem_handled]",
       "transformations": [
         {
@@ -1729,22 +1756,18 @@
     }
   ],
   "refresh": "30s",
-  "schemaVersion": 27,
-  "style": "dark",
+  "schemaVersion": 42,
   "tags": [
     "neteye"
   ],
   "templating": {
     "list": [
       {
-        "allValue": null,
         "current": {
           "selected": true,
           "text": "All",
           "value": "All"
         },
-        "description": null,
-        "error": null,
         "hide": 0,
         "includeAll": false,
         "label": "problem handled",
@@ -1773,7 +1796,6 @@
         "type": "custom"
       },
       {
-        "allValue": null,
         "current": {
           "selected": true,
           "tags": [],
@@ -1784,8 +1806,6 @@
             "$__all"
           ]
         },
-        "description": null,
-        "error": null,
         "hide": 0,
         "includeAll": true,
         "label": "service state",
@@ -1837,5 +1857,10 @@
   "timezone": "browser",
   "title": "NetEye Problems",
   "uid": "XfwT78pMz1",
+<<<<<<< HEAD
   "version": 23
 }
+=======
+  "weekStart": ""
+}
+>>>>>>> 3441837 (fix(NEP-962): migrate ITOA dashboards from Icinga IDO to IcingaDB (#114))
