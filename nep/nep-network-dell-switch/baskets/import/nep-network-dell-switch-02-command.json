@@ -10,15 +10,9 @@
                 },
                 "--mode": {
                     "value": "$nx_centreon_dell_n4000_mode_list$"
-                },
-                "--warning": {
-                    "value": "$nx_centreon_dell_n4000_warning$"
-                },
-                "--critical": {
-                    "value": "$nx_centreon_dell_n4000_critical$"
                 }
             },
-            "command": "\/usr\/lib\/centreon\/plugins\/centreon_dell_n4000.pl",
+            "command": "\/usr\/lib\/centreon\/plugins\/centreon_dell_nseries_snmp.pl",
             "disabled": false,
             "fields": [],
             "imports": [
@@ -42,12 +36,6 @@
                 },
                 "--mode": {
                     "value": "$nx_centreon_dell_os10_snmp_mode_list$"
-                },
-                "--warning": {
-                    "value": "$nx_centreon_dell_os10_snmp_warning$"
-                },
-                "--critical": {
-                    "value": "$nx_centreon_dell_os10_snmp_critical$"
                 }
             },
             "command": "\/usr\/lib\/centreon\/plugins\/centreon_dell_os10_snmp.pl",
