@@ -11,7 +11,7 @@
 ##  - elastic-agent_policies_<tenant>.json     (per tenant)     ##
 ##                                                              ##
 ## Tenant = Kibana space prefix "<code>_" (xxxxxx_elk -> xxxxxx)##
-## or explicit mapping in SPACE_TENANT_MAP.                     ##
+## or explicit mapping (config file -c, or option -m).          ##
 ## Nothing is published unless ALL API calls succeed.           ##
 #################################################################
 
@@ -21,13 +21,14 @@ POLICIES_PREFIX="elastic-agent_policies"
 # Space ID -> tenant: "<code>_<anything>" => <code>; otherwise the space ID itself
 TENANT_REGEX='^([[:digit:]]+)_.+$'
 
-# Explicit space -> tenant mapping for spaces without "<code>_" prefix.
-# The NetEye cluster itself (Kibana "default" space) belongs to the owner
-# tenant 103956 (W-IT Italy): its agents are merged with 103956_* spaces.
-declare -A SPACE_TENANT_MAP=(
-    [default]="xxxxxx"
-    [master]="xxxxxx"
-)
+# Explicit space -> tenant mapping for spaces without "<code>_" prefix
+# (e.g. the Kibana "default" and "master" spaces). Empty by default: an
+# unmapped space is its own tenant, so nothing is merged by accident.
+# Fill it from the config file (-c) and/or with -m; see print_help.
+declare -A SPACE_TENANT_MAP=()
+CONF_FILE_DEFAULT="/neteye/shared/monitoring/conf/fleet-agent-status.conf"
+MAP_OPT=""
+WARNINGS=()
 
 print_help() {
     echo ""
@@ -39,6 +40,11 @@ print_help() {
     echo "-f <file_path>    [optional]    ... file path of global status JSON (default: $DEFAULT_FILE)"
     echo "                                    all other files are written in the same directory"
     echo "-S                [optional]    ... Enable SSL (auto-enabled if Kibana answers only on HTTPS)"
+    echo "-c <conf_file>    [optional]    ... space -> tenant mapping file (default: $CONF_FILE_DEFAULT)"
+    echo "                                    one \"<space>=<tenant>\" per line, # for comments;"
+    echo "                                    ignored if the default file does not exist"
+    echo "-m <map>          [optional]    ... space -> tenant mapping, e.g. -m default=123456,master=123456"
+    echo "                                    overrides the config file"
     echo "-z                [optional]    ... Allow empty results (0 agents or 0 policies)"
     echo "                                    default: an empty result is treated as an error"
     echo "-P                [deprecated]  ... Ignored (policies are always exported)"
@@ -46,11 +52,13 @@ print_help() {
 }
 
 # --- Read options
-while getopts "hf:SzP" opt; do
+while getopts "hf:SzPc:m:" opt; do
     case "${opt}" in
         f) JSON_FILE=${OPTARG} ;;
         S) ssl_enabled=1 ;;
         z) allow_empty=1 ;;
+        c) CONF_FILE=${OPTARG} ;;
+        m) MAP_OPT=${OPTARG} ;;
         P) ;;   # deprecated, ignored: kept so existing commands with -P keep working
         h|*) print_help ;;
     esac
@@ -65,6 +73,48 @@ KBN_USER="kibana_monitoring"
 KBN_PASSWORD="@@PASSWORD@@"
 PER_PAGE=200
 CURL_TIMEOUT=60
+
+# add_mapping <space> <tenant> <origin>: validates and stores one mapping
+add_mapping() {
+    local sp="$1" tn="${2,,}"
+    if [[ ! "$sp" =~ ^[A-Za-z0-9][A-Za-z0-9._-]*$ || ! "$tn" =~ ^[a-z0-9][a-z0-9_-]*$ ]]; then
+        WARNINGS+=("Ignored invalid mapping '$sp=$2' ($3)")
+        return
+    fi
+    SPACE_TENANT_MAP[$sp]="$tn"
+}
+
+# Mapping file: plain "<space>=<tenant>" lines, parsed (never sourced).
+# -c must exist; the default file is optional.
+if [ -n "$CONF_FILE" ]; then
+    [ -r "$CONF_FILE" ] || { echo "CRITICAL - Mapping file not readable: $CONF_FILE"; exit 2; }
+elif [ -r "$CONF_FILE_DEFAULT" ]; then
+    CONF_FILE="$CONF_FILE_DEFAULT"
+fi
+if [ -n "$CONF_FILE" ]; then
+    while IFS= read -r line || [ -n "$line" ]; do
+        line="${line%%#*}"
+        line="${line//[[:space:]]/}"
+        [ -z "$line" ] && continue
+        if [[ "$line" == *=* ]]; then
+            add_mapping "${line%%=*}" "${line#*=}" "$CONF_FILE"
+        else
+            WARNINGS+=("Ignored invalid line '$line' in $CONF_FILE")
+        fi
+    done < "$CONF_FILE"
+fi
+
+# -m overrides the file
+if [ -n "$MAP_OPT" ]; then
+    IFS=',' read -ra PAIRS <<< "$MAP_OPT"
+    for pair in "${PAIRS[@]}"; do
+        if [[ "$pair" == *=* ]]; then
+            add_mapping "${pair%%=*}" "${pair#*=}" "-m"
+        else
+            WARNINGS+=("Ignored invalid mapping '$pair' (-m)")
+        fi
+    done
+fi
 
 if [[ $ssl_enabled -eq 1 ]]; then
     KBN_URL="https://kibana.neteyelocal:5601"
@@ -241,6 +291,19 @@ fi
 mapfile -t SPACE_IDS < <(jq -r '.[]?.id // empty' "$WORK_DIR/spaces.json")
 [ ${#SPACE_IDS[@]} -gt 0 ] || fail "No Kibana spaces returned"
 
+# --- Mapping sanity checks (warnings only)
+for MAP_SPACE in "${!SPACE_TENANT_MAP[@]}"; do
+    MAP_TENANT="${SPACE_TENANT_MAP[$MAP_SPACE]}"
+    FOUND_SPACE=0; FOUND_PREFIX=0
+    for S in "${SPACE_IDS[@]}"; do
+        [[ "$S" == "$MAP_SPACE" ]] && FOUND_SPACE=1
+        [[ "$S" == "${MAP_TENANT}_"* ]] && FOUND_PREFIX=1
+    done
+    (( FOUND_SPACE )) || WARNINGS+=("Mapping for unknown space '$MAP_SPACE' (tenant $MAP_TENANT)")
+    (( FOUND_SPACE && ! FOUND_PREFIX )) && \
+        WARNINGS+=("Space '$MAP_SPACE' is mapped to tenant '$MAP_TENANT' but no '${MAP_TENANT}_*' space exists: check the mapping")
+done
+
 ALL_AGENTS="$WORK_DIR/all_agents.ndjson"
 ALL_POLICIES="$WORK_DIR/all_policies.ndjson"
 : > "$ALL_AGENTS"
@@ -260,7 +323,7 @@ for SPACE_ID in "${SPACE_IDS[@]}"; do
 
     TENANT_ID=$(space_to_tenant "$SPACE_ID")
     if [[ ! "$TENANT_ID" =~ ^[a-z0-9][a-z0-9_-]*$ ]]; then
-        echo "WARNING - Tenant '$TENANT_ID' (space '$SPACE_ID') not usable as file name; included only in global files"
+        WARNINGS+=("Tenant '$TENANT_ID' (space '$SPACE_ID') not usable as file name; included only in global files")
         continue
     fi
 
@@ -312,4 +375,9 @@ for TENANT_ID in "${TENANT_LIST[@]}"; do
 done
 
 echo "OK - Exported $TOTAL_HOSTS unique agent(s) and $TOTAL_POLICIES unique policies from ${#SPACE_IDS[@]} space(s), ${#TENANT_LIST[@]} tenant(s).|hosts=$TOTAL_HOSTS;;;0; policies=$TOTAL_POLICIES;;;0;$PERFDATA_TENANTS"
+if [ ${#WARNINGS[@]} -gt 0 ]; then
+    for W in "${WARNINGS[@]}"; do
+        echo "WARNING - $W"
+    done
+fi
 exit 0
