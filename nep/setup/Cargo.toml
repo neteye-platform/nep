@@ -23,7 +23,7 @@ reqwest = { version = "0.11.14", features = [
     "mime_guess", "brotli", "rustls-tls"
 ], default-features = false}
 pretty_env_logger = "0.4.0"
-colored = "2.0.0"
+colored = "3.0.0"
 rand = "0.8.5"
 
 [build-dependencies]
