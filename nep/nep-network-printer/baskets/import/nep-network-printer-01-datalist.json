@@ -22,6 +22,18 @@
                     "entry_value": "Uptime",
                     "format": "string",
                     "allowed_roles": null
+                },
+                {
+                    "entry_name": "page-count",
+                    "entry_value": "Page Count",
+                    "format": "string",
+                    "allowed_roles": null
+                },
+                {
+                    "entry_name": "printer-info",
+                    "entry_value": "Printer Info",
+                    "format": "string",
+                    "allowed_roles": null
                 }
             ]
         }

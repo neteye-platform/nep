@@ -671,7 +671,7 @@ sub check_messages {
   my $message = '';
   if ($arg{join_all}) {
       $message = join( $arg{join_all},
-          map { @$_ ? join( $arg{'join'}, @$_) : () }
+          map { @$_ ? join( $arg{'join'} // ', ', @$_) : () }
               $arg{critical},
               $arg{warning},
               $arg{unknown},
@@ -5023,7 +5023,15 @@ sub get_entries_get_bulk {
     $newparams{-contextengineid} = $self->opts->contextengineid if $self->opts->contextengineid;
     $newparams{-contextname} = $self->opts->contextname if $self->opts->contextname;
   }
-  delete $newparams{'-maxrepetitions'}; # bulk howe gsagt!!
+  if ($Monitoring::GLPlugin::SNMP::maxrepetitions &&
+      $Monitoring::GLPlugin::SNMP::maxrepetitions <= 1) {
+    # bulk_is_baeh() was called: the device does not answer get-bulk-requests
+    # (e.g. Brother NC-xxxx print servers). With -maxrepetitions <= 1
+    # Net::SNMP falls back to get-next-requests.
+    $newparams{'-maxrepetitions'} = 0;
+  } else {
+    delete $newparams{'-maxrepetitions'}; # bulk howe gsagt!!
+  }
   $result = $Monitoring::GLPlugin::SNMP::session->get_entries(%newparams);
   return $result;
 }
@@ -9187,6 +9195,7 @@ $Monitoring::GLPlugin::SNMP::MibsAndOids::mibs_and_oids->{'LEXMARK-MPS-MIB'} = {
   paperGeneralCountType => '1.3.6.1.4.1.641.6.4.2.1.1.2',
   paperGeneralCountTypeDefinition => 'LEXMARK-MPS-MIB::paperGeneralCountType',
   paperGeneralCountUnits => '1.3.6.1.4.1.641.6.4.2.1.1.3',
+  paperGeneralCountUnitsDefinition => 'LEXMARK-TC-MIB::UnitsTC',
   paperGeneralCountValue => '1.3.6.1.4.1.641.6.4.2.1.1.4',
   paperSidesCountTable => '1.3.6.1.4.1.641.6.4.2.2',
   paperSidesCountEntry => '1.3.6.1.4.1.641.6.4.2.2.1',
@@ -12004,7 +12013,6 @@ sub init {
     $self->get_snmp_tables('PRINTER-MIB', [
         ['displays', 'prtConsoleDisplayBufferTable', 'Classes::PRINTERMIB::Component::PrinterSubsystem::Display'],
         ['covers', 'prtCoverTable', 'Classes::PRINTERMIB::Component::PrinterSubsystem::Cover'],
-        ['channels', 'prtChannelTable', 'Classes::PRINTERMIB::Component::PrinterSubsystem::Channel'],
     ]);
   } elsif ($self->mode =~ /device::printer::consumables/) {
     $self->get_snmp_tables('PRINTER-MIB', [
@@ -12076,6 +12084,238 @@ use strict;
 package Classes::PRINTERMIB::Component::PrinterSubsystem::Marker;
 our @ISA = qw(Monitoring::GLPlugin::SNMP::TableItem);
 use strict;
+
+sub is_color {
+  my ($self) = @_;
+  # A color marker has more than 1 process colorant (e.g. C+M+Y+K = 4)
+  return (($self->{prtMarkerProcessColorants} // 0) > 1) ? 1 : 0;
+}
+
+
+package Classes::PRINTERMIB::Component::PageCountSubsystem;
+our @ISA = qw(Monitoring::GLPlugin::SNMP::Item);
+use strict;
+
+# Vendor independent page counters from PRINTER-MIB::prtMarkerTable
+#   prtMarkerLifeCount    -> pages printed during the life of the printer
+#   prtMarkerPowerOnCount -> pages printed since the last power on
+# Vendor classes (HP, Lexmark) inherit from here and add their own counters.
+
+sub init {
+  my ($self) = @_;
+  $self->get_snmp_tables('PRINTER-MIB', [
+      ['markers', 'prtMarkerTable', 'Classes::PRINTERMIB::Component::PageCountSubsystem::Marker'],
+  ]);
+}
+
+sub is_color {
+  my ($self) = @_;
+  return (grep { $_->is_color() } @{$self->{markers}}) ? 1 : 0;
+}
+
+sub check {
+  my ($self) = @_;
+  my @markers = grep { defined $_->{prtMarkerLifeCount} } @{$self->{markers}};
+  if (! @markers) {
+    $self->add_unknown('no page counter (PRINTER-MIB::prtMarkerLifeCount) found');
+    return;
+  }
+  my $total = 0;
+  my $poweron = 0;
+  my $poweron_known = 1;
+  foreach my $marker (@markers) {
+    $total += $marker->{prtMarkerLifeCount};
+    if (defined $marker->{prtMarkerPowerOnCount}) {
+      $poweron += $marker->{prtMarkerPowerOnCount};
+    } else {
+      $poweron_known = 0;
+    }
+  }
+  my $unit = $markers[0]->{prtMarkerCounterUnit} || 'impressions';
+  $self->add_info(sprintf '%s printer, %d %s total%s',
+      $self->is_color() ? 'color' : 'mono',
+      $total,
+      ($unit =~ /^(impressions|sheets)$/) ? 'pages' : $unit,
+      $poweron_known ? sprintf(', %d since power on', $poweron) : '');
+  $self->add_ok();
+  $self->add_perfdata(label => 'pages_total', value => $total);
+  $self->add_perfdata(label => 'pages_since_poweron', value => $poweron)
+      if $poweron_known;
+  if (scalar(@markers) > 1) {
+    # e.g. printers with separate markers per engine
+    foreach my $marker (@markers) {
+      $marker->check();
+    }
+  }
+}
+
+
+package Classes::PRINTERMIB::Component::PageCountSubsystem::Marker;
+our @ISA = qw(Classes::PRINTERMIB::Component::PrinterSubsystem::Marker);
+use strict;
+
+sub finish {
+  my ($self) = @_;
+  # flat_indices is hrDeviceIndex.prtMarkerIndex, keep only the marker index
+  ($self->{marker_index} = $self->{flat_indices}) =~ s/^.*\.//;
+}
+
+sub check {
+  my ($self) = @_;
+  # only called when there is more than one marker
+  $self->add_info(sprintf 'marker %s (%s): %d pages total',
+      $self->{marker_index}, $self->is_color() ? 'color' : 'mono',
+      $self->{prtMarkerLifeCount});
+  $self->add_perfdata(
+      label => sprintf('pages_total_marker%s', $self->{marker_index}),
+      value => $self->{prtMarkerLifeCount},
+  );
+}
+
+
+package Classes::PRINTERMIB::Component::InfoSubsystem;
+our @ISA = qw(Monitoring::GLPlugin::SNMP::Item);
+use strict;
+
+sub init {
+  my ($self) = @_;
+  # --- Model name ---
+  # The hrDeviceDescr of the device with hrDeviceType hrDevicePrinter
+  # returns a clean model name on all vendors ("HP Color LaserJet CP4520 Series",
+  # "Lexmark C4352", "Brother HL-L2400DWE"). sysDescr usually contains the
+  # firmware/print server and is only used as fallback.
+  $self->{printer_index} = 1;
+  $self->{model} = undef;
+  $self->get_snmp_tables('HOST-RESOURCES-MIB', [
+      ['devices', 'hrDeviceTable', 'Monitoring::GLPlugin::SNMP::TableItem'],
+  ]);
+  my @printers = grep {
+      defined $_->{hrDeviceType} && $_->{hrDeviceType} =~ /(hrDevicePrinter|25\.3\.1\.5)$/
+  } @{$self->{devices}};
+  my ($device) = @printers ? @printers : @{$self->{devices}};
+  if ($device) {
+    $self->{printer_index} = $device->{flat_indices};
+    $self->{model} = $device->{hrDeviceDescr};
+  }
+  if (! defined $self->{model} || $self->{model} !~ /\S/) {
+    my $sysdesc = $self->get_snmp_object('MIB-2-MIB', 'sysDescr', 0) || '';
+    ($self->{model} = $sysdesc) =~ s/[\s,]+(version|firmware|kernel|hw|sw|FW|Ver\.).*$//i;
+  }
+  $self->{model} = $self->accentfree($self->{model} // '');
+  $self->{model} =~ s/^\s+|\s+$//g;
+  $self->{model} = 'unknown' unless $self->{model} =~ /\S/;
+  delete $self->{devices};
+
+  # --- Serial number ---
+  # PRINTER-MIB::prtGeneralSerialNumber is indexed by the hrDeviceIndex of the
+  # printer, the Lexmark private MIBs are the fallback.
+  $self->{serial} = undef;
+  foreach my $candidate (
+      ['PRINTER-MIB', 'prtGeneralSerialNumber', $self->{printer_index}],
+      ['PRINTER-MIB', 'prtGeneralSerialNumber', 1],
+      ['LEXMARK-MPS-MIB', 'deviceSerialNumber', 1],
+      ['LEXMARK-PVT-MIB', 'prtgenSerialNo', 1]) {
+    my $serial = $self->get_snmp_object(@{$candidate});
+    if (defined $serial && $serial =~ /\S/) {
+      $self->{serial} = $serial;
+      last;
+    }
+  }
+  $self->{serial} //= 'unknown';
+  $self->{serial} =~ s/^\s+|\s+$//g;
+}
+
+sub check {
+  my ($self) = @_;
+  $self->add_info(sprintf '%s, Serial # %s', $self->{model}, $self->{serial});
+  $self->add_ok();
+}
+
+
+package Classes::Lexmark::Component::PageCountSubsystem;
+our @ISA = qw(Classes::PRINTERMIB::Component::PageCountSubsystem);
+use strict;
+
+sub init {
+  my ($self) = @_;
+  # standard PRINTER-MIB marker table (life/poweron counters + color detection)
+  $self->SUPER::init();
+  # Lexmark detailed counters (mono/color/copy/fax breakdown)
+  $self->get_snmp_tables('LEXMARK-MPS-MIB', [
+      ['pagecounters', 'paperGeneralCountTable', 'Monitoring::GLPlugin::SNMP::TableItem'],
+  ]);
+}
+
+sub check {
+  my ($self) = @_;
+  $self->SUPER::check();
+  # The same counter type can be reported in different units (sides/sheets).
+  # Sides (= impressions) is what PRINTER-MIB counts, so it is preferred.
+  my %counts = ();
+  my %units = ();
+  foreach my $counter (@{$self->{pagecounters}}) {
+    my $type = $counter->{paperGeneralCountType};
+    next unless defined $type && defined $counter->{paperGeneralCountValue};
+    my $unit = $counter->{paperGeneralCountUnits} // '';
+    next if exists $counts{$type} && $units{$type} eq 'sides';
+    $counts{$type} = $counter->{paperGeneralCountValue};
+    $units{$type} = $unit;
+  }
+  if ($self->is_color() && exists $counts{printColor} && exists $counts{printMono}) {
+    $self->add_ok(sprintf '%d color, %d mono pages',
+        $counts{printColor}, $counts{printMono});
+  }
+  # print_total = print_mono + print_color, print_color is further split in
+  # highlight/business/graphics color
+  my @interesting = $self->is_color()
+      ? qw(printTotal printMono printColor highlightColor businessColor graphicsColor
+           printNHold usbDirect copyTotal copyMono copyColor faxTotal
+           blankTotal blankPrint blankCopy blankFax)
+      : qw(printTotal printNHold usbDirect copyTotal faxTotal blankTotal);
+  foreach my $type (@interesting) {
+    next unless exists $counts{$type};
+    (my $label = $type) =~ s/([A-Z])/_\L$1/g;  # camelCase -> snake_case
+    $self->add_perfdata(label => $label, value => $counts{$type});
+  }
+}
+
+
+package Classes::HP::Component::PageCountSubsystem;
+our @ISA = qw(Classes::PRINTERMIB::Component::PageCountSubsystem);
+use strict;
+
+sub init {
+  my ($self) = @_;
+  $self->SUPER::init();
+  # HP private page counters, all scalars with index 0
+  $self->{hp_mono}   = $self->get_snmp_object('HP-MIB', 'hpTotalMonoPageCount', 0);
+  $self->{hp_color}  = $self->get_snmp_object('HP-MIB', 'hpTotalColorPageCount', 0);
+  $self->{hp_duplex} = $self->get_snmp_object('HP-MIB', 'hpDuplexPageCount', 0);
+  foreach (qw(hp_mono hp_color hp_duplex)) {
+    delete $self->{$_} if defined $self->{$_} && $self->{$_} !~ /^\d+$/;
+  }
+}
+
+sub is_color {
+  my ($self) = @_;
+  return 1 if $self->SUPER::is_color();
+  return (defined $self->{hp_color} && $self->{hp_color} > 0) ? 1 : 0;
+}
+
+sub check {
+  my ($self) = @_;
+  $self->SUPER::check();
+  if ($self->is_color() && defined $self->{hp_color}) {
+    $self->add_ok(sprintf '%d color, %d mono pages',
+        $self->{hp_color}, $self->{hp_mono} // 0);
+    $self->add_perfdata(label => 'print_color', value => $self->{hp_color});
+    $self->add_perfdata(label => 'print_mono', value => $self->{hp_mono})
+        if defined $self->{hp_mono};
+  }
+  $self->add_perfdata(label => 'print_duplex', value => $self->{hp_duplex})
+      if defined $self->{hp_duplex};
+}
+
 
 package Classes::PRINTERMIB::Component::PrinterSubsystem::MarkerSupply;
 our @ISA = qw(Monitoring::GLPlugin::SNMP::TableItem);
@@ -12206,31 +12446,25 @@ sub init {
   } elsif ($self->mode =~ /device::printer::consumables/) {
     $self->analyze_and_check_environmental_subsystem('Classes::PRINTERMIB::Component::PrinterSubsystem');
     $self->reduce_messages_short('supplies status is fine');
+  } elsif ($self->mode =~ /device::printer::pagecount/) {
+    $self->analyze_and_check_pagecount_subsystem($self->pagecount_class());
+  } elsif ($self->mode =~ /device::printer::info/) {
+    $self->analyze_and_check_info_subsystem('Classes::PRINTERMIB::Component::InfoSubsystem');
   } else {
     $self->no_such_mode();
   }
+}
+
+sub pagecount_class {
+  return 'Classes::PRINTERMIB::Component::PageCountSubsystem';
 }
 
 package Classes::Kyocera;
-our @ISA = qw(Classes::Device);
+our @ISA = qw(Classes::PRINTERMIB);
 use strict;
 
-sub init {
-  my $self = shift;
-  $self->get_snmp_tables('KYOCERA-Private-MIB', [
-    ['xxx', 'kcprtMemoryDeviceTable', 'Monitoring::GLPlugin::SNMP::TableItem'],
-#https://pastebin.com/ZvuFXPcU
-  ]);
-
-  if ($self->mode =~ /device::hardware::health/) {
-    $self->analyze_and_check_environmental_subsystem('Classes::HOSTRESOURCESMIB::Component::EnvironmentalSubsystem');
-  } elsif ($self->mode =~ /device::consumables/) {
-    $self->analyze_and_check_environmental_subsystem('Classes::HOSTRESOURCESMIB::Component::EnvironmentalSubsystem');
-    $self->analyze_and_check_battery_subsystem('Classes::Kyocera::Components::BatterySubsystem');
-  } else {
-    $self->no_such_mode();
-  }
-}
+# Kyocera printers implement the standard PRINTER-MIB. The class only exists
+# so that vendor specific extensions can be added here.
 
 package Classes::Lexmark::Component::PrinterSubsystem;;
 our @ISA = qw(Monitoring::GLPlugin::SNMP::Item);
@@ -12373,24 +12607,26 @@ sub init {
     $self->analyze_and_check_consumables_subsystem('Classes::Lexmark::Component::ConsumablesSubsystem');
     $self->analyze_and_check_consumables_subsystem('Classes::PRINTERMIB::Component::PrinterSubsystem');
     $self->reduce_messages_short('supplies status is fine');
+  } elsif ($self->mode =~ /device::printer::pagecount/) {
+    $self->analyze_and_check_pagecount_subsystem('Classes::Lexmark::Component::PageCountSubsystem');
+  } elsif ($self->mode =~ /device::printer::info/) {
+    $self->analyze_and_check_info_subsystem('Classes::PRINTERMIB::Component::InfoSubsystem');
   } else {
     $self->no_such_mode();
   }
 }
 
 package Classes::Brother;
-our @ISA = qw(Classes::Device);
+our @ISA = qw(Classes::PRINTERMIB);
 use strict;
 
 sub init {
   my $self = shift;
-  if ($self->mode =~ /device::hardware::health/) {
-    $self->analyze_and_check_environmental_subsystem('Classes::HOSTRESOURCESMIB::Component::EnvironmentalSubsystem');
-  } elsif ($self->mode =~ /device::battery/) {
-    $self->analyze_and_check_battery_subsystem('Classes::Kyocera::Components::BatterySubsystem');
-  } else {
-    $self->no_such_mode();
-  }
+  # Brother print servers (e.g. NC-9300w) do not answer get-bulk-requests at
+  # all, every bulk walk runs into a timeout. Force get-next-requests.
+  $self->bulk_is_baeh(1)
+      if $Monitoring::GLPlugin::SNMP::session && $self->opts->protocol ne '1';
+  $self->SUPER::init();
 }
 
 package Classes::Device;
@@ -12407,23 +12643,37 @@ sub classify {
       if ($self->opts->verbose && $self->opts->verbose) {
         printf "I am a %s\n", $self->{productname};
       }
+      # Vendor classes must be tested before PRINTER-MIB, because every
+      # printer implements PRINTER-MIB. The sysObjectID is checked first,
+      # because many printers also answer in foreign enterprise trees
+      # (e.g. Brother implements parts of the HP JetDirect tree).
       if ($self->opts->mode =~ /^my-/) {
         $self->load_my_extension();
       } elsif ($self->implements_mib('LEXMARK-PVT-MIB')) {
         bless $self, 'Classes::Lexmark';
         $self->debug('using Classes::Lexmark');
+      } elsif ($self->sysobjectid_starts_with('1.3.6.1.4.1.2435')) {
+        bless $self, 'Classes::Brother';
+        $self->debug('using Classes::Brother (sysObjectID)');
+      } elsif ($self->sysobjectid_starts_with('1.3.6.1.4.1.1347')) {
+        bless $self, 'Classes::Kyocera';
+        $self->debug('using Classes::Kyocera (sysObjectID)');
+      } elsif ($self->sysobjectid_starts_with('1.3.6.1.4.1.11') ||
+               ($self->{productname} && $self->{productname} =~ /^(HP|Hewlett)\b/i)) {
+        bless $self, 'Classes::HP';
+        $self->debug('using Classes::HP');
+      } elsif ($self->implements_mib('BROTHER-MIB')) {
+        bless $self, 'Classes::Brother';
+        $self->debug('using Classes::Brother');
+      } elsif ($self->implements_mib('KYOCERA-Private-MIB')) {
+        bless $self, 'Classes::Kyocera';
+        $self->debug('using Classes::Kyocera');
       } elsif ($self->implements_mib('PRINTER-MIB')) {
         bless $self, 'Classes::PRINTERMIB';
         $self->debug('using Classes::PRINTERMIB');
       } elsif ($self->implements_mib('HOST-RESOURCES-MIB')) {
         bless $self, 'Classes::HOSTRESOURCESMIB';
         $self->debug('using Classes::HOSTRESOURCESMIB');
-      } elsif ($self->implements_mib('KYOCERA-Private-MIB')) {
-        bless $self, 'Classes::Kyocera';
-        $self->debug('using Classes::Kyocera');
-      } elsif ($self->implements_mib('BROTHER-MIB')) {
-        bless $self, 'Classes::Brother';
-        $self->debug('using Classes::Brother');
       } else {
         if (my $class = $self->discover_suitable_class()) {
           bless $self, $class;
@@ -12438,6 +12688,46 @@ sub classify {
   return $self;
 }
 
+sub sysobjectid_starts_with {
+  my ($self, $prefix) = @_;
+  my $sysobj = $self->get_snmp_object('MIB-2-MIB', 'sysObjectID', 0);
+  return 0 if ! defined $sysobj;
+  $sysobj =~ s/^\.//;
+  return index($sysobj.'.', $prefix.'.') == 0 ? 1 : 0;
+}
+
+
+package Monitoring::GLPlugin::SNMP::MibsAndOids::HPMIB;
+
+$Monitoring::GLPlugin::SNMP::MibsAndOids::origin->{'HP-MIB'} = {
+  url => '',
+  name => 'HP-MIB',
+};
+
+$Monitoring::GLPlugin::SNMP::MibsAndOids::mib_ids->{'HP-MIB'} =
+    '1.3.6.1.4.1.11.2.3.9';
+
+$Monitoring::GLPlugin::SNMP::MibsAndOids::mibs_and_oids->{'HP-MIB'} = {
+  hp => '1.3.6.1.4.1.11',
+  netPeripheral => '1.3.6.1.4.1.11.2.3.9',
+  # HP JetDirect / PML page counters (scalars, index 0)
+  hpTotalMonoPageCount => '1.3.6.1.4.1.11.2.3.9.4.2.1.4.1.2.6',
+  hpTotalColorPageCount => '1.3.6.1.4.1.11.2.3.9.4.2.1.4.1.2.7',
+  hpDuplexPageCount => '1.3.6.1.4.1.11.2.3.9.4.2.1.4.1.2.22',
+};
+
+
+package Classes::HP;
+our @ISA = qw(Classes::PRINTERMIB);
+use strict;
+
+# HP printers were handled by Classes::PRINTERMIB before, hardware-health and
+# supplies-status are unchanged. Only page-count adds the HP color counters.
+
+sub pagecount_class {
+  return 'Classes::HP::Component::PageCountSubsystem';
+}
+
 
 package Classes::Generic;
 our @ISA = qw(Classes::Device);
@@ -12446,6 +12736,10 @@ use strict;
 sub init {
   my $self = shift;
   if ($self->mode =~ /something specific/) {
+  } elsif ($self->mode =~ /device::printer::pagecount/) {
+    $self->analyze_and_check_pagecount_subsystem('Classes::PRINTERMIB::Component::PageCountSubsystem');
+  } elsif ($self->mode =~ /device::printer::info/) {
+    $self->analyze_and_check_info_subsystem('Classes::PRINTERMIB::Component::InfoSubsystem');
   } else {
     bless $self, 'Monitoring::GLPlugin::SNMP';
     $self->no_such_mode();
@@ -12492,6 +12786,18 @@ $plugin->add_mode(
     internal => 'device::printer::consumables',
     spec => 'supplies-status',
     help => 'Check the availability of consumables (toner, ink, ...)',
+);
+$plugin->add_mode(
+    internal => 'device::printer::pagecount',
+    spec => 'page-count',
+    alias => undef,
+    help => 'Report the page counters (total, since power on and vendor specific counters like color/mono) as performance data',
+);
+$plugin->add_mode(
+    internal => 'device::printer::info',
+    spec => 'printer-info',
+    alias => undef,
+    help => 'Report printer model and serial number',
 );
 $plugin->add_snmp_modes();
 $plugin->add_snmp_args();

@@ -5,6 +5,8 @@ The NEP is based on the check_printer_health script (for more information have l
 * Printer Hardware Status
 * Printer Supplies Status
 * Printer Uptime
+* Printer Page Count
+* Printer Info (model and serial number)
 
 ## Table of Contents
 
@@ -38,6 +40,13 @@ This NEP doesn't require external references, if you want to manually download a
 
 The installation process provides a PERL script `check_printer_health` that is automatically installed at `/neteye/shared/monitoring/plugins/`
 
+### NEP Update
+
+During the update the Service Set `nx-ss-network-printer` is removed and imported again, so that the new services are added
+to all the printers. The names of the existing services do not change, so their history and performance data are kept.
+If the Service Set was assigned manually to a Host (instead of using the Host Template `nx-ht-network-printer-snmp`), the
+update prints a warning: in this case the Service Set must be assigned again to the Host before deploying the configuration.
+
 ### NEP Installation
 
 In order to install the NEP run:
@@ -62,16 +71,33 @@ Host Template:
 
 Service Templates:
 
-* `nx-st-network-printer-health` using the 3 available modes
+* `nx-st-network-printer-health` using the 5 available modes
   * `uptime`: printer uptime
   * `hardware-health`: checks printer hardware
   * `supplies-status`: checks consumables, toner, ink cartridges, etc..
+  * `page-count`: page counters as performance data (always OK)
+    * all vendors: `pages_total` (PRINTER-MIB prtMarkerLifeCount) and `pages_since_poweron` (prtMarkerPowerOnCount)
+    * HP: `print_color`, `print_mono`, `print_duplex` (HP JetDirect counters)
+    * Lexmark: `print_total`, `print_mono`, `print_color`, `copy_*`, `fax_total`, `blank_*`, ... (LEXMARK-MPS-MIB)
+  * `printer-info`: model and serial number of the printer (always OK)
 
-#### Sercices Sets
+Vendor specific notes:
+
+* Brother print servers (e.g. NC-9300w) do not answer to SNMP get-bulk requests: the plugin detects Brother printers
+  by their sysObjectID and uses get-next requests, so they can be monitored with SNMP v2c too.
+* Lexmark printers are detected by the Lexmark private MIB, Brother, Kyocera and HP printers by their sysObjectID.
+  Printers of other vendors use the standard PRINTER-MIB, even if they emulate the HP JetDirect MIB.
+
+#### Services Sets
 
 Service Set:
 
-* `nx-ss-network-printer`
+* `nx-ss-network-printer` with the services:
+  * `Printer Hardware Status` (mode `hardware-health`)
+  * `Printer Supplies Status` (mode `supplies-status`)
+  * `Printer Uptime` (mode `uptime`)
+  * `Printer Page Count` (mode `page-count`)
+  * `Printer Info` (mode `printer-info`)
 
 #### Commands
 
