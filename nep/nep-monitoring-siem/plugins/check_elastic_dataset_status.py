@@ -43,12 +43,17 @@ def CalculateEPS(events: int, interval: str):
         eps = 0
     else:
         # Convert interval to secs
-        if interval[-1] == "m":
+        if interval[-1] == "s":
+            seconds = int(interval[:-1])
+        elif interval[-1] == "m":
             seconds = int(interval[:-1]) * 60
         elif interval[-1] == "h":
             seconds = int(interval[:-1]) * 3600
         elif interval[-1] == "d":
             seconds = int(interval[:-1]) * 86400
+        else:
+            logging.warning("Unsupported interval unit: " + str(interval))
+            return 0
 
         eps = round(events / seconds, 1)
     return eps
@@ -117,10 +122,10 @@ def SearchOnElastic():
             cert=(cert_path + cert_file, cert_path + key_file),
             verify=False,
         )
-    except (ConnectionError, ReadTimeout):
+    except (ConnectionError, ReadTimeout) as e:
         ## Error on Elastic
         logging.warning("Elastic connection error")
-        return UNKNOWN_CODE, []
+        return UNKNOWN_CODE, [], "connection error: " + str(e)
 
     if r.status_code == 200:
         logging.debug(r.content)
@@ -128,19 +133,34 @@ def SearchOnElastic():
 
         ## Check if there are results
         if JSON_RES == {}:
-            return WARNING_CODE, []
+            return WARNING_CODE, [], ""
         else:
-            return OK_CODE, JSON_RES["aggregations"]["results"]["buckets"]
+            return OK_CODE, JSON_RES["aggregations"]["results"]["buckets"], ""
     else:
         ## Error on Elastic
-        return UNKNOWN_CODE, []
+        return UNKNOWN_CODE, [], "HTTP " + str(r.status_code) + ": " + str(r.reason)
+
+
+def SendToTornado(payload):
+    try:
+        r = requests.post(
+            tornado_url + webhook + "?token=" + secret,
+            data=json.dumps(payload),
+            headers=headers,
+            verify=False,
+            timeout=10,
+        )
+        return r.status_code == 200
+    except requests.exceptions.RequestException as e:
+        logging.warning("Tornado webhook error: " + str(e))
+        return False
 
 
 ### END FUNCTIONS ###
 
 ### MAIN ####
-__version__ = "0.1.2"
-__version_date__ = "2025-05-20"
+__version__ = "0.1.3"
+__version_date__ = "2026-11-20"
 
 
 # Arguments definition
@@ -219,6 +239,7 @@ args = parser.parse_args()
 
 if args.version:
     print(__version__)
+    sys.exit(0)
 if args.verbose:
     logging.basicConfig(level=logging.DEBUG)
 else:
@@ -259,7 +280,11 @@ if agent == "elastic_agent":
     else:
         URL = "https://elasticsearch.neteyelocal:9200/logs-*,-logs-endpoint*,-logs-apm*/_search?filter_path=aggregations.results.buckets.key_as_string,aggregations.results.buckets.doc_count"
     TERMS = '{ "field": "data_stream.namespace" }, { "field": "NETEYE.hostname" }, { "field": "agent.type", "missing": "none" },{ "field": "data_stream.dataset" },{ "field": "input.type", "missing": "none" }'
-    TENANT_FILTER = ', { "term": { "data_stream.namespace": "' + tenant + '" } }'
+    TENANT_FILTER = (
+        ', { "term": { "data_stream.namespace": "' + tenant + '" } }'
+        if args.TenantId
+        else ""
+    )
 
 elif agent == "beats":
     if args.Metrics:
@@ -267,14 +292,18 @@ elif agent == "beats":
     else:
         URL = "https://elasticsearch.neteyelocal:9200/auditbeat-*,winlogbeat-*,packetbeat-*,filebeat-*/_search?filter_path=aggregations.results.buckets.key_as_string,aggregations.results.buckets.doc_count"
     TERMS = '{ "field": "NETEYE.customer" }, { "field": "NETEYE.hostname" }, { "field": "agent.type" },{ "field": "event.dataset" }'
-    TENANT_FILTER = ', { "term": { "NETEYE.customer": "' + tenant + '" } }'
+    TENANT_FILTER = (
+        ', { "term": { "NETEYE.customer": "' + tenant + '" } }' if args.TenantId else ""
+    )
 
 elif agent == "logstash":
     URL = "https://elasticsearch.neteyelocal:9200/logstash-*/_search?filter_path=aggregations.results.buckets.key_as_string,aggregations.results.buckets.doc_count"
     TERMS = '{ "field": "NETEYE.customer" }, { "field": "NETEYE.hostname" }, { "field": "agent.type" },{ "field": "event.dataset" }'
-    TENANT_FILTER = ', { "term": { "NETEYE.customer": "' + tenant + '" } }'
+    TENANT_FILTER = (
+        ', { "term": { "NETEYE.customer": "' + tenant + '" } }' if args.TenantId else ""
+    )
 
-result, raw_events = SearchOnElastic()
+result, raw_events, ELASTIC_ERROR = SearchOnElastic()
 logging.info("Search on Elastic returns: " + str(result))
 
 if result == 0:
@@ -314,31 +343,20 @@ if result == 0:
 
         logging.debug(payload_data)
         ## Post to Tornado
-        r = requests.post(
-            tornado_url + webhook + "?token=" + secret,
-            data=json.dumps(payload_data),
-            headers=headers,
-            verify=False,
-        )
-        if r.status_code == 200:
+        if SendToTornado(payload_data):
             logging.debug("Ok sent webhook")
             webhook_sent += 1
         else:
             ## Error on send webhook
             webhook_error += 1
             EXIT_CODE = copy.deepcopy(CRITICAL_CODE)
-            logging.debug(
-                "Webhook error. Return code: "
-                + str(r.status_code)
-                + ", content: "
-                + str(r.content)
-            )
+            logging.debug("Webhook error. See Tornado webhook error warning above.")
 
     # Endpoint (Defend) and APM logs
     if agent == "elastic_agent":
         URL = "https://elasticsearch.neteyelocal:9200/logs-endpoint*,logs-apm*/_search?filter_path=aggregations.results.buckets.key_as_string,aggregations.results.buckets.doc_count"
 
-        result, raw_events = SearchOnElastic()
+        result, raw_events, ELASTIC_ERROR = SearchOnElastic()
         logging.info("Search on Elastic returns: " + str(result))
         if result == 0:
             payload_data = {}
@@ -373,13 +391,7 @@ if result == 0:
             ## Post to Tornado
             for key, value in payload_data.items():
                 logging.debug(value)
-                r = requests.post(
-                    tornado_url + webhook + "?token=" + secret,
-                    data=json.dumps(value),
-                    headers=headers,
-                    verify=False,
-                )
-                if r.status_code == 200:
+                if SendToTornado(value):
                     logging.debug("Ok sent webhook")
                     webhook_sent += 1
                 else:
@@ -387,10 +399,7 @@ if result == 0:
                     webhook_error += 1
                     EXIT_CODE = CRITICAL_CODE
                     logging.debug(
-                        "Webhook error. Return code: "
-                        + str(r.status_code)
-                        + ", content: "
-                        + str(r.content)
+                        "Webhook error. See Tornado webhook error warning above."
                     )
         elif result == 1:
             logging.info("No endpoint or apm events founded.")
@@ -454,12 +463,7 @@ message += (
 
 ## UNKNOWN (error on api)
 if EXIT_CODE == UNKNOWN_CODE:
-    message = (
-        "UNKNOWN - Elasticsearch API error.<br>Status Code: "
-        + r.status_code
-        + "<br>Reason: "
-        + r.content
-    )
+    message = "UNKNOWN - Elasticsearch: " + ELASTIC_ERROR + "<br>"
 
 # Return message and exit code
 print(message)
