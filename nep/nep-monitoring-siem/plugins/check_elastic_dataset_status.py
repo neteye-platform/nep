@@ -143,7 +143,9 @@ def SearchOnElastic():
 
 def SendToTornado(payload):
     try:
-        r = requests.post(
+        # Internal Tornado endpoint over self-signed certs; TLS validation is
+        # intentionally disabled, matching the existing Elasticsearch calls.
+        r = requests.post(  # codeql[py/disabled-tls-certificate-validation] ignore
             tornado_url + webhook + "?token=" + secret,
             data=json.dumps(payload),
             headers=headers,
