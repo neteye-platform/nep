@@ -119,6 +119,19 @@
                 "escal_bereitschaftsrelevanz": true
             }
         },
+        "nx-st-hana-disk-usage": {
+            "check_command": "nx-c-sap-check-hana-disk-usage",
+            "fields": [],
+            "imports": [
+                "nx-st-agentless-sap-hana"
+            ],
+            "object_name": "nx-st-hana-disk-usage",
+            "object_type": "template",
+            "uuid": "32f05666-f239-494a-8418-a64243bc5fdf",
+            "vars": {
+                "escal_bereitschaftsrelevanz": true
+            }
+        },
         "nx-st-hana-failed-data-backups": {
             "check_command": "nx-c-sap-check-hana-failed-data-backups",
             "fields": [],

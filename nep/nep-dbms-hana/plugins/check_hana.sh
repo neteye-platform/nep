@@ -19,6 +19,8 @@
 ####    24/04/2026    1.50  fix remove temp file in crash case  #
 ####    11/08/2026    1.51  fix green result in case of failed  #
 ####                        add ERRFILE instead TMPFILE         #
+####    08/09/2026    1.60  function "disk_usage" added         #
+####                        (filesystem usage from M_DISKS)     #
 ####                                                            #
 #################################################################
 ####
@@ -71,6 +73,7 @@ print_usage() {
   echo "  $PROGNAME --function memory_usage --sid <SID> --host <HOST> --port <PORT> --user <USER> --pass <PASSWORD> --crit <memory free % CRITICAL> --warn <memory free % WARNING>"
   echo "  $PROGNAME --function replication_status --sid <SID> --host <HOST> --port <PORT> --user <USER> --pass <PASSWORD>"
   echo "  $PROGNAME --function used_space --sid <SID> --host <HOST> --port <PORT> --user <USER> --pass <PASSWORD>"
+  echo "  $PROGNAME --function disk_usage --sid <SID> --host <HOST> --port <PORT> --user <USER> --pass <PASSWORD> [--usage <DATA,LOG,TRACE,BACKUP>] [--warn <pct>] [--crit <pct>] [--warnlog <pct>] [--critlog <pct>]"
   echo "  $PROGNAME --function missing_index --sid <SID> --host <HOST> --port <PORT> --user <USER> --pass <PASSWORD>"
   echo "  $PROGNAME --help"
   echo "  $PROGNAME --version"
@@ -84,6 +87,15 @@ print_help() {
   echo ""
   echo "--function connection_time"
   echo "   Attempt a dummy login and alert if login is not possible"
+  echo "--function disk_usage"
+  echo "   Filesystem usage of the HANA volumes (M_DISKS), one line per host/usage-type."
+  echo "   --usage    comma separated list of usage types (default: DATA,LOG)"
+  echo "   --warn     warning threshold in percent, non-LOG volumes (default: 85)"
+  echo "   --crit     critical threshold in percent, non-LOG volumes (default: 95)"
+  echo "   --warnlog  warning threshold in percent, LOG volumes (default: 80)"
+  echo "   --critlog  critical threshold in percent, LOG volumes (default: 90)"
+  echo "   NOTE: this is filesystem fill level, which is NOT the same as --function used_space,"
+  echo "         that one reports the fill degree inside the data volume file."
   echo "--help"
   echo "   Print this help screen"
   echo "--version"
@@ -111,6 +123,9 @@ while [[ "$#" -gt 0 ]]; do
     --pass)      HANA_PASS="$2";     shift;;
     --warn)      HANA_WARN=$2;       shift;;
     --crit)      HANA_CRIT=$2;       shift;;
+    --usage)     HANA_USAGE="$2";    shift;;
+    --warnlog)   HANA_WARN_LOG=$2;   shift;;
+    --critlog)   HANA_CRIT_LOG=$2;   shift;;
     *)          echo "UNKNOWN: Parameter not valid: $1"; exit 3;;
   esac
   shift
@@ -498,6 +513,58 @@ ORDER BY
     MAP(BI.ORDER_BY, 'ALLOC', V.TOTAL_ALLOC_GB, 'USED', V.TOTAL_USED_GB) DESC
 @EOF
   ${HDBSQL} -n ${HANA_HOST}:${HANA_PORT} -u ${HANA_USER} -p ${HANA_PASS} -I "$INFILE" -o "$TMPFILE" -F ' ' -a 2>"$ERRFILE"
+  RET=$?
+  if grep -qE '^\*[[:space:]]*-?[0-9]+:' "$ERRFILE" "$TMPFILE" 2>/dev/null; then
+      RET=1
+  fi
+  rm -f $INFILE
+  return $RET
+}
+
+#
+# check_disk_usage
+#
+# Filesystem fill level of the HANA volumes, taken from M_DISKS.
+# TOTAL_SIZE is the size of the underlying filesystem, USED_SIZE is the space
+# occupied there by HANA files of the given USAGE_TYPE. Rows are grouped by
+# DEVICE_ID so that several volumes on the same filesystem are not counted twice.
+#
+check_disk_usage ()
+{
+  # default usage types, sanitized to uppercase letters and commas only
+  [ -z "$HANA_USAGE" ] && HANA_USAGE="DATA,LOG"
+  usage_clean=$(echo "$HANA_USAGE" | tr 'a-z' 'A-Z' | tr -cd 'A-Z,')
+  usage_list=$(echo "$usage_clean" | sed -e "s/,/','/g" -e "s/^/'/" -e "s/\$/'/")
+
+  cat >>$INFILE <<@EOF
+SELECT
+    HOST,
+    USAGE_TYPE,
+    PATH,
+    TO_DECIMAL(TOTAL_GB, 10, 2) TOTAL_GB,
+    TO_DECIMAL(USED_GB, 10, 2) USED_GB,
+    TO_DECIMAL(CASE WHEN TOTAL_GB = 0 THEN 0 ELSE USED_GB / TOTAL_GB * 100 END, 10, 2) PCT_USED
+FROM
+( SELECT
+    HOST,
+    USAGE_TYPE,
+    MIN(PATH) PATH,
+    MAX(TOTAL_SIZE) / 1024 / 1024 / 1024 TOTAL_GB,
+    SUM(USED_SIZE) / 1024 / 1024 / 1024 USED_GB
+  FROM
+    M_DISKS
+  WHERE
+    USAGE_TYPE IN (${usage_list})
+  GROUP BY
+    HOST,
+    USAGE_TYPE,
+    DEVICE_ID
+)
+ORDER BY
+    HOST,
+    USAGE_TYPE
+@EOF
+  ${HDBSQL} -n ${HANA_HOST}:${HANA_PORT} -u ${HANA_USER} -p ${HANA_PASS} -I "$INFILE" -o "$TMPFILE" -F ';' -a 2>"$ERRFILE"
   RET=$?
   if grep -qE '^\*[[:space:]]*-?[0-9]+:' "$ERRFILE" "$TMPFILE" 2>/dev/null; then
       RET=1
@@ -900,6 +967,77 @@ used_space)
     fi
     rm -f $TMPFILE
     echo "${result_string}${PERF_OUT}"
+    exit $ret_state
+    ;;
+
+
+disk_usage)
+    check_disk_usage
+    sqlret=$?
+    if [ $sqlret -eq 0 ]; then
+        num_rows=$(grep -c ';' $TMPFILE)
+        # thresholds in percent of filesystem size
+        [ -z "$HANA_WARN" ]     && HANA_WARN=85
+        [ -z "$HANA_CRIT" ]     && HANA_CRIT=95
+        [ -z "$HANA_WARN_LOG" ] && HANA_WARN_LOG=80
+        [ -z "$HANA_CRIT_LOG" ] && HANA_CRIT_LOG=90
+        ret_state=$STATE_OK
+        err_string=""
+        detail_string=""
+        perf_string=""
+        while read -r line
+        do
+            # example-output:   "sapdbp01";"LOG";"/hana/log/H0P/mnt00001";512.00;181.44;35.44
+            clean=$(echo "$line" | tr -d '"')
+            IFS=';' read -r DISK_HOST USAGE_TYPE DISK_PATH TOTAL_GB USED_GB PCT_USED <<< "$clean"
+            [ -z "$USAGE_TYPE" ] && continue
+
+            # LOG volumes get their own, tighter thresholds
+            if [ "$USAGE_TYPE" = "LOG" ]; then
+                warn_val=$HANA_WARN_LOG
+                crit_val=$HANA_CRIT_LOG
+            else
+                warn_val=$HANA_WARN
+                crit_val=$HANA_CRIT
+            fi
+
+            [ "$detail_string" = "" ] && detail_string="HOST USAGE_TYPE PATH TOTAL_GB USED_GB PCT_USED"
+            detail_string="${detail_string}\n${DISK_HOST} ${USAGE_TYPE} ${DISK_PATH} ${TOTAL_GB} ${USED_GB} ${PCT_USED}"
+
+            if [ $(echo "$PCT_USED >= $warn_val" | bc -l) -ne 0 ]; then
+                [ $ret_state -ne $STATE_CRITICAL ] && ret_state=$STATE_WARNING
+                err_string="${err_string}, ${DISK_HOST} ${USAGE_TYPE} at ${PCT_USED}%"
+                if [ $(echo "$PCT_USED >= $crit_val" | bc -l) -ne 0 ]; then
+                    ret_state=$STATE_CRITICAL
+                fi
+            fi
+
+            # sanitize label: hostnames contain dots, paths contain slashes
+            label=$(printf '%s' "${DISK_HOST}_${USAGE_TYPE}" | tr -c 'A-Za-z0-9_-' '_')
+            [ "$perf_string" != "" ] && perf_string="${perf_string} "
+            perf_string="${perf_string}'${label}_pct'=${PCT_USED}%;${warn_val};${crit_val};0;100"
+            perf_string="${perf_string} '${label}_used'=${USED_GB}GB;;;0;${TOTAL_GB}"
+        done <$TMPFILE
+
+        if [ $num_rows -eq 0 ]; then
+            ret_state=$STATE_UNKNOWN
+            result_string="UNKNOWN - no volume found for usage types '${HANA_USAGE:-DATA,LOG}' on database $HANA_SID"
+            PERF_OUT=""
+        else
+            err_string="Filesystem usage $HANA_SID${err_string}"
+            [ $ret_state -eq $STATE_CRITICAL ] && result_string="CRITICAL - $err_string"
+            [ $ret_state -eq $STATE_WARNING ]  && result_string="WARNING - $err_string"
+            [ $ret_state -eq $STATE_OK ]       && result_string="OK - $err_string, all volumes below threshold"
+            # perfdata belong on the first line, detail lines follow afterwards
+            PERF_OUT="|${perf_string}\n${detail_string}"
+        fi
+    else
+        ret_state=$STATE_CRITICAL
+        result_string="CRITICAL - sql-statement failed: $(head -1 "$ERRFILE" | tr -d '\n')"
+        PERF_OUT=""
+    fi
+    rm -f $TMPFILE
+    echo -e "${result_string}${PERF_OUT}"
     exit $ret_state
     ;;
 

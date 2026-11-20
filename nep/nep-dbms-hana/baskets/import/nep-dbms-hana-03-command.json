@@ -17,6 +17,23 @@
             "object_type": "object",
             "uuid": "f5ba1607-2e07-4aaf-b75e-e9a740e87c10"
         },
+        "nx-c-sap-check-hana-disk-usage": {
+            "arguments": {
+                "--function": {
+                    "description": "function to be executed",
+                    "skip_key": false,
+                    "value": "disk_usage"
+                }
+            },
+            "fields": [],
+            "imports": [
+                "nx-ct-sap-check-hana"
+            ],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-sap-check-hana-disk-usage",
+            "object_type": "object",
+            "uuid": "c03b3a37-bd9c-4a03-a0b9-7a6d60fa9f28"
+        },
         "nx-c-sap-check-hana-failed-data-backups": {
             "arguments": {
                 "--function": {
