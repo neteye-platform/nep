@@ -7,6 +7,7 @@ The NEP is based on the check_printer_health script (for more information have l
 * Printer Uptime
 * Printer Page Count
 * Printer Info (model and serial number)
+* Printer Status (paper jam, no paper, toner low, offline, active alerts, ...)
 
 ## Table of Contents
 
@@ -71,7 +72,7 @@ Host Template:
 
 Service Templates:
 
-* `nx-st-network-printer-health` using the 5 available modes
+* `nx-st-network-printer-health` using the 6 available modes
   * `uptime`: printer uptime
   * `hardware-health`: checks printer hardware
   * `supplies-status`: checks consumables, toner, ink cartridges, etc..
@@ -80,6 +81,14 @@ Service Templates:
     * HP: `print_color`, `print_mono`, `print_duplex` (HP JetDirect counters)
     * Lexmark: `print_total`, `print_mono`, `print_color`, `copy_*`, `fax_total`, `blank_*`, ... (LEXMARK-MPS-MIB)
   * `printer-info`: model and serial number of the printer (always OK)
+  * `printer-status`: status reported by the printer itself
+    * HOST-RESOURCES-MIB `hrPrinterDetectedErrorState`: CRITICAL for noPaper, noToner, doorOpen, jammed, offline,
+      inputTrayMissing, outputTrayMissing, markerSupplyMissing, outputFull; WARNING for lowPaper, lowToner,
+      serviceRequested, outputNearFull, inputTrayEmpty, overduePreventMaint
+    * HOST-RESOURCES-MIB `hrDeviceStatus` (down is CRITICAL, warning is WARNING) when no error is reported
+    * PRINTER-MIB `prtAlertTable`: active critical and warning alerts (informational events like "powered up" are ignored)
+    * the text of the printer display is shown in the output
+    * WARNING conditions can be changed with `--mitigation` (e.g. `--mitigation ok`)
 
 Vendor specific notes:
 
@@ -98,6 +107,7 @@ Service Set:
   * `Printer Uptime` (mode `uptime`)
   * `Printer Page Count` (mode `page-count`)
   * `Printer Info` (mode `printer-info`)
+  * `Printer Status` (mode `printer-status`)
 
 #### Commands
 

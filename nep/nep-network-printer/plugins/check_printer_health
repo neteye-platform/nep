@@ -8792,8 +8792,17 @@ $Monitoring::GLPlugin::SNMP::MibsAndOids::definitions->{'HOST-RESOURCES-MIB'} = 
         5 => 'jammed',
         6 => 'offline',
         7 => 'serviceRequested',
+        # second octet, RFC 3805
+        8 => 'inputTrayMissing',
+        9 => 'outputTrayMissing',
+        10 => 'markerSupplyMissing',
+        11 => 'outputNearFull',
+        12 => 'outputFull',
+        13 => 'inputTrayEmpty',
+        14 => 'overduePreventMaint',
     };
-    foreach my $bit (0..7) {
+    foreach my $bit (0..14) {
+      next if $bit >= length($state);
       if (substr($state, $bit, 1) eq "1") {
         push(@errors, $errors->{$bit});
       }
@@ -12003,6 +12012,19 @@ package Classes::HOSTRESOURCESMIB;
 our @ISA = qw(Classes::Device);
 use strict;
 
+sub init {
+  my $self = shift;
+  # Devices without PRINTER-MIB. printer-status and printer-info only need
+  # HOST-RESOURCES-MIB, the other modes keep their previous behavior.
+  if ($self->mode =~ /device::printer::status/) {
+    $self->analyze_and_check_status_subsystem('Classes::PRINTERMIB::Component::StatusSubsystem');
+  } elsif ($self->mode =~ /device::printer::info/) {
+    $self->analyze_and_check_info_subsystem('Classes::PRINTERMIB::Component::InfoSubsystem');
+  } else {
+    $self->SUPER::init();
+  }
+}
+
 package Classes::PRINTERMIB::Component::PrinterSubsystem;
 our @ISA = qw(Monitoring::GLPlugin::SNMP::Item);
 use strict;
@@ -12232,6 +12254,144 @@ sub check {
 }
 
 
+package Classes::PRINTERMIB::Component::StatusSubsystem;
+our @ISA = qw(Monitoring::GLPlugin::SNMP::Item);
+use strict;
+
+# Status of the printer as the printer itself reports it:
+#   HOST-RESOURCES-MIB hrDeviceStatus, hrPrinterStatus, hrPrinterDetectedErrorState
+#   PRINTER-MIB prtAlertTable (active alerts) and the console display text
+# This catches problems the other modes do not see, e.g. paper jams, no paper,
+# offline printers and toner low on printers which report the toner level
+# only as "some remaining" (prtMarkerSuppliesLevel -3).
+
+# 2 = printing is not possible (CRITICAL), 1 = someone has to act soon (WARNING)
+our $error_levels = {
+  noPaper => 2,
+  noToner => 2,
+  doorOpen => 2,
+  jammed => 2,
+  offline => 2,
+  inputTrayMissing => 2,
+  outputTrayMissing => 2,
+  markerSupplyMissing => 2,
+  outputFull => 2,
+  lowPaper => 1,
+  lowToner => 1,
+  serviceRequested => 1,
+  outputNearFull => 1,
+  inputTrayEmpty => 1,
+  overduePreventMaint => 1,
+};
+
+sub init {
+  my ($self) = @_;
+  $self->get_snmp_tables('HOST-RESOURCES-MIB', [
+      ['devices', 'hrDeviceTable', 'Monitoring::GLPlugin::SNMP::TableItem'],
+      ['printers', 'hrPrinterTable', 'Monitoring::GLPlugin::SNMP::TableItem'],
+  ]);
+  $self->get_snmp_tables('PRINTER-MIB', [
+      ['alerts', 'prtAlertTable', 'Classes::PRINTERMIB::Component::StatusSubsystem::Alert'],
+      ['displays', 'prtConsoleDisplayBufferTable', 'Monitoring::GLPlugin::SNMP::TableItem'],
+  ]);
+}
+
+sub check {
+  my ($self) = @_;
+  if (! @{$self->{printers}} && ! @{$self->{alerts}}) {
+    $self->add_unknown('the printer reports neither hrPrinterTable nor prtAlertTable');
+    return;
+  }
+  foreach my $printer (@{$self->{printers}}) {
+    my ($device) = grep {
+        $_->{flat_indices} eq $printer->{flat_indices}
+    } @{$self->{devices}};
+    my $name = ($device && $device->{hrDeviceDescr}) ?
+        $self->accentfree($device->{hrDeviceDescr}) : 'printer';
+    $name =~ s/^\s+|\s+$//g;
+    my $device_status = ($device && $device->{hrDeviceStatus}) || 'unknown';
+    my @errors = grep {
+        $_ ne 'good'
+    } split(/\|/, $printer->{hrPrinterDetectedErrorState} // 'good');
+    $self->add_info(sprintf '%s is %s, device status %s, errors: %s',
+        $name, $printer->{hrPrinterStatus} // 'unknown', $device_status,
+        @errors ? join(',', @errors) : 'none');
+    if (@errors) {
+      foreach my $error (@errors) {
+        if (($error_levels->{$error} // 1) == 2) {
+          $self->add_critical(sprintf '%s: %s', $name, $error);
+        } else {
+          $self->add_warning_mitigation(sprintf '%s: %s', $name, $error);
+        }
+      }
+    } elsif ($device_status eq 'down') {
+      $self->add_critical(sprintf '%s: device status is down', $name);
+    } elsif ($device_status eq 'warning') {
+      $self->add_warning_mitigation(sprintf '%s: device status is warning', $name);
+    } else {
+      $self->add_ok(sprintf '%s is %s', $name, $printer->{hrPrinterStatus} // 'unknown');
+    }
+  }
+  foreach my $alert (@{$self->{alerts}}) {
+    $alert->check();
+  }
+  my @display = grep { /\S/ } map {
+      my $text = $self->accentfree($_->{prtConsoleDisplayBufferText} // '');
+      $text =~ s/^\s+|\s+$//g;
+      $text;
+  } @{$self->{displays}};
+  $self->add_ok(sprintf 'display: %s', join(' / ', @display)) if @display;
+}
+
+
+package Classes::PRINTERMIB::Component::StatusSubsystem::Alert;
+our @ISA = qw(Monitoring::GLPlugin::SNMP::TableItem);
+use strict;
+
+sub finish {
+  my ($self) = @_;
+  my $description = $self->{prtAlertDescription} // '';
+  if ($description =~ /^[^ ]{2} [^ ]{2} [^ ]{2}/) {
+    $description = $self->unhex_octet_string($description);
+  }
+  $description = unpack('Z*', $self->accentfree($description));
+  $description =~ s/^\s+|\s+$//g;
+  # no description: use the alert code (e.g. jammed, inputMediaSupplyEmpty)
+  $self->{description} = $description ne '' ? $description :
+      ($self->{prtAlertCode} // 'unknown alert');
+  # values not defined in PrtAlertSeverityLevelTC (Brother reports 0 for "Sleep")
+  $self->{prtAlertSeverityLevel} = 'other'
+      if ! defined $self->{prtAlertSeverityLevel} ||
+          $self->{prtAlertSeverityLevel} =~ /^(unknown_)?\d+$/;
+}
+
+# Alert codes which only inform about an event (something was closed, added,
+# changed, the printer was switched on, ...). They are no problem to act on.
+our $informational_codes = qr/^(coverClosed|interlockClosed|configurationChanged|subunitClosed|
+    subunitTurnedOn|subunitPowerSaver|subunitWarmingUp|subunitAdded|subunitResourceAdded|
+    subunitResourceRemoved|doorClosed|poweredUp|poweredDown|printerNMSReset|printerManualReset|
+    printerReadyToPrint|inputMedia(Size|Weight|Type|Color)Changed|inputMediaFormPartsChange|
+    markerAdjustingPrintQuality|interpreterMemory(In|De)creased|interpreterCartridge(Added|Deleted)|
+    interpreterResource(Added|Deleted)|interpreterComplexPageEncountered|
+    alertRemovalOfBinaryChangeEntry)$/x;
+
+sub check {
+  my ($self) = @_;
+  # PrtAlertSeverityLevelTC: other(1), critical(3), warning(4),
+  # warningBinaryChangeEvent(5). Printers report e.g. "Toner Low" as warning(4).
+  my $severity = $self->{prtAlertSeverityLevel} // 'other';
+  my $code = $self->{prtAlertCode} // 'other';
+  $self->add_info(sprintf 'alert %s (severity %s, code %s)',
+      $self->{description}, $severity, $code);
+  return if $code =~ $informational_codes;
+  if ($severity =~ /^critical/) {
+    $self->add_critical(sprintf 'alert: %s', $self->{description});
+  } elsif ($severity =~ /^warning/) {
+    $self->add_warning_mitigation(sprintf 'alert: %s', $self->{description});
+  }
+}
+
+
 package Classes::Lexmark::Component::PageCountSubsystem;
 our @ISA = qw(Classes::PRINTERMIB::Component::PageCountSubsystem);
 use strict;
@@ -12450,6 +12610,8 @@ sub init {
     $self->analyze_and_check_pagecount_subsystem($self->pagecount_class());
   } elsif ($self->mode =~ /device::printer::info/) {
     $self->analyze_and_check_info_subsystem('Classes::PRINTERMIB::Component::InfoSubsystem');
+  } elsif ($self->mode =~ /device::printer::status/) {
+    $self->analyze_and_check_status_subsystem('Classes::PRINTERMIB::Component::StatusSubsystem');
   } else {
     $self->no_such_mode();
   }
@@ -12611,6 +12773,8 @@ sub init {
     $self->analyze_and_check_pagecount_subsystem('Classes::Lexmark::Component::PageCountSubsystem');
   } elsif ($self->mode =~ /device::printer::info/) {
     $self->analyze_and_check_info_subsystem('Classes::PRINTERMIB::Component::InfoSubsystem');
+  } elsif ($self->mode =~ /device::printer::status/) {
+    $self->analyze_and_check_status_subsystem('Classes::PRINTERMIB::Component::StatusSubsystem');
   } else {
     $self->no_such_mode();
   }
@@ -12740,6 +12904,8 @@ sub init {
     $self->analyze_and_check_pagecount_subsystem('Classes::PRINTERMIB::Component::PageCountSubsystem');
   } elsif ($self->mode =~ /device::printer::info/) {
     $self->analyze_and_check_info_subsystem('Classes::PRINTERMIB::Component::InfoSubsystem');
+  } elsif ($self->mode =~ /device::printer::status/) {
+    $self->analyze_and_check_status_subsystem('Classes::PRINTERMIB::Component::StatusSubsystem');
   } else {
     bless $self, 'Monitoring::GLPlugin::SNMP';
     $self->no_such_mode();
@@ -12798,6 +12964,12 @@ $plugin->add_mode(
     spec => 'printer-info',
     alias => undef,
     help => 'Report printer model and serial number',
+);
+$plugin->add_mode(
+    internal => 'device::printer::status',
+    spec => 'printer-status',
+    alias => undef,
+    help => 'Check the status reported by the printer (paper jam, no paper, toner low, offline, active alerts, ...)',
 );
 $plugin->add_snmp_modes();
 $plugin->add_snmp_args();

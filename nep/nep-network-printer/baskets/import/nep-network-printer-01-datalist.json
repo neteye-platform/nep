@@ -34,6 +34,12 @@
                     "entry_value": "Printer Info",
                     "format": "string",
                     "allowed_roles": null
+                },
+                {
+                    "entry_name": "printer-status",
+                    "entry_value": "Printer Status",
+                    "format": "string",
+                    "allowed_roles": null
                 }
             ]
         }
