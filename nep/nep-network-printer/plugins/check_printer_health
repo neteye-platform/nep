@@ -12121,7 +12121,8 @@ use strict;
 # Vendor independent page counters from PRINTER-MIB::prtMarkerTable
 #   prtMarkerLifeCount    -> pages printed during the life of the printer
 #   prtMarkerPowerOnCount -> pages printed since the last power on
-# Vendor classes (HP, Lexmark) inherit from here and add their own counters.
+# Vendor classes (HP, Lexmark, Canon, Ricoh, Konica Minolta, Xerox, Samsung)
+# inherit from here and add their own counters.
 
 sub init {
   my ($self) = @_;
@@ -12168,6 +12169,25 @@ sub check {
     foreach my $marker (@markers) {
       $marker->check();
     }
+  }
+}
+
+# Vendor classes put their private counters in $self->{vendor_counters} and call
+# add_counters with the labels in output order: the numeric counters become
+# performance data, the color and mono totals are added to the output.
+sub add_counters {
+  my ($self, $labels) = @_;
+  my $counters = $self->{vendor_counters} || {};
+  my @known = grep {
+      defined $counters->{$_} && $counters->{$_} =~ /^\d+$/
+  } @{$labels};
+  return if ! @known;
+  if (grep { $_ eq 'color_total' } @known and grep { $_ eq 'mono_total' } @known) {
+    $self->add_ok(sprintf '%d color, %d mono pages',
+        $counters->{color_total}, $counters->{mono_total});
+  }
+  foreach my $label (@known) {
+    $self->add_perfdata(label => $label, value => $counters->{$label});
   }
 }
 
@@ -12302,6 +12322,8 @@ sub check {
     $self->add_unknown('the printer reports neither hrPrinterTable nor prtAlertTable');
     return;
   }
+  # number of active problems, as performance data for the history in Grafana
+  my %problems = (critical => 0, warning => 0);
   foreach my $printer (@{$self->{printers}}) {
     my ($device) = grep {
         $_->{flat_indices} eq $printer->{flat_indices}
@@ -12320,20 +12342,26 @@ sub check {
       foreach my $error (@errors) {
         if (($error_levels->{$error} // 1) == 2) {
           $self->add_critical(sprintf '%s: %s', $name, $error);
+          $problems{critical}++;
         } else {
           $self->add_warning_mitigation(sprintf '%s: %s', $name, $error);
+          $problems{warning}++;
         }
       }
     } elsif ($device_status eq 'down') {
       $self->add_critical(sprintf '%s: device status is down', $name);
+      $problems{critical}++;
     } elsif ($device_status eq 'warning') {
       $self->add_warning_mitigation(sprintf '%s: device status is warning', $name);
+      $problems{warning}++;
     } else {
       $self->add_ok(sprintf '%s is %s', $name, $printer->{hrPrinterStatus} // 'unknown');
     }
   }
   foreach my $alert (@{$self->{alerts}}) {
-    $alert->check();
+    my $level = $alert->check();
+    $problems{critical}++ if $level == 2;
+    $problems{warning}++ if $level == 1;
   }
   my @display = grep { /\S/ } map {
       my $text = $self->accentfree($_->{prtConsoleDisplayBufferText} // '');
@@ -12341,6 +12369,8 @@ sub check {
       $text;
   } @{$self->{displays}};
   $self->add_ok(sprintf 'display: %s', join(' / ', @display)) if @display;
+  $self->add_perfdata(label => 'problems_critical', value => $problems{critical});
+  $self->add_perfdata(label => 'problems_warning', value => $problems{warning});
 }
 
 
@@ -12383,12 +12413,15 @@ sub check {
   my $code = $self->{prtAlertCode} // 'other';
   $self->add_info(sprintf 'alert %s (severity %s, code %s)',
       $self->{description}, $severity, $code);
-  return if $code =~ $informational_codes;
+  return 0 if $code =~ $informational_codes;
   if ($severity =~ /^critical/) {
     $self->add_critical(sprintf 'alert: %s', $self->{description});
+    return 2;
   } elsif ($severity =~ /^warning/) {
     $self->add_warning_mitigation(sprintf 'alert: %s', $self->{description});
+    return 1;
   }
+  return 0;
 }
 
 
@@ -12822,6 +12855,25 @@ sub classify {
       } elsif ($self->sysobjectid_starts_with('1.3.6.1.4.1.1347')) {
         bless $self, 'Classes::Kyocera';
         $self->debug('using Classes::Kyocera (sysObjectID)');
+      } elsif ($self->sysobjectid_starts_with('1.3.6.1.4.1.236')) {
+        # before HP: HP branded models built by Samsung keep the Samsung MIBs
+        bless $self, 'Classes::Samsung';
+        $self->debug('using Classes::Samsung (sysObjectID)');
+      } elsif ($self->sysobjectid_starts_with('1.3.6.1.4.1.1602')) {
+        bless $self, 'Classes::Canon';
+        $self->debug('using Classes::Canon (sysObjectID)');
+      } elsif ($self->sysobjectid_starts_with('1.3.6.1.4.1.367')) {
+        bless $self, 'Classes::Ricoh';
+        $self->debug('using Classes::Ricoh (sysObjectID)');
+      } elsif ($self->sysobjectid_starts_with('1.3.6.1.4.1.18334')) {
+        bless $self, 'Classes::KonicaMinolta';
+        $self->debug('using Classes::KonicaMinolta (sysObjectID)');
+      } elsif ($self->sysobjectid_starts_with('1.3.6.1.4.1.253')) {
+        bless $self, 'Classes::Xerox';
+        $self->debug('using Classes::Xerox (sysObjectID)');
+      } elsif ($self->sysobjectid_starts_with('1.3.6.1.4.1.10642')) {
+        bless $self, 'Classes::Zebra';
+        $self->debug('using Classes::Zebra (sysObjectID)');
       } elsif ($self->sysobjectid_starts_with('1.3.6.1.4.1.11') ||
                ($self->{productname} && $self->{productname} =~ /^(HP|Hewlett)\b/i)) {
         bless $self, 'Classes::HP';
@@ -12890,6 +12942,569 @@ use strict;
 
 sub pagecount_class {
   return 'Classes::HP::Component::PageCountSubsystem';
+}
+
+
+################################################################
+# Vendor private MIBs (only the objects used by this plugin)
+#
+# Sources of the OIDs:
+#   CANON-MIB, RICOH-PRIVATE-MIB counters: Checkmk checks canon_pages and
+#     printer_pages_ricoh, Observium MIB browser (RicohPrivateMIB)
+#   XEROX-HOST-RESOURCES-EXT-MIB: Observium MIB browser, detail type 20
+#     (lifetime usage), index 34 total black impressions, 33 total color
+#   SAMSUNG-HOST-RESOURCES-EXT-MIB: Observium MIB browser (scmHrDevCountTable)
+#   KONICA-MINOLTA counters: community sources (Observium OBS-1587, LibreNMS)
+#   ZEBRA-MIB: official Zebra Link-OS MIB
+################################################################
+package Monitoring::GLPlugin::SNMP::MibsAndOids::CANONMIB;
+
+$Monitoring::GLPlugin::SNMP::MibsAndOids::origin->{'CANON-MIB'} = {
+  url => '',
+  name => 'CANON-MIB',
+};
+
+$Monitoring::GLPlugin::SNMP::MibsAndOids::mib_ids->{'CANON-MIB'} =
+    '1.3.6.1.4.1.1602';
+
+$Monitoring::GLPlugin::SNMP::MibsAndOids::mibs_and_oids->{'CANON-MIB'} = {
+  canon => '1.3.6.1.4.1.1602',
+  # page counters, the index is the Canon counter code (301 total, ...)
+  canonCounterValue => '1.3.6.1.4.1.1602.1.11.1.3.1.4',
+};
+
+
+package Monitoring::GLPlugin::SNMP::MibsAndOids::RICOHPRIVATEMIB;
+
+$Monitoring::GLPlugin::SNMP::MibsAndOids::origin->{'RICOH-PRIVATE-MIB'} = {
+  url => '',
+  name => 'RICOH-PRIVATE-MIB',
+};
+
+$Monitoring::GLPlugin::SNMP::MibsAndOids::mib_ids->{'RICOH-PRIVATE-MIB'} =
+    '1.3.6.1.4.1.367';
+
+$Monitoring::GLPlugin::SNMP::MibsAndOids::mibs_and_oids->{'RICOH-PRIVATE-MIB'} = {
+  ricoh => '1.3.6.1.4.1.367',
+  ricohEngCounterTotal => '1.3.6.1.4.1.367.3.2.1.2.19.1',
+  ricohEngCounterPrinter => '1.3.6.1.4.1.367.3.2.1.2.19.2',
+  ricohEngCounterFax => '1.3.6.1.4.1.367.3.2.1.2.19.3',
+  ricohEngCounterCopier => '1.3.6.1.4.1.367.3.2.1.2.19.4',
+  ricohEngCounterTable => '1.3.6.1.4.1.367.3.2.1.2.19.5',
+  ricohEngCounterEntry => '1.3.6.1.4.1.367.3.2.1.2.19.5.1',
+  ricohEngCounterName => '1.3.6.1.4.1.367.3.2.1.2.19.5.1.5',
+  ricohEngCounterValue => '1.3.6.1.4.1.367.3.2.1.2.19.5.1.9',
+};
+
+
+package Monitoring::GLPlugin::SNMP::MibsAndOids::KONICAMINOLTAMIB;
+
+$Monitoring::GLPlugin::SNMP::MibsAndOids::origin->{'KONICA-MINOLTA-MIB'} = {
+  url => '',
+  name => 'KONICA-MINOLTA-MIB',
+};
+
+$Monitoring::GLPlugin::SNMP::MibsAndOids::mib_ids->{'KONICA-MINOLTA-MIB'} =
+    '1.3.6.1.4.1.18334';
+
+$Monitoring::GLPlugin::SNMP::MibsAndOids::mibs_and_oids->{'KONICA-MINOLTA-MIB'} = {
+  konicaMinolta => '1.3.6.1.4.1.18334',
+  kmCounterTotal => '1.3.6.1.4.1.18334.1.1.1.5.7.2.1.1',
+  kmCounterDuplex => '1.3.6.1.4.1.18334.1.1.1.5.7.2.1.3',
+  kmCounterOriginals => '1.3.6.1.4.1.18334.1.1.1.5.7.2.1.8',
+  # index <color>.<function>, color 1 black 2 full color, function 1 copy 2 print
+  kmCounterFunction => '1.3.6.1.4.1.18334.1.1.1.5.7.2.2.1.5',
+};
+
+
+package Monitoring::GLPlugin::SNMP::MibsAndOids::XEROXHOSTRESOURCESEXTMIB;
+
+$Monitoring::GLPlugin::SNMP::MibsAndOids::origin->{'XEROX-HOST-RESOURCES-EXT-MIB'} = {
+  url => '',
+  name => 'XEROX-HOST-RESOURCES-EXT-MIB',
+};
+
+$Monitoring::GLPlugin::SNMP::MibsAndOids::mib_ids->{'XEROX-HOST-RESOURCES-EXT-MIB'} =
+    '1.3.6.1.4.1.253.8.53';
+
+$Monitoring::GLPlugin::SNMP::MibsAndOids::mibs_and_oids->{'XEROX-HOST-RESOURCES-EXT-MIB'} = {
+  xcmHrMIB => '1.3.6.1.4.1.253.8.53',
+  # index <hrDeviceIndex>.<xcmHrDevDetailType>.<xcmHrDevDetailIndex>
+  xcmHrDevDetailValueInteger => '1.3.6.1.4.1.253.8.53.13.2.1.6',
+};
+
+
+package Monitoring::GLPlugin::SNMP::MibsAndOids::SAMSUNGHOSTRESOURCESEXTMIB;
+
+$Monitoring::GLPlugin::SNMP::MibsAndOids::origin->{'SAMSUNG-HOST-RESOURCES-EXT-MIB'} = {
+  url => '',
+  name => 'SAMSUNG-HOST-RESOURCES-EXT-MIB',
+};
+
+$Monitoring::GLPlugin::SNMP::MibsAndOids::mib_ids->{'SAMSUNG-HOST-RESOURCES-EXT-MIB'} =
+    '1.3.6.1.4.1.236.11.5.11.53';
+
+$Monitoring::GLPlugin::SNMP::MibsAndOids::mibs_and_oids->{'SAMSUNG-HOST-RESOURCES-EXT-MIB'} = {
+  scmHrDevCountTable => '1.3.6.1.4.1.236.11.5.11.53.11.2',
+  scmHrDevCountEntry => '1.3.6.1.4.1.236.11.5.11.53.11.2.1',
+  scmHrDevCountJobType => '1.3.6.1.4.1.236.11.5.11.53.11.2.1.2',
+  scmHrDevCountJobTypeDefinition => 'SAMSUNG-HOST-RESOURCES-EXT-MIB::scmHrDevCountJobType',
+  scmHrDevCountUnit => '1.3.6.1.4.1.236.11.5.11.53.11.2.1.4',
+  scmHrDevCountUnitDefinition => 'PRINTER-MIB::PrtMarkerCounterUnitTC',
+  scmHrDevCountColor => '1.3.6.1.4.1.236.11.5.11.53.11.2.1.6',
+  scmHrDevCountColorDefinition => 'SAMSUNG-HOST-RESOURCES-EXT-MIB::scmHrDevCountColor',
+  scmHrDevCountValue => '1.3.6.1.4.1.236.11.5.11.53.11.2.1.7',
+};
+
+$Monitoring::GLPlugin::SNMP::MibsAndOids::definitions->{'SAMSUNG-HOST-RESOURCES-EXT-MIB'} = {
+  scmHrDevCountJobType => {
+    '1' => 'print',
+    '2' => 'copy',
+    '3' => 'faxIn',
+    '4' => 'faxOut',
+    '5' => 'scan',
+    '6' => 'report',
+    '11' => 'digitalSend',
+    '12' => 'digitalReceive',
+    '21' => 'localStorage',
+  },
+  scmHrDevCountColor => {
+    '1' => 'fullColor',
+    '2' => 'singleColor',
+    '3' => 'monoColor',
+  },
+};
+
+
+package Monitoring::GLPlugin::SNMP::MibsAndOids::ZEBRAMIB;
+
+$Monitoring::GLPlugin::SNMP::MibsAndOids::origin->{'ZEBRA-MIB'} = {
+  url => '',
+  name => 'ZEBRA-MIB',
+};
+
+$Monitoring::GLPlugin::SNMP::MibsAndOids::mib_ids->{'ZEBRA-MIB'} =
+    '1.3.6.1.4.1.10642';
+
+$Monitoring::GLPlugin::SNMP::MibsAndOids::mibs_and_oids->{'ZEBRA-MIB'} = {
+  zebra => '1.3.6.1.4.1.10642',
+  zbrGeneralModel => '1.3.6.1.4.1.10642.1.1',
+  zbrGeneralFirmwareVersion => '1.3.6.1.4.1.10642.1.2',
+  zbrGeneralUniqueId => '1.3.6.1.4.1.10642.1.9',
+  zbrHeadLatch => '1.3.6.1.4.1.10642.2.1.1',
+  zbrHeadLatchDefinition => 'ZEBRA-MIB::zbrHeadLatch',
+  zbrHeadUndertempWarning => '1.3.6.1.4.1.10642.2.1.7',
+  zbrHeadUndertempWarningDefinition => 'ZEBRA-MIB::zbrNoYes',
+  zbrHeadOvertempError => '1.3.6.1.4.1.10642.2.1.8',
+  zbrHeadOvertempErrorDefinition => 'ZEBRA-MIB::zbrNoYes',
+  zbrPowerSerialNumber => '1.3.6.1.4.1.10642.2.3.27',
+  zbrOdometerTotalLabelCount => '1.3.6.1.4.1.10642.3.1.7',
+  zbrOdometerTotalPrintLength => '1.3.6.1.4.1.10642.3.1.8',
+  zbrPrintRibbonInWarning => '1.3.6.1.4.1.10642.6.17',
+  zbrPrintRibbonInWarningDefinition => 'ZEBRA-MIB::zbrNoYes',
+  zbrPrintCutterJamError => '1.3.6.1.4.1.10642.6.19',
+  zbrPrintCutterJamErrorDefinition => 'ZEBRA-MIB::zbrNoYes',
+  zbrPrintPause => '1.3.6.1.4.1.10642.6.22',
+  zbrPrintPauseDefinition => 'ZEBRA-MIB::zbrNoYes',
+  zbrPrintPaperOut => '1.3.6.1.4.1.10642.6.23',
+  zbrPrintPaperOutDefinition => 'ZEBRA-MIB::zbrNoYes',
+  zbrPrintRibbonOut => '1.3.6.1.4.1.10642.6.24',
+  zbrPrintRibbonOutDefinition => 'ZEBRA-MIB::zbrNoYes',
+};
+
+$Monitoring::GLPlugin::SNMP::MibsAndOids::definitions->{'ZEBRA-MIB'} = {
+  zbrHeadLatch => {
+    '1' => 'ok',
+    '2' => 'open',
+  },
+  zbrNoYes => {
+    '1' => 'no',
+    '2' => 'yes',
+  },
+};
+
+
+################################################################
+# Vendor page counters
+################################################################
+package Classes::Canon::Component::PageCountSubsystem;
+our @ISA = qw(Classes::PRINTERMIB::Component::PageCountSubsystem);
+use strict;
+
+# Canon counter codes (Checkmk canon_pages): 301 total, 106 color total,
+# 109 black total, 122/123 color large (A3) / small (A4), 112/113 black A3/A4.
+# Canon models without these counters only report the PRINTER-MIB counters.
+our @counters = (
+  [301, 'machine_total'], [106, 'color_total'], [109, 'mono_total'],
+  [122, 'color_a3'], [123, 'color_a4'], [112, 'mono_a3'], [113, 'mono_a4'],
+);
+
+sub init {
+  my ($self) = @_;
+  $self->SUPER::init();
+  foreach my $counter (@counters) {
+    $self->{vendor_counters}->{$counter->[1]} =
+        $self->get_snmp_object('CANON-MIB', 'canonCounterValue', $counter->[0]);
+  }
+}
+
+sub check {
+  my ($self) = @_;
+  $self->SUPER::check();
+  $self->add_counters([map { $_->[1] } @counters]);
+}
+
+
+package Classes::Ricoh::Component::PageCountSubsystem;
+our @ISA = qw(Classes::PRINTERMIB::Component::PageCountSubsystem);
+use strict;
+
+# Counter names in the ricohEngCounterTable (Checkmk printer_pages_ricoh)
+our %table_names = (
+  'Counter: Machine Total' => 'machine_total',
+  'Total Prints: Color' => 'color_total',
+  'Total Prints: Black & White' => 'mono_total',
+);
+
+sub init {
+  my ($self) = @_;
+  $self->SUPER::init();
+  $self->{vendor_counters}->{machine_total} =
+      $self->get_snmp_object('RICOH-PRIVATE-MIB', 'ricohEngCounterTotal', 0);
+  $self->{vendor_counters}->{print_total} =
+      $self->get_snmp_object('RICOH-PRIVATE-MIB', 'ricohEngCounterPrinter', 0);
+  $self->{vendor_counters}->{copy_total} =
+      $self->get_snmp_object('RICOH-PRIVATE-MIB', 'ricohEngCounterCopier', 0);
+  $self->{vendor_counters}->{fax_total} =
+      $self->get_snmp_object('RICOH-PRIVATE-MIB', 'ricohEngCounterFax', 0);
+  $self->get_snmp_tables('RICOH-PRIVATE-MIB', [
+      ['counters', 'ricohEngCounterTable', 'Monitoring::GLPlugin::SNMP::TableItem'],
+  ]);
+  foreach my $counter (@{$self->{counters}}) {
+    my $name = $counter->{ricohEngCounterName} // '';
+    $name =~ s/^\s+|\s+$//g;
+    next if ! exists $table_names{$name};
+    # the scalar counters are preferred, the table only adds what is missing
+    $self->{vendor_counters}->{$table_names{$name}} //= $counter->{ricohEngCounterValue};
+  }
+  delete $self->{counters};
+}
+
+sub check {
+  my ($self) = @_;
+  $self->SUPER::check();
+  $self->add_counters([qw(machine_total color_total mono_total print_total copy_total fax_total)]);
+}
+
+
+package Classes::KonicaMinolta::Component::PageCountSubsystem;
+our @ISA = qw(Classes::PRINTERMIB::Component::PageCountSubsystem);
+use strict;
+
+sub init {
+  my ($self) = @_;
+  $self->SUPER::init();
+  my $c = $self->{vendor_counters} = {};
+  $c->{machine_total} = $self->get_snmp_object('KONICA-MINOLTA-MIB', 'kmCounterTotal', 0);
+  $c->{duplex_total} = $self->get_snmp_object('KONICA-MINOLTA-MIB', 'kmCounterDuplex', 0);
+  $c->{originals_total} = $self->get_snmp_object('KONICA-MINOLTA-MIB', 'kmCounterOriginals', 0);
+  $c->{copy_mono} = $self->get_snmp_object('KONICA-MINOLTA-MIB', 'kmCounterFunction', '1.1');
+  $c->{print_mono} = $self->get_snmp_object('KONICA-MINOLTA-MIB', 'kmCounterFunction', '1.2');
+  $c->{copy_color} = $self->get_snmp_object('KONICA-MINOLTA-MIB', 'kmCounterFunction', '2.1');
+  $c->{print_color} = $self->get_snmp_object('KONICA-MINOLTA-MIB', 'kmCounterFunction', '2.2');
+  # color/mono over copy and print, when all the parts are known
+  foreach my $color (qw(color mono)) {
+    my @parts = grep { defined && /^\d+$/ } map { $c->{$_.'_'.$color} } qw(copy print);
+    $c->{$color.'_total'} = $parts[0] + $parts[1] if scalar(@parts) == 2;
+  }
+}
+
+sub check {
+  my ($self) = @_;
+  $self->SUPER::check();
+  $self->add_counters([qw(machine_total color_total mono_total print_color print_mono
+      copy_color copy_mono duplex_total originals_total)]);
+}
+
+
+package Classes::Xerox::Component::PageCountSubsystem;
+our @ISA = qw(Classes::PRINTERMIB::Component::PageCountSubsystem);
+use strict;
+
+sub init {
+  my ($self) = @_;
+  $self->SUPER::init();
+  # xcmHrDevDetailTable is indexed by the hrDeviceIndex of the printer
+  my ($marker) = @{$self->{markers}};
+  my $device = ($marker && $marker->{flat_indices} =~ /^(\d+)\./) ? $1 : 1;
+  # detail type 20 = lifetime usage, 33 = total color, 34 = total black impressions
+  $self->{vendor_counters}->{color_total} = $self->get_snmp_object(
+      'XEROX-HOST-RESOURCES-EXT-MIB', 'xcmHrDevDetailValueInteger', $device.'.20.33');
+  $self->{vendor_counters}->{mono_total} = $self->get_snmp_object(
+      'XEROX-HOST-RESOURCES-EXT-MIB', 'xcmHrDevDetailValueInteger', $device.'.20.34');
+}
+
+sub check {
+  my ($self) = @_;
+  $self->SUPER::check();
+  $self->add_counters([qw(color_total mono_total)]);
+}
+
+
+package Classes::Samsung::Component::PageCountSubsystem;
+our @ISA = qw(Classes::PRINTERMIB::Component::PageCountSubsystem);
+use strict;
+
+# scmHrDevCountTable: one row per job type, media size, duplex, color and unit.
+# The rows are summed per job type and color, in impressions if the printer
+# counts in impressions, otherwise in sheets.
+our %jobs = (print => 'print', copy => 'copy', faxIn => 'fax_in', faxOut => 'fax_out',
+    scan => 'scan', report => 'report');
+our %colors = (fullColor => 'color', monoColor => 'mono', singleColor => 'single_color');
+
+sub init {
+  my ($self) = @_;
+  $self->SUPER::init();
+  $self->get_snmp_tables('SAMSUNG-HOST-RESOURCES-EXT-MIB', [
+      ['counts', 'scmHrDevCountTable', 'Monitoring::GLPlugin::SNMP::TableItem'],
+  ]);
+  my @rows = grep {
+      defined $_->{scmHrDevCountValue} && $_->{scmHrDevCountValue} =~ /^\d+$/ &&
+      exists $jobs{$_->{scmHrDevCountJobType} // ''} &&
+      exists $colors{$_->{scmHrDevCountColor} // ''}
+  } @{$self->{counts}};
+  my @impressions = grep { ($_->{scmHrDevCountUnit} // '') eq 'impressions' } @rows;
+  @rows = @impressions if @impressions;
+  my $c = $self->{vendor_counters} = {};
+  foreach my $row (@rows) {
+    my $label = $jobs{$row->{scmHrDevCountJobType}}.'_'.$colors{$row->{scmHrDevCountColor}};
+    $c->{$label} += $row->{scmHrDevCountValue};
+  }
+  foreach my $color (qw(color mono)) {
+    my @parts = grep { defined } map { $c->{$_.'_'.$color} } qw(print copy);
+    next if ! @parts;
+    $c->{$color.'_total'} = 0;
+    $c->{$color.'_total'} += $_ foreach @parts;
+  }
+  delete $self->{counts};
+}
+
+sub check {
+  my ($self) = @_;
+  $self->SUPER::check();
+  my @labels = qw(color_total mono_total);
+  foreach my $job (qw(print copy fax_in fax_out scan report)) {
+    push(@labels, map { $job.'_'.$_ } qw(color mono single_color));
+  }
+  $self->add_counters(\@labels);
+}
+
+
+################################################################
+# Zebra label printers: status, labels and identification come from
+# ZEBRA-MIB, many Zebra printers implement PRINTER-MIB only partially.
+################################################################
+package Classes::Zebra::Component::StatusSubsystem;
+our @ISA = qw(Monitoring::GLPlugin::SNMP::Item);
+use strict;
+
+# [object, value meaning a problem, level (2 critical, 1 warning), text]
+our @conditions = (
+  ['zbrHeadLatch', 'open', 2, 'print head is open', 'hardware'],
+  ['zbrPrintPaperOut', 'yes', 2, 'media (paper/labels) out', 'supplies'],
+  ['zbrPrintRibbonOut', 'yes', 2, 'ribbon out', 'supplies'],
+  ['zbrHeadOvertempError', 'yes', 2, 'print head too hot', 'hardware'],
+  ['zbrPrintCutterJamError', 'yes', 2, 'cutter jammed', 'hardware'],
+  ['zbrPrintPause', 'yes', 1, 'printer paused', 'status'],
+  ['zbrHeadUndertempWarning', 'yes', 1, 'print head too cold', 'hardware'],
+  ['zbrPrintRibbonInWarning', 'yes', 1, 'ribbon installed in direct thermal mode', 'supplies'],
+);
+
+# which conditions are checked: hardware, supplies or all (printer-status)
+sub scope {
+  return 'all';
+}
+
+sub init {
+  my ($self) = @_;
+  $self->{model} = $self->get_snmp_object('ZEBRA-MIB', 'zbrGeneralModel', 0) || 'Zebra printer';
+  $self->{model} =~ s/^\s+|\s+$//g;
+  foreach my $condition (@conditions) {
+    $self->{$condition->[0]} = $self->get_snmp_object('ZEBRA-MIB', $condition->[0], 0);
+  }
+}
+
+sub check {
+  my ($self) = @_;
+  my %problems = (critical => 0, warning => 0);
+  my $known = 0;
+  foreach my $condition (@conditions) {
+    my ($object, $bad, $level, $text, $group) = @{$condition};
+    next if $self->scope() ne 'all' && $self->scope() ne $group;
+    my $value = $self->{$object};
+    next if ! defined $value;
+    $known++;
+    $self->add_info(sprintf '%s is %s', $object, $value);
+    next if $value ne $bad;
+    if ($level == 2) {
+      $self->add_critical(sprintf '%s: %s', $self->{model}, $text);
+      $problems{critical}++;
+    } else {
+      $self->add_warning_mitigation(sprintf '%s: %s', $self->{model}, $text);
+      $problems{warning}++;
+    }
+  }
+  if (! $known) {
+    $self->add_unknown('the printer does not report the ZEBRA-MIB status objects');
+    return;
+  }
+  if (! $problems{critical} && ! $problems{warning}) {
+    $self->add_ok($self->scope() eq 'hardware' ? 'hardware working fine' :
+        $self->scope() eq 'supplies' ? 'supplies status is fine' :
+        sprintf('%s is ready', $self->{model}));
+  }
+  if ($self->scope() eq 'all') {
+    $self->add_perfdata(label => 'problems_critical', value => $problems{critical});
+    $self->add_perfdata(label => 'problems_warning', value => $problems{warning});
+  }
+}
+
+
+package Classes::Zebra::Component::HardwareSubsystem;
+our @ISA = qw(Classes::Zebra::Component::StatusSubsystem);
+use strict;
+
+sub scope {
+  return 'hardware';
+}
+
+
+package Classes::Zebra::Component::SuppliesSubsystem;
+our @ISA = qw(Classes::Zebra::Component::StatusSubsystem);
+use strict;
+
+sub scope {
+  return 'supplies';
+}
+
+
+package Classes::Zebra::Component::PageCountSubsystem;
+our @ISA = qw(Monitoring::GLPlugin::SNMP::Item);
+use strict;
+
+sub init {
+  my ($self) = @_;
+  $self->{labels} = $self->get_snmp_object('ZEBRA-MIB', 'zbrOdometerTotalLabelCount', 0);
+  $self->{length} = $self->get_snmp_object('ZEBRA-MIB', 'zbrOdometerTotalPrintLength', 0);
+}
+
+sub check {
+  my ($self) = @_;
+  if (! defined $self->{labels} || $self->{labels} !~ /^\d+$/) {
+    $self->add_unknown('no label counter (ZEBRA-MIB::zbrOdometerTotalLabelCount) found');
+    return;
+  }
+  $self->add_ok(sprintf 'label printer, %d labels total', $self->{labels});
+  # labels are the pages of a label printer
+  $self->add_perfdata(label => 'pages_total', value => $self->{labels});
+  $self->add_perfdata(label => 'print_length_total', value => $self->{length})
+      if defined $self->{length} && $self->{length} =~ /^\d+$/;
+}
+
+
+package Classes::Zebra::Component::InfoSubsystem;
+our @ISA = qw(Classes::PRINTERMIB::Component::InfoSubsystem);
+use strict;
+
+sub init {
+  my ($self) = @_;
+  $self->SUPER::init();
+  my $model = $self->get_snmp_object('ZEBRA-MIB', 'zbrGeneralModel', 0);
+  $self->{model} = $model if defined $model && $model =~ /\S/;
+  if ($self->{serial} eq 'unknown') {
+    foreach my $object (qw(zbrPowerSerialNumber zbrGeneralUniqueId)) {
+      my $serial = $self->get_snmp_object('ZEBRA-MIB', $object, 0);
+      if (defined $serial && $serial =~ /\S/) {
+        $self->{serial} = $serial;
+        last;
+      }
+    }
+  }
+  $self->{model} =~ s/^\s+|\s+$//g;
+  $self->{serial} =~ s/^\s+|\s+$//g;
+}
+
+
+################################################################
+# Vendor classes
+################################################################
+package Classes::Canon;
+our @ISA = qw(Classes::PRINTERMIB);
+use strict;
+
+sub pagecount_class {
+  return 'Classes::Canon::Component::PageCountSubsystem';
+}
+
+
+package Classes::Ricoh;
+our @ISA = qw(Classes::PRINTERMIB);
+use strict;
+
+# also Savin, Lanier, Nashuatec, Gestetner, Rex-Rotary (sysObjectID 367)
+sub pagecount_class {
+  return 'Classes::Ricoh::Component::PageCountSubsystem';
+}
+
+
+package Classes::KonicaMinolta;
+our @ISA = qw(Classes::PRINTERMIB);
+use strict;
+
+# also Develop and Olivetti printers built by Konica Minolta (sysObjectID 18334)
+sub pagecount_class {
+  return 'Classes::KonicaMinolta::Component::PageCountSubsystem';
+}
+
+
+package Classes::Xerox;
+our @ISA = qw(Classes::PRINTERMIB);
+use strict;
+
+sub pagecount_class {
+  return 'Classes::Xerox::Component::PageCountSubsystem';
+}
+
+
+package Classes::Samsung;
+our @ISA = qw(Classes::PRINTERMIB);
+use strict;
+
+# Samsung printers (also the HP branded models built by Samsung, sysObjectID 236)
+sub pagecount_class {
+  return 'Classes::Samsung::Component::PageCountSubsystem';
+}
+
+
+package Classes::Zebra;
+our @ISA = qw(Classes::PRINTERMIB);
+use strict;
+
+sub init {
+  my $self = shift;
+  if ($self->mode =~ /device::hardware::health/) {
+    $self->analyze_and_check_hardware_subsystem('Classes::Zebra::Component::HardwareSubsystem');
+  } elsif ($self->mode =~ /device::printer::consumables/) {
+    $self->analyze_and_check_consumables_subsystem('Classes::Zebra::Component::SuppliesSubsystem');
+  } elsif ($self->mode =~ /device::printer::pagecount/) {
+    $self->analyze_and_check_pagecount_subsystem('Classes::Zebra::Component::PageCountSubsystem');
+  } elsif ($self->mode =~ /device::printer::info/) {
+    $self->analyze_and_check_info_subsystem('Classes::Zebra::Component::InfoSubsystem');
+  } elsif ($self->mode =~ /device::printer::status/) {
+    $self->analyze_and_check_status_subsystem('Classes::Zebra::Component::StatusSubsystem');
+  } else {
+    $self->no_such_mode();
+  }
 }
 
 

@@ -1,0 +1,1048 @@
+{
+  "uid": "nx-network-printer-overview",
+  "title": "Network Printer Overview",
+  "description": "Page counters, supplies and problems of the printers monitored by nep-network-printer",
+  "tags": [
+    "nep",
+    "nep-network-printer",
+    "printer"
+  ],
+  "editable": true,
+  "graphTooltip": 1,
+  "schemaVersion": 39,
+  "version": 1,
+  "refresh": "5m",
+  "time": {
+    "from": "now-30d",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "browser",
+  "fiscalYearStartMonth": 0,
+  "liveNow": false,
+  "weekStart": "",
+  "annotations": {
+    "list": []
+  },
+  "links": [],
+  "templating": {
+    "list": [
+      {
+        "name": "ds",
+        "label": "Datasource",
+        "type": "datasource",
+        "query": "influxdb",
+        "regex": "/icinga2-influxdb/",
+        "current": {},
+        "hide": 0,
+        "refresh": 1,
+        "includeAll": false,
+        "multi": false,
+        "options": [],
+        "skipUrlSync": false
+      },
+      {
+        "name": "dsicingadb",
+        "label": "IcingaDB",
+        "type": "datasource",
+        "query": "mysql",
+        "regex": "/^icingadb-mysql$/",
+        "current": {},
+        "hide": 0,
+        "refresh": 1,
+        "includeAll": false,
+        "multi": false,
+        "options": [],
+        "skipUrlSync": false
+      },
+      {
+        "name": "hostname",
+        "label": "Printer",
+        "type": "query",
+        "datasource": {
+          "type": "influxdb",
+          "uid": "${ds}"
+        },
+        "definition": "SHOW TAG VALUES FROM \"nx-c-check-printer-health\" WITH KEY = \"hostname\"",
+        "query": "SHOW TAG VALUES FROM \"nx-c-check-printer-health\" WITH KEY = \"hostname\"",
+        "refresh": 2,
+        "sort": 1,
+        "hide": 0,
+        "includeAll": false,
+        "multi": false,
+        "current": {},
+        "options": [],
+        "regex": "",
+        "skipUrlSync": false
+      }
+    ]
+  },
+  "panels": [
+    {
+      "type": "stat",
+      "id": 1,
+      "title": "",
+      "description": "Printer name and address from the NetEye Host, model and serial number from the service Printer Info (datasource IcingaDB). When the printer is not reachable, the last known model and serial number are shown.",
+      "datasource": {
+        "type": "mysql",
+        "uid": "${dsicingadb}"
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 20,
+        "h": 4
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "mysql",
+            "uid": "${dsicingadb}"
+          },
+          "refId": "A",
+          "format": "table",
+          "rawQuery": true,
+          "editorMode": "code",
+          "rawSql": "SELECT\n  h.display_name AS `Printer`,\n  h.address AS `Address`,\n  IF(LOCATE(', Serial ', pi.output) > 0,\n     TRIM(SUBSTRING_INDEX(REGEXP_REPLACE(pi.output, '^[A-Z]+ - ', ''), ', Serial ', 1)), NULL) AS `Model`,\n  IF(LOCATE(', Serial ', pi.output) > 0,\n     TRIM(SUBSTRING(SUBSTRING_INDEX(pi.output, ', Serial ', -1), 2)), NULL) AS `Serial number`\nFROM host h\nLEFT JOIN (\n  SELECT s.host_id, COALESCE(\n      IF(LOCATE(', Serial ', ss.output) > 0, ss.output, NULL),\n      (SELECT sh.output FROM state_history sh\n       WHERE sh.service_id = s.id AND LOCATE(', Serial ', sh.output) > 0\n       ORDER BY sh.event_time DESC LIMIT 1)) AS output\n  FROM service s\n  JOIN service_customvar sc ON sc.service_id = s.id\n  JOIN customvar cv ON cv.id = sc.customvar_id\n  JOIN service_state ss ON ss.service_id = s.id\n  WHERE cv.name = 'nx_printer_health_mode' AND cv.value = '\"printer-info\"'\n) pi ON pi.host_id = h.id\nWHERE h.name = ${hostname:sqlstring}\nLIMIT 1"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "text"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "mappings": [],
+          "noValue": "-"
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/.*/",
+          "values": false
+        },
+        "colorMode": "none",
+        "graphMode": "none",
+        "textMode": "value_and_name",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "wideLayout": true,
+        "showPercentChange": false,
+        "text": {
+          "titleSize": 14,
+          "valueSize": 24
+        }
+      }
+    },
+    {
+      "type": "text",
+      "id": 2,
+      "title": "",
+      "transparent": true,
+      "gridPos": {
+        "x": 20,
+        "y": 0,
+        "w": 4,
+        "h": 4
+      },
+      "options": {
+        "mode": "html",
+        "content": "<div style=\"display:flex;align-items:center;justify-content:center;height:100%\"><a href=\"/neteye/icingadb/host?name=${hostname:percentencode}\" target=\"_blank\" rel=\"noopener noreferrer\" style=\"font-size:16px\">Open the printer in NetEye &#8599;</a></div>",
+        "code": {
+          "language": "plaintext",
+          "showLineNumbers": false,
+          "showMiniMap": false
+        }
+      }
+    },
+    {
+      "type": "row",
+      "id": 3,
+      "title": "Overview",
+      "collapsed": false,
+      "gridPos": {
+        "x": 0,
+        "y": 4,
+        "w": 24,
+        "h": 1
+      },
+      "panels": []
+    },
+    {
+      "type": "stat",
+      "id": 4,
+      "title": "Total pages",
+      "description": "Pages printed during the life of the printer (PRINTER-MIB prtMarkerLifeCount).",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${ds}"
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 5,
+        "w": 6,
+        "h": 5
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${ds}"
+          },
+          "query": "SELECT last(\"value\") FROM \"nx-c-check-printer-health\" WHERE \"hostname\" = '$hostname' AND \"metric\" = 'pages_total' AND $timeFilter",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "alias": "Total pages"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "locale",
+          "decimals": 0,
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "text"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "mappings": []
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "none",
+        "graphMode": "none",
+        "textMode": "auto",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "wideLayout": true,
+        "showPercentChange": false
+      }
+    },
+    {
+      "type": "stat",
+      "id": 5,
+      "title": "Pages in the selected period",
+      "description": "Difference of the total page counter between the first and the last check of the selected time range.",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${ds}"
+      },
+      "gridPos": {
+        "x": 6,
+        "y": 5,
+        "w": 6,
+        "h": 5
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${ds}"
+          },
+          "query": "SELECT spread(\"value\") FROM \"nx-c-check-printer-health\" WHERE \"hostname\" = '$hostname' AND \"metric\" = 'pages_total' AND $timeFilter",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "alias": "Pages"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "locale",
+          "decimals": 0,
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "text"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "mappings": []
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "none",
+        "graphMode": "none",
+        "textMode": "auto",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "wideLayout": true,
+        "showPercentChange": false
+      }
+    },
+    {
+      "type": "stat",
+      "id": 6,
+      "title": "Uptime",
+      "description": "",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${ds}"
+      },
+      "gridPos": {
+        "x": 12,
+        "y": 5,
+        "w": 6,
+        "h": 5
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${ds}"
+          },
+          "query": "SELECT last(\"value\") FROM \"nx-c-check-printer-health\" WHERE \"hostname\" = '$hostname' AND \"metric\" = 'uptime' AND $timeFilter",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "alias": "Uptime"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "m",
+          "decimals": 1,
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "text"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "mappings": []
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "none",
+        "graphMode": "none",
+        "textMode": "auto",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "wideLayout": true,
+        "showPercentChange": false
+      }
+    },
+    {
+      "type": "stat",
+      "id": 7,
+      "title": "Active problems",
+      "description": "Problems reported by the printer (service Printer Status): paper jam, no paper, toner low, offline, door open, active alerts, ...",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${ds}"
+      },
+      "gridPos": {
+        "x": 18,
+        "y": 5,
+        "w": 6,
+        "h": 5
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${ds}"
+          },
+          "query": "SELECT last(\"value\") FROM \"nx-c-check-printer-health\" WHERE \"hostname\" = '$hostname' AND \"metric\" =~ /^problems_(critical|warning)$/ AND $timeFilter GROUP BY \"metric\"",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "alias": "$tag_metric"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "locale",
+          "decimals": 0,
+          "color": {
+            "mode": "thresholds",
+            "fixedColor": "text"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 1
+              }
+            ]
+          },
+          "mappings": []
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "problems_critical"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Critical"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "red",
+                      "value": 1
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "problems_warning"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Warning"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "orange",
+                      "value": 1
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "background",
+        "graphMode": "none",
+        "textMode": "value_and_name",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "wideLayout": true,
+        "showPercentChange": false
+      }
+    },
+    {
+      "type": "row",
+      "id": 8,
+      "title": "Page counters",
+      "collapsed": false,
+      "gridPos": {
+        "x": 0,
+        "y": 10,
+        "w": 24,
+        "h": 1
+      },
+      "panels": []
+    },
+    {
+      "type": "timeseries",
+      "id": 9,
+      "title": "Pages per day",
+      "description": "Pages printed per day (UTC days), computed from the total page counter.",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${ds}"
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 11,
+        "w": 16,
+        "h": 9
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${ds}"
+          },
+          "query": "SELECT non_negative_difference(last(\"value\")) FROM \"nx-c-check-printer-health\" WHERE \"hostname\" = '$hostname' AND \"metric\" = 'pages_total' AND $timeFilter GROUP BY time(1d) fill(none)",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "alias": "Pages per day"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "locale",
+          "custom": {
+            "drawStyle": "bars",
+            "fillOpacity": 80,
+            "lineWidth": 1,
+            "showPoints": "never",
+            "spanNulls": true,
+            "barAlignment": 0,
+            "axisSoftMin": 0
+          },
+          "color": {
+            "mode": "palette-classic"
+          },
+          "decimals": 0
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true,
+          "calcs": []
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      }
+    },
+    {
+      "type": "table",
+      "id": 10,
+      "title": "Page counters",
+      "description": "All page counters of the printer. HP, Lexmark, Canon, Ricoh, Konica Minolta, Xerox and Samsung printers add color, mono, copy, fax, ... counters, Zebra label printers count labels.",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${ds}"
+      },
+      "gridPos": {
+        "x": 16,
+        "y": 11,
+        "w": 8,
+        "h": 9
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${ds}"
+          },
+          "query": "SELECT last(\"value\") FROM \"nx-c-check-printer-health\" WHERE \"hostname\" = '$hostname' AND \"metric\" !~ /^(uptime|problems_critical|problems_warning)$|_(remaining|used)$/ AND $timeFilter GROUP BY \"metric\"",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "alias": "$tag_metric"
+        }
+      ],
+      "transformations": [
+        {
+          "id": "reduce",
+          "options": {
+            "reducers": [
+              "lastNotNull"
+            ],
+            "includeTimeField": false,
+            "mode": "seriesToRows"
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "renameByName": {
+              "Field": "Counter",
+              "Last *": "Pages"
+            },
+            "excludeByName": {},
+            "indexByName": {}
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "locale",
+          "decimals": 0,
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            }
+          },
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "text",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Pages"
+            },
+            "properties": [
+              {
+                "id": "custom.align",
+                "value": "right"
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "showHeader": true,
+        "cellHeight": "sm",
+        "footer": {
+          "show": false
+        },
+        "sortBy": [
+          {
+            "displayName": "Counter",
+            "desc": false
+          }
+        ]
+      }
+    },
+    {
+      "type": "timeseries",
+      "id": 11,
+      "title": "Page counters over time",
+      "description": "",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${ds}"
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 20,
+        "w": 24,
+        "h": 8
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${ds}"
+          },
+          "query": "SELECT last(\"value\") FROM \"nx-c-check-printer-health\" WHERE \"hostname\" = '$hostname' AND \"metric\" !~ /^(uptime|problems_critical|problems_warning)$|_(remaining|used)$/ AND $timeFilter GROUP BY time($__interval), \"metric\" fill(none)",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "alias": "$tag_metric"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "locale",
+          "custom": {
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "lineWidth": 1,
+            "showPoints": "never",
+            "spanNulls": true,
+            "barAlignment": 0,
+            "axisSoftMin": 0
+          },
+          "color": {
+            "mode": "palette-classic"
+          },
+          "decimals": 0
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true,
+          "calcs": []
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      }
+    },
+    {
+      "type": "row",
+      "id": 12,
+      "title": "Supplies",
+      "collapsed": false,
+      "gridPos": {
+        "x": 0,
+        "y": 28,
+        "w": 24,
+        "h": 1
+      },
+      "panels": []
+    },
+    {
+      "type": "bargauge",
+      "id": 13,
+      "title": "Supplies level",
+      "description": "Toner, drum, ... remaining (_remaining) and waste containers fill level (_used). Supplies which report no percentage are not shown.",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${ds}"
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 29,
+        "w": 10,
+        "h": 9
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${ds}"
+          },
+          "query": "SELECT last(\"value\") FROM \"nx-c-check-printer-health\" WHERE \"hostname\" = '$hostname' AND \"metric\" =~ /_(remaining|used)$/ AND $timeFilter GROUP BY \"metric\"",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "alias": "$tag_metric"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
+          "decimals": 0,
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": 5
+              },
+              {
+                "color": "green",
+                "value": 20
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/_used$/"
+            },
+            "properties": [
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "orange",
+                      "value": 90
+                    },
+                    {
+                      "color": "red",
+                      "value": 95
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "orientation": "horizontal",
+        "displayMode": "basic",
+        "showUnfilled": true,
+        "valueMode": "color",
+        "namePlacement": "auto",
+        "sizing": "auto",
+        "minVizHeight": 16
+      }
+    },
+    {
+      "type": "timeseries",
+      "id": 14,
+      "title": "Supplies over time",
+      "description": "",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${ds}"
+      },
+      "gridPos": {
+        "x": 10,
+        "y": 29,
+        "w": 14,
+        "h": 9
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${ds}"
+          },
+          "query": "SELECT last(\"value\") FROM \"nx-c-check-printer-health\" WHERE \"hostname\" = '$hostname' AND \"metric\" =~ /_(remaining|used)$/ AND $timeFilter GROUP BY time($__interval), \"metric\" fill(none)",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "alias": "$tag_metric"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "custom": {
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "lineWidth": 1,
+            "showPoints": "never",
+            "spanNulls": true,
+            "barAlignment": 0,
+            "axisSoftMin": 0
+          },
+          "color": {
+            "mode": "palette-classic"
+          },
+          "min": 0,
+          "max": 100,
+          "decimals": 0
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true,
+          "calcs": []
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      }
+    },
+    {
+      "type": "row",
+      "id": 15,
+      "title": "Problems history",
+      "collapsed": false,
+      "gridPos": {
+        "x": 0,
+        "y": 38,
+        "w": 24,
+        "h": 1
+      },
+      "panels": []
+    },
+    {
+      "type": "state-timeline",
+      "id": 16,
+      "title": "Problems reported by the printer",
+      "description": "Number of active critical and warning problems (service Printer Status).",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${ds}"
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 39,
+        "w": 24,
+        "h": 6
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${ds}"
+          },
+          "query": "SELECT max(\"value\") FROM \"nx-c-check-printer-health\" WHERE \"hostname\" = '$hostname' AND \"metric\" =~ /^problems_(critical|warning)$/ AND $timeFilter GROUP BY time($__interval), \"metric\" fill(previous)",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "alias": "$tag_metric"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 1
+              }
+            ]
+          },
+          "custom": {
+            "fillOpacity": 80,
+            "lineWidth": 0
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "problems_critical"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Critical"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "problems_warning"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Warning"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "orange",
+                      "value": 1
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "showValue": "auto",
+        "mergeValues": true,
+        "rowHeight": 0.8,
+        "alignValue": "left",
+        "legend": {
+          "showLegend": false,
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      }
+    }
+  ]
+}
