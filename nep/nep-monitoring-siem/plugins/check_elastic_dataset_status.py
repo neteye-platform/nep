@@ -115,12 +115,12 @@ def SearchOnElastic():
     payload_data = json.loads(JSON_PAYLOAD)
 
     try:
-        r = requests.get(  # codeql[py/request-without-cert-validation] ignore
+        r = requests.get(
             URL,
             headers=headers,
             data=json.dumps(payload_data),
             cert=(cert_path + cert_file, cert_path + key_file),
-            verify=False,
+            verify=False,  # codeql[py/request-without-cert-validation] ignore
         )
     except (ConnectionError, ReadTimeout) as e:
         ## Error on Elastic
@@ -145,11 +145,11 @@ def SendToTornado(payload):
     try:
         # Internal Tornado endpoint over self-signed certs; TLS validation is
         # intentionally disabled, matching the existing Elasticsearch calls.
-        r = requests.post(  # codeql[py/request-without-cert-validation] ignore
+        r = requests.post(
             tornado_url + webhook + "?token=" + secret,
             data=json.dumps(payload),
             headers=headers,
-            verify=False,
+            verify=False,  # codeql[py/request-without-cert-validation] ignore
             timeout=10,
         )
         return r.status_code == 200
