@@ -1,0 +1,36 @@
+# The plugins also run on RHEL 8, whose Python is 3.6.
+# Ruff cannot target Python 3.6, so it targets the oldest version it supports.
+target-version = "py37"
+
+[lint]
+ignore = [
+  # These rules suggest code that needs Python 3.7 or later.
+  # Keep them disabled while the plugins run on Python 3.6.
+  "FA100",   # future-rewritable-type-annotation
+  "UP021",   # replace-universal-newlines
+  "UP022",   # replace-stdout-stderr
+
+  # TODO: Fix the code and remove these rules one at a time.
+  "BLE001",  # blind-except
+  "C403",    # unnecessary-list-comprehension-set
+  "FLY002",  # static-join-to-f-string
+  "G010",    # logging-warn
+  "I001",    # unsorted-imports
+  "LOG015",  # root-logger-call
+  "PERF102", # incorrect-dict-iterator
+  "PERF402", # manual-list-copy
+  "PLR1704", # redefined-argument-from-local
+  "PLR1711", # useless-return
+  "PLR1722", # sys-exit-alias
+  "PLW1510", # subprocess-run-without-check
+  "RUF010",  # explicit-f-string-type-conversion
+  "RUF012",  # mutable-class-default
+  "RUF100",  # unused-noqa
+  "S110",    # try-except-pass
+  "SIM102",  # collapsible-if
+  "SIM103",  # needless-bool
+  "SIM114",  # if-with-same-arms
+  "UP028",   # yield-in-for-loop
+  "UP030",   # format-literals
+  "UP032",   # f-string
+]

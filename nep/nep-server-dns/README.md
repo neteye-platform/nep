@@ -1,6 +1,7 @@
 # NEP Server DNS
 
-The `nep-server-dns` provides the minimum requirements to implement a monitoring of DNS Server .
+The `nep-server-dns` provides the minimum requirements to implement a monitoring
+of DNS Server .
 
 Using the provided objects, is possible to:
 
@@ -32,7 +33,8 @@ Using the provided objects, is possible to:
 
 ### External dependencies
 
-This NEP doesn't need any external dependencies other that the ones used by the NEPs reported in [Prerequisites](#prerequisites)
+This NEP doesn't need any external dependencies other that the ones used by the
+NEPs reported in [Prerequisites](#prerequisites)
 
 ## Installation
 
@@ -62,25 +64,31 @@ This NEP doesn't provide any Director/Icinga object
 
 The following Host Templates can be used to freely create Host Objects.
 
-_Remember to not edit these Host Templates because they will be restored/updated at the next NEP package update_:
+_Remember to not edit these Host Templates because they will be restored/updated
+at the next NEP package update_:
 
 * `nx-ht-windows-dns-server`: Describe a generic Windows DNS Server.
 
 #### Service Templates
 
-The following Service Templates can be used to freely create Service Objects, Service Apply Rules or Service Sets.
+The following Service Templates can be used to freely create Service Objects,
+Service Apply Rules or Service Sets.
 
-_Remember to not edit these Service Templates as they will be restored/updated at the next NEP Package update_:
+_Remember to not edit these Service Templates as they will be restored/updated
+at the next NEP Package update_:
 
-* `nx-st-agentless-dns-record-status`: Checks all aspects of monitoring of a DNS Server
+* `nx-st-agentless-dns-record-status`: Checks all aspects of monitoring of a DNS
+  Server
 
 #### Services Sets
 
 The following Service Sets can be used to freely monitor Host Objects.
 
-_Remember to not edit these Service Sets because they will be restored/updated at the next NEP Package update_:
+_Remember to not edit these Service Sets because they will be restored/updated
+at the next NEP Package update_:
 
-* `nx-ss-windows-ad-dns-server`: Service Set providing common monitoring for DNS Server:
+* `nx-ss-windows-ad-dns-server`: Service Set providing common monitoring for DNS
+  Server:
   * Service DNS Server Status
   * DNS A record Status
   * DNS PTR record Status

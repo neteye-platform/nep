@@ -1,6 +1,7 @@
 # NEP Monitoring VMD
 
-The `nep-monitoring-vmd` package is the NEP designed to monitor the state of VMD service.
+The `nep-monitoring-vmd` package is the NEP designed to monitor the state of VMD
+service.
 
 ## Table of Contents
 
@@ -26,7 +27,8 @@ The `nep-monitoring-vmd` package is the NEP designed to monitor the state of VMD
 
 ### External dependencies
 
-This NEP doesn't need any external dependencies other that the ones used by the NEPs reported in [Prerequisites](#prerequisites)
+This NEP doesn't need any external dependencies other that the ones used by the
+NEPs reported in [Prerequisites](#prerequisites)
 
 ## Installation
 
@@ -68,7 +70,8 @@ This NEP doesn't provide any Service Template definition.
 
 The following Service Sets can be used to freely monitor Host Objects.
 
-_Remember to not edit these Service Sets because they will be restored/updated at the next NEP Package update_:
+_Remember to not edit these Service Sets because they will be restored/updated
+at the next NEP Package update_:
 
 * `nx-ss-neteye-vmd-state`: Service Set providing common monitoring for VMD Module
   * Unit Icinga-VsphereDB State
