@@ -20,8 +20,8 @@ Choose the printer with the `Printer` variable at the top of the dashboard.
 ## Requirements
 
 * Grafana datasource `icinga2-influxdb` (it can be changed with the `Datasource` variable)
-* Grafana datasource `icingadb-mysql` for the header (it can be changed with the `IcingaDB` variable), created by
-  nep-common on NetEye 4.50 and newer
+* NetEye 4.48 and newer and the Grafana datasource `icingadb-mysql` for the header and the active problems
+  (it can be changed with the `IcingaDB` variable), created by nep-common
 * Pages per day are computed on UTC days
 * Supplies which report no percentage (e.g. toner of some Brother printers) are not shown: their problems are
   reported by the service `Printer Status`

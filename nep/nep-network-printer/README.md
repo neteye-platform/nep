@@ -21,10 +21,13 @@ The NEP is based on the check_printer_health script (for more information have l
 
 | Software Version | Version |
 | --- | ----------- |
-| NetEye | 4.29 |
-| nep-common | 0.0.3 |
-| nep-network-base | >=0.0.3 |
-| nep-centreon-plugins-base | >=0.0.2 |
+| NetEye | >=4.48 |
+| nep-common | >=0.13.10 |
+| nep-network-base | >=0.5.0 |
+
+NetEye 4.48 is required because nep-common creates the Grafana datasource `icingadb-mysql`, used by the dashboard to
+read the current state of the printer from IcingaDB. The minimum versions of nep-common and nep-network-base are the
+ones distributed with NetEye 4.48.
 
 ### Required NetEye Modules
 
