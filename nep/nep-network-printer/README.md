@@ -49,6 +49,15 @@ to all the printers. The names of the existing services do not change, so their 
 If the Service Set was assigned manually to a Host (instead of using the Host Template `nx-ht-network-printer-snmp`), the
 update prints a warning: in this case the Service Set must be assigned again to the Host before deploying the configuration.
 
+#### Changes of the monitoring after the update to 0.1.0
+
+* `Printer Hardware Status` and `Printer Supplies Status` also report the problems that the printer signals (see
+  [How problems are notified](#how-problems-are-notified)). They can become WARNING or CRITICAL for problems that the
+  previous versions did not notify, e.g. toner low on Brother printers, paper jam, no paper. An open door reported by
+  the printer is CRITICAL. Without problems the output does not change.
+* Brother printers can be monitored with SNMP v2c (the previous versions timed out).
+* New services: `Printer Page Count`, `Printer Info`, `Printer Status`.
+
 ### NEP Installation
 
 In order to install the NEP run:
@@ -75,21 +84,53 @@ Service Templates:
 
 * `nx-st-network-printer-health` using the 6 available modes
   * `uptime`: printer uptime
-  * `hardware-health`: checks printer hardware
-  * `supplies-status`: checks consumables, toner, ink cartridges, etc..
+  * `hardware-health`: checks the printer hardware: covers, plus the hardware problems reported by the printer
+    (door open, paper jam, missing trays, service requested, ...), see [How problems are notified](#how-problems-are-notified)
+  * `supplies-status`: checks consumables, toner, ink cartridges, etc.: supplies levels, plus the supplies problems
+    reported by the printer (toner low, no paper, output bin full, ...), see [How problems are notified](#how-problems-are-notified)
   * `page-count`: page counters as performance data (always OK)
     * all vendors: `pages_total` (PRINTER-MIB prtMarkerLifeCount) and `pages_since_poweron` (prtMarkerPowerOnCount)
     * vendor specific counters: see [Supported printers](#supported-printers)
   * `printer-info`: model and serial number of the printer (always OK)
-  * `printer-status`: status reported by the printer itself, with the number of active problems as performance
-    data (`problems_critical`, `problems_warning`)
-    * HOST-RESOURCES-MIB `hrPrinterDetectedErrorState`: CRITICAL for noPaper, noToner, doorOpen, jammed, offline,
-      inputTrayMissing, outputTrayMissing, markerSupplyMissing, outputFull; WARNING for lowPaper, lowToner,
-      serviceRequested, outputNearFull, inputTrayEmpty, overduePreventMaint
-    * HOST-RESOURCES-MIB `hrDeviceStatus` (down is CRITICAL, warning is WARNING) when no error is reported
-    * PRINTER-MIB `prtAlertTable`: active critical and warning alerts (informational events like "powered up" are ignored)
-    * the text of the printer display is shown in the output
-    * WARNING conditions can be changed with `--mitigation` (e.g. `--mitigation ok`)
+  * `printer-status`: status of the printer itself (offline, device down, alerts which are neither hardware nor
+    supplies). It lists all the problems reported by the printer and the text of the display, but only its own
+    problems make it WARNING or CRITICAL, see [How problems are notified](#how-problems-are-notified).
+    Performance data: number of all the active problems (`problems_critical`, `problems_warning`)
+
+#### How problems are notified
+
+The printer reports its problems in HOST-RESOURCES-MIB (`hrPrinterDetectedErrorState`, `hrDeviceStatus`) and in
+PRINTER-MIB (`prtAlertTable`). Every problem is notified by **one service only**, so the same problem does not send two
+notifications:
+
+| Problem reported by the printer | Service WARNING / CRITICAL | Level |
+| --- | --- | --- |
+| no toner, toner cartridge or other supply missing, no paper, output bin full | `Printer Supplies Status` | CRITICAL |
+| toner low, paper low, input tray empty, output bin almost full | `Printer Supplies Status` | WARNING |
+| supplies alerts: toner/ink empty or almost empty, waste toner full, drum (OPC) or developer life over, input/output media low/empty/full, finisher supplies | `Printer Supplies Status` | severity of the alert |
+| door open, paper jam, input tray missing, output tray missing | `Printer Hardware Status` | CRITICAL |
+| service requested, preventive maintenance overdue | `Printer Hardware Status` | WARNING |
+| hardware alerts: cover or interlock open, jam, missing subunit, motor/memory/storage failure, fuser or temperature problems, finisher device | `Printer Hardware Status` | severity of the alert |
+| printer offline | `Printer Status` | CRITICAL |
+| device status down or warning, when the printer reports no problem explaining it | `Printer Status` | CRITICAL (down), WARNING (warning) |
+| any other alert (e.g. interpreter, channel, vendor specific alert codes) | `Printer Status` | severity of the alert |
+
+Rules:
+
+* Alerts with severity critical make the service CRITICAL, alerts with severity warning make it WARNING. Alerts which
+  only inform about an event (powered up, door closed, configuration changed, media size changed, ...) are ignored.
+* `Printer Hardware Status` keeps checking the covers table: an open cover is WARNING, an open door reported by the
+  printer is CRITICAL (the printer cannot print).
+* `Printer Supplies Status` keeps checking the supplies levels (`*_remaining` below 20% WARNING, below 5% CRITICAL,
+  `*_used` above 90% WARNING, above 95% CRITICAL). The problems reported by the printer make toner low visible also on
+  printers which report the toner level only as "some remaining" (e.g. Brother).
+* `Printer Status` stays OK for hardware and supplies problems and lists them, for example:
+  `OK - Brother HL-L2400DWE is idle, reported by Supplies Status: Brother HL-L2400DWE: lowToner, alert: Toner Low, display: Toner Low`
+* The WARNING level of all the services can be changed with `--mitigation` (e.g. `--mitigation ok`).
+* Zebra label printers follow the same rule with the ZEBRA-MIB: head open, head temperature, cutter jam in
+  `Printer Hardware Status`; media out, ribbon out in `Printer Supplies Status`; printer paused in `Printer Status`.
+* Printers which implement only HOST-RESOURCES-MIB (no PRINTER-MIB) report their problems the same way in the three
+  services.
 
 #### Services Sets
 
@@ -112,8 +153,9 @@ Commands:
 ### Dashboard ITOA
 
 The NEP provides the Grafana dashboard `Network Printer Overview` (folder `itoa/NetworkPrinterOverview`): choose a
-printer and see its page counters (exact numbers and pages per day), supplies levels and the history of the
-problems reported by the printer.
+printer and see in the header its name, address, model, serial number and ping (colored by round trip time), then the
+page counters (exact numbers and pages per day), the active problems (services of the printer which are CRITICAL,
+WARNING or UNKNOWN now) and the supplies levels.
 
 ## Supported printers
 
@@ -149,8 +191,8 @@ All the other network printers are monitored with the standard MIBs. What each m
 
 | Mode | Standard objects | Without them |
 | --- | --- | --- |
-| `hardware-health` | PRINTER-MIB covers (`prtCoverTable`) and display (`prtConsoleDisplayBufferTable`) | OK, nothing to check |
-| `supplies-status` | PRINTER-MIB `prtMarkerSuppliesTable` with a level and a maximum capacity | supplies reporting only "some remaining" (-3) are always OK |
+| `hardware-health` | PRINTER-MIB covers (`prtCoverTable`), HOST-RESOURCES-MIB `hrPrinterDetectedErrorState`, PRINTER-MIB `prtAlertTable` | OK, nothing to check |
+| `supplies-status` | PRINTER-MIB `prtMarkerSuppliesTable` (level and maximum capacity), `hrPrinterDetectedErrorState`, `prtAlertTable` | supplies reporting only "some remaining" (-3) are OK unless the printer reports a problem |
 | `uptime` | SNMPv2-MIB `sysUpTime` / HOST-RESOURCES-MIB `hrSystemUptime` | UNKNOWN |
 | `page-count` | PRINTER-MIB `prtMarkerLifeCount`, `prtMarkerPowerOnCount` | UNKNOWN |
 | `printer-info` | HOST-RESOURCES-MIB `hrDeviceDescr` (printer device), PRINTER-MIB `prtGeneralSerialNumber` | model from `sysDescr`, serial `unknown` |

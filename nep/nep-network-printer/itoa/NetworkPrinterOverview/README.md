@@ -7,13 +7,15 @@ This dashboard shows, for one printer at a time, the data collected by the servi
 
 Choose the printer with the `Printer` variable at the top of the dashboard.
 
-* Header: printer name and address (NetEye Host), model and serial number (service `Printer Info`), and a link that
-  opens the Host in NetEye
-* Overview: total pages (exact number), pages printed in the selected period, uptime, active problems
+* Header: printer name and address (NetEye Host), model and serial number (service `Printer Info`; when the printer
+  is not reachable the last known values), ping now (round trip time of the host check
+  `hostalive` from InfluxDB: green below 50 ms, orange below 200 ms, red above, `no reply` when the host does not
+  answer) and a link that opens the Host in NetEye
+* Overview: total pages (exact number), pages printed in the selected period, uptime, active problems (number of
+  services of the printer which are CRITICAL, WARNING or UNKNOWN now, from IcingaDB, independent of the time range)
 * Page counters: pages per day, all page counters of the printer (HP and Lexmark add color, mono, duplex, copy,
   fax, ... counters), page counters over time
 * Supplies: current level of toner, drum, waste containers, ... and their history
-* Problems history: problems reported by the printer (service `Printer Status`) over time
 
 ## Requirements
 

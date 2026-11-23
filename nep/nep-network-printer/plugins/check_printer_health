@@ -12014,9 +12014,14 @@ use strict;
 
 sub init {
   my $self = shift;
-  # Devices without PRINTER-MIB. printer-status and printer-info only need
-  # HOST-RESOURCES-MIB, the other modes keep their previous behavior.
-  if ($self->mode =~ /device::printer::status/) {
+  # Devices without PRINTER-MIB: hardware-health, supplies-status and
+  # printer-status use the problems reported in HOST-RESOURCES-MIB
+  # (hrPrinterDetectedErrorState), printer-info the device description.
+  if ($self->mode =~ /device::hardware::health/) {
+    $self->analyze_and_check_environmental_subsystem('Classes::PRINTERMIB::Component::PrinterSubsystem');
+  } elsif ($self->mode =~ /device::printer::consumables/) {
+    $self->analyze_and_check_environmental_subsystem('Classes::PRINTERMIB::Component::PrinterSubsystem');
+  } elsif ($self->mode =~ /device::printer::status/) {
     $self->analyze_and_check_status_subsystem('Classes::PRINTERMIB::Component::StatusSubsystem');
   } elsif ($self->mode =~ /device::printer::info/) {
     $self->analyze_and_check_info_subsystem('Classes::PRINTERMIB::Component::InfoSubsystem');
@@ -12036,6 +12041,8 @@ sub init {
         ['displays', 'prtConsoleDisplayBufferTable', 'Classes::PRINTERMIB::Component::PrinterSubsystem::Display'],
         ['covers', 'prtCoverTable', 'Classes::PRINTERMIB::Component::PrinterSubsystem::Cover'],
     ]);
+    # hardware problems reported by the printer (door open, jam, ...)
+    $self->{conditions} = Classes::PRINTERMIB::Component::Conditions->new();
   } elsif ($self->mode =~ /device::printer::consumables/) {
     $self->get_snmp_tables('PRINTER-MIB', [
         ['inputs', 'prtInputTable', 'Classes::PRINTERMIB::Component::PrinterSubsystem::Input'],
@@ -12044,12 +12051,19 @@ sub init {
         ['markers', 'prtMarkerTable', 'Classes::PRINTERMIB::Component::PrinterSubsystem::Marker'],
         ['media', 'prtMediaPathTable', 'Classes::PRINTERMIB::Component::PrinterSubsystem::MediaPath'],
     ]);
+    # supplies problems reported by the printer (toner low, no paper, ...),
+    # also for supplies without a level (prtMarkerSuppliesLevel -3)
+    $self->{conditions} = Classes::PRINTERMIB::Component::Conditions->new();
   }
 }
 
 sub check {
   my ($self) = @_;
   $self->SUPER::check();
+  if ($self->{conditions}) {
+    $self->{conditions}->apply(
+        $self->mode =~ /device::hardware::health/ ? 'hardware' : 'supplies');
+  }
   if ($self->mode =~ /device::hardware::health/) {
     $self->reduce_messages("hardware working fine");
   } elsif ($self->mode =~ /device::printer::consumables/) {
@@ -12274,35 +12288,43 @@ sub check {
 }
 
 
-package Classes::PRINTERMIB::Component::StatusSubsystem;
+package Classes::PRINTERMIB::Component::Conditions;
 our @ISA = qw(Monitoring::GLPlugin::SNMP::Item);
 use strict;
 
-# Status of the printer as the printer itself reports it:
-#   HOST-RESOURCES-MIB hrDeviceStatus, hrPrinterStatus, hrPrinterDetectedErrorState
-#   PRINTER-MIB prtAlertTable (active alerts) and the console display text
-# This catches problems the other modes do not see, e.g. paper jams, no paper,
-# offline printers and toner low on printers which report the toner level
-# only as "some remaining" (prtMarkerSuppliesLevel -3).
+# Problems reported by the printer itself:
+#   HOST-RESOURCES-MIB hrPrinterDetectedErrorState, hrDeviceStatus
+#   PRINTER-MIB prtAlertTable (active alerts)
+# Every problem belongs to exactly one category, and only the mode of that
+# category turns it into a WARNING or CRITICAL, so a problem is notified once:
+#   supplies -> supplies-status, hardware -> hardware-health, status -> printer-status
+# printer-status lists the problems of the other categories in its output.
 
-# 2 = printing is not possible (CRITICAL), 1 = someone has to act soon (WARNING)
-our $error_levels = {
-  noPaper => 2,
-  noToner => 2,
-  doorOpen => 2,
-  jammed => 2,
-  offline => 2,
-  inputTrayMissing => 2,
-  outputTrayMissing => 2,
-  markerSupplyMissing => 2,
-  outputFull => 2,
-  lowPaper => 1,
-  lowToner => 1,
-  serviceRequested => 1,
-  outputNearFull => 1,
-  inputTrayEmpty => 1,
-  overduePreventMaint => 1,
+# error bit => [category, level]: level 2 CRITICAL (printing is not possible),
+# 1 WARNING (someone has to act soon)
+our $error_bits = {
+  lowToner => ['supplies', 1],
+  noToner => ['supplies', 2],
+  markerSupplyMissing => ['supplies', 2],
+  lowPaper => ['supplies', 1],
+  noPaper => ['supplies', 2],
+  inputTrayEmpty => ['supplies', 1],
+  outputNearFull => ['supplies', 1],
+  outputFull => ['supplies', 2],
+  doorOpen => ['hardware', 2],
+  jammed => ['hardware', 2],
+  inputTrayMissing => ['hardware', 2],
+  outputTrayMissing => ['hardware', 2],
+  serviceRequested => ['hardware', 1],
+  overduePreventMaint => ['hardware', 1],
+  offline => ['status', 2],
 };
+
+our %category_service = (
+  hardware => 'Hardware Status',
+  supplies => 'Supplies Status',
+  status => 'Printer Status',
+);
 
 sub init {
   my ($self) = @_;
@@ -12312,18 +12334,9 @@ sub init {
   ]);
   $self->get_snmp_tables('PRINTER-MIB', [
       ['alerts', 'prtAlertTable', 'Classes::PRINTERMIB::Component::StatusSubsystem::Alert'],
-      ['displays', 'prtConsoleDisplayBufferTable', 'Monitoring::GLPlugin::SNMP::TableItem'],
   ]);
-}
-
-sub check {
-  my ($self) = @_;
-  if (! @{$self->{printers}} && ! @{$self->{alerts}}) {
-    $self->add_unknown('the printer reports neither hrPrinterTable nor prtAlertTable');
-    return;
-  }
-  # number of active problems, as performance data for the history in Grafana
-  my %problems = (critical => 0, warning => 0);
+  $self->{conditions} = [];
+  my @alerts = grep { $_->category() } @{$self->{alerts}};
   foreach my $printer (@{$self->{printers}}) {
     my ($device) = grep {
         $_->{flat_indices} eq $printer->{flat_indices}
@@ -12331,37 +12344,102 @@ sub check {
     my $name = ($device && $device->{hrDeviceDescr}) ?
         $self->accentfree($device->{hrDeviceDescr}) : 'printer';
     $name =~ s/^\s+|\s+$//g;
-    my $device_status = ($device && $device->{hrDeviceStatus}) || 'unknown';
+    $printer->{name} = $name;
+    $printer->{device_status} = ($device && $device->{hrDeviceStatus}) || 'unknown';
     my @errors = grep {
         $_ ne 'good'
     } split(/\|/, $printer->{hrPrinterDetectedErrorState} // 'good');
-    $self->add_info(sprintf '%s is %s, device status %s, errors: %s',
-        $name, $printer->{hrPrinterStatus} // 'unknown', $device_status,
-        @errors ? join(',', @errors) : 'none');
-    if (@errors) {
-      foreach my $error (@errors) {
-        if (($error_levels->{$error} // 1) == 2) {
-          $self->add_critical(sprintf '%s: %s', $name, $error);
-          $problems{critical}++;
-        } else {
-          $self->add_warning_mitigation(sprintf '%s: %s', $name, $error);
-          $problems{warning}++;
-        }
+    $printer->{errors} = \@errors;
+    foreach my $error (@errors) {
+      my ($category, $level) = @{$error_bits->{$error} || ['status', 1]};
+      push(@{$self->{conditions}}, {
+          category => $category, level => $level, text => sprintf('%s: %s', $name, $error),
+      });
+    }
+    # hrDeviceStatus only counts if the printer gives no reason for it
+    if (! @errors && ! @alerts) {
+      if ($printer->{device_status} eq 'down') {
+        push(@{$self->{conditions}}, {
+            category => 'status', level => 2, text => sprintf('%s: device status is down', $name),
+        });
+      } elsif ($printer->{device_status} eq 'warning') {
+        push(@{$self->{conditions}}, {
+            category => 'status', level => 1, text => sprintf('%s: device status is warning', $name),
+        });
       }
-    } elsif ($device_status eq 'down') {
-      $self->add_critical(sprintf '%s: device status is down', $name);
-      $problems{critical}++;
-    } elsif ($device_status eq 'warning') {
-      $self->add_warning_mitigation(sprintf '%s: device status is warning', $name);
-      $problems{warning}++;
-    } else {
-      $self->add_ok(sprintf '%s is %s', $name, $printer->{hrPrinterStatus} // 'unknown');
     }
   }
-  foreach my $alert (@{$self->{alerts}}) {
-    my $level = $alert->check();
-    $problems{critical}++ if $level == 2;
-    $problems{warning}++ if $level == 1;
+  foreach my $alert (@alerts) {
+    push(@{$self->{conditions}}, {
+        category => $alert->category(), level => $alert->level(),
+        text => sprintf('alert: %s', $alert->{description}),
+    });
+  }
+}
+
+sub has_status_data {
+  my ($self) = @_;
+  return (@{$self->{printers}} || @{$self->{alerts}}) ? 1 : 0;
+}
+
+sub of_category {
+  my ($self, $category) = @_;
+  return grep { $_->{category} eq $category } @{$self->{conditions}};
+}
+
+# turns the problems of a category into WARNING or CRITICAL messages
+sub apply {
+  my ($self, $category) = @_;
+  foreach my $condition ($self->of_category($category)) {
+    if ($condition->{level} == 2) {
+      $self->add_critical($condition->{text});
+    } else {
+      $self->add_warning_mitigation($condition->{text});
+    }
+  }
+}
+
+
+package Classes::PRINTERMIB::Component::StatusSubsystem;
+our @ISA = qw(Monitoring::GLPlugin::SNMP::Item);
+use strict;
+
+# printer-status: WARNING or CRITICAL only for the status of the printer
+# itself (offline, device down/warning without a reported reason, alerts which
+# are neither hardware nor supplies). Hardware and supplies problems are
+# notified by hardware-health and supplies-status and only listed here.
+
+sub init {
+  my ($self) = @_;
+  $self->{status} = Classes::PRINTERMIB::Component::Conditions->new();
+  $self->get_snmp_tables('PRINTER-MIB', [
+      ['displays', 'prtConsoleDisplayBufferTable', 'Monitoring::GLPlugin::SNMP::TableItem'],
+  ]);
+}
+
+sub check {
+  my ($self) = @_;
+  my $status = $self->{status};
+  if (! $status->has_status_data()) {
+    $self->add_unknown('the printer reports neither hrPrinterTable nor prtAlertTable');
+    return;
+  }
+  foreach my $condition (@{$status->{conditions}}) {
+    $self->add_info(sprintf '%s (%s, %s)', $condition->{text}, $condition->{category},
+        $condition->{level} == 2 ? 'critical' : 'warning');
+  }
+  $status->apply('status');
+  my %own = map { $_->{text} => 1 } $status->of_category('status');
+  foreach my $printer (@{$status->{printers}}) {
+    next if grep { index($_, $printer->{name}.':') == 0 } keys %own;
+    $self->add_ok(sprintf '%s is %s', $printer->{name}, $printer->{hrPrinterStatus} // 'unknown');
+  }
+  # problems notified by the other services
+  foreach my $category (qw(hardware supplies)) {
+    my @texts = map { $_->{text} } $status->of_category($category);
+    $self->add_ok(sprintf 'reported by %s: %s',
+        $Classes::PRINTERMIB::Component::Conditions::category_service{$category},
+        join(', ', @texts)) if @texts;
   }
   my @display = grep { /\S/ } map {
       my $text = $self->accentfree($_->{prtConsoleDisplayBufferText} // '');
@@ -12369,14 +12447,43 @@ sub check {
       $text;
   } @{$self->{displays}};
   $self->add_ok(sprintf 'display: %s', join(' / ', @display)) if @display;
-  $self->add_perfdata(label => 'problems_critical', value => $problems{critical});
-  $self->add_perfdata(label => 'problems_warning', value => $problems{warning});
+  # all the problems of the printer, as performance data for the history
+  my @conditions = @{$status->{conditions}};
+  $self->add_perfdata(label => 'problems_critical',
+      value => scalar(grep { $_->{level} == 2 } @conditions));
+  $self->add_perfdata(label => 'problems_warning',
+      value => scalar(grep { $_->{level} == 1 } @conditions));
 }
 
 
 package Classes::PRINTERMIB::Component::StatusSubsystem::Alert;
 our @ISA = qw(Monitoring::GLPlugin::SNMP::TableItem);
 use strict;
+
+# Alert codes which only inform about an event (something was closed, added,
+# changed, the printer was switched on, ...). They are no problem to act on.
+our $informational_codes = qr/^(coverClosed|interlockClosed|configurationChanged|subunitClosed|
+    subunitTurnedOn|subunitPowerSaver|subunitWarmingUp|subunitAdded|subunitResourceAdded|
+    subunitResourceRemoved|doorClosed|poweredUp|poweredDown|printerNMSReset|printerManualReset|
+    printerReadyToPrint|inputMedia(Size|Weight|Type|Color)Changed|inputMediaFormPartsChange|
+    markerAdjustingPrintQuality|interpreterMemory(In|De)creased|interpreterCartridge(Added|Deleted)|
+    interpreterResource(Added|Deleted)|interpreterComplexPageEncountered|
+    alertRemovalOfBinaryChangeEntry)$/x;
+
+# Alert codes of consumables (toner, ink, paper, waste, output bins, ...)
+our $supplies_codes = qr/^(subunitLifeAlmostOver|subunitLifeOver|subunitAlmostEmpty|subunitEmpty|
+    subunitAlmostFull|subunitFull|subunitNearLimit|subunitAtLimit|inputMediaSupplyLow|
+    inputMediaSupplyEmpty|outputMediaTrayAlmostFull|outputMediaTrayFull|marker(Toner|Ink|PrintRibbon)(Almost)?Empty|
+    markerWaste(Toner|Ink)Receptacle(Almost)?Full|markerOpcLife(AlmostOver|Over)|markerDeveloper(Almost)?Empty|
+    markerTonerCartridgeMissing|mediaPathMediaTrayAlmostFull|mediaPathMediaTrayFull)$/x;
+
+# Alert codes of the hardware (covers, jams, missing trays, failures, ...)
+our $hardware_codes = qr/^(coverOpened|interlockOpened|jammed|subunitMissing|subunitOpened|
+    subunitRecoverableFailure|subunitUnrecoverableFailure|subunitRecoverableStorageError|
+    subunitUnrecoverableStorageError|subunitMotorFailure|subunitMemoryExhausted|subunitUnderTemperature|
+    subunitOverTemperature|subunitTimingFailure|subunitThermistorFailure|doorOpen|inputMediaTrayMissing|
+    inputTrayPositionFailure|inputTrayElevationFailure|outputMediaTrayMissing|outputMailboxSelectFailure|
+    markerFuser(UnderTemperature|OverTemperature|TimingFailure|ThermistorFailure)|mediaPathMediaTrayMissing)$/x;
 
 sub finish {
   my ($self) = @_;
@@ -12395,33 +12502,29 @@ sub finish {
           $self->{prtAlertSeverityLevel} =~ /^(unknown_)?\d+$/;
 }
 
-# Alert codes which only inform about an event (something was closed, added,
-# changed, the printer was switched on, ...). They are no problem to act on.
-our $informational_codes = qr/^(coverClosed|interlockClosed|configurationChanged|subunitClosed|
-    subunitTurnedOn|subunitPowerSaver|subunitWarmingUp|subunitAdded|subunitResourceAdded|
-    subunitResourceRemoved|doorClosed|poweredUp|poweredDown|printerNMSReset|printerManualReset|
-    printerReadyToPrint|inputMedia(Size|Weight|Type|Color)Changed|inputMediaFormPartsChange|
-    markerAdjustingPrintQuality|interpreterMemory(In|De)creased|interpreterCartridge(Added|Deleted)|
-    interpreterResource(Added|Deleted)|interpreterComplexPageEncountered|
-    alertRemovalOfBinaryChangeEntry)$/x;
-
-sub check {
+# 2 CRITICAL, 1 WARNING, 0 no problem
+# PrtAlertSeverityLevelTC: other(1), critical(3), warning(4), warningBinaryChangeEvent(5).
+# Printers report e.g. "Toner Low" as warning(4).
+sub level {
   my ($self) = @_;
-  # PrtAlertSeverityLevelTC: other(1), critical(3), warning(4),
-  # warningBinaryChangeEvent(5). Printers report e.g. "Toner Low" as warning(4).
-  my $severity = $self->{prtAlertSeverityLevel} // 'other';
   my $code = $self->{prtAlertCode} // 'other';
-  $self->add_info(sprintf 'alert %s (severity %s, code %s)',
-      $self->{description}, $severity, $code);
   return 0 if $code =~ $informational_codes;
-  if ($severity =~ /^critical/) {
-    $self->add_critical(sprintf 'alert: %s', $self->{description});
-    return 2;
-  } elsif ($severity =~ /^warning/) {
-    $self->add_warning_mitigation(sprintf 'alert: %s', $self->{description});
-    return 1;
-  }
+  return 2 if $self->{prtAlertSeverityLevel} =~ /^critical/;
+  return 1 if $self->{prtAlertSeverityLevel} =~ /^warning/;
   return 0;
+}
+
+# hardware, supplies or status; undef if the alert is no problem
+sub category {
+  my ($self) = @_;
+  return undef if ! $self->level();
+  my $code = $self->{prtAlertCode} // 'other';
+  my $group = $self->{prtAlertGroup} // 'other';
+  return 'supplies' if $code =~ $supplies_codes;
+  return 'hardware' if $code =~ $hardware_codes;
+  return 'supplies' if $group =~ /^(markerSupplies|markerColorant|finSupply|finSupplyMediaInput)$/;
+  return 'hardware' if $group =~ /^(cover|mediaPath|finDevice)$/;
+  return 'status';
 }
 
 
@@ -13337,6 +13440,7 @@ sub init {
 sub check {
   my ($self) = @_;
   my %problems = (critical => 0, warning => 0);
+  my %elsewhere = ();
   my $known = 0;
   foreach my $condition (@conditions) {
     my ($object, $bad, $level, $text, $group) = @{$condition};
@@ -13346,6 +13450,12 @@ sub check {
     $known++;
     $self->add_info(sprintf '%s is %s', $object, $value);
     next if $value ne $bad;
+    if ($self->scope() eq 'all' && $group ne 'status') {
+      # notified by hardware-health or supplies-status, only listed here
+      push(@{$elsewhere{$group}}, $text);
+      $problems{$level == 2 ? 'critical' : 'warning'}++;
+      next;
+    }
     if ($level == 2) {
       $self->add_critical(sprintf '%s: %s', $self->{model}, $text);
       $problems{critical}++;
@@ -13358,10 +13468,15 @@ sub check {
     $self->add_unknown('the printer does not report the ZEBRA-MIB status objects');
     return;
   }
-  if (! $problems{critical} && ! $problems{warning}) {
+  if (! $self->check_messages()) {
     $self->add_ok($self->scope() eq 'hardware' ? 'hardware working fine' :
         $self->scope() eq 'supplies' ? 'supplies status is fine' :
         sprintf('%s is ready', $self->{model}));
+  }
+  foreach my $group (qw(hardware supplies)) {
+    $self->add_ok(sprintf 'reported by %s: %s',
+        $Classes::PRINTERMIB::Component::Conditions::category_service{$group},
+        join(', ', @{$elsewhere{$group}})) if $elsewhere{$group};
   }
   if ($self->scope() eq 'all') {
     $self->add_perfdata(label => 'problems_critical', value => $problems{critical});

@@ -90,7 +90,7 @@
       "gridPos": {
         "x": 0,
         "y": 0,
-        "w": 20,
+        "w": 17,
         "h": 4
       },
       "targets": [
@@ -134,7 +134,145 @@
           "fields": "/.*/",
           "values": false
         },
-        "colorMode": "none",
+        "colorMode": "value",
+        "graphMode": "none",
+        "textMode": "value_and_name",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "wideLayout": true,
+        "showPercentChange": false,
+        "text": {
+          "titleSize": 14,
+          "valueSize": 24
+        }
+      }
+    },
+    {
+      "type": "stat",
+      "id": 2,
+      "title": "",
+      "description": "Round trip time of the host check (ping) now: green below 50 ms, orange below 200 ms, red above, no reply when the printer does not answer (datasource InfluxDB).",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${ds}"
+      },
+      "gridPos": {
+        "x": 17,
+        "y": 0,
+        "w": 3,
+        "h": 4
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${ds}"
+          },
+          "refId": "A",
+          "rawQuery": true,
+          "resultFormat": "time_series",
+          "hide": true,
+          "query": "SELECT last(\"value\") * 1000 FROM \"hostalive\" WHERE \"hostname\" = '$hostname' AND \"metric\" = 'rta' AND time > now() - 7d"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${ds}"
+          },
+          "refId": "B",
+          "rawQuery": true,
+          "resultFormat": "time_series",
+          "hide": true,
+          "query": "SELECT last(\"value\") FROM \"hostalive\" WHERE \"hostname\" = '$hostname' AND \"metric\" = 'pl' AND time > now() - 10m"
+        },
+        {
+          "datasource": {
+            "type": "__expr__",
+            "uid": "__expr__"
+          },
+          "refId": "C",
+          "type": "reduce",
+          "expression": "A",
+          "reducer": "last",
+          "settings": {
+            "mode": "dropNN"
+          },
+          "hide": true
+        },
+        {
+          "datasource": {
+            "type": "__expr__",
+            "uid": "__expr__"
+          },
+          "refId": "D",
+          "type": "reduce",
+          "expression": "B",
+          "reducer": "last",
+          "settings": {
+            "mode": "dropNN"
+          },
+          "hide": true
+        },
+        {
+          "datasource": {
+            "type": "__expr__",
+            "uid": "__expr__"
+          },
+          "refId": "Ping",
+          "type": "math",
+          "expression": "($D < 100) * $C - ($D >= 100)"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "displayName": "Ping",
+          "unit": "ms",
+          "decimals": 1,
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": 50
+              },
+              {
+                "color": "red",
+                "value": 200
+              }
+            ]
+          },
+          "mappings": [
+            {
+              "type": "value",
+              "options": {
+                "-1": {
+                  "text": "no reply",
+                  "color": "red",
+                  "index": 0
+                }
+              }
+            }
+          ],
+          "noValue": "-"
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "value",
         "graphMode": "none",
         "textMode": "value_and_name",
         "justifyMode": "auto",
@@ -149,7 +287,7 @@
     },
     {
       "type": "text",
-      "id": 2,
+      "id": 3,
       "title": "",
       "transparent": true,
       "gridPos": {
@@ -170,7 +308,7 @@
     },
     {
       "type": "row",
-      "id": 3,
+      "id": 4,
       "title": "Overview",
       "collapsed": false,
       "gridPos": {
@@ -183,7 +321,7 @@
     },
     {
       "type": "stat",
-      "id": 4,
+      "id": 5,
       "title": "Total pages",
       "description": "Pages printed during the life of the printer (PRINTER-MIB prtMarkerLifeCount).",
       "datasource": {
@@ -249,7 +387,7 @@
     },
     {
       "type": "stat",
-      "id": 5,
+      "id": 6,
       "title": "Pages in the selected period",
       "description": "Difference of the total page counter between the first and the last check of the selected time range.",
       "datasource": {
@@ -315,7 +453,7 @@
     },
     {
       "type": "stat",
-      "id": 6,
+      "id": 7,
       "title": "Uptime",
       "description": "",
       "datasource": {
@@ -381,12 +519,12 @@
     },
     {
       "type": "stat",
-      "id": 7,
+      "id": 8,
       "title": "Active problems",
-      "description": "Problems reported by the printer (service Printer Status): paper jam, no paper, toner low, offline, door open, active alerts, ...",
+      "description": "Services of the printer which are CRITICAL, WARNING or UNKNOWN now (current state in NetEye, datasource IcingaDB, independent of the time range). Open the printer in NetEye to see the problems.",
       "datasource": {
-        "type": "influxdb",
-        "uid": "${ds}"
+        "type": "mysql",
+        "uid": "${dsicingadb}"
       },
       "gridPos": {
         "x": 18,
@@ -397,14 +535,14 @@
       "targets": [
         {
           "datasource": {
-            "type": "influxdb",
-            "uid": "${ds}"
+            "type": "mysql",
+            "uid": "${dsicingadb}"
           },
-          "query": "SELECT last(\"value\") FROM \"nx-c-check-printer-health\" WHERE \"hostname\" = '$hostname' AND \"metric\" =~ /^problems_(critical|warning)$/ AND $timeFilter GROUP BY \"metric\"",
-          "rawQuery": true,
           "refId": "A",
-          "resultFormat": "time_series",
-          "alias": "$tag_metric"
+          "format": "table",
+          "rawQuery": true,
+          "editorMode": "code",
+          "rawSql": "SELECT\n  COALESCE(SUM(ss.soft_state = 2), 0) AS `Critical`,\n  COALESCE(SUM(ss.soft_state = 1), 0) AS `Warning`,\n  COALESCE(SUM(ss.soft_state = 3), 0) AS `Unknown`\nFROM host h\nJOIN service s ON s.host_id = h.id\nJOIN service_state ss ON ss.service_id = s.id\nWHERE h.name = ${hostname:sqlstring}"
         }
       ],
       "fieldConfig": {
@@ -434,13 +572,9 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "problems_critical"
+              "options": "Critical"
             },
             "properties": [
-              {
-                "id": "displayName",
-                "value": "Critical"
-              },
               {
                 "id": "thresholds",
                 "value": {
@@ -462,13 +596,9 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "problems_warning"
+              "options": "Warning"
             },
             "properties": [
-              {
-                "id": "displayName",
-                "value": "Warning"
-              },
               {
                 "id": "thresholds",
                 "value": {
@@ -486,6 +616,30 @@
                 }
               }
             ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Unknown"
+            },
+            "properties": [
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "purple",
+                      "value": 1
+                    }
+                  ]
+                }
+              }
+            ]
           }
         ]
       },
@@ -494,7 +648,7 @@
           "calcs": [
             "lastNotNull"
           ],
-          "fields": "",
+          "fields": "/.*/",
           "values": false
         },
         "colorMode": "background",
@@ -508,7 +662,7 @@
     },
     {
       "type": "row",
-      "id": 8,
+      "id": 9,
       "title": "Page counters",
       "collapsed": false,
       "gridPos": {
@@ -521,7 +675,7 @@
     },
     {
       "type": "timeseries",
-      "id": 9,
+      "id": 10,
       "title": "Pages per day",
       "description": "Pages printed per day (UTC days), computed from the total page counter.",
       "datasource": {
@@ -581,7 +735,7 @@
     },
     {
       "type": "table",
-      "id": 10,
+      "id": 11,
       "title": "Page counters",
       "description": "All page counters of the printer. HP, Lexmark, Canon, Ricoh, Konica Minolta, Xerox and Samsung printers add color, mono, copy, fax, ... counters, Zebra label printers count labels.",
       "datasource": {
@@ -684,7 +838,7 @@
     },
     {
       "type": "timeseries",
-      "id": 11,
+      "id": 12,
       "title": "Page counters over time",
       "description": "",
       "datasource": {
@@ -744,7 +898,7 @@
     },
     {
       "type": "row",
-      "id": 12,
+      "id": 13,
       "title": "Supplies",
       "collapsed": false,
       "gridPos": {
@@ -757,7 +911,7 @@
     },
     {
       "type": "bargauge",
-      "id": 13,
+      "id": 14,
       "title": "Supplies level",
       "description": "Toner, drum, ... remaining (_remaining) and waste containers fill level (_used). Supplies which report no percentage are not shown.",
       "datasource": {
@@ -860,7 +1014,7 @@
     },
     {
       "type": "timeseries",
-      "id": 14,
+      "id": 15,
       "title": "Supplies over time",
       "description": "",
       "datasource": {
@@ -916,130 +1070,6 @@
         },
         "tooltip": {
           "mode": "multi",
-          "sort": "none"
-        }
-      }
-    },
-    {
-      "type": "row",
-      "id": 15,
-      "title": "Problems history",
-      "collapsed": false,
-      "gridPos": {
-        "x": 0,
-        "y": 38,
-        "w": 24,
-        "h": 1
-      },
-      "panels": []
-    },
-    {
-      "type": "state-timeline",
-      "id": 16,
-      "title": "Problems reported by the printer",
-      "description": "Number of active critical and warning problems (service Printer Status).",
-      "datasource": {
-        "type": "influxdb",
-        "uid": "${ds}"
-      },
-      "gridPos": {
-        "x": 0,
-        "y": 39,
-        "w": 24,
-        "h": 6
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "${ds}"
-          },
-          "query": "SELECT max(\"value\") FROM \"nx-c-check-printer-health\" WHERE \"hostname\" = '$hostname' AND \"metric\" =~ /^problems_(critical|warning)$/ AND $timeFilter GROUP BY time($__interval), \"metric\" fill(previous)",
-          "rawQuery": true,
-          "refId": "A",
-          "resultFormat": "time_series",
-          "alias": "$tag_metric"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "decimals": 0,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 1
-              }
-            ]
-          },
-          "custom": {
-            "fillOpacity": 80,
-            "lineWidth": 0
-          }
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "problems_critical"
-            },
-            "properties": [
-              {
-                "id": "displayName",
-                "value": "Critical"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "problems_warning"
-            },
-            "properties": [
-              {
-                "id": "displayName",
-                "value": "Warning"
-              },
-              {
-                "id": "thresholds",
-                "value": {
-                  "mode": "absolute",
-                  "steps": [
-                    {
-                      "color": "green",
-                      "value": null
-                    },
-                    {
-                      "color": "orange",
-                      "value": 1
-                    }
-                  ]
-                }
-              }
-            ]
-          }
-        ]
-      },
-      "options": {
-        "showValue": "auto",
-        "mergeValues": true,
-        "rowHeight": 0.8,
-        "alignValue": "left",
-        "legend": {
-          "showLegend": false,
-          "displayMode": "list",
-          "placement": "bottom"
-        },
-        "tooltip": {
-          "mode": "single",
           "sort": "none"
         }
       }
