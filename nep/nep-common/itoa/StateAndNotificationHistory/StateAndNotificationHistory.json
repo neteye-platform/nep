@@ -1241,11 +1241,5 @@
   "timepicker": {},
   "timezone": "",
   "title": "State and Notification History",
-<<<<<<< HEAD
-  "uid": "OcWYNyWnk",
-  "version": 18
-}
-=======
   "uid": "OcWYNyWnk"
 }
->>>>>>> 3441837 (fix(NEP-962): migrate ITOA dashboards from Icinga IDO to IcingaDB (#114))
