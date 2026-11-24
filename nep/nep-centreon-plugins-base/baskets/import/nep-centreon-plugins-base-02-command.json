@@ -278,7 +278,7 @@
                     "order": "3"
                 },
                 "--subsetleef": {
-                    "description": "How many oid values per SNMP request (default: 50) (for get_leef method. Be cautious whe you set it. Prefer to let the default value).",
+                    "description": "How many OID values per SNMP request (default: 50) (for get_leef method. Be cautious when you set it. Prefer to let the default value).",
                     "value": "$nx_centreon_plugin_snmp_subsetleef$",
                     "order": "8"
                 },

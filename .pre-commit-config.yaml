@@ -4,9 +4,9 @@ repos:
     hooks:
       - id: trailing-whitespace
       - id: check-added-large-files
-  #     - id: check-case-conflict
-  #     - id: end-of-file-fixer
-  #     - id: fix-byte-order-marker
+      - id: check-case-conflict
+      - id: end-of-file-fixer
+      - id: fix-byte-order-marker
       - id: check-json
       - id: check-json5
       - id: check-toml
@@ -18,69 +18,71 @@ repos:
       - id: check-symlinks
       - id: check-merge-conflict
       - id: detect-private-key
-  #     - id: check-executables-have-shebangs
+      - id: check-executables-have-shebangs
 
-  # - repo: https://github.com/pre-commit/pre-commit-hooks
-  #   rev: 3e8a8703264a2f4a69428a0aa4dcb512790b2c8c # frozen: v6.0.0
-  #   hooks:
-  #     - id: check-ast
-  #     - id: check-shebang-scripts-are-executable
-  #     - id: requirements-txt-fixer
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: 3e8a8703264a2f4a69428a0aa4dcb512790b2c8c # frozen: v6.0.0
+    hooks:
+      - id: check-ast
+      - id: check-shebang-scripts-are-executable
+      - id: requirements-txt-fixer
 
-  # - repo: meta
-  #   hooks:
-  #     - id: check-useless-excludes
+  - repo: meta
+    hooks:
+      - id: check-useless-excludes
 
-  # - repo: https://github.com/gitleaks/gitleaks
-  #   rev: 83d9cd684c87d95d656c1458ef04895a7f1cbd8e # frozen: v8.30.1
-  #   hooks:
-  #     - id: gitleaks
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: 83d9cd684c87d95d656c1458ef04895a7f1cbd8e # frozen: v8.30.1
+    hooks:
+      - id: gitleaks
 
-  # - repo: https://github.com/codespell-project/codespell
-  #   rev: 2ccb47ff45ad361a21071a7eedda4c37e6ae8c5a # frozen: v2.4.2
-  #   hooks:
-  #     - id: codespell
+  - repo: https://github.com/codespell-project/codespell
+    rev: 57b21406f092110c18776e39b0bda50d37c945c8 # frozen: v2.4.3
+    hooks:
+      - id: codespell
 
-  # - repo: https://github.com/rhysd/actionlint
-  #   rev: 914e7df21a07ef503a81201c76d2b11c789d3fca # frozen: v1.7.12
-  #   hooks:
-  #     - id: actionlint
+  - repo: https://github.com/rhysd/actionlint
+    rev: 914e7df21a07ef503a81201c76d2b11c789d3fca # frozen: v1.7.12
+    hooks:
+      - id: actionlint
 
-  # - repo: https://github.com/shellcheck-py/shellcheck-py
-  #   rev: 745eface02aef23e168a8afb6b5737818efbea95 # frozen: v0.11.0.1
-  #   hooks:
-  #     - id: shellcheck
+  - repo: https://github.com/shellcheck-py/shellcheck-py
+    rev: 745eface02aef23e168a8afb6b5737818efbea95 # frozen: v0.11.0.1
+    hooks:
+      - id: shellcheck
+        # TODO: Remove this filter after the scripts are fixed for all severities.
+        args: [--severity=error]
 
-  # - repo: https://github.com/astral-sh/ruff-pre-commit
-  #   rev: 0671d8ab202c4ac093b78433ae5baf74f3fc7246 # frozen: v0.15.15
-  #   hooks:
-  #     - id: ruff-check
-  #       args:
-  #         - --fix
-  #     - id: ruff-format
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: c0f278f1254ccc8fb09676bcdb8d847e7db493e5 # frozen: v0.17.4
+    hooks:
+      - id: ruff-check
+        args:
+          - --fix
+      - id: ruff-format
 
-  # - repo: https://github.com/astral-sh/uv-pre-commit
-  #   rev: 254dd0011fda0cd4bbb281ff135792b157e43e1f # frozen: 0.11.17
-  #   hooks:
-  #     - id: uv-lock
+  - repo: https://github.com/astral-sh/uv-pre-commit
+    rev: d1df990f871e616da38bb602a2671d5e840b9989 # frozen: 0.13.7
+    hooks:
+      - id: uv-lock
 
-  # - repo: https://github.com/ansible/ansible-lint
-  #   rev: 5fac056c45595896c973fbde871f01f6cb14d74c # frozen: v26.4.0
-  #   hooks:
-  #     - id: ansible-lint
+  - repo: https://github.com/ansible/ansible-lint
+    rev: b74fb6f73d234bf92672372cb1c10768e4018d16 # frozen: v26.11.0
+    hooks:
+      - id: ansible-lint
 
-  # - repo: https://github.com/hadolint/hadolint
-  #   rev: 57e1618d78fd469a92c1e584e8c9313024656623 # frozen: v2.14.0
-  #   hooks:
-  #     - id: hadolint-docker
+  - repo: https://github.com/hadolint/hadolint
+    rev: 2eece55955ced00200be9729e9728cb7dacca505 # frozen: v2.15.1
+    hooks:
+      - id: hadolint-docker
 
-  # - repo: https://github.com/DavidAnson/markdownlint-cli2
-  #   rev: 996abf60411a8d954288ac9856aae7602b80cbda # frozen: v0.22.1
-  #   hooks:
-  #     - id: markdownlint-cli2
+  - repo: https://github.com/DavidAnson/markdownlint-cli2
+    rev: 341e2a331ba578029e66c2e01183e7a6b5ca9ab4 # frozen: v0.24.0
+    hooks:
+      - id: markdownlint-cli2
 
-  # - repo: https://github.com/renovatebot/pre-commit-hooks
-  #   rev: 3e70e24e4a930974005a744c9fa29b1c4714f44d # frozen: 43.205.2
-  #   hooks:
-  #     - id: renovate-config-validator
-  #       args: [--strict]
+  - repo: https://github.com/renovatebot/pre-commit-hooks
+    rev: 9fd1972c2dd675ea03b47fb8b29d5563f622921f # frozen: 44.221.2
+    hooks:
+      - id: renovate-config-validator
+        args: [--strict]

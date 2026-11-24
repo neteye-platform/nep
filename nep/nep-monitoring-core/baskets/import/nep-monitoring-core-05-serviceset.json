@@ -3245,7 +3245,8 @@
                             "^/data",
                             "^/neteye",
                             "^/var",
-                            "^/mnt/"
+                            "^/mnt/",
+                            "^/tmp/\\.mount"
                         ],
                         "nx_is_infrastructural": "y"
                     },

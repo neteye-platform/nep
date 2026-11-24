@@ -58,7 +58,7 @@ function add_api_user() {
         echo $CURL_RAW_RESPONSE | jq 'select(.error!=null).error'
         exit 1
       else
-        echo "API keys with name '${API_NAME}' created successfull!"
+        echo "API keys with name '${API_NAME}' created successfully!"
         ## Write API on auth_file
         echo $CURL_RAW_RESPONSE | jq 'select(.encoded!=null)' > $FILE
         exit 0

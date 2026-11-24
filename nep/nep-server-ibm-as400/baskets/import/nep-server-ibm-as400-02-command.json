@@ -34,7 +34,7 @@
                     "order": "7"
                 },
                 "-o": {
-                    "description": "Provide OS version in numberic format: 5.4, 5.3, ...",
+                    "description": "Provide OS version in numeric format: 5.4, 5.3, ...",
                     "value": "$nx-as400-os-version$",
                     "order": "4"
                 },

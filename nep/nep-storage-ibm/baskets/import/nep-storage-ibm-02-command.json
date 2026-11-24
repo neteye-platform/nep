@@ -38,7 +38,7 @@
                     "value": "$nx_centreon_ibm_storwize_ssh_critical_usage$"
                 },
                 "--filter": {
-                    "description": "Exclude some parts (comma seperated list) (Example: --filter=host --filter=enclosurecanister) Can also exclude specific instance: --filter=host,10",
+                    "description": "Exclude some parts (comma separated list) (Example: --filter=host --filter=enclosurecanister) Can also exclude specific instance: --filter=host,10",
                     "repeat_key": true,
                     "value": "$nx_centreon_ibm_storwize_ssh_filter$"
                 },

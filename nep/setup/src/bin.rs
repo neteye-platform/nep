@@ -29,7 +29,7 @@ fn main() -> Result<()> {
             Arg::new("neteye_cluster_file")
                 .default_value(confs.neteye_cluster_file.to_str().unwrap())
                 .global(true)
-                .help("The path where neteye writes the other nodes informations on a cluster")
+                .help("The path where neteye writes the other nodes information on a cluster")
         )
         .arg(
             Arg::new("fs_packages_file")
@@ -73,7 +73,7 @@ fn main() -> Result<()> {
         )
         .subcommand(
             Command::new("info")
-                .about("Get informations about a package")
+                .about("Get information about a package")
                 .arg(
                     Arg::new("package_name")
                         .required(true)

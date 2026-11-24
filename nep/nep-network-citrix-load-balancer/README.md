@@ -5,7 +5,7 @@ for Citrix NetScaler load balancers to NetEye using Centreon plugins.
 It provides service checks for CPU, hardware health, interfaces, memory,
 connections, certificates, virtual servers, and high availability state.
 
-# Table of Contents
+## Table of Contents
 
 1. [Prerequisites](#prerequisites)
 2. [Installation](#installation)
@@ -18,13 +18,13 @@ This package can be installed on systems running the software described
 below. Systems with equivalent components are also suitable for
 installation.
 
-| Sofware Version | Version |
+| Software Version | Version |
 | --- | ----------- |
 | NetEye | 4.46+ |
 | nep-common | 0.6.8+ |
 | nep-centreon-plugins-base | 0.2.2+ |
 
-##### Required NetEye Modules
+### Required NetEye Modules
 
 | NetEye Module |
 | --- |
@@ -157,14 +157,14 @@ The service sets provided by this NEP can be used in two ways.
 The base service set `nx-ss-network-centreon-citrix-netscaler` is
 applied when a host meets all of the following conditions:
 
-- The host uses the `nx-ht-network-switch-snmp` host template
+- The host uses the `nx-ht-network-load-balancer-snmp` host template
 - The host variable `nx_hardware_vendor` is set to `netscalers`
 
 The extras service set
 `nx-ss-network-centreon-citrix-netscaler-extras` requires all of the
 following conditions:
 
-- The host uses the `nx-ht-network-switch-snmp` host template
+- The host uses the `nx-ht-network-load-balancer-snmp` host template
 - The host variable `nx_hardware_vendor` is set to `netscalers`
 - The host variable `nx_enable_nep_ss` is set to `true`
 - The host variable `nx_enable_nep_extras` is set to `true`

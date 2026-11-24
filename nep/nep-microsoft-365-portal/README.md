@@ -1,16 +1,22 @@
 # nep-microsoft-365-portal
 
-The `nep-microsoft-365-portal` is developed in order to provide a simple tool for monitoring the status of Office 365 online services that are reported at: **https://portal.office.com/servicestatus**
+The `nep-microsoft-365-portal` is developed in order to provide a simple tool
+for monitoring the status of Office 365 online services that are reported at:
+[https://portal.office.com/servicestatus](https://portal.office.com/servicestatus)
 
 ![Portal_Office](doc-images/portal.png "portal.office.com")
 
-This NEP calls API at https://portal.office.com/api/servicestatus/index and uses this python3 library
+This NEP calls API at
+[https://portal.office.com/api/servicestatus/index](https://portal.office.com/api/servicestatus/index)
+and uses this python3 library
 
-*  [python3-xmltodict](https://pypi.org/project/xmltodict/)
+* [python3-xmltodict](https://pypi.org/project/xmltodict/)
 
-*This NEP can be also as example in order to develp advanced XML tests by customizing the logic inside the python script.*
+*This NEP can be also as example in order to develop advanced XML tests by
+customizing the logic inside the python script.*
 
-# Table of Contents
+## Table of Contents
+
 1. [Prerequisites](#prerequisites)
 2. [Installation](#installation)
 3. [Packet Contents](#packet-contents)
@@ -18,31 +24,34 @@ This NEP calls API at https://portal.office.com/api/servicestatus/index and uses
 
 ## Prerequisites
 
-| Sofware Version | Version |
+| Software Version | Version |
 | --- | ----------- |
 | NetEye | 4.32 |
 | nep-common | 0.1 |
 
-##### Required NetEye Modules
+### Required NetEye Modules
 
 | NetEye Module |
 | --- |
 | Core |
 
-### External dependencies
+### External Dependencies
 
-This NEP needs these external dependecies other that the ones used by the NEPs reported in [Prerequisites](#prerequisites)
+This NEP needs these external dependencies other that the ones used by the NEPs
+reported in [Prerequisites](#prerequisites)
 
 * Access to the epel repository (granted by nep-common)
 
 ## Installation
 
-The installation process provides a Python script `check_office_services.py` that is automatically installed at `/neteye/shared/monitoring/plugins/`
+The installation process provides a Python script `check_office_services.py`
+that is automatically installed at `/neteye/shared/monitoring/plugins/`
 
 ### NEP Installation
 
 To install the NEP, run this command using SSH on NetEye Master Node:
-```
+
+``` bash
 nep-setup install nep-microsoft-365-portal
 ```
 
@@ -50,10 +59,14 @@ nep-setup install nep-microsoft-365-portal
 
 There is no need to perform any action to complete the installation of this NEP.
 
-*Maybe it will be usefull manually run the script in order to check the compatibility with your OS.*
-```
+*Maybe it will be useful to manually run the script in order to check the
+compatibility with your OS.*
+
+<!-- markdownlint-disable MD013 -->
+``` bash
 /neteye/shared/monitoring/plugins/check_office_services.py -p 'https://portal.office.com/api/servicestatus/index' -m all
 ```
+<!-- markdownlint-enable MD013 -->
 
 ## Packet Contents
 
@@ -72,26 +85,29 @@ The Python3 Script:
 
 * check_office_services.py
 
-
 ### Director/Icinga Objects
 
 This NEP provides some basic Icinga objects used to speedup the configuration
 
 #### Host Templates
 
-This NEP provides a single Host Template definition, that must be applied to the desiderd host:
+This NEP provides a single Host Template definition, that must be applied to the
+desiderd host:
 
 * nx-ht-office-365-portal-service
 
 #### Service Templates
 
-This NEP provides a Service Template definition that can be used to obtain one or all the services status information
+This NEP provides a Service Template definition that can be used to obtain one
+or all the services status information
 
 * nx-st-agentless-office365-portal-service
 
 #### Services Sets
 
-This NEP provides 2 Service Set definition, one that provides a single service with all servicese status. An advanced Service Set where all Office Services are splitted in Icinga Services
+This NEP provides 2 Service Set definition, one that provides a single service
+with all servicese status. An advanced Service Set where all Office Services are
+split in Icinga Services
 
 * nx-ss-microsoft-365-portal-service-basic
 * nx-ss-microsoft-365-portal-service-advanced (this one can be manually added)
@@ -100,7 +116,8 @@ This NEP provides 2 Service Set definition, one that provides a single service w
 
 Command Templates:
 
-* nx-c-check-office-services based on `check_office_services.py` that can be customized by `-p` and `-m`
+* nx-c-check-office-services based on `check_office_services.py` that can be
+  customized by `-p` and `-m`
 
 Where
 
@@ -110,7 +127,6 @@ Where
 ### Metrics
 
 This NEP doesn't generate any Performance Data from its commands
-
 
 ## Usage
 
@@ -126,7 +142,8 @@ This service monitors all the Office-Portal Service in one:
 
 ![Aggregated Service](doc-images/director_basic_view.png "Aggregated Service")
 
-If you want to split the services add the advanced SS `nx-ss-microsoft-365-portal-service-advanced` to the host:
+If you want to split the services add the advanced SS
+`nx-ss-microsoft-365-portal-service-advanced` to the host:
 
 ![Add SS](doc-images/director_advanced_conf.png "Add SS")
 
@@ -138,6 +155,7 @@ And the final result is:
 
 ### Examples
 
-In addtion yuo can chose to monitor only one services of the Office Portal, i.e. OneDrive:
+In addition you can chose to monitor only one services of the Office Portal,
+i.e. OneDrive:
 
 ![Single View](doc-images/director_advanced_view.png "Single View")

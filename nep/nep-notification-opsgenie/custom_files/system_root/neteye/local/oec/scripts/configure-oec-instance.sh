@@ -39,7 +39,7 @@ function usage() {
     exit 1
 }
 
-# Check the expected nuber of arguments from command line
+# Check the expected number of arguments from command line
 function check_arguments_count() {
     if [ $1 -ne 2 ]; then
         echo -e "Error: Wrong number of arguments. Unable to continue."
@@ -87,7 +87,7 @@ function check_instance_file() {
 }
 
 # Ensure Icinga has no User object with the provided name
-# Pay attention: this function makes no difference between user obejcts and user templates
+# Pay attention: this function makes no difference between user objects and user templates
 function check_icinga_user() {
     if icingacli director user exists "$1"; then
         echo "Fatal: Icinga User Object \"$1\" already exists. Unable to continue."
@@ -97,7 +97,7 @@ function check_icinga_user() {
 }
 
 # Ensure Icinga has a User Template with the provided name
-# Pay attention: this function makes no difference between user obejcts and user templates
+# Pay attention: this function makes no difference between user objects and user templates
 function check_icinga_user_template() {
     if icingacli director user exists "$1"; then
         return 0

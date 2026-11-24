@@ -3041,7 +3041,7 @@
             "category_id": null,
             "varname": "disk_cfree",
             "caption": "Disk Free space critical threshold",
-            "description": "Exit with CRITICAL status if less than INTEGER units of disk are free or Exit with CRITCAL status if less than PERCENT of disk space is free",
+            "description": "Exit with CRITICAL status if less than INTEGER units of disk are free or Exit with CRITICAL status if less than PERCENT of disk space is free",
             "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
             "format": null,
             "originalId": "28",
@@ -3592,7 +3592,7 @@
             "category_id": null,
             "varname": "perfmon_win_syntax",
             "caption": "Performance counter Output label",
-            "description": "Use this instead of the counter name in the perfomance data",
+            "description": "Use this instead of the counter name in the performance data",
             "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
             "format": null,
             "originalId": "80",
@@ -3901,7 +3901,7 @@
         "109": {
             "category_id": null,
             "varname": "uptime_win_crit",
-            "caption": "Uptime critical theshold",
+            "caption": "Uptime critical threshold",
             "description": "Critical threshold",
             "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
             "format": null,
@@ -4259,7 +4259,7 @@
         "161": {
             "varname": "nx_notification_basic_groups_override",
             "caption": "[NX] Recipient groups list Override",
-            "description": "Overrides Recepient groups list from owning Host Object",
+            "description": "Overrides Recipient groups list from owning Host Object",
             "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeDirectorObject",
             "format": null,
             "settings": {
@@ -4271,7 +4271,7 @@
         "162": {
             "varname": "nx_notification_basic_users_override",
             "caption": "[NX] Recipients list Override",
-            "description": "Override Recepients from onwing Host Object",
+            "description": "Override Recipients from owning Host Object",
             "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeDirectorObject",
             "format": null,
             "settings": {
@@ -4404,7 +4404,7 @@
         "584": {
             "varname": "nx_netstat_port",
             "caption": "[NX] Netstat Port",
-            "description": "Comma separated. Which tcp ports (attributes) to check. The value here can be either numeric or name that would be come from /etc/services. The value should be prefixed with: > : check outgoing TCP connections, < : check incoming TCP connections (default). Special value of '>@' or just '>' allow to specify that you want to check on total number of TCP connections (this is reported in perfomance data as 'all_out').",
+            "description": "Comma separated. Which tcp ports (attributes) to check. The value here can be either numeric or name that would be come from /etc/services. The value should be prefixed with: > : check outgoing TCP connections, < : check incoming TCP connections (default). Special value of '>@' or just '>' allow to specify that you want to check on total number of TCP connections (this is reported in performance data as 'all_out').",
             "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
             "format": null,
             "originalId": "584",

@@ -7,7 +7,7 @@
                     "value": "sensors"
                 },
                 "--component": {
-                    "description": "Choose a componet",
+                    "description": "Choose a component",
                     "value": "$nx_centreon_apc_netbotz_component_list$"
                 },
                 "--verbose": {

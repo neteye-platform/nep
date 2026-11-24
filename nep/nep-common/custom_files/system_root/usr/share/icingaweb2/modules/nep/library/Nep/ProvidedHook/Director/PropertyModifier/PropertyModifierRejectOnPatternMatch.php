@@ -14,7 +14,7 @@ class PropertyModifierRejectOnPatternMatch extends PropertyModifierHook
             'label'       => $form->translate('Pattern'),
             'required'    => true,
             'description' => $form->translate(
-                'This pattern will be matched with the main selected one. If it matches exaclty, the row will be skipped.'
+                'This pattern will be matched with the main selected one. If it matches exactly, the row will be skipped.'
                 . 'Please provide field names in pattern using format ${some_column} .'
             )
         ));
