@@ -1,5 +1,64 @@
 {
     "Command": {
+        "nx-c-sap-check-saphealth-my-updates": {
+            "arguments": {
+                "--mode": "my-updates",
+                "--with-mymodules-dyn-dir": "/neteye/shared/monitoring/plugins/sap/mymodules"
+            },
+            "fields": [],
+            "imports": [
+                "nx-ct-sap-check-saphealth"
+            ],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-sap-check-saphealth-my-updates",
+            "object_type": "object",
+            "uuid": "9e3b1a40-6c2d-4f8e-b1a7-3d5c7e9f0a01"
+        },
+        "nx-c-sap-check-saphealth-my-locks": {
+            "arguments": {
+                "--mode": "my-locks",
+                "--with-mymodules-dyn-dir": "/neteye/shared/monitoring/plugins/sap/mymodules"
+            },
+            "fields": [],
+            "imports": [
+                "nx-ct-sap-check-saphealth"
+            ],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-sap-check-saphealth-my-locks",
+            "object_type": "object",
+            "uuid": "9e3b1a40-6c2d-4f8e-b1a7-3d5c7e9f0a02"
+        },
+        "nx-c-sap-check-saphealth-my-queues": {
+            "arguments": {
+                "--mode": "my-queues",
+                "--with-mymodules-dyn-dir": "/neteye/shared/monitoring/plugins/sap/mymodules"
+            },
+            "fields": [],
+            "imports": [
+                "nx-ct-sap-check-saphealth"
+            ],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-sap-check-saphealth-my-queues",
+            "object_type": "object",
+            "uuid": "9e3b1a40-6c2d-4f8e-b1a7-3d5c7e9f0a03"
+        },
+        "nx-c-sap-check-sapcontrol-system-instance-list": {
+            "arguments": {
+                "-function": {
+                    "description": "sapstartsrv-Webservice",
+                    "skip_key": false,
+                    "value": "GetSystemInstanceList"
+                }
+            },
+            "fields": [],
+            "imports": [
+                "nx-ct-sap-check-sapcontrol"
+            ],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-sap-check-sapcontrol-system-instance-list",
+            "object_type": "object",
+            "uuid": "9e3b1a40-6c2d-4f8e-b1a7-3d5c7e9f0a04"
+        },
         "nx-c-sap-check-sapcontrol-enqueue-stats": {
             "arguments": {
                 "-function": {
@@ -243,250 +302,6 @@
             "object_name": "nx-c-sap-check-saphealth-workload-overview",
             "object_type": "object",
             "uuid": "464412cd-2620-4147-87b5-b56256306d23"
-        }
-    },
-    "CommandTemplate": {
-        "nx-ct-sap-check-sapcontrol": {
-            "arguments": {
-                "-crit": {
-                    "description": "critical threshold",
-                    "set_if": "$nx_sap_sapcontrol_crit$",
-                    "set_if_format": "string",
-                    "value": "$nx_sap_sapcontrol_crit$"
-                },
-                "-exclude": {
-                    "description": "pattern to be excluded from results (function ABAPReadSyslog)",
-                    "value": "$nx_sap_sapcontrol_exclude$"
-                },
-                "-function": {
-                    "description": "sapstartsrv-Webservice to execute",
-                    "skip_key": false,
-                    "value": "$nx_sap_sapcontrol_function$"
-                },
-                "-host": {
-                    "description": "IP-address of host",
-                    "skip_key": false,
-                    "value": "$host.address$"
-                },
-                "-lookback": {
-                    "description": "lookback-time (hours) when searching for syslog patterns",
-                    "set_if": "$nx_sap_sapcontrol_lookback$",
-                    "set_if_format": "string",
-                    "value": "$nx_sap_sapcontrol_lookback$"
-                },
-                "-nr": {
-                    "description": "SAP instance number",
-                    "skip_key": false,
-                    "value": "$nx_sap_instance_number$"
-                },
-                "-pattern": {
-                    "description": "search pattern for syslog text-field",
-                    "value": "$nx_sap_sapcontrol_pattern$"
-                },
-                "-prot": {
-                    "description": "protocol used for connecting to SAP instance",
-                    "skip_key": false,
-                    "value": "$nx_sap_sapcontrol_protocol$"
-                },
-                "-text": {
-                    "description": "explanation-string for nx_sap_sapcontrol_pattern",
-                    "value": "$nx_sap_sapcontrol_text$"
-                },
-                "-warn": {
-                    "description": "warning threshold",
-                    "set_if": "$nx_sap_sapcontrol_warn$",
-                    "set_if_format": "string",
-                    "value": "$nx_sap_sapcontrol_warn$"
-                }
-            },
-            "command": "PluginContribDir + /check_sapcontrol.sh",
-            "fields": [],
-            "methods_execute": "PluginCheck",
-            "object_name": "nx-ct-sap-check-sapcontrol",
-            "object_type": "template",
-            "timeout": 60,
-            "uuid": "7d1572ce-aff2-4d6c-b897-7cd72f71d428"
-        },
-        "nx-ct-sap-check-saphealth": {
-            "arguments": {
-                "--ashost": {
-                    "skip_key": false,
-                    "value": "$nx_sap_saphealth_ashost$",
-                    "order": "0"
-                },
-                "--client": {
-                    "skip_key": false,
-                    "value": "$nx_sap_saphealth_client$",
-                    "order": "10"
-                },
-                "--critical": {
-                    "skip_key": false,
-                    "value": "$nx_sap_saphealth_critical$",
-                    "order": "18"
-                },
-                "--criticalx": {
-                    "repeat_key": true,
-                    "skip_key": false,
-                    "value": "$nx_sap_saphealth_criticalx$",
-                    "order": "20"
-                },
-                "--environment": {
-                    "skip_key": false,
-                    "value": "$nx_sap_saphealth_environment$",
-                    "order": "26"
-                },
-                "--group": {
-                    "skip_key": false,
-                    "value": "$nx_sap_saphealth_group$",
-                    "order": "5"
-                },
-                "--gwhost": {
-                    "skip_key": false,
-                    "value": "$nx_sap_saphealth_gwhost$",
-                    "order": "6"
-                },
-                "--gwserv": {
-                    "skip_key": false,
-                    "value": "$nx_sap_saphealth_gwserv$",
-                    "order": "7"
-                },
-                "--isvalidtime": {
-                    "skip_key": false,
-                    "value": "$nx_sap_saphealth_isvalidtime$",
-                    "order": "32"
-                },
-                "--lang": {
-                    "skip_key": false,
-                    "value": "$nx_sap_saphealth_language$",
-                    "order": "11"
-                },
-                "--lookback": {
-                    "skip_key": false,
-                    "value": "$nx_sap_saphealth_lookback$",
-                    "order": "25"
-                },
-                "--mode": {
-                    "skip_key": false,
-                    "value": "$nx_sap_saphealth_mode$",
-                    "order": "15"
-                },
-                "--mshost": {
-                    "skip_key": false,
-                    "value": "$nx_sap_saphealth_mshost$",
-                    "order": "2"
-                },
-                "--msserv": {
-                    "skip_key": false,
-                    "value": "$nx_sap_saphealth_msserv$",
-                    "order": "3"
-                },
-                "--mtelong": {
-                    "set_if": "$nx_sap_saphealth_mtelong$",
-                    "set_if_format": "string",
-                    "order": "13"
-                },
-                "--multiline": {
-                    "set_if": "$nx_sap_saphealth_multiline$",
-                    "set_if_format": "string",
-                    "order": "30"
-                },
-                "--name": {
-                    "required": false,
-                    "skip_key": false,
-                    "value": "$nx_sap_saphealth_name$",
-                    "order": "22"
-                },
-                "--name2": {
-                    "required": false,
-                    "skip_key": false,
-                    "value": "$nx_sap_saphealth_name2$",
-                    "order": "23"
-                },
-                "--name3": {
-                    "skip_key": false,
-                    "value": "$nx_sap_saphealth_name3$",
-                    "order": "24"
-                },
-                "--negate": {
-                    "skip_key": false,
-                    "value": "$nx_sap_saphealth_negate$",
-                    "order": "27"
-                },
-                "--password": {
-                    "skip_key": false,
-                    "value": "$nx_sap_saphealth_password$",
-                    "order": "9"
-                },
-                "--r3name": {
-                    "skip_key": false,
-                    "value": "$nx_sap_saphealth_r3name$",
-                    "order": "4"
-                },
-                "--regexp": {
-                    "set_if": "$nx_sap_saphealth_regexp$",
-                    "set_if_format": "string",
-                    "order": "16"
-                },
-                "--report": {
-                    "skip_key": false,
-                    "value": "$nx_sap_saphealth_report$",
-                    "order": "29"
-                },
-                "--selectedperfdata": {
-                    "skip_key": false,
-                    "value": "$nx_sap_saphealth_selectedperfdata$",
-                    "order": "28"
-                },
-                "--separator": {
-                    "skip_key": false,
-                    "value": "$nx_sap_saphealth_separator$",
-                    "order": "12"
-                },
-                "--statefilesdir": {
-                    "skip_key": false,
-                    "value": "$nx_sap_saphealth_statefilesdir$",
-                    "order": "31"
-                },
-                "--sysnr": {
-                    "skip_key": false,
-                    "value": "$nx_sap_saphealth_sysnr$",
-                    "order": "1"
-                },
-                "--unique": {
-                    "skip_key": false,
-                    "value": "$nx_sap_saphealth_unique$",
-                    "order": "14"
-                },
-                "--units": {
-                    "skip_key": false,
-                    "value": "$nx_sap_saphealth_units$",
-                    "order": "21"
-                },
-                "--username": {
-                    "skip_key": false,
-                    "value": "$nx_sap_saphealth_username$",
-                    "order": "8"
-                },
-                "--warning": {
-                    "skip_key": false,
-                    "value": "$nx_sap_saphealth_warning$",
-                    "order": "17"
-                },
-                "--warningx": {
-                    "repeat_key": true,
-                    "skip_key": false,
-                    "value": "$nx_sap_saphealth_warningx$",
-                    "order": "19"
-                },
-                "-t": "$nx_sap_saphealth_timeout$"
-            },
-            "command": "PluginContribDir + /check_sap_health",
-            "fields": [],
-            "methods_execute": "PluginCheck",
-            "object_name": "nx-ct-sap-check-saphealth",
-            "object_type": "template",
-            "timeout": 60,
-            "uuid": "19cd2aab-827e-473b-8f8b-772fc787f8ce"
         }
     }
 }

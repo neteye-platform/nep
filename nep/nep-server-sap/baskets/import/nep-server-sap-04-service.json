@@ -1,39 +1,142 @@
 {
     "ServiceTemplate": {
+        "nx-st-sap-system-old-updates": {
+            "check_command": "nx-c-sap-check-saphealth-my-updates",
+            "fields": [],
+            "imports": [
+                "nx-st-agentless-sap-saphealth"
+            ],
+            "notes": "update requests (VBHDR/SM13) older than lookback seconds - extension CheckSapHealthNetEye.pm",
+            "object_name": "nx-st-sap-system-old-updates",
+            "object_type": "template",
+            "uuid": "9e3b1a40-6c2d-4f8e-b1a7-3d5c7e9f0b01",
+            "vars": {
+                "nx_sap_saphealth_lookback": "86400",
+                "nx_sap_saphealth_multiline": "1"
+            }
+        },
+        "nx-st-sap-system-old-locks": {
+            "check_command": "nx-c-sap-check-saphealth-my-locks",
+            "fields": [],
+            "imports": [
+                "nx-st-agentless-sap-saphealth"
+            ],
+            "notes": "lock entries (ENQUEUE_READ/SM12) older than lookback seconds - extension CheckSapHealthNetEye.pm\r\nname = client (default *), name2 = user (default *), name3 = regexp on table",
+            "object_name": "nx-st-sap-system-old-locks",
+            "object_type": "template",
+            "uuid": "9e3b1a40-6c2d-4f8e-b1a7-3d5c7e9f0b02",
+            "vars": {
+                "nx_sap_saphealth_lookback": "86400",
+                "nx_sap_saphealth_multiline": "1"
+            }
+        },
+        "nx-st-sap-system-qrfc-errors": {
+            "check_command": "nx-c-sap-check-saphealth-my-queues",
+            "fields": [],
+            "imports": [
+                "nx-st-agentless-sap-saphealth"
+            ],
+            "notes": "qRFC queues in error state (TRFCQIN/TRFCQOUT) - extension CheckSapHealthNetEye.pm\r\nname = in|out|both, name2 = states (default SYSFAIL,CPICERR,STOP,WAITSTOP,ANORETRY), name3 = regexp on client/queue",
+            "object_name": "nx-st-sap-system-qrfc-errors",
+            "object_type": "template",
+            "uuid": "9e3b1a40-6c2d-4f8e-b1a7-3d5c7e9f0b03",
+            "vars": {
+                "nx_sap_saphealth_multiline": "1"
+            }
+        },
+        "nx-st-sap-instance-ccms-mte-check": {
+            "check_command": "nx-c-sap-check-saphealth-ccms-mte-check",
+            "fields": [],
+            "imports": [
+                "nx-st-agentless-sap-saphealth"
+            ],
+            "notes": "CCMS check with RFC connection directly to the application server instance (per instance services)",
+            "object_name": "nx-st-sap-instance-ccms-mte-check",
+            "object_type": "template",
+            "uuid": "9e3b1a40-6c2d-4f8e-b1a7-3d5c7e9f0b04",
+            "vars": {
+                "nx_sap_saphealth_ashost": "$host.address$",
+                "nx_sap_saphealth_sysnr": "$host.vars.nx_sap_instance_number$"
+            }
+        },
+        "nx-st-sap-instance-wp-table-batch": {
+            "check_command": "nx-c-sap-check-sapcontrol-wp-table-batch",
+            "fields": [],
+            "imports": [
+                "nx-st-agentless-sap-sapcontrol"
+            ],
+            "notes": "free BTC work processes, warning/critical if free WPs <= value (default 0)",
+            "object_name": "nx-st-sap-instance-wp-table-batch",
+            "object_type": "template",
+            "uuid": "9e3b1a40-6c2d-4f8e-b1a7-3d5c7e9f0b05"
+        },
+        "nx-st-sap-instance-wp-table-update": {
+            "check_command": "nx-c-sap-check-sapcontrol-wp-table-update",
+            "fields": [],
+            "imports": [
+                "nx-st-agentless-sap-sapcontrol"
+            ],
+            "notes": "free UPD work processes, warning/critical if free WPs <= value (default 0)",
+            "object_name": "nx-st-sap-instance-wp-table-update",
+            "object_type": "template",
+            "uuid": "9e3b1a40-6c2d-4f8e-b1a7-3d5c7e9f0b06"
+        },
+        "nx-st-sap-instance-wp-table-spool": {
+            "check_command": "nx-c-sap-check-sapcontrol-wp-table-spool",
+            "fields": [],
+            "imports": [
+                "nx-st-agentless-sap-sapcontrol"
+            ],
+            "notes": "free SPO work processes, warning/critical if free WPs <= value (default 0)",
+            "object_name": "nx-st-sap-instance-wp-table-spool",
+            "object_type": "template",
+            "uuid": "9e3b1a40-6c2d-4f8e-b1a7-3d5c7e9f0b07"
+        },
+        "nx-st-sap-system-instance-list": {
+            "check_command": "nx-c-sap-check-sapcontrol-system-instance-list",
+            "fields": [],
+            "imports": [
+                "nx-st-agentless-sap-sapcontrol"
+            ],
+            "notes": "status of all instances of the system (run on the message server instance)\r\npattern = regexp on instance features (e.g. ABAP), warning/critical = minimum number of GREEN instances",
+            "object_name": "nx-st-sap-system-instance-list",
+            "object_type": "template",
+            "uuid": "9e3b1a40-6c2d-4f8e-b1a7-3d5c7e9f0b08"
+        },
         "nx-st-agentless-sap-sapcontrol": {
             "fields": [
                 {
-                    "datafield_id": 1946,
+                    "datafield_id": 2281,
                     "is_required": "n",
                     "var_filter": null
                 },
                 {
-                    "datafield_id": 1971,
+                    "datafield_id": 2306,
                     "is_required": "n",
                     "var_filter": null
                 },
                 {
-                    "datafield_id": 1972,
+                    "datafield_id": 2309,
                     "is_required": "n",
                     "var_filter": null
                 },
                 {
-                    "datafield_id": 1973,
+                    "datafield_id": 2312,
                     "is_required": "n",
                     "var_filter": null
                 },
                 {
-                    "datafield_id": 1974,
+                    "datafield_id": 2315,
                     "is_required": "n",
                     "var_filter": null
                 },
                 {
-                    "datafield_id": 1976,
+                    "datafield_id": 2318,
                     "is_required": "n",
                     "var_filter": null
                 },
                 {
-                    "datafield_id": 1977,
+                    "datafield_id": 2321,
                     "is_required": "n",
                     "var_filter": null
                 }
@@ -53,167 +156,167 @@
         "nx-st-agentless-sap-saphealth": {
             "fields": [
                 {
-                    "datafield_id": 2225,
+                    "datafield_id": 2324,
                     "is_required": "n",
                     "var_filter": null
                 },
                 {
-                    "datafield_id": 2226,
+                    "datafield_id": 2327,
                     "is_required": "n",
                     "var_filter": null
                 },
                 {
-                    "datafield_id": 2227,
+                    "datafield_id": 2330,
                     "is_required": "n",
                     "var_filter": null
                 },
                 {
-                    "datafield_id": 2228,
+                    "datafield_id": 2333,
                     "is_required": "n",
                     "var_filter": null
                 },
                 {
-                    "datafield_id": 2229,
+                    "datafield_id": 2336,
                     "is_required": "n",
                     "var_filter": null
                 },
                 {
-                    "datafield_id": 2230,
+                    "datafield_id": 2339,
                     "is_required": "n",
                     "var_filter": null
                 },
                 {
-                    "datafield_id": 2231,
+                    "datafield_id": 2342,
                     "is_required": "n",
                     "var_filter": null
                 },
                 {
-                    "datafield_id": 2232,
+                    "datafield_id": 2345,
                     "is_required": "n",
                     "var_filter": null
                 },
                 {
-                    "datafield_id": 2233,
+                    "datafield_id": 2348,
                     "is_required": "n",
                     "var_filter": null
                 },
                 {
-                    "datafield_id": 2234,
+                    "datafield_id": 2351,
                     "is_required": "n",
                     "var_filter": null
                 },
                 {
-                    "datafield_id": 2235,
+                    "datafield_id": 2354,
                     "is_required": "n",
                     "var_filter": null
                 },
                 {
-                    "datafield_id": 2236,
+                    "datafield_id": 2357,
                     "is_required": "n",
                     "var_filter": null
                 },
                 {
-                    "datafield_id": 2237,
+                    "datafield_id": 2360,
                     "is_required": "n",
                     "var_filter": null
                 },
                 {
-                    "datafield_id": 2238,
+                    "datafield_id": 2363,
                     "is_required": "n",
                     "var_filter": null
                 },
                 {
-                    "datafield_id": 2239,
+                    "datafield_id": 2366,
                     "is_required": "n",
                     "var_filter": null
                 },
                 {
-                    "datafield_id": 2240,
+                    "datafield_id": 2369,
                     "is_required": "n",
                     "var_filter": null
                 },
                 {
-                    "datafield_id": 2241,
+                    "datafield_id": 2372,
                     "is_required": "n",
                     "var_filter": null
                 },
                 {
-                    "datafield_id": 2242,
+                    "datafield_id": 2375,
                     "is_required": "n",
                     "var_filter": null
                 },
                 {
-                    "datafield_id": 2243,
+                    "datafield_id": 2378,
                     "is_required": "n",
                     "var_filter": null
                 },
                 {
-                    "datafield_id": 2244,
+                    "datafield_id": 2381,
                     "is_required": "n",
                     "var_filter": null
                 },
                 {
-                    "datafield_id": 2245,
+                    "datafield_id": 2384,
                     "is_required": "n",
                     "var_filter": null
                 },
                 {
-                    "datafield_id": 2246,
+                    "datafield_id": 2387,
                     "is_required": "n",
                     "var_filter": null
                 },
                 {
-                    "datafield_id": 2247,
+                    "datafield_id": 2390,
                     "is_required": "n",
                     "var_filter": null
                 },
                 {
-                    "datafield_id": 2248,
+                    "datafield_id": 2393,
                     "is_required": "n",
                     "var_filter": null
                 },
                 {
-                    "datafield_id": 2249,
+                    "datafield_id": 2396,
                     "is_required": "n",
                     "var_filter": null
                 },
                 {
-                    "datafield_id": 2250,
+                    "datafield_id": 2399,
                     "is_required": "n",
                     "var_filter": null
                 },
                 {
-                    "datafield_id": 2251,
+                    "datafield_id": 2402,
                     "is_required": "n",
                     "var_filter": null
                 },
                 {
-                    "datafield_id": 2252,
+                    "datafield_id": 2405,
                     "is_required": "n",
                     "var_filter": null
                 },
                 {
-                    "datafield_id": 2253,
+                    "datafield_id": 2408,
                     "is_required": "n",
                     "var_filter": null
                 },
                 {
-                    "datafield_id": 2254,
+                    "datafield_id": 2411,
                     "is_required": "n",
                     "var_filter": null
                 },
                 {
-                    "datafield_id": 2255,
+                    "datafield_id": 2414,
                     "is_required": "n",
                     "var_filter": null
                 },
                 {
-                    "datafield_id": 2256,
+                    "datafield_id": 2417,
                     "is_required": "n",
                     "var_filter": null
                 },
                 {
-                    "datafield_id": 2257,
+                    "datafield_id": 2420,
                     "is_required": "n",
                     "var_filter": null
                 }
@@ -376,7 +479,7 @@
         }
     },
     "Datafield": {
-        "1946": {
+        "2281": {
             "uuid": "0760b9e1-8b49-48ac-8c3f-97eb000028f2",
             "varname": "nx_sap_instance_number",
             "caption": "[NX] SAP Instance Number",
@@ -388,7 +491,7 @@
             },
             "category": "[NX] SAP Instance"
         },
-        "1971": {
+        "2306": {
             "uuid": "0760b9e1-8b49-48ac-8c3f-97eb000028fe",
             "varname": "nx_sap_sapcontrol_crit",
             "caption": "[NX] SAP sapcontrol Critical",
@@ -400,7 +503,7 @@
             },
             "category": "[NX] SAP Instance"
         },
-        "1972": {
+        "2309": {
             "uuid": "0760b9e1-8b49-48ac-8c3f-97eb00002901",
             "varname": "nx_sap_sapcontrol_exclude",
             "caption": "[NX] SAP sapcontrol Exclude",
@@ -412,7 +515,7 @@
             },
             "category": "[NX] SAP Instance"
         },
-        "1973": {
+        "2312": {
             "uuid": "0760b9e1-8b49-48ac-8c3f-97eb00002905",
             "varname": "nx_sap_sapcontrol_lookback",
             "caption": "[NX] SAP sapcontrol Lookback",
@@ -424,7 +527,7 @@
             },
             "category": "[NX] SAP Instance"
         },
-        "1974": {
+        "2315": {
             "uuid": "0760b9e1-8b49-48ac-8c3f-97eb00002902",
             "varname": "nx_sap_sapcontrol_pattern",
             "caption": "[NX] SAP sapcontrol Pattern",
@@ -436,7 +539,7 @@
             },
             "category": "[NX] SAP Instance"
         },
-        "1976": {
+        "2318": {
             "uuid": "0760b9e1-8b49-48ac-8c3f-97eb00002904",
             "varname": "nx_sap_sapcontrol_text",
             "caption": "[NX] SAP sapcontrol Text",
@@ -448,7 +551,7 @@
             },
             "category": "[NX] SAP Instance"
         },
-        "1977": {
+        "2321": {
             "uuid": "0760b9e1-8b49-48ac-8c3f-97eb000028ff",
             "varname": "nx_sap_sapcontrol_warn",
             "caption": "[NX] SAP sapcontrol Warning",
@@ -460,7 +563,7 @@
             },
             "category": "[NX] SAP Instance"
         },
-        "2225": {
+        "2324": {
             "uuid": "fddb09e6-885d-417e-ae7b-bb883409bde2",
             "varname": "nx_sap_saphealth_ashost",
             "caption": "[NX] SAP saphealth Applicationserver-Host",
@@ -472,7 +575,7 @@
             },
             "category": "[NX] SAP Instance"
         },
-        "2226": {
+        "2327": {
             "uuid": "e303f706-799c-4bae-92ed-6733f4f186d7",
             "varname": "nx_sap_saphealth_client",
             "caption": "[NX] SAP saphealth Client",
@@ -484,7 +587,7 @@
             },
             "category": "[NX] SAP System"
         },
-        "2227": {
+        "2330": {
             "uuid": "dd604402-4ab0-4503-b586-9baee1b031dc",
             "varname": "nx_sap_saphealth_critical",
             "caption": "[NX] SAP saphealth Critical",
@@ -496,7 +599,7 @@
             },
             "category": "[NX] SAP Instance"
         },
-        "2228": {
+        "2333": {
             "uuid": "35416719-f68c-490b-8c56-83991bb3f3c5",
             "varname": "nx_sap_saphealth_criticalx",
             "caption": "[NX] SAP saphealth Criticalx",
@@ -506,7 +609,7 @@
             "settings": {},
             "category": "[NX] SAP Instance"
         },
-        "2229": {
+        "2336": {
             "uuid": "9d961019-3f9f-4c6e-b008-80830f08c9b0",
             "varname": "nx_sap_saphealth_environment",
             "caption": "[NX] SAP saphealth Environment",
@@ -518,7 +621,7 @@
             },
             "category": "[NX] SAP Instance"
         },
-        "2230": {
+        "2339": {
             "uuid": "0db213b2-0737-4835-8f4a-5ec66fd52723",
             "varname": "nx_sap_saphealth_group",
             "caption": "[NX] SAP saphealth Logongroup",
@@ -530,7 +633,7 @@
             },
             "category": "[NX] SAP System"
         },
-        "2231": {
+        "2342": {
             "uuid": "0c4d3b84-a716-4db2-9da8-9e7cc9bc851e",
             "varname": "nx_sap_saphealth_gwhost",
             "caption": "[NX] SAP saphealth Gateway-Host",
@@ -542,7 +645,7 @@
             },
             "category": "[NX] SAP Instance"
         },
-        "2232": {
+        "2345": {
             "uuid": "90b0086e-f985-4c3b-8290-c051a98d5141",
             "varname": "nx_sap_saphealth_gwserv",
             "caption": "[NX] SAP saphealth Gateway-Service",
@@ -554,7 +657,7 @@
             },
             "category": "[NX] SAP Instance"
         },
-        "2233": {
+        "2348": {
             "uuid": "55b92e55-44ea-4c3f-8c70-10779dd96f0b",
             "varname": "nx_sap_saphealth_isvalidtime",
             "caption": "[NX] SAP saphealth IsValidTime",
@@ -566,7 +669,7 @@
             },
             "category": "[NX] SAP Instance"
         },
-        "2234": {
+        "2351": {
             "uuid": "d31f8951-9659-4534-ac08-314f5e667118",
             "varname": "nx_sap_saphealth_language",
             "caption": "[NX] SAP saphealth Language",
@@ -578,7 +681,7 @@
             },
             "category": "[NX] SAP System"
         },
-        "2235": {
+        "2354": {
             "uuid": "44a611ce-d76c-4db3-ae39-22acb6252309",
             "varname": "nx_sap_saphealth_lookback",
             "caption": "[NX] SAP saphealth Lookback",
@@ -590,7 +693,7 @@
             },
             "category": "[NX] SAP Instance"
         },
-        "2236": {
+        "2357": {
             "uuid": "44e5f4ed-28c2-46fe-b7dc-f877bb153ef6",
             "varname": "nx_sap_saphealth_mshost",
             "caption": "[NX] SAP saphealth Messageserver-Host",
@@ -602,7 +705,7 @@
             },
             "category": "[NX] SAP System"
         },
-        "2237": {
+        "2360": {
             "uuid": "4aec0622-ae2e-4084-a778-b3840d4cb4ba",
             "varname": "nx_sap_saphealth_msserv",
             "caption": "[NX] SAP saphealth Messageserver-Service",
@@ -614,7 +717,7 @@
             },
             "category": "[NX] SAP System"
         },
-        "2238": {
+        "2363": {
             "uuid": "71e2acdf-4832-4638-aa62-26375c5e6f86",
             "varname": "nx_sap_saphealth_mtelong",
             "caption": "[NX] SAP saphealth MTE long",
@@ -626,7 +729,7 @@
             },
             "category": "[NX] SAP Instance"
         },
-        "2239": {
+        "2366": {
             "uuid": "432e20fd-c660-442a-88be-00e555fe7cff",
             "varname": "nx_sap_saphealth_multiline",
             "caption": "[NX] SAP saphealth Multiline",
@@ -638,7 +741,7 @@
             },
             "category": "[NX] SAP Instance"
         },
-        "2240": {
+        "2369": {
             "uuid": "4722cb0f-c73a-455d-8ea6-0511c2175a76",
             "varname": "nx_sap_saphealth_name",
             "caption": "[NX] SAP saphealth Name",
@@ -650,7 +753,7 @@
             },
             "category": "[NX] SAP Instance"
         },
-        "2241": {
+        "2372": {
             "uuid": "bf7dce84-a453-4bac-a214-59190cedce42",
             "varname": "nx_sap_saphealth_name2",
             "caption": "[NX] SAP saphealth Name2",
@@ -662,7 +765,7 @@
             },
             "category": "[NX] SAP Instance"
         },
-        "2242": {
+        "2375": {
             "uuid": "81e5c566-bd6f-442d-8fa8-9b11fe1332a2",
             "varname": "nx_sap_saphealth_name3",
             "caption": "[NX] SAP saphealth Name3",
@@ -674,7 +777,7 @@
             },
             "category": "[NX] SAP Instance"
         },
-        "2243": {
+        "2378": {
             "uuid": "0be2b019-c20f-4978-8e5b-6c4879f1e193",
             "varname": "nx_sap_saphealth_negate",
             "caption": "[NX] SAP saphealth Negate",
@@ -686,7 +789,7 @@
             },
             "category": "[NX] SAP Instance"
         },
-        "2244": {
+        "2381": {
             "uuid": "7e57768a-1daa-482b-a9d1-b04dcd402aae",
             "varname": "nx_sap_saphealth_password",
             "caption": "[NX] SAP saphealth Password",
@@ -698,7 +801,7 @@
             },
             "category": "[NX] SAP System"
         },
-        "2245": {
+        "2384": {
             "uuid": "57a8e568-7f38-4d74-8001-e788542e9d48",
             "varname": "nx_sap_saphealth_r3name",
             "caption": "[NX] SAP saphealth R3name",
@@ -710,7 +813,7 @@
             },
             "category": "[NX] SAP System"
         },
-        "2246": {
+        "2387": {
             "uuid": "1a3742fa-c690-49a2-b363-7902dc22cf27",
             "varname": "nx_sap_saphealth_regexp",
             "caption": "[NX] SAP saphealth Regular Expression",
@@ -722,7 +825,7 @@
             },
             "category": "[NX] SAP Instance"
         },
-        "2247": {
+        "2390": {
             "uuid": "e5814042-d195-4275-9c70-1ea3e95f9291",
             "varname": "nx_sap_saphealth_report",
             "caption": "[NX] SAP saphealth Report",
@@ -734,7 +837,7 @@
             },
             "category": "[NX] SAP Instance"
         },
-        "2248": {
+        "2393": {
             "uuid": "81725baf-25fd-453d-88c9-8b4813ded92e",
             "varname": "nx_sap_saphealth_selectedperfdata",
             "caption": "[NX] SAP saphealth Selected perfdata",
@@ -746,7 +849,7 @@
             },
             "category": "[NX] SAP Instance"
         },
-        "2249": {
+        "2396": {
             "uuid": "4889772d-237a-40de-8b1c-20fb464447cd",
             "varname": "nx_sap_saphealth_separator",
             "caption": "[NX] SAP saphealth Separator",
@@ -758,7 +861,7 @@
             },
             "category": "[NX] SAP Instance"
         },
-        "2250": {
+        "2399": {
             "uuid": "ddd3c08b-0cb5-4b61-a4ac-4293766232b2",
             "varname": "nx_sap_saphealth_statefilesdir",
             "caption": "[NX] SAP saphealth Statefilesdir",
@@ -770,7 +873,7 @@
             },
             "category": "[NX] SAP Instance"
         },
-        "2251": {
+        "2402": {
             "uuid": "3ebedf1c-be98-44f1-bf88-7dca291adf73",
             "varname": "nx_sap_saphealth_sysnr",
             "caption": "[NX] SAP saphealth Instance-Number",
@@ -782,7 +885,7 @@
             },
             "category": "[NX] SAP Instance"
         },
-        "2252": {
+        "2405": {
             "uuid": "ee679be4-8090-4059-bde3-c2422eec8872",
             "varname": "nx_sap_saphealth_timeout",
             "caption": "[NX] SAP saphealth Timeout",
@@ -794,7 +897,7 @@
             },
             "category": "[NX] SAP Instance"
         },
-        "2253": {
+        "2408": {
             "uuid": "724cb4d1-b4e5-402f-82cb-430ec72b0aa2",
             "varname": "nx_sap_saphealth_unique",
             "caption": "[NX] SAP saphealth Unique output",
@@ -806,7 +909,7 @@
             },
             "category": "[NX] SAP Instance"
         },
-        "2254": {
+        "2411": {
             "uuid": "e15d3ceb-5c56-47b2-ac82-021a31966ef3",
             "varname": "nx_sap_saphealth_units",
             "caption": "[NX] SAP saphealth Units",
@@ -818,7 +921,7 @@
             },
             "category": "[NX] SAP Instance"
         },
-        "2255": {
+        "2414": {
             "uuid": "81ea1a20-ce2a-43ee-9738-76e4c7c45e7b",
             "varname": "nx_sap_saphealth_username",
             "caption": "[NX] SAP saphealth Username",
@@ -830,7 +933,7 @@
             },
             "category": "[NX] SAP System"
         },
-        "2256": {
+        "2417": {
             "uuid": "38294daa-2e7e-49cd-89dd-40268e3a7adc",
             "varname": "nx_sap_saphealth_warning",
             "caption": "[NX] SAP saphealth Warning",
@@ -842,7 +945,7 @@
             },
             "category": "[NX] SAP Instance"
         },
-        "2257": {
+        "2420": {
             "uuid": "89206452-b678-4503-a717-f3bbd385b782",
             "varname": "nx_sap_saphealth_warningx",
             "caption": "[NX] SAP saphealth Warningx",
@@ -857,12 +960,12 @@
         "[NX] SAP Instance": {
             "category_name": "[NX] SAP Instance",
             "description": "fields related to SAP Instance level",
-            "originalId": "39"
+            "originalId": "50"
         },
         "[NX] SAP System": {
             "category_name": "[NX] SAP System",
             "description": "fields related to SAP System level",
-            "originalId": "38"
+            "originalId": "91"
         }
     }
 }
