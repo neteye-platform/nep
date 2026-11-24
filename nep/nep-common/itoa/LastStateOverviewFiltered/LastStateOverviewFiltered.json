@@ -696,11 +696,5 @@
   },
   "timezone": "browser",
   "title": "Last state History",
-<<<<<<< HEAD
-  "uid": "MzQlrMInk",
-  "version": 6
-}
-=======
   "uid": "MzQlrMInk"
 }
->>>>>>> 3441837 (fix(NEP-962): migrate ITOA dashboards from Icinga IDO to IcingaDB (#114))
