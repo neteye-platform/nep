@@ -2875,6 +2875,8 @@ sub check_rfc_and_model {
   my $self = shift;
   chdir("/tmp");
   if (eval "require sapnwrfc") {
+     # NW RFC SDK 7.50: function descriptions belong to the SDK cache and must not be destroyed (sapnwrfc 0.37 -> segfault)
+    { no warnings qw(redefine once); *SAPNW::RFC::FunctionDescriptor::DESTROY = sub {}; }
     my %params = (
       'LCHECK' => '1',
     );
@@ -3034,7 +3036,7 @@ sub create_statefile {
   $extension .= $params{name} ? '_'.$params{name} : '';
   $extension .= $self->opts->name ? '_'.$self->opts->name : '';
   $extension .= $self->opts->name2 ? '_'.$self->opts->name2 : '';
-  $extension .= $self->opts->name3 ? '_'.$self->opts->name3 : '';
+  if ($self->opts->name3) { my $n3 = $self->opts->name3; $extension .= '_'.(length($n3) > 40 ? md5_hex($n3) : $n3); }
   $extension =~ s/\//_/g;
   $extension =~ s/\(/_/g;
   $extension =~ s/\)/_/g;
