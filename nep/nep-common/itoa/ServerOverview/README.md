@@ -27,7 +27,6 @@ SELECT g.display_name AS __text, g.name AS __value FROM hostgroup g
 WHERE g.display_name LIKE '%Windows%'
   AND EXISTS (SELECT 1 FROM hostgroup_member m WHERE m.hostgroup_id = g.id)
 ORDER BY g.display_name
->>>>>>> 3441837 (fix(NEP-962): migrate ITOA dashboards from Icinga IDO to IcingaDB (#114))
 ```
 
 
