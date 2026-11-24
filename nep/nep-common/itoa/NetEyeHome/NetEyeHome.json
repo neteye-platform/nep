@@ -884,13 +884,6 @@
       "title": "Endpoints Connected",
       "type": "bargauge"
     },
-<<<<<<< HEAD
-    "timezone": "",
-    "title": "NetEye Home",
-    "uid": "TpobGWFMk",
-    "version": 22
-  }
-=======
     {
       "cacheTimeout": null,
       "datasource": null,
@@ -2752,4 +2745,3 @@
   "title": "NetEye Home",
   "uid": "TpobGWFMk"
 }
->>>>>>> 3441837 (fix(NEP-962): migrate ITOA dashboards from Icinga IDO to IcingaDB (#114))
