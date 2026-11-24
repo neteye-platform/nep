@@ -10,18 +10,18 @@ SETUP_LIBRARY=${NEP_STAGE_DIR}/setup/library
 ## Script main code: add your code here ##
 ##########################################
 function install_plugins() {
-    dnf -y install https://download-ib01.fedoraproject.org/pub/epel/8/Everything/x86_64/Packages/p/perl-URI-Encode-1.1.1-11.el8.noarch.rpm
-    dnf -y --enablerepo=centreon-*-stable* install centreon-plugin-Network-Dell-N4000
-    dnf -y --enablerepo=centreon-*-stable* install centreon-plugin-Network-Dell-Os10-Snmp.noarch
+    dnf -y install https://download-ib01.fedoraproject.org/pub/epel/8/Everything/x86_64/Packages/p/perl-URI-Encode-1.1.1-11.el8.noarch.rpm || return $?
+    dnf -y --enablerepo=centreon-*-stable* install centreon-plugin-Network-Dell-Nseries-Snmp || return $?
+    dnf -y --enablerepo=centreon-*-stable* install centreon-plugin-Network-Dell-Os10-Snmp.noarch || return $?
 }
 
 if [[ $neteye_deployment == 'single_node' ]]; then
-    install_plugins
+    install_plugins || exit $?
     exit 0
 fi
 if [[ $neteye_deployment == 'cluster' ]]; then
     if [[ $neteye_node_type == 'node' ]]; then
-        install_plugins
+        install_plugins || exit $?
         exit 0
     fi
     if [[ $neteye_node_type == 'elastic_only' ]]; then
@@ -32,7 +32,7 @@ if [[ $neteye_deployment == 'cluster' ]]; then
     fi
 fi
 if [[ $neteye_deployment == 'satellite' ]]; then
-    install_plugins
+    install_plugins || exit $?
     exit 0
 fi
 

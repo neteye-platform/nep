@@ -1,6 +1,9 @@
 # NEP Realtime Monitoring
 
-The `nep-realtime-monitoring` provide basic Host Templates and Service Templates pre-configured with minimal Service Checks for Linux and Windows Operating Systems based on InfluxDB data sent by Telegraf agents installed on the Operating System.
+The `nep-realtime-monitoring` provide basic Host Templates and Service Templates
+pre-configured with minimal Service Checks for Linux and Windows Operating
+Systems based on InfluxDB data sent by Telegraf agents installed on the
+Operating System.
 
 ## Table of Contents
 
@@ -145,8 +148,13 @@ This NEP doesn't generate any Performance Data from its commands.
 ### Create Host Objects for Realtime Monitoring
 
 1. Ensure all the proper configurations for `nep-influxdb-query` have been done.
-2. Ensure the Host (Windows or Linux) has a running Telegraf instance with the minimum configuration reported at [Setup Realtime Monitoring clients](#setup-realtime-monitoring-clients-telegraf-agents) .
-3. Create a Host Objects using the minimum templates reported in this screenshot; make sure to use (in place of `test-ht-influxdb-neteye-telegraf_master`) the right Host Template created during the setup of `nep-influxdb-query`.
+2. Ensure the Host (Windows or Linux) has a running Telegraf instance with the
+   minimum configuration reported at [Setup Realtime Monitoring
+   clients](#setup-realtime-monitoring-clients-telegraf-agents) .
+3. Create a Host Objects using the minimum templates reported in this
+   screenshot; make sure to use (in place of
+   `test-ht-influxdb-neteye-telegraf_master`) the right Host Template created
+   during the setup of `nep-influxdb-query`.
 ![Configure Host](/doc-images/configure-host.png)
 4. Deploy the configuration and see the result
 ![Deploy Configuration](/doc-images/deploy-conf.png)
@@ -156,25 +164,37 @@ This NEP doesn't generate any Performance Data from its commands.
 
 #### Basic Usage
 
-1. Ensure the requested telemetry is sent to the right InfluxDB (if NetEye NATS Infrastructure is used, metrics are automatically routed to the InfluxDB Server managing the Tenant Database).
-2. Identify the Hostname tagging the incoming telemetry (see source Telegraf Agent configuration, if Telegraf is used)
-3. Create a new Host Object inheriting from the right Host Template created during Basic Setup
+1. Ensure the requested telemetry is sent to the right InfluxDB (if NetEye NATS
+   Infrastructure is used, metrics are automatically routed to the InfluxDB
+   Server managing the Tenant Database).
+2. Identify the Hostname tagging the incoming telemetry (see source Telegraf
+   Agent configuration, if Telegraf is used)
+3. Create a new Host Object inheriting from the right Host Template created
+   during Basic Setup
 ![Create Host Object](/doc-images/create-ho.png)
-4. Build your own custom InfluxDB query that will monitor the Telemetry (follow [InfluxDB | Centreon Documentation](https://docs.centreon.com/pp/integrations/plugin-packs/procedures/applications-databases-influxdb/))
-   1. Make sure to group by some field (usually is `host`): this will used as Instance by the Plugin
-   2. Remember to prefix the measurement name with the InfluxDB Database and Retention policy names
+4. Build your own custom InfluxDB query that will monitor the Telemetry (follow
+   [InfluxDB | Centreon
+   Documentation](https://docs.centreon.com/pp/integrations/plugin-packs/procedures/applications-databases-influxdb/))
+   1. Make sure to group by some field (usually is `host`): this will used as
+      Instance by the Plugin
+   2. Remember to prefix the measurement name with the InfluxDB Database and
+      Retention policy names
    3. Always define an alias for the sole field the query will return
-   4. The alias should be used as prefix for the query text, as requested by the Plugin
+   4. The alias should be used as prefix for the query text, as requested by the
+      Plugin
    5. Example of query for the status of unit `ssh.service`:
 
+      <!-- markdownlint-disable MD013 -->
       ``` sql
       active_code,select last(active_code) as active_code from telegraf_master.autogen.systemd_units where time > now() - 1m and host='nexus' and "name"='ssh.service' group by host;
       ```
+      <!-- markdownlint-enable MD013 -->
 
 5. Add a new Service Object to the Host Object
    1. Use template `nx-st-agentless-influxdb-centreon-query`
     ![Use the template nx-st-agentless-influxdb-centreon-query](doc-images/use-st.png)
-   2. Add the query, then provide values for thresholds, Output Text and Global Text *at least*:
+   2. Add the query, then provide values for thresholds, Output Text and Global
+      Text *at least*:
     ![Create and compile the new service](doc-images/create-and-compile-new-service.png)
    3.Deploy and see the result:
     ![Deploy and see the result](doc-images/deploy-result.png)
@@ -187,11 +207,14 @@ This section describes how to get telemetry metrics with Telegraf Agents into In
    1. SSL Client Certificate Root CA Public key: `/neteye/local/telegraf/conf/certs/root-ca.crt`
    2. SSL Client Certificate Public key: `/neteye/local/telegraf/conf/certs/telegraf_wo.crt.pem`
    3. SSL Client Certificate Private Key: `/neteye/local/telegraf/conf/certs/private/telegraf_wo.key.pem`
-2. Install Telegraf on the monitored system (follow [Install Telegraf | Telegraf Documentation](https://docs.influxdata.com/telegraf/v1/install/))
-3. Place the Certificate files you got from NetEye in the Configuration Folder of your Telegraf
+2. Install Telegraf on the monitored system (follow [Install Telegraf | Telegraf
+   Documentation](https://docs.influxdata.com/telegraf/v1/install/))
+3. Place the Certificate files you got from NetEye in the Configuration Folder
+   of your Telegraf
 4. Test the configuration files (follow [Telegraf Configuration | Telegraf Documentation](https://docs.influxdata.com/telegraf/v1/install/#generate-a-custom-configuration-file))
 5. Run Telegraf as a Service (follow [Running Telegraf as a Windows Service
- | InfluxData](https://archive.docs.influxdata.com/telegraf/v1.4/administration/windows_service/), or follow the procedures for your specific OS)
+   | InfluxData](https://archive.docs.influxdata.com/telegraf/v1.4/administration/windows_service/),
+   or follow the procedures for your specific OS)
 
 #### Minimal Telegraf Configuration Files for Realtime Monitoring
 

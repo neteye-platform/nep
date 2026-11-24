@@ -1,6 +1,7 @@
 # NEP Server Email
 
-The `nep-server-email` provides the minimum requirements to implement a monitoring of Email Server (receive/send) on Windows and Linux systems.
+The `nep-server-email` provides the minimum requirements to implement a
+monitoring of Email Server (receive/send) on Windows and Linux systems.
 
 Using the provided objects, is possible to:
 
@@ -30,7 +31,8 @@ Using the provided objects, is possible to:
 
 ### External dependencies
 
-This NEP doesn't need any external dependencies other that the ones used by the NEPs reported in [Prerequisites](#prerequisites)
+This NEP doesn't need any external dependencies other that the ones used by the
+NEPs reported in [Prerequisites](#prerequisites)
 
 ## Installation
 
@@ -60,15 +62,18 @@ This NEP doesn't provide any Director/Icinga object
 
 The following Host Templates can be used to freely create Host Objects.
 
-_Remember to not edit these Host Templates because they will be restored/updated at the next NEP package update_:
+_Remember to not edit these Host Templates because they will be restored/updated
+at the next NEP package update_:
 
 - `nx-ht-server-agent-linux-email`: Describe a generic Linux email Server.
 
 #### Service Templates
 
-The following Service Templates can be used to freely create Service Objects, Service Apply Rules or Service Sets.
+The following Service Templates can be used to freely create Service Objects,
+Service Apply Rules or Service Sets.
 
-_Remember to not edit these Service Templates as they will be restored/updated at the next NEP Package update_:
+_Remember to not edit these Service Templates as they will be restored/updated
+at the next NEP Package update_:
 
 - `nx-st-agentless-email-receive`: Checks email receive from Email Server
 - `nx-st-agentless-email-send`: Checks email sending from Email Server
@@ -77,12 +82,15 @@ _Remember to not edit these Service Templates as they will be restored/updated a
 
 The following Service Sets can be used to freely monitor Host Objects.
 
-_Remember to not edit these Service Sets because they will be restored/updated at the next NEP Package update_:
+_Remember to not edit these Service Sets because they will be restored/updated
+at the next NEP Package update_:
 
-- `nx-ss-server-agent-linux-email`: Service Set providing common monitoring for Linux Email Server
+- `nx-ss-server-agent-linux-email`: Service Set providing common monitoring for
+  Linux Email Server
   - Email Receive
   - Email Send
-- `nx-ss-server-agent-windows-email`: Service Set providing common monitoring for Windows Email Server
+- `nx-ss-server-agent-windows-email`: Service Set providing common monitoring
+  for Windows Email Server
   - Email Receive
   - Email Send
 - `nx-ss-server-agent-linux-email-init`: Service Set for monitor Postfix Service
@@ -92,9 +100,11 @@ _Remember to not edit these Service Sets because they will be restored/updated a
 
 #### Command
 
-The following Commands can be used to freely create Command Objects, Command Template and Service Template.
+The following Commands can be used to freely create Command Objects, Command
+Template and Service Template.
 
-_Remember to not edit these Service Templates as they will be restored/updated at the next NEP Package update_:
+_Remember to not edit these Service Templates as they will be restored/updated
+at the next NEP Package update_:
 
 - `nx-c-check-imap-receive`
 - `nx-c-check-smtp-send`
