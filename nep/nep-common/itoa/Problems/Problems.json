@@ -1857,10 +1857,5 @@
   "timezone": "browser",
   "title": "NetEye Problems",
   "uid": "XfwT78pMz1",
-<<<<<<< HEAD
-  "version": 23
-}
-=======
   "weekStart": ""
 }
->>>>>>> 3441837 (fix(NEP-962): migrate ITOA dashboards from Icinga IDO to IcingaDB (#114))
