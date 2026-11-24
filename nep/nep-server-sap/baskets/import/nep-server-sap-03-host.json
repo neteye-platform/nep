@@ -3,72 +3,72 @@
         "nx-ht-sap-instance": {
             "fields": [
                 {
-                    "datafield_id": 1939,
+                    "datafield_id": 2260,
                     "is_required": "n",
                     "var_filter": "host.vars.nx_sap_instance_type=%22D%22|host.vars.nx_sap_instance_type=%22DVEBMGS%22"
                 },
                 {
-                    "datafield_id": 1940,
+                    "datafield_id": 2263,
                     "is_required": "n",
                     "var_filter": null
                 },
                 {
-                    "datafield_id": 1941,
+                    "datafield_id": 2266,
                     "is_required": "n",
                     "var_filter": null
                 },
                 {
-                    "datafield_id": 1942,
+                    "datafield_id": 2269,
                     "is_required": "n",
                     "var_filter": null
                 },
                 {
-                    "datafield_id": 1943,
+                    "datafield_id": 2272,
                     "is_required": "n",
                     "var_filter": null
                 },
                 {
-                    "datafield_id": 1944,
+                    "datafield_id": 2275,
                     "is_required": "n",
                     "var_filter": "host.vars.nx_sap_instance_is_msserver=true"
                 },
                 {
-                    "datafield_id": 1945,
+                    "datafield_id": 2278,
                     "is_required": "n",
                     "var_filter": "host.vars.nx_sap_instance_is_msserver=true"
                 },
                 {
-                    "datafield_id": 1946,
+                    "datafield_id": 2281,
                     "is_required": "n",
                     "var_filter": null
                 },
                 {
-                    "datafield_id": 1947,
+                    "datafield_id": 2284,
                     "is_required": "n",
                     "var_filter": null
                 },
                 {
-                    "datafield_id": 1948,
+                    "datafield_id": 2287,
                     "is_required": "n",
                     "var_filter": null
                 },
                 {
-                    "datafield_id": 1979,
+                    "datafield_id": 2299,
                     "is_required": "n",
                     "var_filter": "host.vars.nx_sap_instance_type=%5B%22ASCS%22%2C%22SCS%22%5D"
                 },
                 {
-                    "datafield_id": 1949,
+                    "datafield_id": 2290,
                     "is_required": "n",
                     "var_filter": null
                 },
                 {
-                    "datafield_id": 1950,
+                    "datafield_id": 2293,
                     "is_required": "n",
                     "var_filter": null
                 },
                 {
-                    "datafield_id": 1975,
+                    "datafield_id": 944,
                     "is_required": "n",
                     "var_filter": null
                 }
@@ -86,32 +86,32 @@
         "nx-ht-sap-system": {
             "fields": [
                 {
-                    "datafield_id": 1936,
+                    "datafield_id": 2251,
                     "is_required": "n",
                     "var_filter": null
                 },
                 {
-                    "datafield_id": 1937,
+                    "datafield_id": 2254,
                     "is_required": "n",
                     "var_filter": null
                 },
                 {
-                    "datafield_id": 2223,
+                    "datafield_id": 2302,
                     "is_required": "n",
                     "var_filter": null
                 },
                 {
-                    "datafield_id": 1978,
+                    "datafield_id": 2296,
                     "is_required": "n",
                     "var_filter": null
                 },
                 {
-                    "datafield_id": 1938,
+                    "datafield_id": 2257,
                     "is_required": "n",
                     "var_filter": null
                 },
                 {
-                    "datafield_id": 2224,
+                    "datafield_id": 2305,
                     "is_required": "n",
                     "var_filter": null
                 }
@@ -122,10 +122,37 @@
             "object_name": "nx-ht-sap-system",
             "object_type": "template",
             "uuid": "e700ea62-5e5e-46f9-9d82-e8e4b711d254"
+        },
+        "nx-ht-server-agentless-sap-os": {
+            "fields": [
+                {
+                    "datafield_id": 2981,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-ht-computer-agentless"
+            ],
+            "object_name": "nx-ht-server-agentless-sap-os",
+            "object_type": "template",
+            "uuid": "30e6f491-2945-4380-937c-4fef80ba8222"
+        }
+    },
+    "DatafieldCategory": {
+        "[NX] SAP Instance": {
+            "category_name": "[NX] SAP Instance",
+            "description": "fields related to SAP Instance level",
+            "originalId": "50"
+        },
+        "[NX] SAP System": {
+            "category_name": "[NX] SAP System",
+            "description": "fields related to SAP System level",
+            "originalId": "91"
         }
     },
     "Datafield": {
-        "1939": {
+        "2260": {
             "uuid": "0760b9e1-8b49-48ac-8c3f-97eb000028f7",
             "varname": "nx_sap_instance_dialog_free_critical",
             "caption": "[NX] SAP Instance Dialog free critical",
@@ -137,7 +164,7 @@
             },
             "category": "[NX] SAP Instance"
         },
-        "1940": {
+        "2263": {
             "uuid": "0760b9e1-8b49-48ac-8c3f-97eb000028f8",
             "varname": "nx_sap_instance_dialog_free_warning",
             "caption": "[NX] SAP Instance Dialog free warning",
@@ -149,7 +176,7 @@
             },
             "category": "[NX] SAP Instance"
         },
-        "1941": {
+        "2266": {
             "uuid": "0760b9e1-8b49-48ac-8c3f-97eb000028f3",
             "varname": "nx_sap_instance_http_port",
             "caption": "[NX] SAP Instance ICM/WD HTTP Port",
@@ -161,7 +188,7 @@
             },
             "category": "[NX] SAP Instance"
         },
-        "1942": {
+        "2269": {
             "uuid": "0760b9e1-8b49-48ac-8c3f-97eb000028f4",
             "varname": "nx_sap_instance_https_port",
             "caption": "[NX] SAP Instance ICM/WD HTTPS Port",
@@ -173,7 +200,7 @@
             },
             "category": "[NX] SAP Instance"
         },
-        "1943": {
+        "2272": {
             "uuid": "0760b9e1-8b49-48ac-8c3f-97eb000028f6",
             "varname": "nx_sap_instance_is_msserver",
             "caption": "[NX] SAP Instance Message Server (true/false)",
@@ -183,7 +210,7 @@
             "settings": {},
             "category": "[NX] SAP Instance"
         },
-        "1944": {
+        "2275": {
             "uuid": "0760b9e1-8b49-48ac-8c3f-97eb000028fc",
             "varname": "nx_sap_instance_ms_http_port",
             "caption": "[NX] SAP Instance Message Server HTTP Port",
@@ -195,7 +222,7 @@
             },
             "category": "[NX] SAP Instance"
         },
-        "1945": {
+        "2278": {
             "uuid": "0760b9e1-8b49-48ac-8c3f-97eb000028fd",
             "varname": "nx_sap_instance_ms_https_port",
             "caption": "[NX] SAP Instance Message Server HTTPS Port",
@@ -207,7 +234,7 @@
             },
             "category": "[NX] SAP Instance"
         },
-        "1946": {
+        "2281": {
             "uuid": "0760b9e1-8b49-48ac-8c3f-97eb000028f2",
             "varname": "nx_sap_instance_number",
             "caption": "[NX] SAP Instance Number",
@@ -219,7 +246,7 @@
             },
             "category": "[NX] SAP Instance"
         },
-        "1947": {
+        "2284": {
             "uuid": "0760b9e1-8b49-48ac-8c3f-97eb000028f9",
             "varname": "nx_sap_instance_responsetime_critical",
             "caption": "[NX] SAP Instance Responsetime critical",
@@ -231,7 +258,7 @@
             },
             "category": "[NX] SAP Instance"
         },
-        "1948": {
+        "2287": {
             "uuid": "0760b9e1-8b49-48ac-8c3f-97eb000028fa",
             "varname": "nx_sap_instance_responsetime_warning",
             "caption": "[NX] SAP Instance Responsetime warning",
@@ -243,7 +270,7 @@
             },
             "category": "[NX] SAP Instance"
         },
-        "1979": {
+        "2299": {
             "uuid": "bed0b741-158b-485e-a94f-ef176eb02552",
             "varname": "nx_sap_instance_runs_webdispatcher",
             "caption": "[NX] SAP Instance runs Webdispatcher",
@@ -253,7 +280,7 @@
             "settings": {},
             "category": "[NX] SAP Instance"
         },
-        "1949": {
+        "2290": {
             "uuid": "0760b9e1-8b49-48ac-8c3f-97eb000028f5",
             "varname": "nx_sap_instance_smtp_port",
             "caption": "[NX] SAP Instance SMTP Port",
@@ -265,7 +292,7 @@
             },
             "category": "[NX] SAP Instance"
         },
-        "1950": {
+        "2293": {
             "uuid": "0760b9e1-8b49-48ac-8c3f-97eb000028f1",
             "varname": "nx_sap_instance_type",
             "caption": "[NX] SAP Instance Type",
@@ -279,7 +306,7 @@
             },
             "category": "[NX] SAP Instance"
         },
-        "1975": {
+        "944": {
             "uuid": "0760b9e1-8b49-48ac-8c3f-97eb00002903",
             "varname": "nx_sap_sapcontrol_protocol",
             "caption": "[NX] SAP sapcontrol Protocol",
@@ -293,7 +320,7 @@
             },
             "category": "[NX] SAP Instance"
         },
-        "1936": {
+        "2251": {
             "uuid": "0760b9e1-8b49-48ac-8c3f-97eb000028ee",
             "varname": "nx_sap_system_client",
             "caption": "[NX] SAP System Client",
@@ -305,7 +332,7 @@
             },
             "category": "[NX] SAP System"
         },
-        "1937": {
+        "2254": {
             "uuid": "0760b9e1-8b49-48ac-8c3f-97eb000028f0",
             "varname": "nx_sap_system_filesystem_sapmnt",
             "caption": "[NX] SAP System mountpoint for sapmnt filesystem",
@@ -317,7 +344,7 @@
             },
             "category": "[NX] SAP System"
         },
-        "2223": {
+        "2302": {
             "uuid": "947ed13f-e85c-4eb2-9017-eea6a8aa0ca4",
             "varname": "nx_sap_system_password",
             "caption": "[NX] SAP System Password",
@@ -329,7 +356,7 @@
             },
             "category": "[NX] SAP System"
         },
-        "1978": {
+        "2296": {
             "uuid": "374152fc-b784-4e51-8050-2765877523df",
             "varname": "nx_sap_system_provides_sapmnt",
             "caption": "[NX] SAP System provides filesystem sapmnt (true/false)",
@@ -339,7 +366,7 @@
             "settings": {},
             "category": "[NX] SAP System"
         },
-        "1938": {
+        "2257": {
             "uuid": "0760b9e1-8b49-48ac-8c3f-97eb000028ef",
             "varname": "nx_sap_system_sid",
             "caption": "[NX] SAP System ID (SID)",
@@ -351,7 +378,7 @@
             },
             "category": "[NX] SAP System"
         },
-        "2224": {
+        "2305": {
             "uuid": "2034d9f6-d8b3-4af1-9bfd-d2553347ed16",
             "varname": "nx_sap_system_username",
             "caption": "[NX] SAP System Username",
@@ -362,18 +389,18 @@
                 "visibility": "visible"
             },
             "category": "[NX] SAP System"
-        }
-    },
-    "DatafieldCategory": {
-        "[NX] SAP Instance": {
-            "category_name": "[NX] SAP Instance",
-            "description": "fields related to SAP Instance level",
-            "originalId": "39"
         },
-        "[NX] SAP System": {
-            "category_name": "[NX] SAP System",
-            "description": "fields related to SAP System level",
-            "originalId": "38"
+        "2981": {
+            "uuid": "6b1f3c2e-5a4d-4e8b-9c11-0a7d2f3e4b01",
+            "varname": "nx_sap_instance_ccms_name",
+            "caption": "[NX] SAP Instance CCMS Name",
+            "description": "Name of the instance in CCMS (<sap-hostname>_<SID>_<NR>, e.g. sapftp1_FTP_20), used by CCMS services per instance",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] SAP Instance"
         }
     }
 }

@@ -1,22 +1,95 @@
 {
     "ServiceSet": {
-        "nx-ss-hana-instance-all": {
-            "assign_filter": "\"nx-ht-hana-instance\"=host.templates",
-            "description": "Serviceset to monitor SAP Instances (all types)",
-            "object_name": "nx-ss-hana-instance-all",
+        "nx-ss-sap-system-logongroup": {
+            "assign_filter": "\"nx-ht-sap-instance\"=host.templates&host.vars.nx_sap_instance_is_msserver=true&host.vars.nx_sap_system_logongroup=true",
+            "description": "RFC logon through the end-user logon group (only if nx_sap_system_logongroup is set)",
+            "object_name": "nx-ss-sap-system-logongroup",
             "object_type": "template",
             "services": [
                 {
                     "fields": [],
                     "imports": [
-                        "nx-st-hana-instance-status"
+                        "nx-st-sap-instance-connection-time"
                     ],
-                    "object_name": "HANA Instance Status",
+                    "object_name": "SAP System Logon Group",
                     "object_type": "object",
-                    "uuid": "f67380a2-8951-4898-9000-c7a740999881"
+                    "uuid": "9e3b1a40-6c2d-4f8e-b1a7-3d5c7e9f0f11",
+                    "vars": {
+                        "nx_sap_saphealth_group": "$host.vars.nx_sap_system_logongroup$",
+                        "nx_sap_saphealth_mshost": "$host.address$",
+                        "nx_sap_saphealth_msserv": "36$host.vars.nx_sap_instance_number$",
+                        "nx_sap_saphealth_sysnr": "$host.vars.nx_sap_instance_number$"
+                    }
                 }
             ],
-            "uuid": "0525f677-86a2-4b3f-b5b7-742aca70ca32"
+            "uuid": "9e3b1a40-6c2d-4f8e-b1a7-3d5c7e9f0f03"
+        },
+        "nx-ss-sap-os-ccms": {
+            "assign_filter": "\"nx-ht-server-agentless-sap-os\"=host.templates",
+            "description": "OS metrics (CPU, memory, filesystems) read from SAP CCMS. No assign filter: assign manually to SAP instance hosts (needs nx_sap_instance_ccms_name)",
+            "object_name": "nx-ss-sap-os-ccms",
+            "object_type": "template",
+            "services": [
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-sap-instance-ccms-mte-check"
+                    ],
+                    "object_name": "SAP OS CPU",
+                    "object_type": "object",
+                    "uuid": "9e3b1a40-6c2d-4f8e-b1a7-3d5c7e9f0e01",
+                    "vars": {
+                        "nx_sap_saphealth_criticalx": [
+                            "CPU_CPU_Utilization=95"
+                        ],
+                        "nx_sap_saphealth_name": "SAP CCMS Admin Workplace",
+                        "nx_sap_saphealth_name2": "Operating System",
+                        "nx_sap_saphealth_name3": "$host.vars.nx_sap_instance_ccms_name$#CPU#(CPU_Utilization|5minLoadAverage)$$",
+                        "nx_sap_saphealth_regexp": "1",
+                        "nx_sap_saphealth_report": "long",
+                        "nx_sap_saphealth_separator": "#",
+                        "nx_sap_saphealth_warningx": [
+                            "CPU_CPU_Utilization=90"
+                        ]
+                    }
+                },
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-sap-instance-ccms-mte-check"
+                    ],
+                    "object_name": "SAP OS Filesystems",
+                    "object_type": "object",
+                    "uuid": "9e3b1a40-6c2d-4f8e-b1a7-3d5c7e9f0e03",
+                    "vars": {
+                        "nx_sap_saphealth_multiline": "1",
+                        "nx_sap_saphealth_name": "SAP CCMS Admin Workplace",
+                        "nx_sap_saphealth_name2": "Operating System",
+                        "nx_sap_saphealth_name3": "$host.vars.nx_sap_instance_ccms_name$#/(?!dev|run|sys)[^#]*#Percentage_Used$$",
+                        "nx_sap_saphealth_regexp": "1",
+                        "nx_sap_saphealth_report": "long",
+                        "nx_sap_saphealth_separator": "#"
+                    }
+                },
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-sap-instance-ccms-mte-check"
+                    ],
+                    "object_name": "SAP OS Memory",
+                    "object_type": "object",
+                    "uuid": "9e3b1a40-6c2d-4f8e-b1a7-3d5c7e9f0e02",
+                    "vars": {
+                        "nx_sap_saphealth_name": "SAP CCMS Admin Workplace",
+                        "nx_sap_saphealth_name2": "Operating System",
+                        "nx_sap_saphealth_name3": "$host.vars.nx_sap_instance_ccms_name$#Memory#(Free|Free Including Fs Cache|Configured Memory)$$",
+                        "nx_sap_saphealth_regexp": "1",
+                        "nx_sap_saphealth_report": "long",
+                        "nx_sap_saphealth_separator": "#"
+                    }
+                }
+            ],
+            "uuid": "9e3b1a40-6c2d-4f8e-b1a7-3d5c7e9f0f04"
         },
         "nx-ss-sap-instance-all": {
             "assign_filter": "\"nx-ht-sap-instance\"=host.templates",
@@ -125,6 +198,227 @@
                 }
             ],
             "uuid": "a15b88ff-a1dd-4234-b2ee-fcbc040ce7ba"
+        },
+        "nx-ss-sap-instance-dialog-extras": {
+            "assign_filter": "\"nx-ht-sap-instance\"=host.templates&host.vars.nx_sap_instance_type=%5B%22D%22%2C%22DVEBMGS%22%5D&host.vars.nx_enable_nep_extras=true",
+            "description": "Additional services for SAP Dialog-Instances (needs host var nx_enable_nep_extras is true)",
+            "object_name": "nx-ss-sap-instance-dialog-extras",
+            "object_type": "template",
+            "services": [
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-sap-instance-wp-table-batch"
+                    ],
+                    "object_name": "SAP Instance Batch free",
+                    "object_type": "object",
+                    "uuid": "9e3b1a40-6c2d-4f8e-b1a7-3d5c7e9f0d0a"
+                },
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-sap-instance-ccms-mte-check"
+                    ],
+                    "object_name": "SAP Instance Buffers",
+                    "object_type": "object",
+                    "uuid": "9e3b1a40-6c2d-4f8e-b1a7-3d5c7e9f0d07",
+                    "vars": {
+                        "nx_sap_saphealth_name": "SAP CCMS Admin Workplace",
+                        "nx_sap_saphealth_name2": "Buffers",
+                        "nx_sap_saphealth_name3": "$host.vars.nx_sap_instance_ccms_name$#([^#]+#Swap|(Program|TableBuffer)#HitRatio)",
+                        "nx_sap_saphealth_regexp": "1",
+                        "nx_sap_saphealth_report": "long",
+                        "nx_sap_saphealth_separator": "#"
+                    }
+                },
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-sap-instance-ccms-mte-check"
+                    ],
+                    "object_name": "SAP Instance Dialog",
+                    "object_type": "object",
+                    "uuid": "9e3b1a40-6c2d-4f8e-b1a7-3d5c7e9f0d02",
+                    "vars": {
+                        "nx_sap_saphealth_name": "SAP RRR Monitor",
+                        "nx_sap_saphealth_name2": "System Load",
+                        "nx_sap_saphealth_name3": "$host.vars.nx_sap_instance_ccms_name$#Dialog#(Utilisation|ErrorFreqInWpDIA)",
+                        "nx_sap_saphealth_regexp": "1",
+                        "nx_sap_saphealth_report": "long",
+                        "nx_sap_saphealth_separator": "#"
+                    }
+                },
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-sap-instance-ccms-mte-check"
+                    ],
+                    "object_name": "SAP Instance Logon Load",
+                    "object_type": "object",
+                    "uuid": "9e3b1a40-6c2d-4f8e-b1a7-3d5c7e9f0d01",
+                    "vars": {
+                        "nx_sap_saphealth_criticalx": [
+                            "Dialog_LogonLoadQuality=0:"
+                        ],
+                        "nx_sap_saphealth_name": "SAP CCMS Monitors for Optional Components",
+                        "nx_sap_saphealth_name2": "Logon Load Balancing",
+                        "nx_sap_saphealth_name3": "$host.vars.nx_sap_instance_ccms_name$#Dialog#(LogonLoadQuality|UsersLoggedIn)",
+                        "nx_sap_saphealth_regexp": "1",
+                        "nx_sap_saphealth_report": "long",
+                        "nx_sap_saphealth_separator": "#",
+                        "nx_sap_saphealth_warningx": [
+                            "Dialog_LogonLoadQuality=0:"
+                        ]
+                    }
+                },
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-sap-instance-ccms-mte-check"
+                    ],
+                    "object_name": "SAP Instance Memory",
+                    "object_type": "object",
+                    "uuid": "9e3b1a40-6c2d-4f8e-b1a7-3d5c7e9f0d06",
+                    "vars": {
+                        "nx_sap_saphealth_criticalx": [
+                            "R3MemMgmtResources_EsAct=85",
+                            "R3MemMgmtResources_HeapAct=85",
+                            "R3MemMgmtResources_EmSlotsAct=85",
+                            "R3Paging_R3PagingUsed=85",
+                            "Ext. global memory_ExtGlobMemUsed=85",
+                            "SharedObjects_SpaceFree=15:"
+                        ],
+                        "nx_sap_saphealth_name": "SAP RRR Monitor",
+                        "nx_sap_saphealth_name2": "Unused Memory",
+                        "nx_sap_saphealth_name3": "$host.vars.nx_sap_instance_ccms_name$#(R3MemMgmtResources#(EsAct|HeapAct|EmSlotsAct)|R3Paging#R3PagingUsed|Ext\\. global memory#ExtGlobMemUsed|SharedObjects#SpaceFree)$$",
+                        "nx_sap_saphealth_regexp": "1",
+                        "nx_sap_saphealth_report": "long",
+                        "nx_sap_saphealth_separator": "#",
+                        "nx_sap_saphealth_warningx": [
+                            "R3MemMgmtResources_EsAct=80",
+                            "R3MemMgmtResources_HeapAct=80",
+                            "R3MemMgmtResources_EmSlotsAct=80",
+                            "R3Paging_R3PagingUsed=80",
+                            "Ext. global memory_ExtGlobMemUsed=80",
+                            "SharedObjects_SpaceFree=20:"
+                        ]
+                    }
+                },
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-sap-instance-ccms-mte-check"
+                    ],
+                    "object_name": "SAP Instance OS Swap",
+                    "object_type": "object",
+                    "uuid": "9e3b1a40-6c2d-4f8e-b1a7-3d5c7e9f0d08",
+                    "vars": {
+                        "nx_sap_saphealth_name": "SAP CCMS Admin Workplace",
+                        "nx_sap_saphealth_name2": "Operating System",
+                        "nx_sap_saphealth_name3": "$host.vars.nx_sap_instance_ccms_name$#(Swap_Space#(Freespace|Percentage_Used)|Memory#(Swap Size|Swap Free))$$",
+                        "nx_sap_saphealth_regexp": "1",
+                        "nx_sap_saphealth_report": "long",
+                        "nx_sap_saphealth_separator": "#"
+                    }
+                },
+                {
+                    "check_timeout": 130,
+                    "fields": [],
+                    "imports": [
+                        "nx-st-sap-instance-ccms-mte-check"
+                    ],
+                    "object_name": "SAP Instance Parameter Changes",
+                    "object_type": "object",
+                    "uuid": "9e3b1a40-6c2d-4f8e-b1a7-3d5c7e9f0d09",
+                    "vars": {
+                        "nx_sap_saphealth_name": "SAP CCMS Monitor Templates",
+                        "nx_sap_saphealth_name2": "System Configuration",
+                        "nx_sap_saphealth_name3": "$host.vars.nx_sap_instance_ccms_name$#Server Configuration#Parameter Changes",
+                        "nx_sap_saphealth_regexp": "1",
+                        "nx_sap_saphealth_report": "long",
+                        "nx_sap_saphealth_separator": "#",
+                        "nx_sap_saphealth_timeout": "120"
+                    }
+                },
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-sap-instance-ccms-mte-check"
+                    ],
+                    "object_name": "SAP Instance Response Time",
+                    "object_type": "object",
+                    "uuid": "9e3b1a40-6c2d-4f8e-b1a7-3d5c7e9f0d03",
+                    "vars": {
+                        "nx_sap_saphealth_criticalx": [
+                            "Dialog_ResponseTime=$host.vars.nx_sap_instance_responsetime_critical$"
+                        ],
+                        "nx_sap_saphealth_name": "SAP RRR Monitor",
+                        "nx_sap_saphealth_name2": "System Load",
+                        "nx_sap_saphealth_name3": "$host.vars.nx_sap_instance_ccms_name$#Dialog#ResponseTime$$",
+                        "nx_sap_saphealth_regexp": "1",
+                        "nx_sap_saphealth_report": "long",
+                        "nx_sap_saphealth_separator": "#",
+                        "nx_sap_saphealth_warningx": [
+                            "Dialog_ResponseTime=$host.vars.nx_sap_instance_responsetime_warning$"
+                        ]
+                    }
+                },
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-sap-instance-wp-table-spool"
+                    ],
+                    "object_name": "SAP Instance Spool free",
+                    "object_type": "object",
+                    "uuid": "9e3b1a40-6c2d-4f8e-b1a7-3d5c7e9f0d0c"
+                },
+                {
+                    "check_timeout": 130,
+                    "fields": [],
+                    "imports": [
+                        "nx-st-sap-instance-ccms-mte-check"
+                    ],
+                    "object_name": "SAP Instance Update WP",
+                    "object_type": "object",
+                    "uuid": "9e3b1a40-6c2d-4f8e-b1a7-3d5c7e9f0d05",
+                    "vars": {
+                        "nx_sap_saphealth_name": "SAP CCMS Admin Workplace",
+                        "nx_sap_saphealth_name2": "Entire System",
+                        "nx_sap_saphealth_name3": "$host.vars.nx_sap_instance_ccms_name$#PerformanceU[12]#(Utilisation|QueueTime|ErrorsInWpUD[12])",
+                        "nx_sap_saphealth_regexp": "1",
+                        "nx_sap_saphealth_report": "long",
+                        "nx_sap_saphealth_separator": "#",
+                        "nx_sap_saphealth_timeout": "120"
+                    }
+                },
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-sap-instance-wp-table-update"
+                    ],
+                    "object_name": "SAP Instance Update free",
+                    "object_type": "object",
+                    "uuid": "9e3b1a40-6c2d-4f8e-b1a7-3d5c7e9f0d0b"
+                },
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-sap-instance-ccms-mte-check"
+                    ],
+                    "object_name": "SAP Instance WP Status",
+                    "object_type": "object",
+                    "uuid": "9e3b1a40-6c2d-4f8e-b1a7-3d5c7e9f0d04",
+                    "vars": {
+                        "nx_sap_saphealth_name": "SAP RRR Monitor",
+                        "nx_sap_saphealth_name2": "Unused Memory",
+                        "nx_sap_saphealth_name3": "$host.vars.nx_sap_instance_ccms_name$#R3MemMgmtResources#(HoldWpNo|WpDiaRestart|WpNonDiaRestart)",
+                        "nx_sap_saphealth_regexp": "1",
+                        "nx_sap_saphealth_report": "long",
+                        "nx_sap_saphealth_separator": "#"
+                    }
+                }
+            ],
+            "uuid": "9e3b1a40-6c2d-4f8e-b1a7-3d5c7e9f0f02"
         },
         "nx-ss-sap-instance-has-messageserver": {
             "assign_filter": "\"nx-ht-sap-instance\"=host.templates&host.vars.nx_sap_instance_type=%5B%22ASCS%22%2C%22DVEBMGS%22%5D&host.vars.nx_sap_instance_is_msserver=true",
@@ -412,6 +706,177 @@
                 }
             ],
             "uuid": "45a6d749-9bc5-491e-850a-7db2bb23118c"
+        },
+        "nx-ss-sap-instance-has-messageserver-extras": {
+            "assign_filter": "\"nx-ht-sap-instance\"=host.templates&host.vars.nx_sap_instance_type=%5B%22ASCS%22%2C%22DVEBMGS%22%5D&host.vars.nx_sap_instance_is_msserver=true&host.vars.nx_enable_nep_extras=true",
+            "description": "Additional KPI services for SAP ABAP systems (host running the message server) (needs host var nx_enable_nep_extras is true)",
+            "object_name": "nx-ss-sap-instance-has-messageserver-extras",
+            "object_type": "template",
+            "services": [
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-sap-system-instance-list"
+                    ],
+                    "object_name": "SAP System Application Servers",
+                    "object_type": "object",
+                    "uuid": "9e3b1a40-6c2d-4f8e-b1a7-3d5c7e9f0c06",
+                    "vars": {
+                        "nx_sap_sapcontrol_pattern": "ABAP"
+                    }
+                },
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-sap-system-ccms-mte-check"
+                    ],
+                    "object_name": "SAP System Background",
+                    "object_type": "object",
+                    "uuid": "9e3b1a40-6c2d-4f8e-b1a7-3d5c7e9f0c03",
+                    "vars": {
+                        "nx_sap_saphealth_group": "SPACE",
+                        "nx_sap_saphealth_mshost": "$host.address$",
+                        "nx_sap_saphealth_msserv": "36$host.vars.nx_sap_instance_number$",
+                        "nx_sap_saphealth_name": "SAP CCMS Admin Workplace",
+                        "nx_sap_saphealth_name2": "Background Processing",
+                        "nx_sap_saphealth_name3": "#BackgroundService#(SystemWideFreeBPWP|SystemWideQueueLength)",
+                        "nx_sap_saphealth_regexp": "1",
+                        "nx_sap_saphealth_report": "long",
+                        "nx_sap_saphealth_separator": "#",
+                        "nx_sap_saphealth_sysnr": "$host.vars.nx_sap_instance_number$"
+                    }
+                },
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-sap-system-ccms-mte-check"
+                    ],
+                    "object_name": "SAP System Enqueue Errors",
+                    "object_type": "object",
+                    "uuid": "9e3b1a40-6c2d-4f8e-b1a7-3d5c7e9f0c02",
+                    "vars": {
+                        "nx_sap_saphealth_group": "SPACE",
+                        "nx_sap_saphealth_mshost": "$host.address$",
+                        "nx_sap_saphealth_msserv": "36$host.vars.nx_sap_instance_number$",
+                        "nx_sap_saphealth_name": "SAP CCMS Admin Workplace",
+                        "nx_sap_saphealth_name2": "Enqueue",
+                        "nx_sap_saphealth_name3": "#Enqueue Server#(Enqueue Request Errors|Update Queue Actual)",
+                        "nx_sap_saphealth_regexp": "1",
+                        "nx_sap_saphealth_report": "long",
+                        "nx_sap_saphealth_separator": "#",
+                        "nx_sap_saphealth_sysnr": "$host.vars.nx_sap_instance_number$"
+                    }
+                },
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-sap-system-old-locks"
+                    ],
+                    "object_name": "SAP System Lock Entries older 1d",
+                    "object_type": "object",
+                    "uuid": "9e3b1a40-6c2d-4f8e-b1a7-3d5c7e9f0c08",
+                    "vars": {
+                        "nx_sap_saphealth_group": "SPACE",
+                        "nx_sap_saphealth_mshost": "$host.address$",
+                        "nx_sap_saphealth_msserv": "36$host.vars.nx_sap_instance_number$",
+                        "nx_sap_saphealth_sysnr": "$host.vars.nx_sap_instance_number$"
+                    }
+                },
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-sap-system-old-updates"
+                    ],
+                    "object_name": "SAP System Update Requests older 1d",
+                    "object_type": "object",
+                    "uuid": "9e3b1a40-6c2d-4f8e-b1a7-3d5c7e9f0c07",
+                    "vars": {
+                        "nx_sap_saphealth_group": "SPACE",
+                        "nx_sap_saphealth_mshost": "$host.address$",
+                        "nx_sap_saphealth_msserv": "36$host.vars.nx_sap_instance_number$",
+                        "nx_sap_saphealth_sysnr": "$host.vars.nx_sap_instance_number$"
+                    }
+                },
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-sap-system-ccms-mte-check"
+                    ],
+                    "object_name": "SAP System Update Service Status",
+                    "object_type": "object",
+                    "uuid": "9e3b1a40-6c2d-4f8e-b1a7-3d5c7e9f0c01",
+                    "vars": {
+                        "nx_sap_saphealth_group": "SPACE",
+                        "nx_sap_saphealth_mshost": "$host.address$",
+                        "nx_sap_saphealth_msserv": "36$host.vars.nx_sap_instance_number$",
+                        "nx_sap_saphealth_name": "SAP CCMS Technical Operations Templates",
+                        "nx_sap_saphealth_name2": "ABAP Critical Messages",
+                        "nx_sap_saphealth_name3": "#UpdateServices#Update Status",
+                        "nx_sap_saphealth_regexp": "1",
+                        "nx_sap_saphealth_report": "long",
+                        "nx_sap_saphealth_separator": "#",
+                        "nx_sap_saphealth_sysnr": "$host.vars.nx_sap_instance_number$"
+                    }
+                },
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-sap-system-ccms-mte-check"
+                    ],
+                    "object_name": "SAP System qRFC Inbound",
+                    "object_type": "object",
+                    "uuid": "9e3b1a40-6c2d-4f8e-b1a7-3d5c7e9f0c04",
+                    "vars": {
+                        "nx_sap_saphealth_group": "SPACE",
+                        "nx_sap_saphealth_mshost": "$host.address$",
+                        "nx_sap_saphealth_msserv": "36$host.vars.nx_sap_instance_number$",
+                        "nx_sap_saphealth_name": "SAP CCMS Monitor Templates",
+                        "nx_sap_saphealth_name2": "Communications",
+                        "nx_sap_saphealth_name3": "Queued RFC#(Inbound Queues Not Otherwise Monitored#Blocked queues: Client [0-9]+|QIN Schedulers: Errors#QIN (Scheduler Errors|Unregistered Queues) - All Clients)",
+                        "nx_sap_saphealth_regexp": "1",
+                        "nx_sap_saphealth_report": "long",
+                        "nx_sap_saphealth_separator": "#",
+                        "nx_sap_saphealth_sysnr": "$host.vars.nx_sap_instance_number$"
+                    }
+                },
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-sap-system-ccms-mte-check"
+                    ],
+                    "object_name": "SAP System qRFC Outbound",
+                    "object_type": "object",
+                    "uuid": "9e3b1a40-6c2d-4f8e-b1a7-3d5c7e9f0c05",
+                    "vars": {
+                        "nx_sap_saphealth_group": "SPACE",
+                        "nx_sap_saphealth_mshost": "$host.address$",
+                        "nx_sap_saphealth_msserv": "36$host.vars.nx_sap_instance_number$",
+                        "nx_sap_saphealth_name": "SAP CCMS Monitor Templates",
+                        "nx_sap_saphealth_name2": "Communications",
+                        "nx_sap_saphealth_name3": "Queued RFC#(Outbound Queues Not Otherwise Monitored#Blocked queues: Client [0-9]+|QOUT Schedulers: Errors#QOUT Scheduler Errors - All Clients)",
+                        "nx_sap_saphealth_regexp": "1",
+                        "nx_sap_saphealth_report": "long",
+                        "nx_sap_saphealth_separator": "#",
+                        "nx_sap_saphealth_sysnr": "$host.vars.nx_sap_instance_number$"
+                    }
+                },
+                {
+                    "fields": [],
+                    "imports": [
+                        "nx-st-sap-system-qrfc-errors"
+                    ],
+                    "object_name": "SAP System qRFC Queues in Error",
+                    "object_type": "object",
+                    "uuid": "9e3b1a40-6c2d-4f8e-b1a7-3d5c7e9f0c09",
+                    "vars": {
+                        "nx_sap_saphealth_group": "SPACE",
+                        "nx_sap_saphealth_mshost": "$host.address$",
+                        "nx_sap_saphealth_msserv": "36$host.vars.nx_sap_instance_number$",
+                        "nx_sap_saphealth_sysnr": "$host.vars.nx_sap_instance_number$"
+                    }
+                }
+            ],
+            "uuid": "9e3b1a40-6c2d-4f8e-b1a7-3d5c7e9f0f01"
         }
     }
 }
