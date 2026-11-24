@@ -157,13 +157,6 @@
       ],
       "valueName": "avg"
     },
-<<<<<<< HEAD
-    "timezone": "",
-    "title": "Server Overview",
-    "uid": "gwlEnKgWk",
-    "version": 2
-  }
-=======
     {
       "columns": [],
       "datasource": {
@@ -1284,4 +1277,3 @@
   "title": "Server Overview",
   "uid": "gwlEnKgWk"
 }
->>>>>>> 3441837 (fix(NEP-962): migrate ITOA dashboards from Icinga IDO to IcingaDB (#114))
