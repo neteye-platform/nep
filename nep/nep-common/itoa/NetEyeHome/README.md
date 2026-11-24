@@ -19,51 +19,12 @@ Before importing this dashboard, ensure the following requirements are met. If n
 
 ## Grafana Datasources
 
-<<<<<<< HEAD
-Create a ReadOnly user in MySQL to access icinga2 database
-```
-create user 'grafanareadonly'@'localhost' identified by 'XXXXXXXX';
-grant select on icinga2.* to 'grafanareadonly'@'localhost';
-flush privileges;
-```
-
-## Grafana Datasources creation
-
-From ITOA – Data Sources menu create a new MySQL datasource named **icinga-mysql** (if not exists)
-```
-Host: mariadb.neteyelocal
-Database: icinga
-User: grafanareadonly
-Password: XXXXXXXX
-```
-
-**Save&Test**
-
-From ITOA – Data Sources menu create a new InfluxDB datasource named **Telegraf** (if not exists)
-
-```
-URL: https://influxdb.neteyelocal:8086
-Basic auth enabled
-
-Basic auth Details
-
-User: influxdbreader
-Password: (look at cat /root/.pwd_analytics_grafana_viewer_user)
-
-Database: telegraf
-User: influxdbreader
-Password: (look at cat /root/.pwd_analytics_grafana_viewer_user)
-```
-
-**Save&Test**
-=======
 The dashboard reads monitoring data from the MySQL datasource `icingadb-mysql` (database `icingadb`). The datasource is created automatically in the Main Org by the `nep-common` setup (`setup_scripts/pre/09_create_grafana_datasources.sh`), so no manual MySQL user or datasource creation is needed.
 
 The InfluxDB datasources `icinga2-influxdb` (Icinga metrics, `neteye_master` variable and Monitoring Performance panels) and `telegraf_master` (Host Performance panels, Telegraf metrics of the NetEye nodes) are also required.
 
 Datasources are referenced by name, so the dashboard works without changes on any NetEye installation where they exist.
 
->>>>>>> 3441837 (fix(NEP-962): migrate ITOA dashboards from Icinga IDO to IcingaDB (#114))
 ## Grafana Variable definition
 
 From Dashboard - Settings - Variables (neteye_master) correct the default Regex related to neteye_master variable from dashboard settings. The simple Regex /neteye/ used in our demo environment must be corrected selecting the correct hostname related to your NetEye monitored.
