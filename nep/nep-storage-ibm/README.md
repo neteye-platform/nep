@@ -1,12 +1,14 @@
 # NEP Storage IBM
 
-The `nep-storage-ibm` provides common basic template to manage Storage IBM systems listed below:
+The `nep-storage-ibm` provides common basic template to manage Storage IBM
+systems listed below:
 
 * IBM DS3000 smcli by Centreon
 
 * IBM Storwize by Centeron
 
-This package can be installed on systems running the software described below. Systems with equivalent components are also suitable for installation.
+This package can be installed on systems running the software described below.
+Systems with equivalent components are also suitable for installation.
 
 ## Table of Contents
 
@@ -45,14 +47,17 @@ nep-setup install nep-storage-ibm
 
 #### Finalizing Installation
 
-After the installation is complete, add the support for the required Notification Channel by installing the related NEP.
+After the installation is complete, add the support for the required
+Notification Channel by installing the related NEP.
 Others custom steps is required for user management on IBM V* series storage:
 
 * create a user named “icinga” with monitor privileges
 
-* copy the file /neteye/local/icinga2/data/spool/icinga2/.ssh/id_rsa.pub in the icinga user properties
+* copy the file /neteye/local/icinga2/data/spool/icinga2/.ssh/id_rsa.pub in the
+  icinga user properties
 
-The plugin centreon-plugin-Hardware-Storage-Ibm-Ds3000-Smcli need the installation of SMcli command. See Centreon Documentation above.
+The plugin centreon-plugin-Hardware-Storage-Ibm-Ds3000-Smcli need the
+installation of SMcli command. See Centreon Documentation above.
 
 ## Packet Contents
 
@@ -66,21 +71,28 @@ This NEP doesn't provide any Host Templates
 
 #### Service Templates
 
-The following Service Templates can be used to freely create Service Objects, Service Apply Rules or Service Sets.
+The following Service Templates can be used to freely create Service Objects,
+Service Apply Rules or Service Sets.
 
-_Remember to not edit these Service Templates as they will be restored/updated at the next NEP Package update_:
+_Remember to not edit these Service Templates as they will be restored/updated
+at the next NEP Package update_:
 
-* `nx-st-agentless-cli-centreon-storage-ibm-ds`: Checks all base monitoring DELL Switch N40XXX using Centreon Plugins
-* `nx-st-agentless-ssh-centreon-storage-ibm-storwize`: Checks all base monitoring DELL Switch OS10 using Centreon Plugins
+* `nx-st-agentless-cli-centreon-storage-ibm-ds`: Checks all base monitoring DELL
+  Switch N40XXX using Centreon Plugins
+* `nx-st-agentless-ssh-centreon-storage-ibm-storwize`: Checks all base
+  monitoring DELL Switch OS10 using Centreon Plugins
 
 #### Services Sets
 
 The following Service Sets can be used to freely monitor Host Objects.
 
-_Remember to not edit these Service Sets because they will be restored/updated at the next NEP Package update_:
+_Remember to not edit these Service Sets because they will be restored/updated
+at the next NEP Package update_:
 
-* `nx-ss-storage-centreon-ibm-ds`: Service Set providing all Base monitoring IBM Storage DS3000
-* `nx-ss-storage-centreon-ibm-storwize`: Service Set providing all Base monitoring IBM Storage Storwize
+* `nx-ss-storage-centreon-ibm-ds`: Service Set providing all Base monitoring IBM
+  Storage DS3000
+* `nx-ss-storage-centreon-ibm-storwize`: Service Set providing all Base
+  monitoring IBM Storage Storwize
 
 #### Command
 

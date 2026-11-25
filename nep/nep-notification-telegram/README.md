@@ -1,6 +1,7 @@
 # Notification Telegram
 
-The `nep-notification-telegram` adds to the Notification Facility provided with `nep-notification-base` the ability to send Notifications using Telegram.
+The `nep-notification-telegram` adds to the Notification Facility provided with
+`nep-notification-base` the ability to send Notifications using Telegram.
 
 ## Table of Contents
 
@@ -10,7 +11,8 @@ The `nep-notification-telegram` adds to the Notification Facility provided with 
 
 ## Prerequisites
 
-This package can be installed on systems running the software described below. Systems with equivalent components are also suitable for installation.
+This package can be installed on systems running the software described below.
+Systems with equivalent components are also suitable for installation.
 
 | Software Version | Version |
 | --- | ----------- |
@@ -36,7 +38,9 @@ nep-setup install nep-notification-telegram
 
 ## Packet Contents
 
-This `nep-notification-telegram` does not provide any Object for the End User. All Objects will be automatically created after the current Director Configuration is deployed.
+This `nep-notification-telegram` does not provide any Object for the End User.
+All Objects will be automatically created after the current Director
+Configuration is deployed.
 
 ### Director/Icinga Objects
 

@@ -1,6 +1,11 @@
 # NEP Network Printer
 
-The NEP is based on the check_printer_health script (for more information have look to this [Page](https://labs.consol.de/nagios/check_printer_health/)). In order to use it, SNMP must be enabled on the target devices. This NEP provides an Host Template `nx-ht-network-printer-snmp` that can be added to the Host. This template is linked to a Service Set: `nx-ss-network-printer` that monitors these elements on the printer: <!-- codespell:ignore consol -->
+The NEP is based on the check_printer_health script (for more information have
+look to this [Page](https://labs.consol.de/nagios/check_printer_health/)). In
+order to use it, SNMP must be enabled on the target devices. This NEP provides
+an Host Template `nx-ht-network-printer-snmp` that can be added to the Host.
+This template is linked to a Service Set: `nx-ss-network-printer` that monitors
+these elements on the printer:
 
 * Printer Hardware Status
 * Printer Supplies Status
@@ -30,13 +35,15 @@ The NEP is based on the check_printer_health script (for more information have l
 
 ### External dependencies
 
-This NEP doesn't require external references, if you want to manually download a new version via WGET see:
+This NEP doesn't require external references, if you want to manually download a
+new version via WGET see:
 
-* [https://labs.consol.de/nagios/check_printer_health/index.html#download](https://labs.consol.de/nagios/check_printer_health/index.html#download) <!-- codespell:ignore consol -->
+* [https://labs.consol.de/nagios/check_printer_health/index.html#download](https://labs.consol.de/nagios/check_printer_health/index.html#download)
 
 ## Installation
 
-The installation process provides a PERL script `check_printer_health` that is automatically installed at `/neteye/shared/monitoring/plugins/`
+The installation process provides a PERL script `check_printer_health` that is
+automatically installed at `/neteye/shared/monitoring/plugins/`
 
 ### NEP Installation
 
@@ -81,11 +88,13 @@ Commands:
 
 ### Dashboard ITOA
 
-The NEP doesn't provide a dedicated dashboard, but user can build it using the available data.
+The NEP doesn't provide a dedicated dashboard, but user can build it using the
+available data.
 
 ## Usage
 
-In order to use this NEP, add the Host Template `nx-ht-network-printer-snmp` to the Host.
+In order to use this NEP, add the Host Template `nx-ht-network-printer-snmp` to
+the Host.
 Configure these fields:
 
 * SNMP Community

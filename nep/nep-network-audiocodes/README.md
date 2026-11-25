@@ -1,6 +1,8 @@
 # Network Audiocodes
 
-The `nep-network-audiocodes` adds SNMP-based monitoring for Audiocodes devices to NetEye, using Centreon plugins. It provides service checks for CPU, hardware health, memory, interfaces, SBC calls, and trunk status.
+The `nep-network-audiocodes` adds SNMP-based monitoring for Audiocodes devices
+to NetEye, using Centreon plugins. It provides service checks for CPU, hardware
+health, memory, interfaces, SBC calls, and trunk status.
 
 ## Table of Contents
 
@@ -11,7 +13,8 @@ The `nep-network-audiocodes` adds SNMP-based monitoring for Audiocodes devices t
 
 ## Prerequisites
 
-This package can be installed on systems running the software described below. Systems with equivalent components are also suitable for installation.
+This package can be installed on systems running the software described below.
+Systems with equivalent components are also suitable for installation.
 
 | Software Version | Version |
 | --- | --- |
@@ -28,7 +31,8 @@ This package can be installed on systems running the software described below. S
 
 ### External dependencies
 
-- RPM package `centreon-plugin-Network-Audiocodes-Snmp` (automatically installed by the pre-install setup script from the Centreon stable repository)
+- RPM package `centreon-plugin-Network-Audiocodes-Snmp` (automatically installed
+  by the pre-install setup script from the Centreon stable repository)
 
 ## Installation
 
@@ -57,7 +61,8 @@ There is no need to perform any action to complete the installation of this NEP.
 
 ## Packet Contents
 
-This package contains Director commands, service templates, and service sets for monitoring Audiocodes devices via SNMP using the Centreon Audiocodes plugin.
+This package contains Director commands, service templates, and service sets for
+monitoring Audiocodes devices via SNMP using the Centreon Audiocodes plugin.
 
 ### Director/Icinga Objects
 
@@ -133,22 +138,28 @@ This NEP does not provide any ITOA dashboards.
 
 ### Metrics
 
-The check commands provide performance data according to the selected Centreon plugin mode and enabled counters.
+The check commands provide performance data according to the selected Centreon
+plugin mode and enabled counters.
 
 ## Usage
 
 The service sets provided by this NEP can be used in two ways.
-The service sets include built-in apply rules that automatically assign services to matching hosts.
+The service sets include built-in apply rules that automatically assign services
+to matching hosts.
 
-The base service set `nx-ss-network-centreon-audiocodes` is applied when a host meets all of the following conditions:
+The base service set `nx-ss-network-centreon-audiocodes` is applied when a host
+meets all of the following conditions:
 
 - The host uses the `nx-ht-network-voip-snmp` host template
 - The host variable `nx_hardware_vendor` is set to `audiocodes`
 - The host variable `nx_enable_nep_ss` is set to `true`
-- The service set `nx-ss-network-centreon-audiocodes` is not listed in the host variable `nx_nep_ss_to_exclude`
+- The service set `nx-ss-network-centreon-audiocodes` is not listed in the host
+  variable `nx_nep_ss_to_exclude`
 
-The extras service set `nx-ss-network-centreon-audiocodes-extras` requires the same conditions as above, plus:
+The extras service set `nx-ss-network-centreon-audiocodes-extras` requires the
+same conditions as above, plus:
 
 - The host variable `nx_enable_nep_extras` is set to `true`
 
-Alternatively, you can manually assign the service sets to individual hosts in Director by adding the desired service set directly to the host configuration.
+Alternatively, you can manually assign the service sets to individual hosts in
+Director by adding the desired service set directly to the host configuration.

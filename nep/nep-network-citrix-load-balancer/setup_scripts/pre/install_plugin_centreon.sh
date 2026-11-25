@@ -10,16 +10,16 @@ SETUP_LIBRARY=${NEP_STAGE_DIR}/setup/library
 ## Script main code: add your code here ##
 ##########################################
 function install_plugin() {
-    dnf --enablerepo=centreon-*-stable* install -y centreon-plugin-network-loadbalancers-netscaler-snmp
+    dnf --enablerepo=centreon-*-stable* install -y centreon-plugin-Network-Loadbalancers-Netscaler-Snmp
 }
 
 if [[ $neteye_deployment == 'single_node' ]]; then
-    install_plugin
+    install_plugin || exit $?
     exit 0
 fi
 if [[ $neteye_deployment == 'cluster' ]]; then
     if [[ $neteye_node_type == 'node' ]]; then
-        install_plugin
+        install_plugin || exit $?
         exit 0
     fi
     if [[ $neteye_node_type == 'elastic_only' ]]; then
@@ -30,7 +30,7 @@ if [[ $neteye_deployment == 'cluster' ]]; then
     fi
 fi
 if [[ $neteye_deployment == 'satellite' ]]; then
-    install_plugin
+    install_plugin || exit $?
     exit 0
 fi
 

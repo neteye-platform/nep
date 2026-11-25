@@ -225,7 +225,7 @@
                     "value": "$nx_centreon_plugin_snmp_filter-name$"
                 },
                 "--mode": {
-                    "value": "memory",
+                    "value": "certificates-expire",
                     "order": "1"
                 },
                 "--warning-days": {
