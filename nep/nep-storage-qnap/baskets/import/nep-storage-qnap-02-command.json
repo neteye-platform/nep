@@ -2,45 +2,367 @@
     "Command": {
         "nx-c-centreon-qnap": {
             "arguments": {
-                "--mode": {
-                    "value": "$nx_qnap_storage_mode$"
-                },
                 "--component": {
                     "description": "Which component to check (Default: '.*'). Can be: 'disk', 'fan', 'mdisk', 'psu', 'raid', 'temperature'.",
                     "value": "$nx_centreon_qnap_storage_component_list$"
                 },
-                "--critical": {
-                    "value": "$nx_centreon_qnap_storage_critical$"
-                },
-                "--warning": {
-                    "description": "Set warning threshold for temperatures (syntax: type,regexp,threshold) Example: --warning='temperature,cpu,30' --warning='fan,.*,1500'",
-                    "value": "$nx_centreon_qnap_storage_warning$"
-                },
+                "--critical": "$nx_centreon_qnap_storage_critical$",
                 "--filter": {
                     "description": "Exclude some parts (comma separated list) (Example: --filter=disk) Can also exclude specific instance: --filter=disk,1",
                     "repeat_key": true,
                     "value": "$nx_centreon_qnap_storage_filter$"
                 },
                 "--interface": {
-                     "description": "Interface (numeric)",
-                      "value": "$nx_centreon_qnap_storage_interface$"
-                  },
-                "--verbose": {}
+                    "description": "Interface (numeric)",
+                    "value": "$nx_centreon_qnap_storage_interface$"
+                },
+                "--mode": "$nx_qnap_storage_mode$",
+                "--verbose": {},
+                "--warning": {
+                    "description": "Set warning threshold for temperatures (syntax: type,regexp,threshold) Example: --warning='temperature,cpu,30' --warning='fan,.*,1500'",
+                    "value": "$nx_centreon_qnap_storage_warning$"
+                }
             },
-            "command": "\/usr\/lib\/centreon\/plugins\/centreon_qnap.pl",
-            "disabled": false,
+            "command": "/usr/lib/centreon/plugins/centreon_qnap.pl",
             "fields": [],
             "imports": [
                 "nx-ct-centreon-plugin-snmp",
                 "nx-ct-centreon-plugin-retention"
             ],
-            "is_string": null,
             "methods_execute": "PluginCheck",
             "object_name": "nx-c-centreon-qnap",
             "object_type": "object",
-            "timeout": null,
-            "vars": {},
-            "zone": null
+            "uuid": "06281502-9b98-4067-bc23-5e436b48d4f6"
+        },
+        "nx-c-centreon-qnap-cpu": {
+            "arguments": {
+                "--critical-average": {
+                    "description": "Critical threshold average CPU utilization.",
+                    "value": "$nx_centreon_qnap_storage_critical$"
+                },
+                "--mode": "cpu",
+                "--warning-average": {
+                    "description": "Warning threshold average CPU utilization.",
+                    "value": "$nx_centreon_qnap_storage_warning$"
+                }
+            },
+            "fields": [],
+            "imports": [
+                "nx-c-centreon-qnap-base"
+            ],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-centreon-qnap-cpu",
+            "object_type": "object",
+            "uuid": "bf119959-a278-4981-bbb0-c682924e9727"
+        },
+        "nx-c-centreon-qnap-interfaces": {
+            "arguments": {
+                "--filter": {
+                    "description": "Exclude some parts (comma separated list) (Example: --filter=disk) Can also exclude specific instance: --filter=disk,1",
+                    "repeat_key": true,
+                    "value": "$nx_centreon_qnap_storage_filter$",
+                    "order": "2"
+                },
+                "--interface": {
+                    "description": "Interface (numeric)",
+                    "value": "$nx_centreon_qnap_storage_interface$",
+                    "order": "3"
+                },
+                "--mode": {
+                    "value": "interfaces",
+                    "order": "1"
+                },
+                "--name": {
+                    "description": "With this option, the interfaces will be filtered by name",
+                    "set_if": "$nx_centreon_qnap_storage_interface_name$",
+                    "set_if_format": "string",
+                    "order": "4"
+                }
+            },
+            "command": "/usr/lib/centreon/plugins/centreon_qnap.pl",
+            "fields": [],
+            "imports": [
+                "nx-ct-centreon-plugin-snmp",
+                "nx-ct-centreon-plugin-retention"
+            ],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-centreon-qnap-interfaces",
+            "object_type": "object",
+            "uuid": "43aaa7f0-4904-4a67-b89e-092eb570878f"
+        },
+        "nx-c-centreon-qnap-memory": {
+            "arguments": {
+                "--critical-memory-usage-prct": {
+                    "description": "Threshold percentage.",
+                    "value": "$nx_centreon_qnap_storage_critical$"
+                },
+                "--mode": "memory",
+                "--verbose": {},
+                "--warning-memory-usage-prct": {
+                    "description": "Threshold percentage.",
+                    "value": "$nx_centreon_qnap_storage_warning$"
+                }
+            },
+            "fields": [],
+            "imports": [
+                "nx-c-centreon-qnap-base"
+            ],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-centreon-qnap-memory",
+            "object_type": "object",
+            "uuid": "361b60e6-624c-4b94-a500-90943c07ad0d"
+        },
+        "nx-c-centreon-qnap-storage": {
+            "arguments": {
+                "--critical-usage": "$nx_centreon_qnap_storage_critical$",
+                "--mode": "storage",
+                "--verbose": {},
+                "--warning-usage": {
+                    "description": "Set warning threshold for temperatures (syntax: type,regexp,threshold) Example: --warning='temperature,cpu,30' --warning='fan,.*,1500'",
+                    "value": "$nx_centreon_qnap_storage_warning$"
+                }
+            },
+            "fields": [],
+            "imports": [
+                "nx-c-centreon-qnap-base",
+                "nx-ct-centreon-plugin-retention"
+            ],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-centreon-qnap-storage",
+            "object_type": "object",
+            "uuid": "56d6ea2e-8b6a-41e0-ac5b-9840512d066a"
+        },
+        "nx-c-centreon-qnap-upgrade": {
+            "arguments": {
+                "--critical-status": {
+                    "description": "Define the conditions to match for the status to be CRITICAL. You can use the following variables: %{model}, %{version}, %{upgrade}",
+                    "value": "$nx_centreon_qnap_storage_critical$"
+                },
+                "--filter": {
+                    "description": "Exclude some parts (comma separated list) (Example: --filter=disk) Can also exclude specific instance: --filter=disk,1",
+                    "repeat_key": true,
+                    "value": "$nx_centreon_qnap_storage_filter$"
+                },
+                "--mode": "upgrade",
+                "--verbose": {},
+                "--warning-status": {
+                    "description": "Define the conditions to match for the status to be CRITICAL. You can use the following variables: %{model}, %{version}, %{upgrade}",
+                    "value": "$nx_centreon_qnap_storage_warning$"
+                }
+            },
+            "fields": [],
+            "imports": [
+                "nx-c-centreon-qnap-base"
+            ],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-centreon-qnap-upgrade",
+            "object_type": "object",
+            "uuid": "3c5e2bce-503d-4522-8f92-90029b7b7314"
+        },
+        "nx-c-centreon-qnap-uptime": {
+            "arguments": {
+                "--add-sysdesc": {
+                    "description": "Display system description."
+                },
+                "--critical-uptime": {
+                    "description": "Critical threshold.",
+                    "value": "$nx_centreon_qnap_storage_critical$"
+                },
+                "--mode": "uptime",
+                "--verbose": {},
+                "--warning-uptime": {
+                    "description": "Warning threshold.",
+                    "value": "$nx_centreon_qnap_storage_warning$"
+                }
+            },
+            "fields": [],
+            "imports": [
+                "nx-c-centreon-qnap-base"
+            ],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-centreon-qnap-uptime",
+            "object_type": "object",
+            "uuid": "91289f4c-bae2-413f-a457-ea9af21c639f"
+        },
+        "nx-c-centreon-qnap-volumes": {
+            "arguments": {
+                "--filter-name": {
+                    "description": "Filter volumes by name (can be a regexp).",
+                    "repeat_key": true,
+                    "value": "$nx_centreon_qnap_storage_filter$"
+                },
+                "--mode": "volumes",
+                "--verbose": {}
+            },
+            "fields": [],
+            "imports": [
+                "nx-c-centreon-qnap-base"
+            ],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-centreon-qnap-volumes",
+            "object_type": "object",
+            "uuid": "31b4c912-bea9-4d23-9a3a-4d3ff9d846c2"
+        },
+        "nx-c-centreon-qnap-base": {
+            "arguments": {
+                "--verbose": {}
+            },
+            "fields": [],
+            "imports": [
+                "nx-ct-centreon-plugin-snmp",
+                "nx-ct-centreon-plugin-retention",
+                "nx-ct-centreon-qnap-base"
+            ],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-centreon-qnap-base",
+            "object_type": "object",
+            "uuid": "ea230593-e6f3-4eca-88aa-64389ef3a929"
+        },
+        "nx-c-centreon-qnap-hw": {
+            "arguments": {
+                "--component": {
+                    "description": "Which component to check (Default: '.*'). Can be: 'disk', 'fan', 'mdisk', 'psu', 'raid', 'temperature'.",
+                    "value": "$nx_centreon_qnap_storage_component_list$"
+                },
+                "--critical": "$nx_centreon_qnap_storage_critical$",
+                "--filter": {
+                    "description": "Exclude some parts (comma separated list) (Example: --filter=disk) Can also exclude specific instance: --filter=disk,1",
+                    "repeat_key": true,
+                    "value": "$nx_centreon_qnap_storage_filter$"
+                },
+                "--mode": "hardware",
+                "--verbose": {},
+                "--warning": {
+                    "description": "Set warning threshold for temperatures (syntax: type,regexp,threshold) Example: --warning='temperature,cpu,30' --warning='fan,.*,1500'",
+                    "value": "$nx_centreon_qnap_storage_warning$"
+                }
+            },
+            "fields": [
+                {
+                    "datafield_id": 3806,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 1398,
+                    "is_required": "n",
+                    "var_filter": null
+                },
+                {
+                    "datafield_id": 3809,
+                    "is_required": "n",
+                    "var_filter": null
+                }
+            ],
+            "imports": [
+                "nx-ct-centreon-plugin-snmp",
+                "nx-ct-centreon-plugin-retention",
+                "nx-ct-centreon-qnap-hw"
+            ],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-centreon-qnap-hw",
+            "object_type": "object",
+            "uuid": "dcd76d20-3b94-4382-9c9d-86c48ef6f62c"
+        },
+        "nx-c-centreon-qnap-hw-disk": {
+            "arguments": {
+                "--component": "disk"
+            },
+            "fields": [],
+            "imports": [
+                "nx-c-centreon-qnap-hw"
+            ],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-centreon-qnap-hw-disk",
+            "object_type": "object",
+            "uuid": "6db1020e-618e-44e9-9ff0-cb279effcd87"
+        },
+        "nx-c-centreon-qnap-hw-fan": {
+            "arguments": {
+                "--component": "fan"
+            },
+            "fields": [],
+            "imports": [
+                "nx-c-centreon-qnap-hw"
+            ],
+            "object_name": "nx-c-centreon-qnap-hw-fan",
+            "object_type": "object",
+            "uuid": "22d86120-8c17-4a9c-ba23-f5a6f03eef61"
+        },
+        "nx-c-centreon-qnap-hw-psu": {
+            "arguments": {
+                "--component": {
+                    "description": "Which component to check (default: '.*'). Can be: 'disk', 'fan', 'mdisk', 'psu', 'raid', 'temperature'.",
+                    "value": "psu"
+                }
+            },
+            "fields": [],
+            "imports": [
+                "nx-c-centreon-qnap-hw"
+            ],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-centreon-qnap-hw-psu",
+            "object_type": "object",
+            "uuid": "9a1fb577-023c-436a-a85d-8c8ea4b4afd8"
+        },
+        "nx-c-centreon-qnap-hw-temperature": {
+            "arguments": {
+                "--component": {
+                    "description": "Which component to check (default: '.*'). Can be: 'disk', 'fan', 'mdisk', 'psu', 'raid', 'temperature'.",
+                    "value": "temperature"
+                }
+            },
+            "fields": [],
+            "imports": [
+                "nx-c-centreon-qnap-hw"
+            ],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-centreon-qnap-hw-temperature",
+            "object_type": "object",
+            "uuid": "ec7446b1-23a6-4bb3-bf39-5a8294518622"
+        },
+        "nx-c-centreon-qnap-hw-raid": {
+            "arguments": {
+                "--component": "raid"
+            },
+            "fields": [],
+            "imports": [
+                "nx-c-centreon-qnap-hw"
+            ],
+            "methods_execute": "PluginCheck",
+            "object_name": "nx-c-centreon-qnap-hw-raid",
+            "object_type": "object",
+            "uuid": "4debe1ae-773f-47ad-ab52-15bcd1483767"
+        }
+    },
+    "CommandTemplate": {
+        "nx-ct-centreon-qnap": {
+            "command": "/usr/lib/centreon/plugins/centreon_qnap.pl",
+            "fields": [],
+            "imports": [
+                "nx-ct-centreon-plugin-base"
+            ],
+            "object_name": "nx-ct-centreon-qnap",
+            "object_type": "template",
+            "uuid": "b04c519c-c22c-4c4e-9853-81ae2e96fb0f"
+        },
+        "nx-ct-centreon-qnap-base": {
+            "fields": [],
+            "imports": [
+                "nx-ct-centreon-qnap"
+            ],
+            "object_name": "nx-ct-centreon-qnap-base",
+            "object_type": "template",
+            "uuid": "5ea3369d-dd94-4c89-9b74-9f14639c63ef"
+        },
+        "nx-ct-centreon-qnap-hw": {
+            "fields": [],
+            "imports": [
+                "nx-ct-centreon-qnap"
+            ],
+            "object_name": "nx-ct-centreon-qnap-hw",
+            "object_type": "template",
+            "uuid": "43bcf3b1-8546-4d42-872b-6da30ad5e92a"
         }
     }
 }
