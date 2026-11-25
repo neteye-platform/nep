@@ -23,6 +23,8 @@
 #  21.03.2022   explanation-text added for function ABAPReadSyslog enhanced (Andreas Foerster)
 #  23.05.2023   ABAP Syslog-output: removed redundant lines (sort -u)
 #  26.06.2023   sapcontrol binary moved to /neteye/shared/monitoring/software/sapcontrol (A.F.)
+#  16.11.2026   new functions ABAPGetWPTableBTC/UPD/UP2/SPO (free WPs per type)
+#               and GetSystemInstanceList (status of all instances of the system)
 #
 ##################################################################################
 #
@@ -279,6 +281,86 @@ case $SC_FUNCTION in
       fi
     fi
     rm -f $TMP_FILE
+    ;;
+
+  ABAPGetWPTableBTC|ABAPGetWPTableUPD|ABAPGetWPTableUP2|ABAPGetWPTableSPO)    \
+    #
+    # (16.11.2026) count free work processes of one type (BTC, UPD, UP2, SPO)
+    # sapcontrol only knows ABAPGetWPTable, the type is taken from the function name.
+    # -warn / -crit: warning/critical if number of free WPs is <= value (default 0 = no free WP)
+    #
+    WP_TYPE=${SC_FUNCTION#ABAPGetWPTable}
+    WP_LOWER=$(echo $WP_TYPE | tr 'A-Z' 'a-z')
+    [ -z "$SC_WARN" ] && SC_WARN=0
+    [ -z "$SC_CRIT" ] && SC_CRIT=0
+    sapcontrol -host $SC_HOST -nr $SC_NR -prot $SC_PROT -function ABAPGetWPTable | grep -e "^No" -e "^[0-9]*," >$TMP_FILE
+    # column 2 = Typ, column 4 = Status ("Wait" = free)
+    WP_ALL=$(grep -c "^[0-9]*," $TMP_FILE)
+    WP_TOTAL=$(awk -F', *' -v t="$WP_TYPE" '$1 ~ /^[0-9]+$/ && $2 == t' $TMP_FILE | wc -l)
+    WP_FREE=$(awk -F', *' -v t="$WP_TYPE" '$1 ~ /^[0-9]+$/ && $2 == t && $4 == "Wait"' $TMP_FILE | wc -l)
+    if [ $WP_ALL -eq 0 ]; then
+      # no WP table at all: sapstartsrv not reachable or instance down
+      STAT_OUT="UNKNOWN: Unable to read WP-Table, please check system or instance parameters"
+      PERF_OUT=""
+      RESULT=3
+    elif [ $WP_TOTAL -eq 0 ]; then
+      STAT_OUT="OK: No $WP_TYPE work processes configured on this instance"
+      PERF_OUT="'wp-${WP_LOWER}-free'=0;;;0;0"
+      RESULT=0
+    else
+      STAT_OUT="OK: Number of free $WP_TYPE processes: $WP_FREE of $WP_TOTAL"
+      RESULT=0
+      if [ $WP_FREE -le $SC_WARN ] ; then
+        STAT_OUT="WARNING: Number of free $WP_TYPE processes: $WP_FREE of $WP_TOTAL"
+        RESULT=1
+        if [ $WP_FREE -le $SC_CRIT ] ; then
+          STAT_OUT="CRITICAL: Number of free $WP_TYPE processes: $WP_FREE of $WP_TOTAL"
+          RESULT=2
+        fi
+      fi
+      STAT_OUT="${STAT_OUT}\nCurrent $WP_TYPE Workprocesses:\n$(grep '^No' $TMP_FILE)\n$(awk -F', *' -v t="$WP_TYPE" '$1 ~ /^[0-9]+$/ && $2 == t' $TMP_FILE)"
+      PERF_OUT="'wp-${WP_LOWER}-free'=$WP_FREE;$SC_WARN;$SC_CRIT;0;$WP_TOTAL"
+    fi
+    rm -f $TMP_FILE
+    ;;
+
+  GetSystemInstanceList)    \
+    #
+    # (16.11.2026) status of all instances of the SAP system (run against the ASCS / message server instance)
+    # -pattern : regexp on column "features" to select instances, e.g. ABAP = only ABAP application servers (default: all)
+    # -warn    : WARNING if less than <n> instances are GREEN (optional)
+    # -crit    : CRITICAL if less than <n> instances are GREEN (optional)
+    # any instance RED or GRAY -> CRITICAL, YELLOW -> WARNING
+    #
+    sapcontrol -host $SC_HOST -nr $SC_NR -prot $SC_PROT -function $SC_FUNCTION >$TMP_FILE
+    # data lines: hostname, instanceNr, httpPort, httpsPort, startPriority, features, dispstatus
+    awk -F', *' -v pat="$SC_PATTERN" 'NF == 7 && $2 ~ /^[0-9][0-9]$/ && (pat == "" || $6 ~ pat) {f=$6; gsub(/\|/, "+", f); print $1"_"$2" "f" "$7}' $TMP_FILE > ${TMP_FILE}_list
+    typeset -i INST_TOTAL=$(cat ${TMP_FILE}_list | wc -l)
+    typeset -i INST_GREEN=$(awk '$3 == "GREEN"' ${TMP_FILE}_list | wc -l)
+    typeset -i INST_YELLOW=$(awk '$3 == "YELLOW"' ${TMP_FILE}_list | wc -l)
+    typeset -i INST_BAD=$(awk '$3 != "GREEN" && $3 != "YELLOW"' ${TMP_FILE}_list | wc -l)
+    if [ $INST_TOTAL -eq 0 ]; then
+      STAT_OUT="UNKNOWN: Unable to read instance list, please check host, instance-number (message server instance) and -pattern"
+      PERF_OUT=""
+      RESULT=3
+    else
+      RESULT=0
+      [ $INST_YELLOW -gt 0 ] && RESULT=1
+      [ -n "$SC_WARN" ] && [ $INST_GREEN -lt $SC_WARN ] && [ $RESULT -lt 1 ] && RESULT=1
+      [ $INST_BAD -gt 0 ] && RESULT=2
+      [ -n "$SC_CRIT" ] && [ $INST_GREEN -lt $SC_CRIT ] && RESULT=2
+      case $RESULT in
+        0) STATUS="OK";;
+        1) STATUS="WARNING";;
+        2) STATUS="CRITICAL";;
+      esac
+      NOT_GREEN=$(awk '$3 != "GREEN" {printf "%s%s=%s", sep, $1, $3; sep=", "}' ${TMP_FILE}_list)
+      STAT_OUT="${STATUS}: $INST_GREEN of $INST_TOTAL instances GREEN"
+      [ -n "$NOT_GREEN" ] && STAT_OUT="${STAT_OUT} (not green: $NOT_GREEN)"
+      STAT_OUT="${STAT_OUT}\nInstances (instance features status):\n$(cat ${TMP_FILE}_list)"
+      PERF_OUT="'instances'=$INST_TOTAL;;;0 'instances_green'=$INST_GREEN;$SC_WARN;$SC_CRIT;0;$INST_TOTAL"
+    fi
+    rm -f $TMP_FILE ${TMP_FILE}_list
     ;;
 
   ABAPReadSyslog)    \
