@@ -23,7 +23,7 @@
 #  21.03.2022   explanation-text added for function ABAPReadSyslog enhanced (Andreas Foerster)
 #  23.05.2023   ABAP Syslog-output: removed redundant lines (sort -u)
 #  26.06.2023   sapcontrol binary moved to /neteye/shared/monitoring/software/sapcontrol (A.F.)
-#  16.11.2026   new functions ABAPGetWPTableBTC/UPD/UP2/SPO (free WPs per type)
+#  24.11.2026   new functions ABAPGetWPTableBTC/UPD/UP2/SPO (free WPs per type)
 #               and GetSystemInstanceList (status of all instances of the system)
 #
 ##################################################################################
@@ -56,8 +56,8 @@ fi
 #
 # set Variables
 #
-export LD_LIBRARY_PATH=/neteye/shared/monitoring/software/sapcontrol
-export PATH=$PATH:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$(dirname $0)/sap/sapcontrol
+export PATH=$PATH:$(dirname $0)/sap/sapcontrol
 export TMP_FILE=/tmp/sapcontrol_$$
 SC_HOST_SHORT=$(echo $SC_HOST | cut -d'.' -f 1)
 PERF_OUT=""
