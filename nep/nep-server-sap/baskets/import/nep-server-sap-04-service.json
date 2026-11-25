@@ -142,8 +142,7 @@
                 }
             ],
             "imports": [
-                "nx-st-agentless",
-                "nx-st-type-custom"
+                "nx-st-agentless"
             ],
             "notes": "for selecting a function specify the appropriate check-command,\r\ne.g. nx-c-sap-sapcontrol-instance-status",
             "object_name": "nx-st-agentless-sap-sapcontrol",
@@ -322,8 +321,7 @@
                 }
             ],
             "imports": [
-                "nx-st-agentless",
-                "nx-st-type-custom"
+                "nx-st-agentless"
             ],
             "notes": "for selecting a function specify the appropriate check-command,\r\ne.g. nx-c-sap-check-saphealth-connection-time",
             "object_name": "nx-st-agentless-sap-saphealth",
