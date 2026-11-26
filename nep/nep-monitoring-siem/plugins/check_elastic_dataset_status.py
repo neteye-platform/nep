@@ -14,17 +14,13 @@ import sys
 import copy
 import logging
 import json
-from requests.exceptions import ReadTimeout, ConnectionError
-
-# Disable warning for Self Signed Certs
-import urllib3
-
-urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 headers = {"Content-Type": "application/json"}
 cert_path = "/neteye/local/elasticsearch/conf/monitoring-certs/certs/"
 cert_file = "NetEyeElasticCheck.crt.pem"
 key_file = "private/NetEyeElasticCheck.key.pem"
+# NetEye installs its root CA into the system trust store.
+system_ca_bundle = "/etc/pki/tls/certs/ca-bundle.crt"
 message = ""
 
 tornado_url = "http://neteye.neteyelocal:8080/event/"
@@ -120,9 +116,10 @@ def SearchOnElastic():
             headers=headers,
             data=json.dumps(payload_data),
             cert=(cert_path + cert_file, cert_path + key_file),
-            verify=False,  # codeql[py/request-without-cert-validation] ignore
+            verify=system_ca_bundle,
         )
-    except (ConnectionError, ReadTimeout) as e:
+    except OSError as e:
+        # Requests errors and unreadable CA/client certificate files.
         ## Error on Elastic
         logging.warning("Elastic connection error")
         return UNKNOWN_CODE, [], "connection error: " + str(e)
@@ -143,13 +140,10 @@ def SearchOnElastic():
 
 def SendToTornado(payload):
     try:
-        # Internal Tornado endpoint over self-signed certs; TLS validation is
-        # intentionally disabled, matching the existing Elasticsearch calls.
         r = requests.post(
             tornado_url + webhook + "?token=" + secret,
             data=json.dumps(payload),
             headers=headers,
-            verify=False,  # codeql[py/request-without-cert-validation] ignore
             timeout=10,
         )
         return r.status_code == 200
