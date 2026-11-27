@@ -13,6 +13,11 @@
                     "var_filter": null
                 },
                 {
+                    "datafield_id": 2987,
+                    "is_required": "n",
+                    "var_filter": "host.vars.nx_sap_instance_type=%22DVEBMGS%22|host.vars.nx_sap_instance_type=%22D%22"
+                },
+                {
                     "datafield_id": 2266,
                     "is_required": "n",
                     "var_filter": null
@@ -169,6 +174,18 @@
             "varname": "nx_sap_instance_dialog_free_warning",
             "caption": "[NX] SAP Instance Dialog free warning",
             "description": "Threshold per Instance for free dialog processes (warning)",
+            "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+            "format": null,
+            "settings": {
+                "visibility": "visible"
+            },
+            "category": "[NX] SAP Instance"
+        },
+        "2987": {
+            "uuid": "1d6f735a-bb54-4727-bb80-0d876f30f505",
+            "varname": "nx_sap_instance_hostname",
+            "caption": "[NX] SAP Instance Hostname (RFC)",
+            "description": "Hostname of the instance as known by SAP (SM51 / SAPLOCALHOST, FQDN accepted). Used as --ashost for RFC connections directly to the instance (CCMS services per instance).",
             "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
             "format": null,
             "settings": {

@@ -55,7 +55,7 @@
             "object_type": "template",
             "uuid": "9e3b1a40-6c2d-4f8e-b1a7-3d5c7e9f0b04",
             "vars": {
-                "nx_sap_saphealth_ashost": "$host.address$",
+                "nx_sap_saphealth_ashost": "$host.vars.nx_sap_instance_hostname$",
                 "nx_sap_saphealth_sysnr": "$host.vars.nx_sap_instance_number$"
             }
         },
