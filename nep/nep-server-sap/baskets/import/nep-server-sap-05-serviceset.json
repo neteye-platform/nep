@@ -9,7 +9,8 @@
                 {
                     "fields": [],
                     "imports": [
-                        "nx-st-sap-instance-connection-time"
+                        "nx-st-sap-instance-connection-time",
+                        "nx-st-type-custom"
                     ],
                     "object_name": "SAP System Logon Group",
                     "object_type": "object",
@@ -33,7 +34,8 @@
                 {
                     "fields": [],
                     "imports": [
-                        "nx-st-sap-instance-ccms-mte-check"
+                        "nx-st-sap-instance-ccms-mte-check",
+                        "nx-st-type-custom"
                     ],
                     "object_name": "SAP OS CPU",
                     "object_type": "object",
@@ -56,7 +58,8 @@
                 {
                     "fields": [],
                     "imports": [
-                        "nx-st-sap-instance-ccms-mte-check"
+                        "nx-st-sap-instance-ccms-mte-check",
+                        "nx-st-type-custom"
                     ],
                     "object_name": "SAP OS Filesystems",
                     "object_type": "object",
@@ -74,7 +77,8 @@
                 {
                     "fields": [],
                     "imports": [
-                        "nx-st-sap-instance-ccms-mte-check"
+                        "nx-st-sap-instance-ccms-mte-check",
+                        "nx-st-type-custom"
                     ],
                     "object_name": "SAP OS Memory",
                     "object_type": "object",
@@ -100,7 +104,8 @@
                 {
                     "fields": [],
                     "imports": [
-                        "nx-st-sap-instance-status"
+                        "nx-st-sap-instance-status",
+                        "nx-st-type-custom"
                     ],
                     "object_name": "SAP Instance Status",
                     "object_type": "object",
@@ -118,7 +123,8 @@
                 {
                     "fields": [],
                     "imports": [
-                        "nx-st-sap-system-enqueue-stats"
+                        "nx-st-sap-system-enqueue-stats",
+                        "nx-st-type-custom"
                     ],
                     "object_name": "SAP Instance Enqueue Status",
                     "object_type": "object",
@@ -131,7 +137,8 @@
                 {
                     "fields": [],
                     "imports": [
-                        "nx-st-sap-instance-version-info"
+                        "nx-st-sap-instance-version-info",
+                        "nx-st-type-custom"
                     ],
                     "object_name": "SAP Instance Version Info",
                     "object_type": "object",
@@ -149,7 +156,8 @@
                 {
                     "fields": [],
                     "imports": [
-                        "nx-st-sap-instance-wp-table"
+                        "nx-st-sap-instance-wp-table",
+                        "nx-st-type-custom"
                     ],
                     "object_name": "SAP Instance Dialog free",
                     "object_type": "object",
@@ -162,7 +170,8 @@
                 {
                     "fields": [],
                     "imports": [
-                        "nx-st-sap-instance-wp-table"
+                        "nx-st-sap-instance-wp-table",
+                        "nx-st-type-custom"
                     ],
                     "object_name": "SAP Instance Dialog privmode",
                     "object_type": "object",
@@ -176,7 +185,8 @@
                 {
                     "fields": [],
                     "imports": [
-                        "nx-st-sap-instance-queue-stats"
+                        "nx-st-sap-instance-queue-stats",
+                        "nx-st-type-custom"
                     ],
                     "object_name": "SAP Instance Queue Stats",
                     "object_type": "object",
@@ -190,7 +200,8 @@
                     "disabled": true,
                     "fields": [],
                     "imports": [
-                        "nx-st-sap-instance-version-info"
+                        "nx-st-sap-instance-version-info",
+                        "nx-st-type-custom"
                     ],
                     "object_name": "SAP Instance Version Info",
                     "object_type": "object",
@@ -208,7 +219,8 @@
                 {
                     "fields": [],
                     "imports": [
-                        "nx-st-sap-instance-wp-table-batch"
+                        "nx-st-sap-instance-wp-table-batch",
+                        "nx-st-type-custom"
                     ],
                     "object_name": "SAP Instance Batch free",
                     "object_type": "object",
@@ -217,7 +229,8 @@
                 {
                     "fields": [],
                     "imports": [
-                        "nx-st-sap-instance-ccms-mte-check"
+                        "nx-st-sap-instance-ccms-mte-check",
+                        "nx-st-type-custom"
                     ],
                     "object_name": "SAP Instance Buffers",
                     "object_type": "object",
@@ -234,7 +247,8 @@
                 {
                     "fields": [],
                     "imports": [
-                        "nx-st-sap-instance-ccms-mte-check"
+                        "nx-st-sap-instance-ccms-mte-check",
+                        "nx-st-type-custom"
                     ],
                     "object_name": "SAP Instance Dialog",
                     "object_type": "object",
@@ -251,7 +265,8 @@
                 {
                     "fields": [],
                     "imports": [
-                        "nx-st-sap-instance-ccms-mte-check"
+                        "nx-st-sap-instance-ccms-mte-check",
+                        "nx-st-type-custom"
                     ],
                     "object_name": "SAP Instance Logon Load",
                     "object_type": "object",
@@ -274,7 +289,8 @@
                 {
                     "fields": [],
                     "imports": [
-                        "nx-st-sap-instance-ccms-mte-check"
+                        "nx-st-sap-instance-ccms-mte-check",
+                        "nx-st-type-custom"
                     ],
                     "object_name": "SAP Instance Memory",
                     "object_type": "object",
@@ -307,7 +323,8 @@
                 {
                     "fields": [],
                     "imports": [
-                        "nx-st-sap-instance-ccms-mte-check"
+                        "nx-st-sap-instance-ccms-mte-check",
+                        "nx-st-type-custom"
                     ],
                     "object_name": "SAP Instance OS Swap",
                     "object_type": "object",
@@ -325,7 +342,8 @@
                     "check_timeout": 130,
                     "fields": [],
                     "imports": [
-                        "nx-st-sap-instance-ccms-mte-check"
+                        "nx-st-sap-instance-ccms-mte-check",
+                        "nx-st-type-custom"
                     ],
                     "object_name": "SAP Instance Parameter Changes",
                     "object_type": "object",
@@ -343,7 +361,8 @@
                 {
                     "fields": [],
                     "imports": [
-                        "nx-st-sap-instance-ccms-mte-check"
+                        "nx-st-sap-instance-ccms-mte-check",
+                        "nx-st-type-custom"
                     ],
                     "object_name": "SAP Instance Response Time",
                     "object_type": "object",
@@ -366,7 +385,8 @@
                 {
                     "fields": [],
                     "imports": [
-                        "nx-st-sap-instance-wp-table-spool"
+                        "nx-st-sap-instance-wp-table-spool",
+                        "nx-st-type-custom"
                     ],
                     "object_name": "SAP Instance Spool free",
                     "object_type": "object",
@@ -376,7 +396,8 @@
                     "check_timeout": 130,
                     "fields": [],
                     "imports": [
-                        "nx-st-sap-instance-ccms-mte-check"
+                        "nx-st-sap-instance-ccms-mte-check",
+                        "nx-st-type-custom"
                     ],
                     "object_name": "SAP Instance Update WP",
                     "object_type": "object",
@@ -394,7 +415,8 @@
                 {
                     "fields": [],
                     "imports": [
-                        "nx-st-sap-instance-wp-table-update"
+                        "nx-st-sap-instance-wp-table-update",
+                        "nx-st-type-custom"
                     ],
                     "object_name": "SAP Instance Update free",
                     "object_type": "object",
@@ -403,7 +425,8 @@
                 {
                     "fields": [],
                     "imports": [
-                        "nx-st-sap-instance-ccms-mte-check"
+                        "nx-st-sap-instance-ccms-mte-check",
+                        "nx-st-type-custom"
                     ],
                     "object_name": "SAP Instance WP Status",
                     "object_type": "object",
@@ -429,7 +452,8 @@
                 {
                     "fields": [],
                     "imports": [
-                        "nx-st-sap-instance-connection-time"
+                        "nx-st-sap-instance-connection-time",
+                        "nx-st-type-custom"
                     ],
                     "object_name": "SAP Instance Connection Time",
                     "object_type": "object",
@@ -444,7 +468,8 @@
                 {
                     "fields": [],
                     "imports": [
-                        "nx-st-sap-system-failed-jobs"
+                        "nx-st-sap-system-failed-jobs",
+                        "nx-st-type-custom"
                     ],
                     "object_name": "SAP System Failed Jobs last 12h",
                     "object_type": "object",
@@ -460,7 +485,8 @@
                 {
                     "fields": [],
                     "imports": [
-                        "nx-st-sap-system-failed-updates"
+                        "nx-st-sap-system-failed-updates",
+                        "nx-st-type-custom"
                     ],
                     "object_name": "SAP System Failed Updates last 24h",
                     "object_type": "object",
@@ -478,7 +504,8 @@
                 {
                     "fields": [],
                     "imports": [
-                        "nx-st-sap-system-ccms-mte-check"
+                        "nx-st-sap-system-ccms-mte-check",
+                        "nx-st-type-custom"
                     ],
                     "object_name": "SAP System License expiration",
                     "object_type": "object",
@@ -498,7 +525,8 @@
                 {
                     "fields": [],
                     "imports": [
-                        "nx-st-sap-system-shortdumps-recurrence"
+                        "nx-st-sap-system-shortdumps-recurrence",
+                        "nx-st-type-custom"
                     ],
                     "object_name": "SAP System Shortdumps Recurrence last 12h",
                     "object_type": "object",
@@ -523,7 +551,8 @@
                 {
                     "fields": [],
                     "imports": [
-                        "nx-st-sap-system-shortdumps-count"
+                        "nx-st-sap-system-shortdumps-count",
+                        "nx-st-type-custom"
                     ],
                     "object_name": "SAP System Shortdumps last 15m",
                     "object_type": "object",
@@ -543,7 +572,8 @@
                     "disabled": true,
                     "fields": [],
                     "imports": [
-                        "nx-st-sap-system-ccms-mte-check"
+                        "nx-st-sap-system-ccms-mte-check",
+                        "nx-st-type-custom"
                     ],
                     "object_name": "SAP System Update status",
                     "object_type": "object",
@@ -571,7 +601,8 @@
                     "disabled": true,
                     "fields": [],
                     "imports": [
-                        "nx-st-sap-system-ccms-mte-check"
+                        "nx-st-sap-system-ccms-mte-check",
+                        "nx-st-type-custom"
                     ],
                     "object_name": "SAP System tRFC SM58",
                     "object_type": "object",
@@ -608,7 +639,8 @@
                 {
                     "fields": [],
                     "imports": [
-                        "nx-st-sap-system-ccms-mte-check"
+                        "nx-st-sap-system-ccms-mte-check",
+                        "nx-st-type-custom"
                     ],
                     "object_name": "SAP System tRFC SM58 Communication Errors",
                     "object_type": "object",
@@ -641,7 +673,8 @@
                 {
                     "fields": [],
                     "imports": [
-                        "nx-st-sap-system-ccms-mte-check"
+                        "nx-st-sap-system-ccms-mte-check",
+                        "nx-st-type-custom"
                     ],
                     "object_name": "SAP System tRFC SM58 Execution Errors",
                     "object_type": "object",
@@ -674,7 +707,8 @@
                 {
                     "fields": [],
                     "imports": [
-                        "nx-st-sap-system-ccms-mte-check"
+                        "nx-st-sap-system-ccms-mte-check",
+                        "nx-st-type-custom"
                     ],
                     "object_name": "SAP System tRFC SM58 Total Calls",
                     "object_type": "object",
@@ -716,7 +750,8 @@
                 {
                     "fields": [],
                     "imports": [
-                        "nx-st-sap-system-instance-list"
+                        "nx-st-sap-system-instance-list",
+                        "nx-st-type-custom"
                     ],
                     "object_name": "SAP System Application Servers",
                     "object_type": "object",
@@ -728,7 +763,8 @@
                 {
                     "fields": [],
                     "imports": [
-                        "nx-st-sap-system-ccms-mte-check"
+                        "nx-st-sap-system-ccms-mte-check",
+                        "nx-st-type-custom"
                     ],
                     "object_name": "SAP System Background",
                     "object_type": "object",
@@ -749,7 +785,8 @@
                 {
                     "fields": [],
                     "imports": [
-                        "nx-st-sap-system-ccms-mte-check"
+                        "nx-st-sap-system-ccms-mte-check",
+                        "nx-st-type-custom"
                     ],
                     "object_name": "SAP System Enqueue Errors",
                     "object_type": "object",
@@ -770,7 +807,8 @@
                 {
                     "fields": [],
                     "imports": [
-                        "nx-st-sap-system-old-locks"
+                        "nx-st-sap-system-old-locks",
+                        "nx-st-type-custom"
                     ],
                     "object_name": "SAP System Lock Entries older 1d",
                     "object_type": "object",
@@ -785,7 +823,8 @@
                 {
                     "fields": [],
                     "imports": [
-                        "nx-st-sap-system-old-updates"
+                        "nx-st-sap-system-old-updates",
+                        "nx-st-type-custom"
                     ],
                     "object_name": "SAP System Update Requests older 1d",
                     "object_type": "object",
@@ -800,7 +839,8 @@
                 {
                     "fields": [],
                     "imports": [
-                        "nx-st-sap-system-ccms-mte-check"
+                        "nx-st-sap-system-ccms-mte-check",
+                        "nx-st-type-custom"
                     ],
                     "object_name": "SAP System Update Service Status",
                     "object_type": "object",
@@ -821,7 +861,8 @@
                 {
                     "fields": [],
                     "imports": [
-                        "nx-st-sap-system-ccms-mte-check"
+                        "nx-st-sap-system-ccms-mte-check",
+                        "nx-st-type-custom"
                     ],
                     "object_name": "SAP System qRFC Inbound",
                     "object_type": "object",
@@ -842,7 +883,8 @@
                 {
                     "fields": [],
                     "imports": [
-                        "nx-st-sap-system-ccms-mte-check"
+                        "nx-st-sap-system-ccms-mte-check",
+                        "nx-st-type-custom"
                     ],
                     "object_name": "SAP System qRFC Outbound",
                     "object_type": "object",
@@ -863,7 +905,8 @@
                 {
                     "fields": [],
                     "imports": [
-                        "nx-st-sap-system-qrfc-errors"
+                        "nx-st-sap-system-qrfc-errors",
+                        "nx-st-type-custom"
                     ],
                     "object_name": "SAP System qRFC Queues in Error",
                     "object_type": "object",
